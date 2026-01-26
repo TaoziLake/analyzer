@@ -1,36 +1,116 @@
-## unidiff_extract（分析代码，和待分析项目隔离）
+# Docstring Analyzer
 
-这个目录下的脚本用于对 **任意待分析的 Git 仓库** 提取：
-- commit 的 **seeds**（变更定位到函数/类/模块）
-- 基于调用图的 **k-hop 传播**（impacted set）
+從 Git commit 自動定位變更函數，並生成 docstring patch。
 
-默认情况下，所有输出都会写到：
-`d:\locbench\analyzer\runs\<repo-name>\impacted_seeds\`
+## 腳本總覽
 
-### 1) 从 commit 提取 seeds
+| 腳本 | 功能 |
+|------|------|
+| `extract_seeds.py` | 從 commit diff 提取變更種子（函數/類） |
+| `process_impacted_set.py` | 基於調用圖計算 k-hop 受影響集合 |
+| `call_graph.py` | 調用圖構建（ast / tree-sitter） |
+| `agent.py` | 模板版 agent（生成 TODO docstring） |
+| `agent_llm.py` | **LLM 版 agent**（調用 LLM 生成 docstring） |
+| `agent_batch.py` | 批量執行多 commits |
+| `agent_neg_control.py` | 負面控制實驗 |
+| `llm_client.py` | LLM API 封裝（OpenAI SDK） |
+| `docstring_style.py` | 自動檢測 docstring 風格 |
 
-在 `d:\locbench`（或任意目录）运行：
+---
 
-```powershell
-python .\analyzer\unidiff_extract\extract_seeds.py --repo D:\locbench\python-unidiff --commit 7eb7da9
-```
+## 快速開始
 
-### 2) 基于 seeds 构建调用图并传播（k-hop）→ impacted set
-
-```powershell
-python .\analyzer\unidiff_extract\process_impacted_set.py --repo D:\locbench\python-unidiff --seeds .\analyzer\runs\python-unidiff\impacted_seeds\impacted_seeds_7eb7da9_*.json --max-hops 2 --parser ast
-```
-
-说明：
-- `--seeds` 支持 glob（Windows/PowerShell 不展开 `*` 也没关系）
-- 输出会写回 seeds 同目录，文件名为 `impacted_set_<commit>_<timestamp>.json`
-- `--parser`：
-  - `ast`：最稳定、无额外依赖
-  - `auto`：本机装了 tree-sitter 时会自动用，否则回退到 ast
-
-### （可选）安装 tree-sitter
+### 1. 單 Commit 執行（模板版）
 
 ```powershell
-pip install tree_sitter tree_sitter_languages
+python .\analyzer\unidiff_extract\agent.py --repo .\black --commit abc123
 ```
 
+### 2. 單 Commit 執行（LLM 版）
+
+```powershell
+python .\analyzer\unidiff_extract\agent_llm.py --repo .\fastapi --commit 1c4fc96c
+```
+
+### 3. 批量執行
+
+```powershell
+python .\analyzer\unidiff_extract\agent_batch.py --repo .\black --n 200
+```
+
+---
+
+## 參數說明
+
+| 參數 | 默認值 | 說明 |
+|------|--------|------|
+| `--repo` | 必填 | Git 倉庫路徑 |
+| `--commit` | 必填 | Commit SHA |
+| `--parser` | `ast` | 解析器：`ast` / `treesitter` / `auto` |
+| `--seed-scope` | `code_only` | 種子範圍：`code_only`（排除測試）/ `all` |
+| `--max-hops` | `2` | 調用圖傳播跳數 |
+| `--limit-targets` | `50` | 最多處理的目標數 |
+| `--style` | `auto` | docstring 風格（僅 LLM 版） |
+| `--no-llm` | - | 禁用 LLM，使用模板（僅 LLM 版） |
+
+---
+
+## LLM 配置
+
+在 `d:\locbench\config.yaml` 中配置：
+
+```yaml
+llm_chat:
+  api_base_url: "http://your-server:8000/v1"
+  api_key: "your-key"
+  model_name: "qwen3:235b"
+```
+
+---
+
+## 輸出目錄
+
+```
+analyzer/runs/<repo>/<agent_type>/<commit>_<timestamp>/
+├── impacted_seeds_<commit>.json    # 變更種子
+├── impacted_set_<commit>.json      # 受影響集合
+├── docstring_patch_<commit>.diff   # patch 檔案
+├── verifier_report_<commit>.json   # 驗證報告
+└── history.json                    # 執行歷史
+```
+
+---
+
+## 批量統計結果
+
+| Repo | Commits | Agent 成功率 | Verifier 通過率 | 平均 Targets |
+|------|---------|-------------|----------------|--------------|
+| python-unidiff | 143 | 99.3% | 100% | 1.02 |
+| black | 200 | 98.5% | 99.5% | 1.10 |
+| fastapi | 200 | 100% | 100% | 1.33 |
+
+---
+
+## 底層工具
+
+### 提取 Seeds
+
+```powershell
+python .\analyzer\unidiff_extract\extract_seeds.py --repo .\black --commit abc123
+```
+
+### 計算 Impacted Set
+
+```powershell
+python .\analyzer\unidiff_extract\process_impacted_set.py --repo .\black --seeds <seeds.json> --max-hops 2
+```
+
+---
+
+## 依賴
+
+```bash
+pip install openai pyyaml
+# 可選
+pip install tree_sitter tree_sitter_python
+```

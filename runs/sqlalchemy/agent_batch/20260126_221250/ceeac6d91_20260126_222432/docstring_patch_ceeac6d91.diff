@@ -1,0 +1,50 @@
+--- a/lib/sqlalchemy/orm/decl_base.py
++++ b/lib/sqlalchemy/orm/decl_base.py
+@@ -472,6 +472,12 @@
+     def _setup_dataclasses_transforms(
+         self, *, enable_descriptor_defaults: bool, revert: bool = False
+     ) -> None:
++        """TODO: docstring
++
++        Args:
++            enable_descriptor_defaults:
++            revert:
++        """
+         dataclass_setup_arguments = self.dataclass_setup_arguments
+         if not dataclass_setup_arguments:
+             return
+@@ -740,6 +746,11 @@
+ 
+     @classmethod
+     def _assert_dc_arguments(cls, arguments: _DataclassArguments) -> None:
++        """TODO: docstring
++
++        Args:
++            arguments:
++        """
+         allowed = {
+             "init",
+             "repr",
+
+--- a/lib/sqlalchemy/util/langhelpers.py
++++ b/lib/sqlalchemy/util/langhelpers.py
+@@ -70,6 +70,11 @@
+ else:
+ 
+     def get_annotations(obj: Any) -> Mapping[str, Any]:
++        """TODO: docstring
++
++        Args:
++            obj:
++        """
+         return inspect.get_annotations(obj)
+ 
+ 
+@@ -106,6 +111,7 @@
+     cls.__annotations__ = new_annotations
+ 
+     def restore():
++        """TODO: docstring"""
+         for k, v in memoized.items():
+             if v is delattr_:
+                 delattr(cls, k)

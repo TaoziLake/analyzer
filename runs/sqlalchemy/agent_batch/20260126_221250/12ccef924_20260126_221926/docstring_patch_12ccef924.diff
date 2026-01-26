@@ -1,0 +1,32 @@
+--- a/lib/sqlalchemy/dialects/postgresql/base.py
++++ b/lib/sqlalchemy/dialects/postgresql/base.py
+@@ -2069,6 +2069,14 @@
+     def visit_json_getitem_op_binary(
+         self, binary, operator, _cast_applied=False, **kw
+     ):
++        """TODO: docstring
++
++        Args:
++            binary:
++            operator:
++            _cast_applied:
++            **kw:
++        """
+         if (
+             not _cast_applied
+             and binary.type._type_affinity is not sqltypes.JSON
+
+--- a/lib/sqlalchemy/sql/functions.py
++++ b/lib/sqlalchemy/sql/functions.py
+@@ -780,6 +780,11 @@
+         # expressions against getitem.  This may need to be made
+         # more portable if in the future we support other DBs
+         # besides postgresql.
++        """TODO: docstring
++
++        Args:
++            against:
++        """
+         if against is operators.getitem and isinstance(
+             self.type, sqltypes.ARRAY
+         ):

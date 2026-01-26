@@ -1,0 +1,96 @@
+--- a/lib/sqlalchemy/orm/context.py
++++ b/lib/sqlalchemy/orm/context.py
+@@ -1474,6 +1474,11 @@
+         """
+ 
+         def _setup_join_targets(collection):
++            """TODO: docstring
++
++            Args:
++                collection:
++            """
+             for (target, *_) in collection:
+                 if isinstance(target, attributes.QueryableAttribute):
+                     yield target.entity
+
+--- a/lib/sqlalchemy/orm/writeonly.py
++++ b/lib/sqlalchemy/orm/writeonly.py
+@@ -512,6 +512,12 @@
+     def __init__(
+         self, attr: _WriteOnlyAttributeImpl, state: InstanceState[_T]
+     ):
++        """TODO: docstring
++
++        Args:
++            attr:
++            state:
++        """
+         instance = state.obj()
+         if TYPE_CHECKING:
+             assert instance
+
+--- a/lib/sqlalchemy/testing/assertions.py
++++ b/lib/sqlalchemy/testing/assertions.py
+@@ -315,6 +315,12 @@
+ 
+ 
+ def is_true(a, msg=None):
++    """TODO: docstring
++
++    Args:
++        a:
++        msg:
++    """
+     is_(bool(a), True, msg=msg)
+ 
+ 
+@@ -533,6 +539,33 @@
+         check_param_order=True,
+         use_literal_execute_for_simple_int=False,
+     ):
++        """TODO: docstring
++
++        Args:
++            clause:
++            result:
++            params:
++            checkparams:
++            for_executemany:
++            check_literal_execute:
++            check_post_param:
++            dialect:
++            checkpositional:
++            check_prefetch:
++            use_default_dialect:
++            allow_dialect_select:
++            supports_default_values:
++            supports_native_boolean:
++            supports_default_metavalue:
++            literal_binds:
++            render_postcompile:
++            schema_translate_map:
++            render_schema_translate:
++            default_schema_name:
++            from_linting:
++            check_param_order:
++            use_literal_execute_for_simple_int:
++        """
+         if use_default_dialect:
+             dialect = default.DefaultDialect()
+             dialect.supports_default_values = supports_default_values
+
+--- a/lib/sqlalchemy/sql/base.py
++++ b/lib/sqlalchemy/sql/base.py
+@@ -752,6 +752,12 @@
+     def plugin_for(
+         cls, plugin_name: str, visit_name: str
+     ) -> Callable[[_Fn], _Fn]:
++        """TODO: docstring
++
++        Args:
++            plugin_name:
++            visit_name:
++        """
+         def decorate(cls_to_decorate):
+             cls.plugins[(plugin_name, visit_name)] = cls_to_decorate
+             return cls_to_decorate

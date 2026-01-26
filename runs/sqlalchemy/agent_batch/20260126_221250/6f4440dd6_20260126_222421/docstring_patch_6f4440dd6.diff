@@ -1,0 +1,41 @@
+--- a/test/typing/plain_files/orm/typed_queries.py
++++ b/test/typing/plain_files/orm/typed_queries.py
+@@ -132,6 +132,7 @@
+ 
+ 
+ def t_legacy_query_single_entity() -> None:
++    """TODO: docstring"""
+     q1 = session.query(User).filter(User.id == 5)
+ 
+     assert_type(q1, Query[User])
+
+--- a/lib/sqlalchemy/orm/query.py
++++ b/lib/sqlalchemy/orm/query.py
+@@ -398,6 +398,13 @@
+     def _no_criterion_assertion(
+         self, meth: str, order_by: bool = True, distinct: bool = True
+     ) -> None:
++        """TODO: docstring
++
++        Args:
++            meth:
++            order_by:
++            distinct:
++        """
+         if not self._enable_assertions:
+             return
+         if (
+@@ -1143,6 +1150,13 @@
+         db_load_fn: Callable[..., Any],
+         identity_token: Optional[Any] = None,
+     ) -> Optional[Any]:
++        """TODO: docstring
++
++        Args:
++            primary_key_identity:
++            db_load_fn:
++            identity_token:
++        """
+         mapper = self._only_full_mapper_zero("get")
+         return self.session._get_impl(
+             mapper,

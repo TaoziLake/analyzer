@@ -1,0 +1,131 @@
+--- a/examples/generic_associations/discriminator_on_association.py
++++ b/examples/generic_associations/discriminator_on_association.py
+@@ -41,6 +41,7 @@
+ 
+     @declared_attr.directive
+     def __tablename__(cls) -> str:
++        """TODO: docstring"""
+         return cls.__name__.lower()
+ 
+     id: Mapped[int] = mapped_column(primary_key=True)
+@@ -84,6 +85,7 @@
+     )
+ 
+     def __repr__(self) -> str:
++        """TODO: docstring"""
+         return "%s(street=%r, city=%r, zip=%r)" % (
+             self.__class__.__name__,
+             self.street,
+@@ -102,10 +104,12 @@
+ 
+     @declared_attr
+     def address_association_id(cls: type[Any]) -> Mapped[int]:
++        """TODO: docstring"""
+         return mapped_column(ForeignKey("address_association.id"))
+ 
+     @declared_attr
+     def address_association(cls: type[Any]) -> Mapped[AddressAssociation]:
++        """TODO: docstring"""
+         name = cls.__name__
+         discriminator = name.lower()
+ 
+
+--- a/examples/generic_associations/generic_fk.py
++++ b/examples/generic_associations/generic_fk.py
+@@ -46,6 +46,7 @@
+ 
+     @declared_attr.directive
+     def __tablename__(cls) -> str:
++        """TODO: docstring"""
+         return cls.__name__.lower()
+ 
+     id: Mapped[int] = mapped_column(primary_key=True)
+@@ -81,6 +82,7 @@
+         )
+ 
+     def __repr__(self) -> str:
++        """TODO: docstring"""
+         return "%s(street=%r, city=%r, zip=%r)" % (
+             self.__class__.__name__,
+             self.street,
+@@ -101,6 +103,12 @@
+ 
+ @event.listens_for(HasAddresses, "mapper_configured", propagate=True)
+ def setup_listener(mapper: Mapper[Any], class_: type[Any]) -> None:
++    """TODO: docstring
++
++    Args:
++        mapper:
++        class_:
++    """
+     name = class_.__name__
+     discriminator = name.lower()
+     class_.addresses = relationship(
+@@ -121,6 +129,13 @@
+     def append_address(
+         target: HasAddresses, value: Address, initiator: Any
+     ) -> None:
++        """TODO: docstring
++
++        Args:
++            target:
++            value:
++            initiator:
++        """
+         value.discriminator = discriminator
+ 
+ 
+
+--- a/examples/generic_associations/table_per_association.py
++++ b/examples/generic_associations/table_per_association.py
+@@ -33,6 +33,7 @@
+ 
+     @declared_attr.directive
+     def __tablename__(cls) -> str:
++        """TODO: docstring"""
+         return cls.__name__.lower()
+ 
+     id: Mapped[int] = mapped_column(primary_key=True)
+@@ -50,6 +51,7 @@
+     zip: Mapped[str]
+ 
+     def __repr__(self) -> str:
++        """TODO: docstring"""
+         return "%s(street=%r, city=%r, zip=%r)" % (
+             self.__class__.__name__,
+             self.street,
+@@ -66,6 +68,7 @@
+ 
+     @declared_attr
+     def addresses(cls: type[DeclarativeBase]) -> Mapped[list[Address]]:
++        """TODO: docstring"""
+         address_association = Table(
+             "%s_addresses" % cls.__tablename__,
+             cls.metadata,
+
+--- a/examples/generic_associations/table_per_related.py
++++ b/examples/generic_associations/table_per_related.py
+@@ -41,6 +41,7 @@
+ 
+     @declared_attr.directive
+     def __tablename__(cls) -> str:
++        """TODO: docstring"""
+         return cls.__name__.lower()
+ 
+     id: Mapped[int] = mapped_column(primary_key=True)
+@@ -61,6 +62,7 @@
+     zip: Mapped[str]
+ 
+     def __repr__(self) -> str:
++        """TODO: docstring"""
+         return "%s(street=%r, city=%r, zip=%r)" % (
+             self.__class__.__name__,
+             self.street,
+@@ -94,6 +96,7 @@
+ 
+     @declared_attr
+     def addresses(cls: type[Any]) -> Mapped[list[AddressWithParent]]:
++        """TODO: docstring"""
+         cls.Address = type(
+             f"{cls.__name__}Address",
+             (Address, Base),

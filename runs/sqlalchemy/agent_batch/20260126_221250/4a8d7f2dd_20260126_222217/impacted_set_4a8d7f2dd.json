@@ -1,0 +1,115 @@
+{
+  "commit": "4a8d7f2dd",
+  "parent": "01dcb7a967fd91b0764e83dabaed0a8a7bfa78ec",
+  "repo": "D:\\locbench\\sqlalchemy",
+  "num_seeds": 13,
+  "num_seeds_used": 2,
+  "seed_scope": "code_only",
+  "num_impacted": 6,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 53612,
+    "total_call_relations": 107959
+  },
+  "impacted": [
+    {
+      "qualname": "lib.sqlalchemy.orm.strategies._ExpressionColumnLoader.setup_query",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "compile_state._append_dedupe_col_collection"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.orm.strategies._ExpressionColumnLoader",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "compile_state._append_dedupe_col_collection",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "lib.sqlalchemy.orm.strategies._ExpressionColumnLoader.setup_query",
+      "callers": [
+        "lib.sqlalchemy.orm.strategies._ColumnLoader.setup_query",
+        "lib.sqlalchemy.orm.strategies._JoinedLoader._create_eager_join",
+        "lib.sqlalchemy.orm.strategies._UninstrumentedColumnLoader.setup_query",
+        "lib.sqlalchemy.orm.strategies._ExpressionColumnLoader.setup_query"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "lib.sqlalchemy.orm.strategies._ColumnLoader.setup_query",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "compile_state._append_dedupe_col_collection",
+      "callers": [],
+      "callees": [
+        "compile_state._append_dedupe_col_collection",
+        "adapter.adapt_check_present"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.orm.strategies._JoinedLoader._create_eager_join",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "compile_state._append_dedupe_col_collection",
+      "callers": [],
+      "callees": [
+        "ae._resolve_where_criteria",
+        "isinstance",
+        "eagerjoin._target_adapter.copy_and_process",
+        "compile_state._append_dedupe_col_collection",
+        "lib.sqlalchemy.orm.strategies._JoinedLoader._splice_nested_inner_join",
+        "compile_state.global_attributes.get",
+        "lib.sqlalchemy.orm.util.AliasedClass",
+        "lib.sqlalchemy.exc.InvalidRequestError",
+        "localparent.persist_selectable.c.contains_column",
+        "lib.sqlalchemy.orm.util._ORMJoin",
+        "adapter.aliased_insp._entity_for_mapper",
+        "localparent.isa",
+        "len",
+        "lib.sqlalchemy.sql.util.find_left_clause_that_matches_given",
+        "getattr",
+        "lib.sqlalchemy.util.to_list",
+        "tuple",
+        "lib.sqlalchemy.sql.util._find_columns",
+        "compile_state.eager_joins.setdefault"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.orm.strategies._UninstrumentedColumnLoader.setup_query",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "compile_state._append_dedupe_col_collection",
+      "callers": [],
+      "callees": [
+        "compile_state._append_dedupe_col_collection"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-26T22:22:28"
+}

@@ -1,0 +1,58 @@
+--- a/lib/sqlalchemy/dialects/sqlite/aiosqlite.py
++++ b/lib/sqlalchemy/dialects/sqlite/aiosqlite.py
+@@ -214,6 +214,12 @@
+ 
+ class AsyncAdapt_aiosqlite_dbapi(AsyncAdapt_dbapi_module):
+     def __init__(self, aiosqlite: ModuleType, sqlite: ModuleType):
++        """TODO: docstring
++
++        Args:
++            aiosqlite:
++            sqlite:
++        """
+         super().__init__(aiosqlite, dbapi_module=sqlite)
+         self.aiosqlite = aiosqlite
+         self.sqlite = sqlite
+@@ -222,6 +228,7 @@
+         self._init_dbapi_attributes()
+ 
+     def _init_dbapi_attributes(self) -> None:
++        """TODO: docstring"""
+         for name in (
+             "DatabaseError",
+             "Error",
+@@ -241,6 +248,12 @@
+             setattr(self, name, getattr(self.sqlite, name))
+ 
+     def connect(self, *arg: Any, **kw: Any) -> AsyncAdapt_aiosqlite_connection:
++        """TODO: docstring
++
++        Args:
++            *arg:
++            **kw:
++        """
+         creator_fn = kw.pop("async_creator_fn", None)
+         if creator_fn:
+             connection = creator_fn(*arg, **kw)
+@@ -275,6 +288,11 @@
+     execution_ctx_cls = SQLiteExecutionContext_aiosqlite
+ 
+     def __init__(self, **kwargs: Any):
++        """TODO: docstring
++
++        Args:
++            **kwargs:
++        """
+         super().__init__(**kwargs)
+         if self.dbapi and not self.dbapi.has_stop:
+             self.has_terminate = False
+@@ -315,6 +333,11 @@
+         return connection._connection  # type: ignore[no-any-return]
+ 
+     def do_terminate(self, dbapi_connection: DBAPIConnection) -> None:
++        """TODO: docstring
++
++        Args:
++            dbapi_connection:
++        """
+         dbapi_connection.terminate()

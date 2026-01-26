@@ -1,0 +1,14 @@
+--- a/lib/sqlalchemy/dialects/mssql/provision.py
++++ b/lib/sqlalchemy/dialects/mssql/provision.py
+@@ -134,6 +134,12 @@
+ 
+ @drop_all_schema_objects_pre_tables.for_db("mssql")
+ def drop_all_schema_objects_pre_tables(cfg, eng):
++    """TODO: docstring
++
++    Args:
++        cfg:
++        eng:
++    """
+     with eng.connect().execution_options(isolation_level="AUTOCOMMIT") as conn:
+         inspector = inspect(conn)
