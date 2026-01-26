@@ -1,0 +1,346 @@
+--- a/fastapi/_compat/v2.py
++++ b/fastapi/_compat/v2.py
+@@ -112,6 +112,7 @@
+ 
+     @property
+     def validation_alias(self) -> Union[str, None]:
++        """TODO: docstring"""
+         va = self.field_info.validation_alias
+         if isinstance(va, str) and va:
+             return va
+@@ -119,6 +120,7 @@
+ 
+     @property
+     def serialization_alias(self) -> Union[str, None]:
++        """TODO: docstring"""
+         sa = self.field_info.serialization_alias
+         return sa or None
+ 
+@@ -235,6 +237,11 @@
+ 
+ 
+ def _has_computed_fields(field: ModelField) -> bool:
++    """TODO: docstring
++
++    Args:
++        field:
++    """
+     computed_fields = field._type_adapter.core_schema.get("schema", {}).get(
+         "computed_fields", []
+     )
+@@ -250,6 +257,14 @@
+     ],
+     separate_input_output_schemas: bool = True,
+ ) -> Dict[str, Any]:
++    """TODO: docstring
++
++    Args:
++        field:
++        model_name_map:
++        field_mapping:
++        separate_input_output_schemas:
++    """
+     override_mode: Union[Literal["validation"], None] = (
+         None
+         if (separate_input_output_schemas or _has_computed_fields(field))
+@@ -281,6 +296,13 @@
+     Dict[Tuple[ModelField, Literal["validation", "serialization"]], JsonSchemaValue],
+     Dict[str, Dict[str, Any]],
+ ]:
++    """TODO: docstring
++
++    Args:
++        fields:
++        model_name_map:
++        separate_input_output_schemas:
++    """
+     schema_generator = GenerateJsonSchema(ref_template=REF_TEMPLATE)
+     validation_fields = [field for field in fields if field.mode == "validation"]
+     serialization_fields = [field for field in fields if field.mode == "serialization"]
+@@ -481,6 +503,11 @@
+ 
+ 
+ def get_model_fields(model: Type[BaseModel]) -> List[ModelField]:
++    """TODO: docstring
++
++    Args:
++        model:
++    """
+     model_fields: List[ModelField] = []
+     for name, field_info in model.model_fields.items():
+         type_ = field_info.annotation
+
+--- a/fastapi/dependencies/utils.py
++++ b/fastapi/dependencies/utils.py
+@@ -143,6 +143,14 @@
+     visited: Optional[List[DependencyCacheKey]] = None,
+     parent_oauth_scopes: Optional[List[str]] = None,
+ ) -> Dependant:
++    """TODO: docstring
++
++    Args:
++        dependant:
++        skip_repeats:
++        visited:
++        parent_oauth_scopes:
++    """
+     if visited is None:
+         visited = []
+     visited.append(dependant.cache_key)
+@@ -191,6 +199,11 @@
+ 
+ 
+ def _get_flat_fields_from_params(fields: List[ModelField]) -> List[ModelField]:
++    """TODO: docstring
++
++    Args:
++        fields:
++    """
+     if not fields:
+         return fields
+     first_field = fields[0]
+@@ -605,6 +618,19 @@
+     async_exit_stack: AsyncExitStack,
+     embed_body_fields: bool,
+ ) -> SolvedDependency:
++    """TODO: docstring
++
++    Args:
++        request:
++        dependant:
++        body:
++        background_tasks:
++        response:
++        dependency_overrides_provider:
++        dependency_cache:
++        async_exit_stack:
++        embed_body_fields:
++    """
+     request_astack = request.scope.get("fastapi_inner_astack")
+     assert isinstance(request_astack, AsyncExitStack), (
+         "fastapi_inner_astack not found in request scope"
+@@ -734,6 +760,14 @@
+ def _validate_value_with_model_field(
+     *, field: ModelField, value: Any, values: Dict[str, Any], loc: Tuple[str, ...]
+ ) -> Tuple[Any, List[Any]]:
++    """TODO: docstring
++
++    Args:
++        field:
++        value:
++        values:
++        loc:
++    """
+     if value is None:
+         if field.required:
+             return None, [get_missing_field_error(loc=loc)]
+@@ -752,6 +786,13 @@
+ def _get_multidict_value(
+     field: ModelField, values: Mapping[str, Any], alias: Union[str, None] = None
+ ) -> Any:
++    """TODO: docstring
++
++    Args:
++        field:
++        values:
++        alias:
++    """
+     alias = alias or get_validation_alias(field)
+     if is_sequence_field(field) and isinstance(values, (ImmutableMultiDict, Headers)):
+         value = values.getlist(alias)
+@@ -777,6 +818,12 @@
+     fields: Sequence[ModelField],
+     received_params: Union[Mapping[str, Any], QueryParams, Headers],
+ ) -> Tuple[Dict[str, Any], List[Any]]:
++    """TODO: docstring
++
++    Args:
++        fields:
++        received_params:
++    """
+     values: Dict[str, Any] = {}
+     errors: List[Dict[str, Any]] = []
+ 
+@@ -903,6 +950,12 @@
+     body_fields: List[ModelField],
+     received_body: FormData,
+ ) -> Dict[str, Any]:
++    """TODO: docstring
++
++    Args:
++        body_fields:
++        received_body:
++    """
+     values = {}
+ 
+     for field in body_fields:
+@@ -951,6 +1004,13 @@
+     received_body: Optional[Union[Dict[str, Any], FormData]],
+     embed_body_fields: bool,
+ ) -> Tuple[Dict[str, Any], List[Dict[str, Any]]]:
++    """TODO: docstring
++
++    Args:
++        body_fields:
++        received_body:
++        embed_body_fields:
++    """
+     values: Dict[str, Any] = {}
+     errors: List[Dict[str, Any]] = []
+     assert body_fields, "request_body_to_args() should be called with fields"
+@@ -1063,5 +1123,10 @@
+ 
+ 
+ def get_validation_alias(field: ModelField) -> str:
++    """TODO: docstring
++
++    Args:
++        field:
++    """
+     va = getattr(field, "validation_alias", None)
+     return va or field.alias
+
+--- a/fastapi/openapi/utils.py
++++ b/fastapi/openapi/utils.py
+@@ -111,6 +111,14 @@
+     ],
+     separate_input_output_schemas: bool = True,
+ ) -> List[Dict[str, Any]]:
++    """TODO: docstring
++
++    Args:
++        dependant:
++        model_name_map:
++        field_mapping:
++        separate_input_output_schemas:
++    """
+     parameters = []
+     flat_dependant = get_flat_dependant(dependant, skip_repeats=True)
+     path_params = _get_flat_fields_from_params(flat_dependant.path_params)
+@@ -267,6 +275,15 @@
+     ],
+     separate_input_output_schemas: bool = True,
+ ) -> Tuple[Dict[str, Any], Dict[str, Any], Dict[str, Any]]:
++    """TODO: docstring
++
++    Args:
++        route:
++        operation_ids:
++        model_name_map:
++        field_mapping:
++        separate_input_output_schemas:
++    """
+     path = {}
+     security_schemes: Dict[str, Any] = {}
+     definitions: Dict[str, Any] = {}
+
+--- a/fastapi/params.py
++++ b/fastapi/params.py
+@@ -73,6 +73,40 @@
+         json_schema_extra: Union[Dict[str, Any], None] = None,
+         **extra: Any,
+     ):
++        """TODO: docstring
++
++        Args:
++            default:
++            default_factory:
++            annotation:
++            alias:
++            alias_priority:
++            validation_alias:
++            serialization_alias:
++            title:
++            description:
++            gt:
++            ge:
++            lt:
++            le:
++            min_length:
++            max_length:
++            pattern:
++            regex:
++            discriminator:
++            strict:
++            multiple_of:
++            allow_inf_nan:
++            max_digits:
++            decimal_places:
++            examples:
++            example:
++            openapi_examples:
++            deprecated:
++            include_in_schema:
++            json_schema_extra:
++            **extra:
++        """
+         if example is not _Unset:
+             warnings.warn(
+                 "`example` has been deprecated, please use `examples` instead",
+@@ -531,6 +565,42 @@
+         json_schema_extra: Union[Dict[str, Any], None] = None,
+         **extra: Any,
+     ):
++        """TODO: docstring
++
++        Args:
++            default:
++            default_factory:
++            annotation:
++            embed:
++            media_type:
++            alias:
++            alias_priority:
++            validation_alias:
++            serialization_alias:
++            title:
++            description:
++            gt:
++            ge:
++            lt:
++            le:
++            min_length:
++            max_length:
++            pattern:
++            regex:
++            discriminator:
++            strict:
++            multiple_of:
++            allow_inf_nan:
++            max_digits:
++            decimal_places:
++            examples:
++            example:
++            openapi_examples:
++            deprecated:
++            include_in_schema:
++            json_schema_extra:
++            **extra:
++        """
+         self.embed = embed
+         self.media_type = media_type
+         if example is not _Unset:
+
+--- a/fastapi/utils.py
++++ b/fastapi/utils.py
+@@ -85,6 +85,20 @@
+     mode: Literal["validation", "serialization"] = "validation",
+     version: Literal["1", "auto"] = "auto",
+ ) -> ModelField:
++    """TODO: docstring
++
++    Args:
++        name:
++        type_:
++        class_validators:
++        default:
++        required:
++        model_config:
++        field_info:
++        alias:
++        mode:
++        version:
++    """
+     class_validators = class_validators or {}
+ 
+     v1_model_config = may_v1.BaseConfig

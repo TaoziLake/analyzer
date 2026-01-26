@@ -1,0 +1,1795 @@
+{
+  "commit": "e5e5dad",
+  "parent": "24e4cb20ab03c20af390fec7303207af2a4a09e8",
+  "repo": "D:\\locbench\\black",
+  "num_seeds": 5,
+  "num_seeds_used": 1,
+  "seed_scope": "code_only",
+  "num_impacted": 84,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 3415,
+    "total_call_relations": 4447
+  },
+  "impacted": [
+    {
+      "qualname": "src.blib2to3.pgen2.tokenize.tokenize",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.blib2to3.pgen2.tokenize",
+        "src.blib2to3.pgen2.driver.Driver.parse_string"
+      ],
+      "callees": [
+        "TOKEN_TYPE_MAP.get",
+        "src.blib2to3.pgen2.tokenize.transform_whitespace",
+        "src.blib2to3.pgen2.tokenize.TokenError",
+        "range",
+        "pytokens.tokenize",
+        "ValueError",
+        "source.split",
+        "type"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.tokenize",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [],
+      "callees": [
+        "open",
+        "dir",
+        "sys.stdin.read",
+        "len",
+        "src.blib2to3.pgen2.tokenize.printtoken",
+        "src.blib2to3.pgen2.tokenize.tokenize"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.driver.Driver.parse_string",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "src.blib2to3.pgen2.driver.Driver.parse_file"
+      ],
+      "callees": [
+        "src.blib2to3.pgen2.driver.Driver.parse_tokens",
+        "src.blib2to3.pgen2.tokenize.tokenize"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "TOKEN_TYPE_MAP.get",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "src.blib2to3.pgen2.tokenize.tokenize"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.tokenize.transform_whitespace",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "src.blib2to3.pgen2.tokenize.tokenize"
+      ],
+      "callees": [
+        "token_str.startswith",
+        "pytokens.Token"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.tokenize.TokenError",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "src.blib2to3.pgen2.tokenize.tokenize"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "range",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "tests.data.cases.preview_simplify_power_operator_hugging",
+        "src.black.linegen._get_last_non_comment_leaf",
+        "tests.data.cases.fmtskip10",
+        "tests.data.cases.comments5",
+        "tests.data.cases.pep_572_py310",
+        "tests.data.line_ranges_formatted.basic",
+        "tests.test_black.TestCaching.test_cache_file_length",
+        "src.blib2to3.pgen2.tokenize.tokenize",
+        "tests.test_black.TestCaching.test_output_locking_when_writeback_diff",
+        "src.blib2to3.pgen2.conv.Converter.parse_graminit_c",
+        "src.black.lines.Line.is_stub_def",
+        "src.black.brackets.get_leaves_inside_matching_brackets",
+        "src.blib2to3.pgen2.literals.test",
+        "src.black.linegen.bracket_split_build_line",
+        "scripts.make_width_table.make_width_table",
+        "src.black.ranges.convert_unchanged_lines",
+        "tests.data.cases.allow_empty_first_line.foo",
+        "tests.data.cases.expression",
+        "src.black.trans.StringMerger._merge_one_string_group",
+        "src.black.lines.Line.is_stub_class",
+        "src.black.linegen._maybe_wrap_cms_in_parens",
+        "tests.data.cases.comments_in_blocks",
+        "src.blib2to3.pytree.WildcardPattern.generate_matches",
+        "tests.data.cases.fmtskip6.A.f",
+        "src.black.trans.StringSplitter._get_illegal_split_indices",
+        "src.black.ranges._get_line_range",
+        "tests.data.cases.torture.A.foo",
+        "tests.data.cases.preview_hug_parens_with_braces_and_square_brackets",
+        "tests.test_format.test_line_ranges_line_by_line",
+        "tests.data.cases.import_line_collapse",
+        "tests.data.cases.pep_572_py39",
+        "tests.data.cases.slices",
+        "tests.data.cases.remove_newline_after_code_block_open",
+        "tests.data.cases.fmtonoff.func_no_args",
+        "src.black.parsing.parse_ast",
+        "tests.data.cases.power_op_spacing",
+        "tests.data.cases.function.func_no_args",
+        "tests.data.cases.fmtonoff5",
+        "tests.data.cases.line_ranges_basic",
+        "tests.data.cases.pattern_matching_generic.get_grammars.test_patma_155",
+        "src.blib2to3.pgen2.pgen.ParserGenerator.simplify_dfa",
+        "tests.data.cases.preview_long_strings__regression",
+        "tests.data.cases.python37.make_arange"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "pytokens.tokenize",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "src.blib2to3.pgen2.tokenize.tokenize"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "ValueError",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "tests.optional.pytest_configure",
+        "src.black.__init__.format_file_in_place",
+        "src.blib2to3.pgen2.literals.escape",
+        "src.blib2to3.pgen2.pgen.ParserGenerator.calcfirst",
+        "gallery.gallery.get_pypi_download_url",
+        "src.black.lines.Line.append_safe",
+        "gallery.gallery.get_archive_manager",
+        "tests.data.cases.preview_long_strings__regression.A.B.foo",
+        "tests.data.cases.cantfit",
+        "tests.data.cases.pep_701",
+        "src.black.ranges.parse_line_ranges",
+        "tests.data.cases.pep_654",
+        "src.blib2to3.pgen2.tokenize.tokenize",
+        "tests.data.cases.pattern_matching_simple",
+        "scripts.diff_shades_gha_helper.config",
+        "tests.data.cases.pep_654_style",
+        "src.black.mode.supports_feature"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "source.split",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "src.blib2to3.pgen2.tokenize.tokenize"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "type",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "src.blib2to3.pytree.type_repr",
+        "src.black.concurrency.schedule_formatting",
+        "tests.data.cases.preview_long_strings__regression.A.foo",
+        "src.blib2to3.pgen2.token",
+        "src.black.linegen.transform_line",
+        "tests.data.cases.type_aliases",
+        "src.blib2to3.pgen2.tokenize.tokenize"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "open",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize",
+      "callers": [
+        "tests.test_black",
+        "scripts.diff_shades_gha_helper.comment_body",
+        "tests.util.read_data_from_file",
+        "tests.data.cases.comments5",
+        "scripts.make_width_table.main",
+        "action.main",
+        "src.blib2to3.pgen2.driver.Driver.parse_file",
+        "src.black.__init__.format_file_in_place",
+        "src.blib2to3.pgen2.conv.Converter.parse_graminit_c",
+        "src.blib2to3.pgen2.conv.Converter.parse_graminit_h",
+        "tests.data.cases.remove_with_brackets",
+        "tests.util.read_jupyter_notebook_from_file",
+        "src.blib2to3.pgen2.grammar.Grammar.load",
+        "docs.conf.make_pypi_svg",
+        "src.black.files._load_toml",
+        "scripts.check_version_in_basics_example",
+        "tests.test_black.BlackTestCase.test_one_empty_line_ff",
+        "src.blib2to3.pgen2.tokenize",
+        "src.blib2to3.pgen2.pgen.ParserGenerator.__init__",
+        "tests.data.cases.remove_newline_after_code_block_open",
+        "scripts.check_pre_commit_rev_in_example",
+        "scripts.diff_shades_gha_helper.comment_details",
+        "scripts.diff_shades_gha_helper.set_output",
+        "tests.data.cases.fmtskip12"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "dir",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize",
+      "callers": [
+        "src.blib2to3.pytree.type_repr",
+        "src.blib2to3.pgen2.tokenize"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "sys.stdin.read",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize",
+      "callers": [
+        "src.black.__init__.main",
+        "src.blib2to3.pgen2.tokenize",
+        "tests.test_tokenize"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "len",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize",
+      "callers": [
+        "src.black.strings.char_width",
+        "scripts.release.SourceFiles.get_next_version",
+        "src.black.nodes.is_yield",
+        "src.black.linegen.generate_trailers_to_omit",
+        "src.black.lines._can_omit_opening_paren",
+        "src.black.__init__.get_features_used",
+        "src.blackd.__init__.parse_python_variant_header",
+        "src.black.linegen.LineGenerator.visit_tname",
+        "tests.test_black.TestCaching.test_cache_file_length",
+        "src.black.trans.BaseStringSplitter.do_match",
+        "src.black.strings.count_chars_in_width",
+        "src.black.handle_ipynb_magics.replace_magics",
+        "src.black.trans.StringMerger._validate_msg",
+        "src.black.trans.iter_fexpr_spans",
+        "src.black.linegen.bracket_split_build_line",
+        "src.black.trans.is_expression_chained",
+        "src.black.lines.EmptyLineTracker._line_is_module_docstring",
+        "src.black.lines.Line.enumerate_with_length",
+        "src.black.trans.is_valid_index_factory.is_valid_index",
+        "src.black.linegen.normalize_invisible_parens",
+        "src.black.ranges._find_lines_mapping_index",
+        "src.blib2to3.pgen2.driver.Driver._partially_consume_prefix",
+        "src.blib2to3.pgen2.literals.escape",
+        "tests.test_black.BlackTestCase.test_code_option_parent_config",
+        "src.black.ranges.parse_line_ranges",
+        "src.blib2to3.pytree.BasePattern.match_seq",
+        "src.black.trans.StringSplitter.do_splitter_match",
+        "src.blib2to3.pgen2.literals.evalString",
+        "src.blib2to3.pgen2.driver.Driver.parse_tokens",
+        "src.blib2to3.pytree.WildcardPattern._bare_name_matches",
+        "src.black.__init__.main",
+        "src.blib2to3.pytree.NegatedPattern.match_seq",
+        "src.black.linegen._first_right_hand_split",
+        "src.blib2to3.pytree.WildcardPattern.__init__",
+        "tests.data.cases.pep_572",
+        "scripts.diff_shades_gha_helper.set_output",
+        "src.black.trans.handle_is_simple_look_up_prev",
+        "src.black.strings.normalize_unicode_escape_sequences.replace",
+        "src.black.trans.StringSplitter._get_break_idx.passes_all_checks",
+        "src.black.linegen.LineGenerator.visit_atom",
+        "tests.data.cases.fmtonoff.spaces",
+        "src.black.trans.StringSplitter.do_transform.more_splits_should_be_made",
+        "src.black.linegen.LineGenerator.line",
+        "action.main",
+        "src.black.linegen._is_atom_multiline",
+        "tests.optional.no",
+        "src.black.handle_ipynb_magics.get_token",
+        "src.black.ranges._calculate_lines_mappings",
+        "src.black.brackets.get_leaves_inside_matching_brackets",
+        "src.black.trans.StringParenWrapper._trailing_comma_tuple_match",
+        "src.blib2to3.pgen2.pgen.ParserGenerator.make_label",
+        "src.black.nodes.is_stub_suite",
+        "src.black.trans.StringSplitter._normalize_f_string",
+        "src.blib2to3.pgen2.driver.ReleaseRange.lock",
+        "src.black.lines.Line.contains_implicit_multiline_string_with_comments",
+        "src.black.trans.StringParenWrapper.do_transform",
+        "tests.test_black.BlackTestCase.test_report_verbose",
+        "src.black.lines.can_omit_invisible_parens",
+        "tests.test_format.test_line_ranges_line_by_line",
+        "src.black.nodes.is_simple_decorator_trailer",
+        "src.black.trans.hug_power_op",
+        "src.blib2to3.pytree.WildcardPattern.match_seq",
+        "src.black.linegen.bracket_split_succeeded_or_raise",
+        "src.black.lines.enumerate_reversed",
+        "src.black.__init__.get_future_imports",
+        "tests.test_black.BlackTestCase.test_code_option_config",
+        "tests.test_black.TestCaching.test_cache_key",
+        "src.black.strings.lines_with_leading_tabs_expanded",
+        "src.black.lines.Line.opens_block",
+        "src.black.trans.StringSplitter.do_transform",
+        "src.black.linegen._get_last_non_comment_leaf",
+        "src.black.strings.assert_is_leaf_string",
+        "tests.util.read_data_from_file",
+        "tests.data.cases.preview_long_strings__regression.A.append",
+        "src.black.trans.StringMerger._merge_one_string_group.make_naked",
+        "src.black.handle_ipynb_magics.mask_cell",
+        "src.black.comments.generate_ignored_nodes",
+        "src.blib2to3.pgen2.conv.Converter.parse_graminit_c",
+        "src.black.lines.can_be_split",
+        "src.blib2to3.pgen2.pgen.ParserGenerator.dump_nfa",
+        "src.black.lines.Line.is_comment",
+        "src.black.linegen.delimiter_split",
+        "src.black.trans.StringParenStripper.do_match",
+        "src.black.trans.StringMerger._merge_one_string_group",
+        "src.black.__init__.reformat_one",
+        "src.blib2to3.pytree.WildcardPattern.generate_matches",
+        "src.blib2to3.pgen2.parse.Parser.addtoken",
+        "src.black.linegen.LineGenerator.visit_STANDALONE_COMMENT",
+        "src.black.nodes.is_empty_tuple",
+        "src.black.nodes.is_one_tuple",
+        "tests.test_black.BlackTestCase.test_report_normal",
+        "src.black.lines.Line.is_fmt_pass_converted",
+        "src.black.nodes.unwrap_singleton_parenthesis",
+        "src.black.nodes.is_simple_exponentiation",
+        "src.blib2to3.pgen2.pgen.DFAState.__eq__",
+        "src.blib2to3.pgen2.driver.TokenProxy.eat",
+        "src.black.strings.fix_multiline_docstring",
+        "src.black.strings.normalize_string_quotes",
+        "tests.data.miscellaneous.string_quotes",
+        "src.black.lines.is_line_short_enough",
+        "src.black.handle_ipynb_magics.create_token",
+        "src.blib2to3.pytree.convert",
+        "src.blib2to3.pytree.WildcardPattern.optimize",
+        "tests.data.cases.comments_in_blocks.get_subtree_proof_nodes",
+        "src.black.comments._should_keep_compound_statement_inline",
+        "src.black.ranges.adjusted_lines",
+        "src.black.trans.BaseStringSplitter._validate",
+        "src.black.trans.BaseStringSplitter._get_max_string_length",
+        "tests.test_black.tracefunc",
+        "tests.data.cases.function.spaces",
+        "src.blib2to3.pgen2.pgen.ParserGenerator.make_grammar",
+        "src.black.files.strip_specifier_set",
+        "src.black.linegen.remove_await_parens",
+        "tests.test_black.BlackTestCase.test_report_quiet",
+        "src.black.nodes.is_stub_body",
+        "src.black.comments.list_comments",
+        "src.black.strings.normalize_string_prefix",
+        "src.black.linegen.LineGenerator.visit_STRING",
+        "src.black.linegen._maybe_wrap_cms_in_parens",
+        "src.black.trans.StringParser.parse",
+        "src.black.linegen.LineGenerator.visit_factor",
+        "src.black.parsing.lib2to3_parse",
+        "src.black.mode.Mode.get_cache_key",
+        "src.black.nodes.fstring_tstring_to_string",
+        "src.black.trans.handle_is_simple_lookup_forward",
+        "src.black.trans.StringParenWrapper._dict_or_lambda_match",
+        "src.black.linegen._prefer_split_rhs_oop_over_rhs",
+        "src.black.lines.Line.append_comment",
+        "src.blib2to3.pytree.WildcardPattern._iterative_matches",
+        "src.blib2to3.pgen2.tokenize",
+        "src.black.lines.Line.is_class_paren_empty",
+        "src.blib2to3.pytree.NodePattern._submatch",
+        "src.black.strings.str_width",
+        "src.blib2to3.pytree.NegatedPattern.generate_matches",
+        "tests.test_trans.test_fexpr_spans.check",
+        "src.blib2to3.pgen2.parse.Recorder.determine_route",
+        "tests.data.cases.pep_646",
+        "src.black.nodes.is_simple_decorator_expression",
+        "src.black.parsing._stringify_ast",
+        "src.black.__init__._contains_asexpr",
+        "tests.test_black.BlackTestCase.test_endmarker",
+        "src.blib2to3.pgen2.pgen.ParserGenerator.simplify_dfa",
+        "src.black.comments._handle_regular_fmt_block"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.tokenize.printtoken",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize",
+      "callers": [
+        "src.blib2to3.pgen2.tokenize"
+      ],
+      "callees": [
+        "print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.driver.Driver.parse_file",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "src.blib2to3.pgen2.driver.Driver.parse_string",
+      "callers": [],
+      "callees": [
+        "open",
+        "src.blib2to3.pgen2.driver.Driver.parse_string",
+        "stream.read"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.driver.Driver.parse_tokens",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.driver.Driver.parse_string",
+      "callers": [
+        "src.blib2to3.pgen2.driver.Driver.parse_string"
+      ],
+      "callees": [
+        "p.setup",
+        "indent_columns.pop",
+        "src.blib2to3.pgen2.driver.Driver._partially_consume_prefix",
+        "src.blib2to3.pgen2.driver.Driver.logger.debug",
+        "value.endswith",
+        "p.addtoken",
+        "src.blib2to3.pgen2.parse.ParseError",
+        "src.blib2to3.pgen2.driver.TokenProxy",
+        "typing.cast",
+        "len",
+        "indent_columns.append",
+        "src.blib2to3.pgen2.parse.Parser"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "token_str.startswith",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.transform_whitespace",
+      "callers": [
+        "src.blib2to3.pgen2.tokenize.transform_whitespace"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "pytokens.Token",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.transform_whitespace",
+      "callers": [
+        "src.blib2to3.pgen2.tokenize.transform_whitespace"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "tests.data.cases.preview_simplify_power_operator_hugging",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "pytest.approx",
+        "super",
+        "hasattr",
+        "lazy",
+        "range",
+        "f",
+        "settings",
+        "np.full",
+        "funcs.f",
+        "np.divide"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen._get_last_non_comment_leaf",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [
+        "src.black.linegen.delimiter_split"
+      ],
+      "callees": [
+        "len",
+        "range"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.fmtskip10",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "range",
+        "print",
+        "foo_dict.setdefault"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.comments5",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "w.write",
+        "do.stuff",
+        "open",
+        "range",
+        "f.read",
+        "main",
+        "print"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.pep_572_py310",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "any",
+        "match.group",
+        "range",
+        "f",
+        "pattern_error.match"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.line_ranges_formatted.basic",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "then_something_else",
+        "range",
+        "handle",
+        "done",
+        "then_something"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_black.TestCaching.test_cache_file_length",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "range",
+        "set",
+        "len",
+        "black.cache.get_cache_file",
+        "black.mode.Mode"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_black.TestCaching.test_output_locking_when_writeback_diff",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "tests.test_black.invokeBlack",
+        "unittest.mock.patch",
+        "cmd.append",
+        "pytest.mark.parametrize",
+        "range",
+        "tests.test_black.cache_dir",
+        "tests.test_black.event_loop",
+        "mgr.assert_called",
+        "src.write_text",
+        "str"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.conv.Converter.parse_graminit_c",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [
+        "src.blib2to3.pgen2.conv.Converter.run"
+      ],
+      "callees": [
+        "open",
+        "states.append",
+        "arcs.append",
+        "len",
+        "print",
+        "map",
+        "mo.group",
+        "next",
+        "state.append",
+        "int",
+        "line.startswith",
+        "enumerate",
+        "labels.append",
+        "list",
+        "eval",
+        "range",
+        "mo.groups",
+        "ord",
+        "re.match"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.Line.is_stub_def",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "blib2to3.pytree.Leaf",
+        "range"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.brackets.get_leaves_inside_matching_brackets",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "ids.add",
+        "enumerate",
+        "id",
+        "next",
+        "bracket_stack.append",
+        "range",
+        "set",
+        "bracket_stack.pop",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.literals.test",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [
+        "src.blib2to3.pgen2.literals"
+      ],
+      "callees": [
+        "repr",
+        "src.blib2to3.pgen2.literals.evalString",
+        "range",
+        "chr",
+        "print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen.bracket_split_build_line",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [
+        "src.black.linegen.left_hand_split",
+        "src.black.linegen._first_right_hand_split"
+      ],
+      "callees": [
+        "id",
+        "blib2to3.pytree.Leaf",
+        "range",
+        "leaves.insert",
+        "set",
+        "len",
+        "original.comments_after",
+        "src.black.linegen.should_split_line",
+        "src.black.linegen._ensure_trailing_comma",
+        "black.lines.Line",
+        "result.append",
+        "black.brackets.get_leaves_inside_matching_brackets"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.make_width_table.make_width_table",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [
+        "scripts.make_width_table.main"
+      ],
+      "callees": [
+        "wcwidth.wcwidth",
+        "range",
+        "chr"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.ranges.convert_unchanged_lines",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "list",
+        "range",
+        "visitor.visit",
+        "set",
+        "src.black.ranges._TopLevelStatementsVisitor",
+        "lines_set.update",
+        "src.black.ranges._convert_unchanged_line_by_line"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.allow_empty_first_line.foo",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "range"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.expression",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "set",
+        "requirements.fit_in_a_single_line",
+        "timedelta",
+        "print",
+        "now",
+        "last_call",
+        "call",
+        "call.me",
+        "y",
+        "threading.current_thread",
+        "authors.łukasz.say_thanks",
+        "x",
+        "dictionary.items",
+        "socket.getaddrinfo",
+        "threading.main_thread",
+        "signal.getsignal",
+        "classmethod",
+        "sync",
+        "range",
+        "session.query",
+        "models.Customer.id.asc"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.trans.StringMerger._merge_one_string_group",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [
+        "src.black.trans.StringMerger._merge_string_group"
+      ],
+      "callees": [
+        "is_valid_index",
+        "prefix_tracker.append",
+        "blib2to3.pytree.Leaf",
+        "custom_splits.append",
+        "re.sub",
+        "S_leaf.value.replace",
+        "src.black.trans.CustomSplit",
+        "atom_node.insert_child",
+        "make_naked",
+        "black.strings.normalize_string_quotes",
+        "range",
+        "black.nodes.replace_child",
+        "src.black.trans.StringMerger.add_custom_splits",
+        "black.strings.get_string_prefix",
+        "bool",
+        "len",
+        "temp_string.find"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.Line.is_stub_class",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "blib2to3.pytree.Leaf",
+        "range"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen._maybe_wrap_cms_in_parens",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [
+        "src.black.linegen.normalize_invisible_parens"
+      ],
+      "callees": [
+        "blib2to3.pytree.Leaf",
+        "child.remove",
+        "blib2to3.pytree.Node",
+        "node.insert_child",
+        "range",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.comments_in_blocks",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "range",
+        "tests.data.cases._parse_and_normalize_offers",
+        "print"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pytree.WildcardPattern.generate_matches",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [
+        "src.blib2to3.pytree.WildcardPattern.match_seq"
+      ],
+      "callees": [
+        "hasattr",
+        "src.blib2to3.pytree.WildcardPattern._bare_name_matches",
+        "min",
+        "range",
+        "io.StringIO",
+        "len",
+        "src.blib2to3.pytree.WildcardPattern._iterative_matches",
+        "src.blib2to3.pytree.WildcardPattern._recursive_matches"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.fmtskip6.A.f",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "range"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.trans.StringSplitter._get_illegal_split_indices",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [
+        "src.black.trans.StringSplitter._get_break_idx"
+      ],
+      "callees": [
+        "src.black.trans.StringSplitter._iter_nameescape_slices",
+        "illegal_indices.update",
+        "range",
+        "set",
+        "src.black.trans.StringSplitter._iter_fexpr_slices"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.ranges._get_line_range",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [
+        "src.black.ranges._convert_unchanged_line_by_line",
+        "src.black.ranges._TopLevelStatementsVisitor.visit_suite",
+        "src.black.ranges._TopLevelStatementsVisitor.visit_simple_stmt"
+      ],
+      "callees": [
+        "black.nodes.first_leaf",
+        "range",
+        "src.black.ranges._leaf_line_end",
+        "set",
+        "isinstance",
+        "black.nodes.last_leaf"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.torture.A.foo",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "bbbbbbbbbbbbbbb.cccccccccc",
+        "range"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.preview_hug_parens_with_braces_and_square_brackets",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "Context",
+        "enumerate",
+        "func",
+        "baaaaaaaaaaaaar",
+        "get_docs_version",
+        "range",
+        "str",
+        "foo",
+        "output.extend",
+        "very_very_very_long_module.VeryVeryVeryVeryLongClassName",
+        "foooooooooooooooooooo"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_format.test_line_ranges_line_by_line",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "tests.util.read_data_with_mode",
+        "pytest.mark.parametrize",
+        "range",
+        "tests.util.assert_format",
+        "tests.util.all_data_cases",
+        "len",
+        "source.splitlines"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.import_line_collapse",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "range",
+        "print",
+        "logging.getLogger"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.pep_572_py39",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "range"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.slices",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "step_fn",
+        "range",
+        "upper_fn"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.remove_newline_after_code_block_open",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "random.randint",
+        "open",
+        "write_file.writelines",
+        "random.uniform",
+        "range",
+        "file.write",
+        "read_file.readlines",
+        "print"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.fmtonoff.func_no_args",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "exec",
+        "range",
+        "print"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.parsing.parse_ast",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "src.black.parsing._parse_single_version",
+        "SyntaxError",
+        "range",
+        "sorted",
+        "str"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.power_op_spacing",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "pytest.approx",
+        "super",
+        "hasattr",
+        "lazy",
+        "range",
+        "f",
+        "settings",
+        "np.full",
+        "funcs.f",
+        "np.divide"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.function.func_no_args",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "exec",
+        "range",
+        "print"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.fmtonoff5",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "will_be_formatted",
+        "setup",
+        "range",
+        "run",
+        "print"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.line_ranges_basic",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "then_something_else",
+        "range",
+        "unformatted",
+        "then_something"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.pattern_matching_generic.get_grammars.test_patma_155",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "range",
+        "tests.data.cases.pattern_matching_generic.get_grammars.assertEqual",
+        "tests.data.cases.pattern_matching_generic.get_grammars.assertIs"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.pgen.ParserGenerator.simplify_dfa",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [
+        "src.blib2to3.pgen2.pgen.ParserGenerator.parse"
+      ],
+      "callees": [
+        "enumerate",
+        "range",
+        "state.unifystate",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.preview_long_strings__regression",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "xxxx.xxxxxx.xxxxxxxxx.xxxxxxxxxxxxxxxxxxxx",
+        "humanize_number",
+        "xxxx",
+        "range",
+        "xxxxxxxxxxxx",
+        "re.compile",
+        "func_call_where_string_arg_has_old_fmt_and_bad_parens",
+        "func_call_where_string_arg_has_method_call_and_bad_parens",
+        "xxx",
+        "func_call",
+        "print",
+        "str"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.python37.make_arange",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "range",
+      "callers": [],
+      "callees": [
+        "range",
+        "wrap"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.optional.pytest_configure",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ValueError",
+      "callers": [],
+      "callees": [
+        "config.addinivalue_line",
+        "set",
+        "getattr",
+        "itertools.chain.from_iterable",
+        "tests.optional.no",
+        "config.getoption",
+        "marker_re.match",
+        "ot_run.update",
+        "ot_markers.add",
+        "ValueError",
+        "a.split",
+        "frozenset",
+        "config.inicfg.get",
+        "log.info",
+        "str",
+        "re.compile",
+        "isinstance",
+        "m.group",
+        "value.strip"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.__init__.format_file_in_place",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ValueError",
+      "callers": [
+        "src.black.__init__.reformat_one"
+      ],
+      "callees": [
+        "src.black.__init__.decode_bytes",
+        "black.output.ipynb_diff",
+        "io.TextIOWrapper",
+        "datetime.datetime.datetime.fromtimestamp",
+        "src.stat",
+        "open",
+        "f.write",
+        "header.decode",
+        "black.output.diff",
+        "ValueError",
+        "f.detach",
+        "dataclasses.replace",
+        "buf.read",
+        "contextlib.nullcontext",
+        "black.output.color_diff",
+        "buf.readline",
+        "src.black.__init__.format_file_contents",
+        "datetime.datetime.datetime.now",
+        "black.files.wrap_stream_for_windows"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.literals.escape",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ValueError",
+      "callers": [],
+      "callees": [
+        "len",
+        "all.startswith",
+        "m.group",
+        "tail.startswith",
+        "ValueError",
+        "int",
+        "chr",
+        "simple_escapes.get"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.pgen.ParserGenerator.calcfirst",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ValueError",
+      "callers": [
+        "src.blib2to3.pgen2.pgen.ParserGenerator.addfirstsets",
+        "src.blib2to3.pgen2.pgen.ParserGenerator.calcfirst"
+      ],
+      "callees": [
+        "totalset.update",
+        "ValueError",
+        "overlapcheck.items",
+        "src.blib2to3.pgen2.pgen.ParserGenerator.calcfirst"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "gallery.gallery.get_pypi_download_url",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ValueError",
+      "callers": [
+        "gallery.gallery.get_package_source"
+      ],
+      "callees": [
+        "urllib.request.urlopen",
+        "ValueError",
+        "typing.cast",
+        "json.load"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.Line.append_safe",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ValueError",
+      "callers": [],
+      "callees": [
+        "src.black.lines.Line.bracket_tracker.any_open_for_or_lambda",
+        "ValueError",
+        "src.black.lines.Line.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "gallery.gallery.get_archive_manager",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ValueError",
+      "callers": [
+        "gallery.gallery.download_and_extract"
+      ],
+      "callees": [
+        "zipfile.is_zipfile",
+        "tarfile.open",
+        "tarfile.is_tarfile",
+        "ValueError",
+        "zipfile.ZipFile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.preview_long_strings__regression.A.B.foo",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ValueError",
+      "callers": [],
+      "callees": [
+        "xxxxx_xxxx",
+        "hasattr",
+        "get_docs_version",
+        "ValueError",
+        "bar",
+        "STError"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.cantfit",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ValueError",
+      "callers": [],
+      "callees": [
+        "ValueError",
+        "function",
+        "but_the_function_name_is_now_ridiculously_long_and_it_is_still_super_annoying",
+        "err.format"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.pep_701",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ValueError",
+      "callers": [],
+      "callees": [
+        "datetime.datetime.now",
+        "ValueError",
+        "foo",
+        "tests.data.cases.writer._transport.get_extra_info",
+        "log",
+        "print"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.ranges.parse_line_ranges",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ValueError",
+      "callers": [],
+      "callees": [
+        "lines.append",
+        "lines_str.split",
+        "ValueError",
+        "int",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.pep_654",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ValueError",
+      "callers": [],
+      "callees": [
+        "SyntaxError",
+        "TypeError",
+        "trio.open_nursery",
+        "OSError",
+        "FalsyEG",
+        "ValueError",
+        "nursery.start_soon"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.pattern_matching_simple",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ValueError",
+      "callers": [],
+      "callees": [
+        "event.get",
+        "game.quit",
+        "character.get",
+        "game.go_north",
+        "quit_game",
+        "command.split",
+        "character.drop",
+        "ValueError",
+        "current_room.describe",
+        "handle_click_at",
+        "current_room.neighbor",
+        "print"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.diff_shades_gha_helper.config",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ValueError",
+      "callers": [],
+      "callees": [
+        "scripts.diff_shades_gha_helper.get_latest_revision",
+        "scripts.diff_shades_gha_helper.get_pypi_version",
+        "os.getenv",
+        "jobs.insert",
+        "platform.python_version",
+        "scripts.diff_shades_gha_helper.get_pr_branches",
+        "pprint.pprint",
+        "json.dumps",
+        "platform.system",
+        "ValueError",
+        "scripts.diff_shades_gha_helper.set_output",
+        "main.command",
+        "str"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.pep_654_style",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ValueError",
+      "callers": [],
+      "callees": [
+        "SyntaxError",
+        "TypeError",
+        "trio.open_nursery",
+        "OSError",
+        "FalsyEG",
+        "ValueError",
+        "nursery.start_soon"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.mode.supports_feature",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ValueError",
+      "callers": [],
+      "callees": [
+        "all",
+        "ValueError"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pytree.type_repr",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "type",
+      "callers": [
+        "src.blib2to3.pytree.BasePattern.__repr__",
+        "src.blib2to3.pytree.Node.__repr__"
+      ],
+      "callees": [
+        "_type_reprs.setdefault",
+        "hasattr",
+        "src.blib2to3.pygram.initialize",
+        "getattr",
+        "dir",
+        "type"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.concurrency.schedule_formatting",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "type",
+      "callers": [
+        "src.black.concurrency.reformat_many"
+      ],
+      "callees": [
+        "asyncio.wait",
+        "task.cancelled",
+        "asyncio.ensure_future",
+        "sources_to_cache.append",
+        "report.failed",
+        "task.result",
+        "tasks.keys",
+        "multiprocessing.Manager",
+        "loop.add_signal_handler",
+        "sorted",
+        "type",
+        "cancelled.append",
+        "task.exception",
+        "report.done",
+        "manager.shutdown",
+        "traceback.print_exception",
+        "manager.Lock",
+        "cache.write",
+        "str",
+        "black.cache.Cache.read",
+        "loop.run_in_executor",
+        "asyncio.gather",
+        "tasks.pop",
+        "cache.filtered_cached"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.preview_long_strings__regression.A.foo",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "type",
+      "callers": [],
+      "callees": [
+        "os.system",
+        "XXXXXXXXXXXX.append",
+        "some_func_call",
+        "type",
+        "xxxxx_xxxxxxxxxxxx"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.token",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "type",
+      "callers": [],
+      "callees": [
+        "globals",
+        "list",
+        "type"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen.transform_line",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "type",
+      "callers": [
+        "src.black.linegen.run_transformer"
+      ],
+      "callees": [
+        "line.contains_standalone_comments",
+        "black.lines.line_to_string",
+        "src.black.linegen.run_transformer",
+        "line.contains_unsplittable_type_ignore",
+        "black.trans.StringParenWrapper",
+        "black.trans.StringSplitter",
+        "line.contains_uncollapsable_type_comments",
+        "black.lines.is_line_short_enough",
+        "line.contains_implicit_multiline_string_with_comments",
+        "transformers.append",
+        "src.black.linegen._hugging_power_ops_line_to_string",
+        "src.black.linegen.should_split_funcdef_with_rhs",
+        "black.trans.StringMerger",
+        "black.trans.StringParenStripper",
+        "type"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.type_aliases",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "type",
+      "callers": [],
+      "callees": [
+        "type",
+        "print"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-26T20:09:11"
+}

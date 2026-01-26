@@ -1,0 +1,446 @@
+{
+  "commit": "99dbf30",
+  "parent": "c0b92f3888a004b95e4626d8007a4b259b8f444f",
+  "repo": "D:\\locbench\\black",
+  "num_seeds": 3,
+  "num_seeds_used": 3,
+  "seed_scope": "code_only",
+  "num_impacted": 27,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 3415,
+    "total_call_relations": 4447
+  },
+  "impacted": [
+    {
+      "qualname": "src.blackd.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "ImportError",
+        "asyncio.Event",
+        "src.blackd.__init__.patched_main"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blackd.__init__.executor",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.blackd.__init__.make_app"
+      ],
+      "callees": [
+        "concurrent.futures.ProcessPoolExecutor"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blackd.__init__.make_app",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.blackd.__init__.main"
+      ],
+      "callees": [
+        "aiohttp.web.Application",
+        "src.blackd.middlewares.cors",
+        "aiohttp.web.post",
+        "src.blackd.__init__.executor",
+        "functools.partial",
+        "app.add_routes"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "ImportError",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__",
+      "callers": [
+        "src.blackd.__init__"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "asyncio.Event",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__",
+      "callers": [
+        "src.blackd.__init__"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "src.blackd.__init__.patched_main",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__",
+      "callers": [
+        "src.blackd.__init__"
+      ],
+      "callees": [
+        "black.concurrency.maybe_install_uvloop",
+        "src.blackd.__init__.main",
+        "multiprocessing.freeze_support"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "concurrent.futures.ProcessPoolExecutor",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__.executor",
+      "callers": [
+        "src.black.concurrency.reformat_many",
+        "src.blackd.__init__.executor"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "src.blackd.__init__.main",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.blackd.__init__.make_app",
+      "callers": [
+        "src.blackd.__init__.patched_main"
+      ],
+      "callees": [
+        "click.version_option",
+        "aiohttp.web.run_app",
+        "black.out",
+        "click.command",
+        "click.option",
+        "src.blackd.__init__.make_app",
+        "logging.basicConfig"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "aiohttp.web.Application",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__.make_app",
+      "callers": [
+        "src.blackd.__init__.make_app"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "src.blackd.middlewares.cors",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__.make_app",
+      "callers": [
+        "src.blackd.__init__.make_app"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "aiohttp.web.post",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__.make_app",
+      "callers": [
+        "src.blackd.__init__.make_app"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "functools.partial",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__.make_app",
+      "callers": [
+        "src.blackd.__init__.handle",
+        "gallery.gallery.download_and_extract_top_packages",
+        "gallery.gallery",
+        "tests.util",
+        "src.blackd.__init__.make_app",
+        "src.black.linegen.LineGenerator.__post_init__"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "app.add_routes",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__.make_app",
+      "callers": [
+        "src.blackd.__init__.make_app"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "black.concurrency.maybe_install_uvloop",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__.patched_main",
+      "callers": [
+        "src.blackd.__init__.patched_main"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "multiprocessing.freeze_support",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__.patched_main",
+      "callers": [
+        "src.black.__init__.patched_main",
+        "src.blackd.__init__.patched_main"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "src.black.concurrency.reformat_many",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "concurrent.futures.ProcessPoolExecutor",
+      "callers": [],
+      "callees": [
+        "concurrent.futures.ProcessPoolExecutor",
+        "executor.shutdown",
+        "loop.run_until_complete",
+        "getattr",
+        "int",
+        "os.environ.get",
+        "asyncio.set_event_loop",
+        "os.cpu_count",
+        "src.black.concurrency.schedule_formatting",
+        "src.black.concurrency.maybe_install_uvloop",
+        "asyncio.new_event_loop",
+        "concurrent.futures.ThreadPoolExecutor",
+        "src.black.concurrency.shutdown",
+        "mypy_extensions.mypyc_attr",
+        "min"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "click.version_option",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__.main",
+      "callers": [
+        "src.blackd.__init__.main",
+        "src.black.__init__.main"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "aiohttp.web.run_app",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__.main",
+      "callers": [
+        "src.blackd.__init__.main"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "black.out",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__.main",
+      "callers": [
+        "src.blackd.__init__.main"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "click.command",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__.main",
+      "callers": [
+        "src.blackd.__init__.main",
+        "src.black.__init__.main",
+        "scripts.generate_schema.main"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "click.option",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__.main",
+      "callers": [
+        "src.blackd.__init__.main",
+        "src.black.__init__.main",
+        "scripts.generate_schema.main"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "logging.basicConfig",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blackd.__init__.main",
+      "callers": [
+        "src.blib2to3.pgen2.driver.main",
+        "scripts.release._handle_debug",
+        "src.blackd.__init__.main"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "src.blackd.__init__.handle",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "functools.partial",
+      "callers": [],
+      "callees": [
+        "req_str.find",
+        "src.blackd.__init__.parse_mode",
+        "str",
+        "bool",
+        "req_bytes.decode",
+        "datetime.datetime.datetime.now",
+        "logging.exception",
+        "functools.partial",
+        "request.content.read",
+        "aiohttp.web.Response",
+        "request.headers.get",
+        "loop.run_in_executor",
+        "asyncio.get_event_loop"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "gallery.gallery.download_and_extract_top_packages",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "functools.partial",
+      "callers": [
+        "gallery.gallery.init_repos"
+      ],
+      "callees": [
+        "executor.map",
+        "functools.partial",
+        "concurrent.futures.ThreadPoolExecutor",
+        "gallery.gallery.get_top_packages"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "gallery.gallery",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "functools.partial",
+      "callers": [],
+      "callees": [
+        "slice",
+        "gallery.gallery.main",
+        "functools.partial",
+        "tempfile.gettempdir"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.util",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "functools.partial",
+      "callers": [],
+      "callees": [
+        "dataclasses.field",
+        "functools.partial",
+        "black.Mode",
+        "pathlib.Path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen.LineGenerator.__post_init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "functools.partial",
+      "callers": [
+        "src.black.linegen.LineGenerator.__init__"
+      ],
+      "callees": [
+        "black.lines.Line",
+        "functools.partial",
+        "set"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-26T20:14:23"
+}

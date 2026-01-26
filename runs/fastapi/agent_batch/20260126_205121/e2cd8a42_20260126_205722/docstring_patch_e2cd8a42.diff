@@ -1,0 +1,725 @@
+--- a/docs_src/body/tutorial002_py310.py
++++ b/docs_src/body/tutorial002_py310.py
+@@ -14,6 +14,11 @@
+ 
+ @app.post("/items/")
+ async def create_item(item: Item):
++    """TODO: docstring
++
++    Args:
++        item:
++    """
+     item_dict = item.model_dump()
+     if item.tax is not None:
+         price_with_tax = item.price + item.tax
+
+--- a/docs_src/body/tutorial002_py39.py
++++ b/docs_src/body/tutorial002_py39.py
+@@ -16,6 +16,11 @@
+ 
+ @app.post("/items/")
+ async def create_item(item: Item):
++    """TODO: docstring
++
++    Args:
++        item:
++    """
+     item_dict = item.model_dump()
+     if item.tax is not None:
+         price_with_tax = item.price + item.tax
+
+--- a/docs_src/body/tutorial003_py310.py
++++ b/docs_src/body/tutorial003_py310.py
+@@ -14,4 +14,10 @@
+ 
+ @app.put("/items/{item_id}")
+ async def update_item(item_id: int, item: Item):
++    """TODO: docstring
++
++    Args:
++        item_id:
++        item:
++    """
+     return {"item_id": item_id, **item.model_dump()}
+
+--- a/docs_src/body/tutorial003_py39.py
++++ b/docs_src/body/tutorial003_py39.py
+@@ -16,4 +16,10 @@
+ 
+ @app.put("/items/{item_id}")
+ async def update_item(item_id: int, item: Item):
++    """TODO: docstring
++
++    Args:
++        item_id:
++        item:
++    """
+     return {"item_id": item_id, **item.model_dump()}
+
+--- a/docs_src/body/tutorial004_py310.py
++++ b/docs_src/body/tutorial004_py310.py
+@@ -14,6 +14,13 @@
+ 
+ @app.put("/items/{item_id}")
+ async def update_item(item_id: int, item: Item, q: str | None = None):
++    """TODO: docstring
++
++    Args:
++        item_id:
++        item:
++        q:
++    """
+     result = {"item_id": item_id, **item.model_dump()}
+     if q:
+         result.update({"q": q})
+
+--- a/docs_src/body/tutorial004_py39.py
++++ b/docs_src/body/tutorial004_py39.py
+@@ -16,6 +16,13 @@
+ 
+ @app.put("/items/{item_id}")
+ async def update_item(item_id: int, item: Item, q: Union[str, None] = None):
++    """TODO: docstring
++
++    Args:
++        item_id:
++        item:
++        q:
++    """
+     result = {"item_id": item_id, **item.model_dump()}
+     if q:
+         result.update({"q": q})
+
+--- a/docs_src/body_updates/tutorial002_py310.py
++++ b/docs_src/body_updates/tutorial002_py310.py
+@@ -27,6 +27,12 @@
+ 
+ @app.patch("/items/{item_id}", response_model=Item)
+ async def update_item(item_id: str, item: Item):
++    """TODO: docstring
++
++    Args:
++        item_id:
++        item:
++    """
+     stored_item_data = items[item_id]
+     stored_item_model = Item(**stored_item_data)
+     update_data = item.model_dump(exclude_unset=True)
+
+--- a/docs_src/body_updates/tutorial002_py39.py
++++ b/docs_src/body_updates/tutorial002_py39.py
+@@ -29,6 +29,12 @@
+ 
+ @app.patch("/items/{item_id}", response_model=Item)
+ async def update_item(item_id: str, item: Item):
++    """TODO: docstring
++
++    Args:
++        item_id:
++        item:
++    """
+     stored_item_data = items[item_id]
+     stored_item_model = Item(**stored_item_data)
+     update_data = item.model_dump(exclude_unset=True)
+
+--- a/docs_src/extra_models/tutorial001_py310.py
++++ b/docs_src/extra_models/tutorial001_py310.py
+@@ -25,10 +25,20 @@
+ 
+ 
+ def fake_password_hasher(raw_password: str):
++    """TODO: docstring
++
++    Args:
++        raw_password:
++    """
+     return "supersecret" + raw_password
+ 
+ 
+ def fake_save_user(user_in: UserIn):
++    """TODO: docstring
++
++    Args:
++        user_in:
++    """
+     hashed_password = fake_password_hasher(user_in.password)
+     user_in_db = UserInDB(**user_in.model_dump(), hashed_password=hashed_password)
+     print("User saved! ..not really")
+@@ -37,5 +47,10 @@
+ 
+ @app.post("/user/", response_model=UserOut)
+ async def create_user(user_in: UserIn):
++    """TODO: docstring
++
++    Args:
++        user_in:
++    """
+     user_saved = fake_save_user(user_in)
+     return user_saved
+
+--- a/docs_src/extra_models/tutorial001_py39.py
++++ b/docs_src/extra_models/tutorial001_py39.py
+@@ -27,10 +27,20 @@
+ 
+ 
+ def fake_password_hasher(raw_password: str):
++    """TODO: docstring
++
++    Args:
++        raw_password:
++    """
+     return "supersecret" + raw_password
+ 
+ 
+ def fake_save_user(user_in: UserIn):
++    """TODO: docstring
++
++    Args:
++        user_in:
++    """
+     hashed_password = fake_password_hasher(user_in.password)
+     user_in_db = UserInDB(**user_in.model_dump(), hashed_password=hashed_password)
+     print("User saved! ..not really")
+@@ -39,5 +49,10 @@
+ 
+ @app.post("/user/", response_model=UserOut)
+ async def create_user(user_in: UserIn):
++    """TODO: docstring
++
++    Args:
++        user_in:
++    """
+     user_saved = fake_save_user(user_in)
+     return user_saved
+
+--- a/docs_src/extra_models/tutorial002_py310.py
++++ b/docs_src/extra_models/tutorial002_py310.py
+@@ -23,10 +23,20 @@
+ 
+ 
+ def fake_password_hasher(raw_password: str):
++    """TODO: docstring
++
++    Args:
++        raw_password:
++    """
+     return "supersecret" + raw_password
+ 
+ 
+ def fake_save_user(user_in: UserIn):
++    """TODO: docstring
++
++    Args:
++        user_in:
++    """
+     hashed_password = fake_password_hasher(user_in.password)
+     user_in_db = UserInDB(**user_in.model_dump(), hashed_password=hashed_password)
+     print("User saved! ..not really")
+@@ -35,5 +45,10 @@
+ 
+ @app.post("/user/", response_model=UserOut)
+ async def create_user(user_in: UserIn):
++    """TODO: docstring
++
++    Args:
++        user_in:
++    """
+     user_saved = fake_save_user(user_in)
+     return user_saved
+
+--- a/docs_src/extra_models/tutorial002_py39.py
++++ b/docs_src/extra_models/tutorial002_py39.py
+@@ -25,10 +25,20 @@
+ 
+ 
+ def fake_password_hasher(raw_password: str):
++    """TODO: docstring
++
++    Args:
++        raw_password:
++    """
+     return "supersecret" + raw_password
+ 
+ 
+ def fake_save_user(user_in: UserIn):
++    """TODO: docstring
++
++    Args:
++        user_in:
++    """
+     hashed_password = fake_password_hasher(user_in.password)
+     user_in_db = UserInDB(**user_in.model_dump(), hashed_password=hashed_password)
+     print("User saved! ..not really")
+@@ -37,5 +47,10 @@
+ 
+ @app.post("/user/", response_model=UserOut)
+ async def create_user(user_in: UserIn):
++    """TODO: docstring
++
++    Args:
++        user_in:
++    """
+     user_saved = fake_save_user(user_in)
+     return user_saved
+
+--- a/fastapi/dependencies/utils.py
++++ b/fastapi/dependencies/utils.py
+@@ -89,6 +89,7 @@
+ 
+ 
+ def ensure_multipart_is_installed() -> None:
++    """TODO: docstring"""
+     try:
+         from python_multipart import __version__
+ 
+@@ -264,6 +265,17 @@
+     use_cache: bool = True,
+     scope: Union[Literal["function", "request"], None] = None,
+ ) -> Dependant:
++    """TODO: docstring
++
++    Args:
++        path:
++        call:
++        name:
++        own_oauth_scopes:
++        parent_oauth_scopes:
++        use_cache:
++        scope:
++    """
+     dependant = Dependant(
+         call=call,
+         name=name,
+@@ -369,6 +381,14 @@
+     value: Any,
+     is_path_param: bool,
+ ) -> ParamDetails:
++    """TODO: docstring
++
++    Args:
++        param_name:
++        annotation:
++        value:
++        is_path_param:
++    """
+     field_info = None
+     depends = None
+     type_annotation: Any = Any
+
+--- a/fastapi/params.py
++++ b/fastapi/params.py
+@@ -72,6 +72,40 @@
+         json_schema_extra: Union[dict[str, Any], None] = None,
+         **extra: Any,
+     ):
++        """TODO: docstring
++
++        Args:
++            default:
++            default_factory:
++            annotation:
++            alias:
++            alias_priority:
++            validation_alias:
++            serialization_alias:
++            title:
++            description:
++            gt:
++            ge:
++            lt:
++            le:
++            min_length:
++            max_length:
++            pattern:
++            regex:
++            discriminator:
++            strict:
++            multiple_of:
++            allow_inf_nan:
++            max_digits:
++            decimal_places:
++            examples:
++            example:
++            openapi_examples:
++            deprecated:
++            include_in_schema:
++            json_schema_extra:
++            **extra:
++        """
+         if example is not _Unset:
+             warnings.warn(
+                 "`example` has been deprecated, please use `examples` instead",
+@@ -525,6 +559,42 @@
+         json_schema_extra: Union[dict[str, Any], None] = None,
+         **extra: Any,
+     ):
++        """TODO: docstring
++
++        Args:
++            default:
++            default_factory:
++            annotation:
++            embed:
++            media_type:
++            alias:
++            alias_priority:
++            validation_alias:
++            serialization_alias:
++            title:
++            description:
++            gt:
++            ge:
++            lt:
++            le:
++            min_length:
++            max_length:
++            pattern:
++            regex:
++            discriminator:
++            strict:
++            multiple_of:
++            allow_inf_nan:
++            max_digits:
++            decimal_places:
++            examples:
++            example:
++            openapi_examples:
++            deprecated:
++            include_in_schema:
++            json_schema_extra:
++            **extra:
++        """
+         self.embed = embed
+         self.media_type = media_type
+         if example is not _Unset:
+
+--- a/fastapi/utils.py
++++ b/fastapi/utils.py
+@@ -82,6 +82,20 @@
+     mode: Literal["validation", "serialization"] = "validation",
+     version: Literal["1", "auto"] = "auto",
+ ) -> ModelField:
++    """TODO: docstring
++
++    Args:
++        name:
++        type_:
++        class_validators:
++        default:
++        required:
++        model_config:
++        field_info:
++        alias:
++        mode:
++        version:
++    """
+     class_validators = class_validators or {}
+ 
+     v1_model_config = may_v1.BaseConfig
+@@ -138,6 +152,12 @@
+     *,
+     cloned_types: Optional[MutableMapping[type[BaseModel], type[BaseModel]]] = None,
+ ) -> ModelField:
++    """TODO: docstring
++
++    Args:
++        field:
++        cloned_types:
++    """
+     if isinstance(field, v2.ModelField):
+         return field
+ 
+
+--- a/fastapi/openapi/utils.py
++++ b/fastapi/openapi/utils.py
+@@ -80,6 +80,11 @@
+ def get_openapi_security_definitions(
+     flat_dependant: Dependant,
+ ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
++    """TODO: docstring
++
++    Args:
++        flat_dependant:
++    """
+     security_definitions = {}
+     # Use a dict to merge scopes for same security scheme
+     operation_security_dict: dict[str, list[str]] = {}
+@@ -112,6 +117,14 @@
+     ],
+     separate_input_output_schemas: bool = True,
+ ) -> list[dict[str, Any]]:
++    """TODO: docstring
++
++    Args:
++        dependant:
++        model_name_map:
++        field_mapping:
++        separate_input_output_schemas:
++    """
+     parameters = []
+     flat_dependant = get_flat_dependant(dependant, skip_repeats=True)
+     path_params = _get_flat_fields_from_params(flat_dependant.path_params)
+@@ -185,6 +198,14 @@
+     ],
+     separate_input_output_schemas: bool = True,
+ ) -> Optional[dict[str, Any]]:
++    """TODO: docstring
++
++    Args:
++        body_field:
++        model_name_map:
++        field_mapping:
++        separate_input_output_schemas:
++    """
+     if not body_field:
+         return None
+     assert _is_model_field(body_field)
+@@ -492,6 +513,24 @@
+     separate_input_output_schemas: bool = True,
+     external_docs: Optional[dict[str, Any]] = None,
+ ) -> dict[str, Any]:
++    """TODO: docstring
++
++    Args:
++        title:
++        version:
++        openapi_version:
++        summary:
++        description:
++        routes:
++        webhooks:
++        tags:
++        servers:
++        terms_of_service:
++        contact:
++        license_info:
++        separate_input_output_schemas:
++        external_docs:
++    """
+     info: dict[str, Any] = {"title": title, "version": version}
+     if summary:
+         info["summary"] = summary
+
+--- a/fastapi/routing.py
++++ b/fastapi/routing.py
+@@ -247,6 +247,20 @@
+     is_coroutine: bool = True,
+     endpoint_ctx: Optional[EndpointContext] = None,
+ ) -> Any:
++    """TODO: docstring
++
++    Args:
++        field:
++        response_content:
++        include:
++        exclude:
++        by_alias:
++        exclude_unset:
++        exclude_defaults:
++        exclude_none:
++        is_coroutine:
++        endpoint_ctx:
++    """
+     if field:
+         errors = []
+         if not hasattr(field, "serialize"):
+@@ -586,6 +600,36 @@
+             Callable[["APIRoute"], str], DefaultPlaceholder
+         ] = Default(generate_unique_id),
+     ) -> None:
++        """TODO: docstring
++
++        Args:
++            path:
++            endpoint:
++            response_model:
++            status_code:
++            tags:
++            dependencies:
++            summary:
++            description:
++            response_description:
++            responses:
++            deprecated:
++            name:
++            methods:
++            operation_id:
++            response_model_include:
++            response_model_exclude:
++            response_model_by_alias:
++            response_model_exclude_unset:
++            response_model_exclude_defaults:
++            response_model_exclude_none:
++            include_in_schema:
++            response_class:
++            dependency_overrides_provider:
++            callbacks:
++            openapi_extra:
++            generate_unique_id_function:
++        """
+         self.path = path
+         self.endpoint = endpoint
+         if isinstance(response_model, DefaultPlaceholder):
+
+--- a/docs_src/encoder/tutorial001_py310.py
++++ b/docs_src/encoder/tutorial001_py310.py
+@@ -18,5 +18,11 @@
+ 
+ @app.put("/items/{id}")
+ def update_item(id: str, item: Item):
++    """TODO: docstring
++
++    Args:
++        id:
++        item:
++    """
+     json_compatible_item_data = jsonable_encoder(item)
+     fake_db[id] = json_compatible_item_data
+
+--- a/fastapi/exception_handlers.py
++++ b/fastapi/exception_handlers.py
+@@ -20,6 +20,12 @@
+ async def request_validation_exception_handler(
+     request: Request, exc: RequestValidationError
+ ) -> JSONResponse:
++    """TODO: docstring
++
++    Args:
++        request:
++        exc:
++    """
+     return JSONResponse(
+         status_code=422,
+         content={"detail": jsonable_encoder(exc.errors())},
+@@ -29,6 +35,12 @@
+ async def websocket_request_validation_exception_handler(
+     websocket: WebSocket, exc: WebSocketRequestValidationError
+ ) -> None:
++    """TODO: docstring
++
++    Args:
++        websocket:
++        exc:
++    """
+     await websocket.close(
+         code=WS_1008_POLICY_VIOLATION, reason=jsonable_encoder(exc.errors())
+     )
+
+--- a/docs_src/body_updates/tutorial001_py310.py
++++ b/docs_src/body_updates/tutorial001_py310.py
+@@ -27,6 +27,12 @@
+ 
+ @app.put("/items/{item_id}", response_model=Item)
+ async def update_item(item_id: str, item: Item):
++    """TODO: docstring
++
++    Args:
++        item_id:
++        item:
++    """
+     update_item_encoded = jsonable_encoder(item)
+     items[item_id] = update_item_encoded
+     return update_item_encoded
+
+--- a/docs_src/response_directly/tutorial001_py310.py
++++ b/docs_src/response_directly/tutorial001_py310.py
+@@ -17,5 +17,11 @@
+ 
+ @app.put("/items/{id}")
+ def update_item(id: str, item: Item):
++    """TODO: docstring
++
++    Args:
++        id:
++        item:
++    """
+     json_compatible_item_data = jsonable_encoder(item)
+     return JSONResponse(content=json_compatible_item_data)
+
+--- a/docs_src/body_updates/tutorial001_py39.py
++++ b/docs_src/body_updates/tutorial001_py39.py
+@@ -29,6 +29,12 @@
+ 
+ @app.put("/items/{item_id}", response_model=Item)
+ async def update_item(item_id: str, item: Item):
++    """TODO: docstring
++
++    Args:
++        item_id:
++        item:
++    """
+     update_item_encoded = jsonable_encoder(item)
+     items[item_id] = update_item_encoded
+     return update_item_encoded
+
+--- a/docs_src/response_directly/tutorial001_py39.py
++++ b/docs_src/response_directly/tutorial001_py39.py
+@@ -18,5 +18,11 @@
+ 
+ @app.put("/items/{id}")
+ def update_item(id: str, item: Item):
++    """TODO: docstring
++
++    Args:
++        id:
++        item:
++    """
+     json_compatible_item_data = jsonable_encoder(item)
+     return JSONResponse(content=json_compatible_item_data)
+
+--- a/docs_src/encoder/tutorial001_py39.py
++++ b/docs_src/encoder/tutorial001_py39.py
+@@ -19,5 +19,11 @@
+ 
+ @app.put("/items/{id}")
+ def update_item(id: str, item: Item):
++    """TODO: docstring
++
++    Args:
++        id:
++        item:
++    """
+     json_compatible_item_data = jsonable_encoder(item)
+     fake_db[id] = json_compatible_item_data
+
+--- a/docs_src/handling_errors/tutorial005_py39.py
++++ b/docs_src/handling_errors/tutorial005_py39.py
+@@ -9,6 +9,12 @@
+ 
+ @app.exception_handler(RequestValidationError)
+ async def validation_exception_handler(request: Request, exc: RequestValidationError):
++    """TODO: docstring
++
++    Args:
++        request:
++        exc:
++    """
+     return JSONResponse(
+         status_code=422,
+         content=jsonable_encoder({"detail": exc.errors(), "body": exc.body}),
+
+--- a/docs_src/pydantic_v1_in_v2/tutorial004_an_py39.py
++++ b/docs_src/pydantic_v1_in_v2/tutorial004_an_py39.py
+@@ -16,4 +16,9 @@
+ 
+ @app.post("/items/")
+ async def create_item(item: Annotated[Item, Body(embed=True)]) -> Item:
++    """TODO: docstring
++
++    Args:
++        item:
++    """
+     return item
+
+--- a/docs_src/pydantic_v1_in_v2/tutorial004_an_py310.py
++++ b/docs_src/pydantic_v1_in_v2/tutorial004_an_py310.py
+@@ -16,4 +16,9 @@
+ 
+ @app.post("/items/")
+ async def create_item(item: Annotated[Item, Body(embed=True)]) -> Item:
++    """TODO: docstring
++
++    Args:
++        item:
++    """
+     return item

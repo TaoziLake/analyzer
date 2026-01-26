@@ -1,0 +1,14 @@
+--- a/src/blackd/client.py
++++ b/src/blackd/client.py
+@@ -69,6 +69,11 @@
+             self.headers.update(headers)
+ 
+     async def format_code(self, unformatted_code: str) -> str:
++        """TODO: docstring
++
++        Args:
++            unformatted_code:
++        """
+         async with aiohttp.ClientSession() as session:
+             async with session.post(
+                 self.url, headers=self.headers, data=unformatted_code.encode("utf-8")

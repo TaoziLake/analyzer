@@ -1,0 +1,44 @@
+--- a/unidiff/patch.py
++++ b/unidiff/patch.py
+@@ -253,6 +253,11 @@
+     """A list of PatchedFiles."""
+ 
+     def __init__(self, f):
++        """TODO: docstring
++
++        Args:
++            f:
++        """
+         super(PatchSet, self).__init__()
+         self._parse(f)
+ 
+@@ -260,6 +265,11 @@
+         return ''.join([str(e) for e in self])
+ 
+     def _parse(self, diff):
++        """TODO: docstring
++
++        Args:
++            diff:
++        """
+         current_file = None
+ 
+         for line in diff:
+@@ -300,14 +310,17 @@
+ 
+     @property
+     def added_files(self):
++        """TODO: docstring"""
+         return [f for f in self if f.is_added_file]
+ 
+     @property
+     def removed_files(self):
++        """TODO: docstring"""
+         return [f for f in self if f.is_removed_file]
+ 
+     @property
+     def modified_files(self):
++        """TODO: docstring"""
+         return [f for f in self if f.is_modified_file]
+ 
+     def as_unified_diff(self):

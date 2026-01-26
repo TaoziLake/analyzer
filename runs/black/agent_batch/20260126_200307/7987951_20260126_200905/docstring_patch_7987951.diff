@@ -1,0 +1,197 @@
+--- a/scripts/migrate-black.py
++++ b/scripts/migrate-black.py
+@@ -9,10 +9,22 @@
+ 
+ 
+ def git(*args: str) -> str:
++    """TODO: docstring
++
++    Args:
++        *args:
++    """
+     return check_output(["git", *args]).decode("utf8").strip()
+ 
+ 
+ def blackify(base_branch: str, black_command: str, logger: logging.Logger) -> int:
++    """TODO: docstring
++
++    Args:
++        base_branch:
++        black_command:
++        logger:
++    """
+     current_branch = git("branch", "--show-current")
+ 
+     if not current_branch or base_branch == current_branch:
+
+--- a/src/blib2to3/pgen2/literals.py
++++ b/src/blib2to3/pgen2/literals.py
+@@ -20,6 +20,11 @@
+ 
+ 
+ def escape(m: re.Match[str]) -> str:
++    """TODO: docstring
++
++    Args:
++        m:
++    """
+     all, tail = m.group(0, 1)
+     assert all.startswith("\\")
+     esc = simple_escapes.get(tail)
+
+--- a/src/blib2to3/pgen2/pgen.py
++++ b/src/blib2to3/pgen2/pgen.py
+@@ -122,6 +122,7 @@
+                     return ilabel
+ 
+     def addfirstsets(self) -> None:
++        """TODO: docstring"""
+         names = list(self.dfas.keys())
+         names.sort()
+         for name in names:
+@@ -130,6 +131,11 @@
+             # print name, self.first[name].keys()
+ 
+     def calcfirst(self, name: str) -> None:
++        """TODO: docstring
++
++        Args:
++            name:
++        """
+         dfa = self.dfas[name]
+         self.first[name] = None  # dummy to detect left recursion
+         state = dfa[0]
+@@ -162,6 +168,7 @@
+         self.first[name] = totalset
+ 
+     def parse(self) -> tuple[dict[str, list["DFAState"]], str]:
++        """TODO: docstring"""
+         dfas = {}
+         startsymbol: Optional[str] = None
+         # MSTART: (NEWLINE | RULE)* ENDMARKER
+@@ -226,6 +233,13 @@
+         return states  # List of DFAState instances; first one is start
+ 
+     def dump_nfa(self, name: str, start: "NFAState", finish: "NFAState") -> None:
++        """TODO: docstring
++
++        Args:
++            name:
++            start:
++            finish:
++        """
+         print("Dump of NFA for", name)
+         todo = [start]
+         for i, state in enumerate(todo):
+@@ -242,6 +256,12 @@
+                     print(f"    {label} -> {j}")
+ 
+     def dump_dfa(self, name: str, dfa: Sequence["DFAState"]) -> None:
++        """TODO: docstring
++
++        Args:
++            name:
++            dfa:
++        """
+         print("Dump of DFA for", name)
+         for i, state in enumerate(dfa):
+             print("  State", i, state.isfinal and "(final)" or "")
+@@ -271,6 +291,7 @@
+ 
+     def parse_rhs(self) -> tuple["NFAState", "NFAState"]:
+         # RHS: ALT ('|' ALT)*
++        """TODO: docstring"""
+         a, z = self.parse_alt()
+         if self.value != "|":
+             return a, z
+@@ -297,6 +318,7 @@
+ 
+     def parse_item(self) -> tuple["NFAState", "NFAState"]:
+         # ITEM: '[' RHS ']' | ATOM ['+' | '*']
++        """TODO: docstring"""
+         if self.value == "[":
+             self.gettoken()
+             a, z = self.parse_rhs()
+@@ -317,6 +339,7 @@
+ 
+     def parse_atom(self) -> tuple["NFAState", "NFAState"]:
+         # ATOM: '(' RHS ')' | NAME | STRING
++        """TODO: docstring"""
+         if self.value == "(":
+             self.gettoken()
+             a, z = self.parse_rhs()
+@@ -334,6 +357,12 @@
+             )
+ 
+     def expect(self, type: int, value: Optional[Any] = None) -> str:
++        """TODO: docstring
++
++        Args:
++            type:
++            value:
++        """
+         if self.type != type or (value is not None and self.value != value):
+             self.raise_error(f"expected {type}/{value}, got {self.type}/{self.value}")
+         value = self.value
+@@ -341,6 +370,7 @@
+         return value
+ 
+     def gettoken(self) -> None:
++        """TODO: docstring"""
+         tup = next(self.generator)
+         while tup[0] in (tokenize.COMMENT, tokenize.NL):
+             tup = next(self.generator)
+@@ -348,6 +378,11 @@
+         # print token.tok_name[self.type], repr(self.value)
+ 
+     def raise_error(self, msg: str) -> NoReturn:
++        """TODO: docstring
++
++        Args:
++            msg:
++        """
+         raise SyntaxError(
+             msg, (str(self.filename), self.end[0], self.end[1], self.line)
+         )
+
+--- a/src/blib2to3/pgen2/tokenize.py
++++ b/src/blib2to3/pgen2/tokenize.py
+@@ -204,6 +204,15 @@
+ def printtoken(
+     type: int, token: str, srow_col: Coord, erow_col: Coord, line: str
+ ) -> None:  # for testing
++    """TODO: docstring
++
++    Args:
++        type:
++        token:
++        srow_col:
++        erow_col:
++        line:
++    """
+     (srow, scol) = srow_col
+     (erow, ecol) = erow_col
+     print(f"{srow},{scol}-{erow},{ecol}:\t{tok_name[type]}\t{token!r}")
+
+--- a/src/blib2to3/pytree.py
++++ b/src/blib2to3/pytree.py
+@@ -28,6 +28,11 @@
+ 
+ 
+ def type_repr(type_num: int) -> Union[str, int]:
++    """TODO: docstring
++
++    Args:
++        type_num:
++    """
+     global _type_reprs
+     if not _type_reprs:
+         from . import pygram
+@@ -518,6 +523,7 @@
+         return object.__new__(cls)
+ 
+     def __repr__(self) -> str:
++        """TODO: docstring"""
+         assert self.type is not None
+         args = [type_repr(self.type), self.content, self.name]
+         while args and args[-1] is None:

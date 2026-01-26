@@ -1,0 +1,118 @@
+--- a/unidiff/patch.py
++++ b/unidiff/patch.py
+@@ -37,6 +37,14 @@
+ 
+     def __init__(self, value, line_type,
+                  source_line_no=None, target_line_no=None):
++        """TODO: docstring
++
++        Args:
++            value:
++            line_type:
++            source_line_no:
++            target_line_no:
++        """
+         super(Line, self).__init__()
+         self.source_line_no = source_line_no
+         self.target_line_no = target_line_no
+@@ -45,6 +53,7 @@
+ 
+     def __str__(self):
+         # PY3 -> unicode
++        """TODO: docstring"""
+         return self.value.encode('utf-8')
+ 
+     def __unicode__(self):
+@@ -52,14 +61,17 @@
+ 
+     @property
+     def is_added(self):
++        """TODO: docstring"""
+         return self.line_type == LINE_TYPE_ADDED
+ 
+     @property
+     def is_removed(self):
++        """TODO: docstring"""
+         return self.line_type == LINE_TYPE_REMOVED
+ 
+     @property
+     def is_context(self):
++        """TODO: docstring"""
+         return self.line_type == LINE_TYPE_CONTEXT
+ 
+     def as_unified_diff(self):
+@@ -104,24 +116,30 @@
+ 
+     @property
+     def added(self):
++        """TODO: docstring"""
+         return len([l for l in self if l.is_added])
+ 
+     @property
+     def removed(self):
++        """TODO: docstring"""
+         return len([l for l in self if l.is_removed])
+ 
+     @property
+     def source(self):
++        """TODO: docstring"""
+         return [unicode(l) for l in self.source_lines()]
+ 
+     @property
+     def target(self):
++        """TODO: docstring"""
+         return [unicode(l) for l in self.target_lines()]
+ 
+     def source_lines(self):
++        """TODO: docstring"""
+         return (l for l in self if l.is_context or l.is_removed)
+ 
+     def target_lines(self):
++        """TODO: docstring"""
+         return (l for l in self if l.is_context or l.is_added)
+ 
+ 
+@@ -130,6 +148,14 @@
+ 
+     def __init__(self, source='', target='',
+                  source_timestamp=None, target_timestamp=None):
++        """TODO: docstring
++
++        Args:
++            source:
++            target:
++            source_timestamp:
++            target_timestamp:
++        """
+         super(PatchedFile, self).__init__()
+         self.source_file = source
+         self.source_timestamp = source_timestamp
+@@ -211,20 +237,28 @@
+     #def __init__(self, f):
+ 
+     def __str__(self):
++        """TODO: docstring"""
+         return ''.join([str(e) for e in self])
+ 
+     @classmethod
+     def from_filename(cls, filename):
++        """TODO: docstring
++
++        Args:
++            filename:
++        """
+         with open(filename, 'r') as f:
+             instance = cls(f)
+         return instance
+ 
+     @property
+     def added(self):
++        """TODO: docstring"""
+         return [f for f in self if f.is_added_file]
+ 
+     @property
+     def removed(self):
++        """TODO: docstring"""
+         return [f for f in self if f.is_removed_file]
+ 
+     @property

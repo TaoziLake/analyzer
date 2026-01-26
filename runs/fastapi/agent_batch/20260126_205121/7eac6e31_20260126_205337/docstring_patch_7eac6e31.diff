@@ -1,0 +1,114 @@
+--- a/scripts/doc_parsing_utils.py
++++ b/scripts/doc_parsing_utils.py
+@@ -277,6 +277,12 @@
+ 
+ 
+ def _add_lang_code_to_url(url: str, lang_code: str) -> str:
++    """TODO: docstring
++
++    Args:
++        url:
++        lang_code:
++    """
+     if url.startswith(TIANGOLO_COM):
+         rel_url = url[len(TIANGOLO_COM) :]
+         if not rel_url.startswith(ASSETS_URL_PREFIXES):
+@@ -550,6 +556,11 @@
+ 
+ 
+ def _split_hash_comment(line: str) -> tuple[str, Union[str, None]]:
++    """TODO: docstring
++
++    Args:
++        line:
++    """
+     match = HASH_COMMENT_RE.match(line)
+     if match:
+         code = match.group("code").rstrip()
+@@ -559,6 +570,11 @@
+ 
+ 
+ def _split_slashes_comment(line: str) -> tuple[str, Union[str, None]]:
++    """TODO: docstring
++
++    Args:
++        line:
++    """
+     match = SLASHES_COMMENT_RE.match(line)
+     if match:
+         code = match.group("code").rstrip()
+
+--- a/scripts/notify_translations.py
++++ b/scripts/notify_translations.py
+@@ -239,6 +239,11 @@
+ def get_graphql_translation_discussions(
+     *, settings: Settings
+ ) -> list[AllDiscussionsDiscussionNode]:
++    """TODO: docstring
++
++    Args:
++        settings:
++    """
+     data = get_graphql_response(
+         settings=settings,
+         query=all_discussions_query,
+@@ -264,6 +269,12 @@
+ def get_graphql_translation_discussion_comments(
+     *, settings: Settings, discussion_number: int
+ ) -> list[Comment]:
++    """TODO: docstring
++
++    Args:
++        settings:
++        discussion_number:
++    """
+     comment_nodes: list[Comment] = []
+     discussion_edges = get_graphql_translation_discussion_comments_edges(
+         settings=settings, discussion_number=discussion_number
+@@ -282,6 +293,13 @@
+ 
+ 
+ def create_comment(*, settings: Settings, discussion_id: str, body: str) -> Comment:
++    """TODO: docstring
++
++    Args:
++        settings:
++        discussion_id:
++        body:
++    """
+     data = get_graphql_response(
+         settings=settings,
+         query=add_comment_mutation,
+@@ -293,6 +311,13 @@
+ 
+ 
+ def update_comment(*, settings: Settings, comment_id: str, body: str) -> Comment:
++    """TODO: docstring
++
++    Args:
++        settings:
++        comment_id:
++        body:
++    """
+     data = get_graphql_response(
+         settings=settings,
+         query=update_comment_mutation,
+@@ -304,6 +329,7 @@
+ 
+ 
+ def main() -> None:
++    """TODO: docstring"""
+     settings = Settings()
+     if settings.debug:
+         logging.basicConfig(level=logging.DEBUG)
+
+--- a/scripts/docs.py
++++ b/scripts/docs.py
+@@ -203,6 +203,7 @@
+ 
+ 
+ def generate_readme_content() -> str:
++    """TODO: docstring"""
+     en_index = en_docs_path / "docs" / "index.md"
+     content = en_index.read_text("utf-8")
+     content = remove_header_permalinks(content)  # remove permalinks from headers

@@ -1,0 +1,779 @@
+{
+  "commit": "e2dc6b3",
+  "parent": "59775327810403b7324c68cd74eef370ef570381",
+  "repo": "D:\\locbench\\black",
+  "num_seeds": 2,
+  "num_seeds_used": 2,
+  "seed_scope": "code_only",
+  "num_impacted": 39,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 3415,
+    "total_call_relations": 4447
+  },
+  "impacted": [
+    {
+      "qualname": "scripts.release",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "sys.exit",
+        "logging.getLogger",
+        "scripts.release.main"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "scripts.release.SourceFiles.update_repo_for_release"
+      ],
+      "callees": [
+        "scripts.release.SourceFiles.changes_path.open",
+        "cfp.read",
+        "re.sub",
+        "cfp.write",
+        "LOG.debug",
+        "changes_string.replace",
+        "LOG.info"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "sys.exit",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release",
+      "callers": [
+        "action.main.determine_version_specifier",
+        "scripts.release",
+        "scripts.check_version_in_basics_example.main",
+        "action.main.find_black_version_in_array",
+        "action.main",
+        "scripts.check_pre_commit_rev_in_example.main",
+        "action.main.read_version_specifier_from_pyproject",
+        "src.blib2to3.pgen2.driver",
+        "scripts.migrate-black"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "logging.getLogger",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release",
+      "callers": [
+        "tests.data.cases.import_line_collapse",
+        "scripts.release",
+        "tests.optional",
+        "src.blib2to3.pgen2.driver.load_grammar",
+        "src.blib2to3.pgen2.driver.Driver.__init__",
+        "scripts.migrate-black",
+        "src.black.concurrency.shutdown"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "scripts.release.main",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release",
+      "callers": [
+        "scripts.release"
+      ],
+      "callees": [
+        "scripts.release.parse_args",
+        "sf.add_template_to_changes",
+        "pathlib.Path",
+        "LOG.info",
+        "sf.update_repo_for_release",
+        "scripts.release.SourceFiles"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.release.SourceFiles.update_repo_for_release",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+      "callers": [],
+      "callees": [
+        "scripts.release.SourceFiles.update_version_in_docs",
+        "scripts.release.SourceFiles.cleanup_changes_template_for_release"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.release.SourceFiles.changes_path.open",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+      "callers": [
+        "scripts.release.SourceFiles.add_template_to_changes",
+        "scripts.release.SourceFiles.cleanup_changes_template_for_release"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "cfp.read",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+      "callers": [
+        "scripts.release.SourceFiles.add_template_to_changes",
+        "scripts.release.SourceFiles.cleanup_changes_template_for_release"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "re.sub",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+      "callers": [
+        "src.black.trans.StringSplitter._normalize_f_string",
+        "src.black.trans.StringMerger._merge_one_string_group",
+        "src.blib2to3.pgen2.literals.evalString",
+        "src.black.trans.StringMerger._merge_one_string_group.make_naked",
+        "docs.conf.replace_pr_numbers_with_links",
+        "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+        "src.black.strings.normalize_unicode_escape_sequences"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "cfp.write",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+      "callers": [
+        "scripts.release.SourceFiles.add_template_to_changes",
+        "scripts.release.SourceFiles.cleanup_changes_template_for_release"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "LOG.debug",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+      "callers": [
+        "scripts.release.SourceFiles.update_version_in_docs",
+        "scripts.release.SourceFiles.cleanup_changes_template_for_release"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "changes_string.replace",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+      "callers": [
+        "scripts.release.SourceFiles.add_template_to_changes",
+        "scripts.release.SourceFiles.cleanup_changes_template_for_release"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "LOG.info",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+      "callers": [
+        "scripts.release.SourceFiles.add_template_to_changes",
+        "scripts.release.SourceFiles.update_version_in_docs",
+        "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+        "scripts.release.main"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "action.main.determine_version_specifier",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "sys.exit",
+      "callers": [
+        "action.main"
+      ],
+      "callees": [
+        "action.main.read_version_specifier_from_pyproject",
+        "sys.exit",
+        "print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.check_version_in_basics_example.main",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "sys.exit",
+      "callers": [
+        "scripts.check_version_in_basics_example"
+      ],
+      "callees": [
+        "the_basics_soup.find_all",
+        "commonmark.commonmark",
+        "sys.exit",
+        "changes_soup.find_all",
+        "bs4.BeautifulSoup",
+        "print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "action.main.find_black_version_in_array",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "sys.exit",
+      "callers": [
+        "action.main.read_version_specifier_from_pyproject"
+      ],
+      "callees": [
+        "isinstance",
+        "BLACK_VERSION_RE.match",
+        "m.group",
+        "sys.exit",
+        "print",
+        "EXTRAS_RE.sub",
+        "item.split"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "action.main",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "sys.exit",
+      "callers": [],
+      "callees": [
+        "str",
+        "action.main.determine_version_specifier",
+        "os.getenv",
+        "describe_name.count",
+        "open",
+        "sys.exit",
+        "re.compile",
+        "f.write",
+        "pathlib.Path",
+        "line.startswith",
+        "subprocess.run",
+        "print",
+        "shlex.split",
+        "len",
+        "EXPORT_SUBST_FAIL_RE.match",
+        "shutil.rmtree"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.check_pre_commit_rev_in_example.main",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "sys.exit",
+      "callers": [
+        "scripts.check_pre_commit_rev_in_example"
+      ],
+      "callees": [
+        "source_version_control_soup.find",
+        "commonmark.commonmark",
+        "sys.exit",
+        "changes_soup.find_all",
+        "bs4.BeautifulSoup",
+        "yaml.safe_load",
+        "print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "action.main.read_version_specifier_from_pyproject",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "sys.exit",
+      "callers": [
+        "action.main.determine_version_specifier"
+      ],
+      "callees": [
+        "action.main.find_black_version_in_array",
+        "sys.exit",
+        "tomllib.load",
+        "pyproject.get",
+        "pathlib.Path",
+        "print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.driver",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "sys.exit",
+      "callers": [],
+      "callees": [
+        "dataclasses.field",
+        "sys.exit",
+        "int",
+        "src.blib2to3.pgen2.driver.main"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.migrate-black",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "sys.exit",
+      "callers": [],
+      "callees": [
+        "scripts.migrate-black.blackify",
+        "parser.add_argument",
+        "parser.parse_args",
+        "argparse.ArgumentParser",
+        "sys.exit",
+        "logger.setLevel",
+        "logger.addHandler",
+        "logging.getLogger",
+        "logging.StreamHandler",
+        "argparse.FileType"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.import_line_collapse",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "logging.getLogger",
+      "callers": [],
+      "callees": [
+        "range",
+        "print",
+        "logging.getLogger"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.optional",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "logging.getLogger",
+      "callers": [],
+      "callees": [
+        "logging.getLogger"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.driver.load_grammar",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "logging.getLogger",
+      "callers": [
+        "src.blib2to3.pgen2.driver.main",
+        "src.blib2to3.pgen2.driver.load_packaged_grammar"
+      ],
+      "callees": [
+        "src.blib2to3.pgen2.driver._generate_pickle_name",
+        "src.blib2to3.pgen2.pgen.generate_grammar",
+        "src.blib2to3.pgen2.driver._newer",
+        "logging.getLogger",
+        "g.dump",
+        "src.blib2to3.pgen2.grammar.Grammar",
+        "g.load"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.driver.Driver.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "logging.getLogger",
+      "callers": [],
+      "callees": [
+        "logging.getLogger"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.concurrency.shutdown",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "logging.getLogger",
+      "callers": [
+        "src.black.concurrency.reformat_many"
+      ],
+      "callees": [
+        "asyncio.all_tasks",
+        "asyncio.gather",
+        "task.done",
+        "loop.close",
+        "loop.run_until_complete",
+        "cf_logger.setLevel",
+        "logging.getLogger",
+        "task.cancel"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.release.parse_args",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.main",
+      "callers": [
+        "scripts.release.main"
+      ],
+      "callees": [
+        "parser.parse_args",
+        "parser.add_argument",
+        "scripts.release._handle_debug",
+        "argparse.ArgumentParser"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "sf.add_template_to_changes",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.main",
+      "callers": [
+        "scripts.release.main"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "pathlib.Path",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.main",
+      "callers": [
+        "tests.test_black.BlackTestCase.test_line_ranges_with_ipynb",
+        "tests.test_black.BlackTestCase.test_bpo_33660_workaround",
+        "tests.test_black.BlackTestCase.test_report_verbose",
+        "src.black.__init__.get_sources",
+        "tests.test_black.TestFileCollection.test_include_exclude",
+        "tests.test_black.BlackTestCase.test_normalize_line_endings",
+        "gallery.gallery.main",
+        "src.black.files.find_project_root",
+        "tests.test_black.BlackTestCase.test_reformat_one_with_stdin_filename_pyi",
+        "tests.test_black.BlackTestCase.test_reformat_one_with_stdin_filename_ipynb",
+        "scripts.release.main",
+        "tests.test_black.TestFileCollection.test_gitignore_reinclude_root",
+        "tests.test_black.BlackTestCase.test_report_quiet",
+        "tests.test_black.TestFileCollection.test_gitignore_that_ignores_subfolders",
+        "src.black.__init__.reformat_one",
+        "tests.test_black.TestFileCollection.test_nested_gitignore",
+        "tests.test_black.TestFileCollection.test_exclude_absolute_path",
+        "tests.test_docs",
+        "gallery.gallery.black_runner",
+        "tests.test_black.BlackTestCase.test_expression_ff",
+        "tests.test_black.TestFileCollection.test_symlinks",
+        "tests.test_black.TestFileCollection.test_gitignore_reinclude",
+        "tests.test_black.BlackTestCase.test_normalize_path_ignore_windows_junctions_outside_of_root",
+        "tests.test_black.BlackTestCase.test_line_ranges_with_multiple_sources",
+        "tests.test_black.TestFileCollection.test_include_absolute_path",
+        "tests.test_black.BlackTestCase.test_expression_diff",
+        "tests.test_black.BlackTestCase.test_decode_with_encoding",
+        "action.main",
+        "tests.test_black.BlackTestCase.test_expression_diff_with_color",
+        "tests.test_black.TestFileCollection.test_gitignore_used_as_default",
+        "tests.test_black.BlackTestCase.test_reformat_one_with_stdin",
+        "tests.test_black.TestFileCollection.test_get_sources_symlink_and_force_exclude",
+        "tests.test_black.BlackTestCase.test_report_normal",
+        "tests.test_black.BlackTestCase.test_invalid_config_return_code",
+        "tests.test_docs.test_feature_lists_are_up_to_date",
+        "tests.test_black.TestCaching.test_filter_cached_hash",
+        "src.black.__init__.reformat_code",
+        "tests.test_black.TestFileCollection.test_nested_gitignore_directly_in_source_directory",
+        "tests.test_black.BlackTestCase.test_read_pyproject_toml_from_stdin",
+        "tests.util",
+        "tests.test_black.BlackTestCase.test_one_empty_line_ff",
+        "tests.test_black.BlackTestCase.test_code_option_config",
+        "src.black.cache.get_cache_dir",
+        "docs.conf",
+        "tests.test_black.cache_dir",
+        "tests.test_black.BlackTestCase.test_skip_source_first_line_when_mixing_newlines",
+        "tests.test_black.BlackTestCase.test_empty_ff",
+        "tests.test_black.BlackTestCase.test_line_ranges_with_source",
+        "tests.test_black.TestFileCollection.test_gitignore_that_ignores_directory",
+        "tests.test_black.BlackTestCase.test_reformat_one_with_stdin_and_existing_path",
+        "action.main.read_version_specifier_from_pyproject",
+        "tests.test_black.BlackTestCase.test_false_positive_symlink_output_issue_3384",
+        "tests.test_black.BlackTestCase.test_code_option_parent_config",
+        "tests.test_black.TestFileCollection.test_gitignore_exclude",
+        "tests.test_black.assert_collected_sources",
+        "scripts.release_tests.TestRelease.setUp",
+        "src.black.files.find_user_pyproject_toml",
+        "tests.test_black.BlackTestCase.test_skip_source_first_line",
+        "tests.test_black.BlackTestCase.test_reformat_one_with_stdin_filename",
+        "tests.test_black.BlackTestCase.test_preserves_line_endings",
+        "tests.test_black.BlackTestCase.test_find_project_root",
+        "tests.test_black.TestCaching.test_filter_cached",
+        "tests.test_black.TestFileCollection.test_gitignore_used_on_multiple_sources",
+        "tests.test_black.TestFileCollection.test_extend_exclude",
+        "tests.test_black.TestFileCollection.test_get_sources_with_stdin_symlink_outside_root",
+        "tests.test_black.TestFileCollection.test_empty_include",
+        "src.black.__init__",
+        "tests.test_black.BlackTestCase.test_skip_magic_trailing_comma",
+        "tests.test_black",
+        "tests.test_black.BlackTestCase.test_find_user_pyproject_toml_linux",
+        "tests.test_black.TestFileCollection.test_get_sources_with_stdin_filename_and_force_exclude_and_symlink",
+        "tests.test_black.BlackTestCase.test_bpo_2142_workaround"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "sf.update_repo_for_release",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.main",
+      "callers": [
+        "scripts.release.main"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "scripts.release.SourceFiles",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.main",
+      "callers": [
+        "scripts.release.main"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.release.SourceFiles.update_version_in_docs",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.update_repo_for_release",
+      "callers": [
+        "scripts.release.SourceFiles.update_repo_for_release"
+      ],
+      "callees": [
+        "dfp.write",
+        "LOG.debug",
+        "doc_path.open",
+        "doc_string.replace",
+        "LOG.info",
+        "dfp.read"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.release.SourceFiles.add_template_to_changes",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "scripts.release.SourceFiles.changes_path.open",
+      "callers": [],
+      "callees": [
+        "scripts.release.SourceFiles.changes_path.open",
+        "LOG.error",
+        "cfp.read",
+        "cfp.write",
+        "changes_string.replace",
+        "LOG.info"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.trans.StringSplitter._normalize_f_string",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.sub",
+      "callers": [
+        "src.black.trans.StringSplitter.do_transform"
+      ],
+      "callees": [
+        "black.strings.assert_is_leaf_string",
+        "re.sub",
+        "src.black.trans.fstring_contains_expr",
+        "len",
+        "prefix.replace"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.trans.StringMerger._merge_one_string_group",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.sub",
+      "callers": [
+        "src.black.trans.StringMerger._merge_string_group"
+      ],
+      "callees": [
+        "black.strings.get_string_prefix",
+        "black.strings.normalize_string_quotes",
+        "black.nodes.replace_child",
+        "bool",
+        "re.sub",
+        "src.black.trans.CustomSplit",
+        "src.black.trans.StringMerger.add_custom_splits",
+        "make_naked",
+        "prefix_tracker.append",
+        "temp_string.find",
+        "custom_splits.append",
+        "range",
+        "S_leaf.value.replace",
+        "atom_node.insert_child",
+        "len",
+        "blib2to3.pytree.Leaf",
+        "is_valid_index"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.literals.evalString",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.sub",
+      "callers": [
+        "src.blib2to3.pgen2.literals.test"
+      ],
+      "callees": [
+        "s.endswith",
+        "s.startswith",
+        "repr",
+        "re.sub",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.trans.StringMerger._merge_one_string_group.make_naked",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.sub",
+      "callers": [],
+      "callees": [
+        "black.strings.assert_is_leaf_string",
+        "re.sub",
+        "re.search",
+        "src.black.trans.iter_fexpr_spans",
+        "len",
+        "src.black.trans._toggle_fexpr_quotes",
+        "any"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "docs.conf.replace_pr_numbers_with_links",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.sub",
+      "callers": [
+        "docs.conf.handle_include_read"
+      ],
+      "callees": [
+        "re.sub"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.strings.normalize_unicode_escape_sequences",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.sub",
+      "callers": [],
+      "callees": [
+        "re.sub",
+        "prefix.lower",
+        "src.black.strings.get_string_prefix"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-26T20:12:36"
+}

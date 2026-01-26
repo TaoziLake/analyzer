@@ -1,0 +1,22 @@
+--- a/fastapi/_compat/v2.py
++++ b/fastapi/_compat/v2.py
+@@ -78,6 +78,11 @@
+ 
+ # TODO: remove when dropping support for Pydantic < v2.12.3
+ def asdict(field_info: FieldInfo) -> Dict[str, Any]:
++    """TODO: docstring
++
++    Args:
++        field_info:
++    """
+     attributes = {}
+     for attr in _Attrs:
+         value = getattr(field_info, attr, Undefined)
+@@ -123,6 +128,7 @@
+         return self.field_info.annotation
+ 
+     def __post_init__(self) -> None:
++        """TODO: docstring"""
+         with warnings.catch_warnings():
+             # Pydantic >= 2.12.0 warns about field specific metadata that is unused
+             # (e.g. `TypeAdapter(Annotated[int, Field(alias='b')])`). In some cases, we

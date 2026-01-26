@@ -1,0 +1,417 @@
+{
+  "commit": "9363888",
+  "parent": "96ef60e635200ded452d9143ec7da35f0fd23881",
+  "repo": "D:\\locbench\\black",
+  "num_seeds": 3,
+  "num_seeds_used": 3,
+  "seed_scope": "code_only",
+  "num_impacted": 24,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 3415,
+    "total_call_relations": 4447
+  },
+  "impacted": [
+    {
+      "qualname": "scripts.release.SourceFiles.add_template_to_changes",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "cfp.read",
+        "cfp.write",
+        "scripts.release.SourceFiles.changes_path.open",
+        "LOG.error",
+        "LOG.info",
+        "changes_string.replace"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "scripts.release.SourceFiles.update_repo_for_release"
+      ],
+      "callees": [
+        "cfp.read",
+        "cfp.write",
+        "LOG.debug",
+        "scripts.release.SourceFiles.changes_path.open",
+        "re.sub",
+        "LOG.info",
+        "changes_string.replace"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.release.SourceFiles.update_version_in_docs",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "scripts.release.SourceFiles.update_repo_for_release"
+      ],
+      "callees": [
+        "dfp.read",
+        "dfp.write",
+        "LOG.debug",
+        "doc_path.open",
+        "doc_string.replace",
+        "LOG.info"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "cfp.read",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.add_template_to_changes",
+      "callers": [
+        "scripts.release.SourceFiles.add_template_to_changes",
+        "scripts.release.SourceFiles.cleanup_changes_template_for_release"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "cfp.write",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.add_template_to_changes",
+      "callers": [
+        "scripts.release.SourceFiles.add_template_to_changes",
+        "scripts.release.SourceFiles.cleanup_changes_template_for_release"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "scripts.release.SourceFiles.changes_path.open",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.add_template_to_changes",
+      "callers": [
+        "scripts.release.SourceFiles.add_template_to_changes",
+        "scripts.release.SourceFiles.cleanup_changes_template_for_release"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "LOG.error",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.add_template_to_changes",
+      "callers": [
+        "scripts.release.SourceFiles.add_template_to_changes",
+        "scripts.release.get_git_tags"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "LOG.info",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.add_template_to_changes",
+      "callers": [
+        "scripts.release.SourceFiles.update_version_in_docs",
+        "scripts.release.SourceFiles.add_template_to_changes",
+        "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+        "scripts.release.main"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "changes_string.replace",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.add_template_to_changes",
+      "callers": [
+        "scripts.release.SourceFiles.add_template_to_changes",
+        "scripts.release.SourceFiles.cleanup_changes_template_for_release"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "scripts.release.SourceFiles.update_repo_for_release",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+      "callers": [],
+      "callees": [
+        "scripts.release.SourceFiles.update_version_in_docs",
+        "scripts.release.SourceFiles.cleanup_changes_template_for_release"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "LOG.debug",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+      "callers": [
+        "scripts.release.SourceFiles.update_version_in_docs",
+        "scripts.release.SourceFiles.cleanup_changes_template_for_release"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "re.sub",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+      "callers": [
+        "src.blib2to3.pgen2.literals.evalString",
+        "src.black.trans.StringMerger._merge_one_string_group",
+        "docs.conf.replace_pr_numbers_with_links",
+        "scripts.release.SourceFiles.cleanup_changes_template_for_release",
+        "src.black.trans.StringSplitter._normalize_f_string",
+        "src.black.strings.normalize_unicode_escape_sequences",
+        "src.black.trans.StringMerger._merge_one_string_group.make_naked"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "dfp.read",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.update_version_in_docs",
+      "callers": [
+        "scripts.release.SourceFiles.update_version_in_docs"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "dfp.write",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.update_version_in_docs",
+      "callers": [
+        "scripts.release.SourceFiles.update_version_in_docs"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "doc_path.open",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.update_version_in_docs",
+      "callers": [
+        "scripts.release.SourceFiles.update_version_in_docs"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "doc_string.replace",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.release.SourceFiles.update_version_in_docs",
+      "callers": [
+        "scripts.release.SourceFiles.update_version_in_docs"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "scripts.release.get_git_tags",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "LOG.error",
+      "callers": [
+        "scripts.release.SourceFiles.get_next_version",
+        "scripts.release.SourceFiles.get_current_version"
+      ],
+      "callees": [
+        "LOG.error",
+        "cp.stdout.splitlines",
+        "subprocess.run"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.release.main",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "LOG.info",
+      "callers": [
+        "scripts.release"
+      ],
+      "callees": [
+        "sf.add_template_to_changes",
+        "pathlib.Path",
+        "scripts.release.parse_args",
+        "sf.update_repo_for_release",
+        "LOG.info",
+        "scripts.release.SourceFiles"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.literals.evalString",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.sub",
+      "callers": [
+        "src.blib2to3.pgen2.literals.test"
+      ],
+      "callees": [
+        "s.endswith",
+        "s.startswith",
+        "re.sub",
+        "repr",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.trans.StringMerger._merge_one_string_group",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.sub",
+      "callers": [
+        "src.black.trans.StringMerger._merge_string_group"
+      ],
+      "callees": [
+        "atom_node.insert_child",
+        "src.black.trans.CustomSplit",
+        "blib2to3.pytree.Leaf",
+        "S_leaf.value.replace",
+        "bool",
+        "black.nodes.replace_child",
+        "src.black.trans.StringMerger.add_custom_splits",
+        "make_naked",
+        "black.strings.get_string_prefix",
+        "range",
+        "custom_splits.append",
+        "black.strings.normalize_string_quotes",
+        "re.sub",
+        "prefix_tracker.append",
+        "temp_string.find",
+        "is_valid_index",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "docs.conf.replace_pr_numbers_with_links",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.sub",
+      "callers": [
+        "docs.conf.handle_include_read"
+      ],
+      "callees": [
+        "re.sub"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.trans.StringSplitter._normalize_f_string",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.sub",
+      "callers": [
+        "src.black.trans.StringSplitter.do_transform"
+      ],
+      "callees": [
+        "black.strings.assert_is_leaf_string",
+        "prefix.replace",
+        "re.sub",
+        "src.black.trans.fstring_contains_expr",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.strings.normalize_unicode_escape_sequences",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.sub",
+      "callers": [],
+      "callees": [
+        "src.black.strings.get_string_prefix",
+        "prefix.lower",
+        "re.sub"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.trans.StringMerger._merge_one_string_group.make_naked",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.sub",
+      "callers": [],
+      "callees": [
+        "black.strings.assert_is_leaf_string",
+        "any",
+        "src.black.trans.iter_fexpr_spans",
+        "re.search",
+        "re.sub",
+        "len",
+        "src.black.trans._toggle_fexpr_quotes"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-26T20:07:41"
+}

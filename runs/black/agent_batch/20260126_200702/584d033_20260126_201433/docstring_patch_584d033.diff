@@ -1,0 +1,46 @@
+--- a/src/black/linegen.py
++++ b/src/black/linegen.py
+@@ -955,6 +955,15 @@
+     features: Collection[Feature] = (),
+     omit: Collection[LeafID] = (),
+ ) -> Iterator[Line]:
++    """TODO: docstring
++
++    Args:
++        rhs:
++        line:
++        mode:
++        features:
++        omit:
++    """
+     if (
+         Feature.FORCE_OPTIONAL_PARENTHESES not in features
+         # the opening bracket is an optional paren
+
+--- a/src/black/trans.py
++++ b/src/black/trans.py
+@@ -902,6 +902,11 @@
+     """
+ 
+     def do_match(self, line: Line) -> TMatchResult:
++        """TODO: docstring
++
++        Args:
++            line:
++        """
+         LL = line.leaves
+ 
+         is_valid_index = is_valid_index_factory(LL)
+@@ -2188,6 +2193,12 @@
+     def do_transform(
+         self, line: Line, string_indices: list[int]
+     ) -> Iterator[TResult[Line]]:
++        """TODO: docstring
++
++        Args:
++            line:
++            string_indices:
++        """
+         LL = line.leaves
+         assert len(string_indices) == 1, (
+             f"{self.__class__.__name__} should only find one match at a time, found"

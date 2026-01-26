@@ -1,0 +1,164 @@
+{
+  "commit": "517aac5",
+  "parent": "95a1e75344b94cdf08fd66eb5fce9a6aabf09b00",
+  "repo": "D:\\locbench\\black",
+  "num_seeds": 2,
+  "num_seeds_used": 1,
+  "seed_scope": "code_only",
+  "num_impacted": 10,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 3415,
+    "total_call_relations": 4447
+  },
+  "impacted": [
+    {
+      "qualname": "src.black.mode",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "enum.auto",
+        "dataclasses.field"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "enum.auto",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.black.mode",
+      "callers": [
+        "src.black.linegen",
+        "src.black.mode"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "dataclasses.field",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.black.mode",
+      "callers": [
+        "src.blib2to3.pgen2.driver",
+        "src.black.lines",
+        "tests.util",
+        "src.black.debug",
+        "src.black.cache",
+        "src.black.mode",
+        "src.black.brackets"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "src.black.linegen",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "enum.auto",
+      "callers": [],
+      "callees": [
+        "enum.auto"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.driver",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "dataclasses.field",
+      "callers": [],
+      "callees": [
+        "int",
+        "sys.exit",
+        "src.blib2to3.pgen2.driver.main",
+        "dataclasses.field"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "dataclasses.field",
+      "callers": [],
+      "callees": [
+        "dataclasses.field",
+        "typing.TypeVar"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.util",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "dataclasses.field",
+      "callers": [],
+      "callees": [
+        "functools.partial",
+        "dataclasses.field",
+        "black.Mode",
+        "pathlib.Path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.debug",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "dataclasses.field",
+      "callers": [],
+      "callees": [
+        "dataclasses.field",
+        "typing.TypeVar"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.cache",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "dataclasses.field",
+      "callers": [],
+      "callees": [
+        "src.black.cache.get_cache_dir",
+        "dataclasses.field"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.brackets",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "dataclasses.field",
+      "callers": [],
+      "callees": [
+        "dataclasses.field"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-26T20:06:53"
+}

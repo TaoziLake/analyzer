@@ -1,0 +1,161 @@
+{
+  "commit": "d051bd7",
+  "parent": "f1f29d9dd964bf80f4e63f354d39b9720369e9c6",
+  "repo": "D:\\locbench\\python-unidiff",
+  "num_seeds": 6,
+  "num_seeds_used": 3,
+  "seed_scope": "code_only",
+  "num_impacted": 10,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 205,
+    "total_call_relations": 319
+  },
+  "impacted": [
+    {
+      "qualname": "unidiff.patch",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "x.encode"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "unidiff.patch.PatchSet",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "unidiff.patch.PatchSet.from_string",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "unidiff.patch.PatchSet._convert_string",
+        "cls"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "x.encode",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "unidiff.patch",
+      "callers": [
+        "unidiff.patch"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "unidiff.patch.PatchSet._convert_string",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "unidiff.patch.PatchSet.from_string",
+      "callers": [
+        "unidiff.patch.PatchSet.from_string",
+        "unidiff.patch.PatchSet.__init__"
+      ],
+      "callees": [
+        "io.StringIO",
+        "unicode"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "cls",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "unidiff.patch.PatchSet.from_string",
+      "callers": [
+        "unidiff.patch.PatchSet.from_string",
+        "unidiff.patch.PatchSet.from_filename"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "unidiff.patch.PatchSet.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "unidiff.patch.PatchSet._convert_string",
+      "callers": [],
+      "callees": [
+        "unidiff.patch.PatchSet._parse",
+        "iter",
+        "unidiff.patch.PatchSet._convert_string",
+        "super",
+        "isinstance"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "io.StringIO",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "unidiff.patch.PatchSet._convert_string",
+      "callers": [
+        "unidiff.patch.PatchSet._convert_string"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "unicode",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "unidiff.patch.PatchSet._convert_string",
+      "callers": [
+        "unidiff.patch.PatchSet._convert_string",
+        "unidiff.patch.PatchSet.__str__",
+        "unidiff.patch.PatchInfo.__str__",
+        "tests.test_parser.TestUnidiffParser.test_print_hunks_without_gaps",
+        "unidiff.patch.PatchedFile.__str__",
+        "unidiff.patch.Hunk.__str__"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "unidiff.patch.PatchSet.from_filename",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "cls",
+      "callers": [],
+      "callees": [
+        "cls",
+        "open_file"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-26T19:55:11"
+}

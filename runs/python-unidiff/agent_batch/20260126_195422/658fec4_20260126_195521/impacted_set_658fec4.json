@@ -1,0 +1,401 @@
+{
+  "commit": "658fec4",
+  "parent": "f094c696963649284aedc2df0fa85c72a64c3760",
+  "repo": "D:\\locbench\\python-unidiff",
+  "num_seeds": 3,
+  "num_seeds_used": 2,
+  "seed_scope": "code_only",
+  "num_impacted": 23,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 205,
+    "total_call_relations": 319
+  },
+  "impacted": [
+    {
+      "qualname": "unidiff.patch.Hunk.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "super",
+        "int"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "unidiff.patch.Hunk.append",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "str",
+        "super"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "super",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "unidiff.patch.Hunk.__init__",
+      "callers": [
+        "unidiff.patch.Hunk.__init__",
+        "tests.test_line.TestLine.setUp",
+        "unidiff.patch.Hunk.append",
+        "unidiff.patch.PatchedFile.__init__",
+        "unidiff.patch.PatchSet.__init__",
+        "unidiff.patch.Line.__init__",
+        "tests.test_hunks.TestHunk.setUp",
+        "tests.test_parser.TestUnidiffParser.setUp",
+        "tests.test_patchedfile.TestPatchedFile.setUp",
+        "unidiff.patch.PatchSet.__repr__"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "int",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "unidiff.patch.Hunk.__init__",
+      "callers": [
+        "unidiff.patch.Hunk.__init__"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "str",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "unidiff.patch.Hunk.append",
+      "callers": [
+        "unidiff.patch.Hunk.source",
+        "unidiff.patch.Hunk.append",
+        "tests.test_parser.TestVCSSamples.test_samples",
+        "tests.test_hunks.TestHunk.test_append_deleted_line",
+        "tests.test_parser.TestVCSSamples.test_git_renaming",
+        "tests.test_hunks.TestHunk.test_append_context",
+        "tests.test_line.TestLine.test_str",
+        "unidiff.patch.Hunk.target",
+        "unidiff.patch.PatchedFile.__str__",
+        "tests.test_hunks.TestHunk.test_append_added_line",
+        "tests.test_parser.TestUnidiffParser.test_parse_round_trip_with_binary_files_in_diff"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "tests.test_line.TestLine.setUp",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "super",
+      "callers": [],
+      "callees": [
+        "super",
+        "unidiff.patch.Line"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "unidiff.patch.PatchedFile.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "super",
+      "callers": [],
+      "callees": [
+        "super"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "unidiff.patch.PatchSet.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "super",
+      "callers": [],
+      "callees": [
+        "super",
+        "unidiff.patch.PatchSet._convert_string",
+        "unidiff.patch.PatchSet._parse",
+        "isinstance",
+        "iter"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "unidiff.patch.Line.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "super",
+      "callers": [],
+      "callees": [
+        "super"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_hunks.TestHunk.setUp",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "super",
+      "callers": [],
+      "callees": [
+        "super",
+        "unidiff.patch.Line"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_parser.TestUnidiffParser.setUp",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "super",
+      "callers": [],
+      "callees": [
+        "super",
+        "os.path.dirname",
+        "os.path.realpath",
+        "os.path.join"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_patchedfile.TestPatchedFile.setUp",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "super",
+      "callers": [],
+      "callees": [
+        "super",
+        "unidiff.patch.PatchedFile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "unidiff.patch.PatchSet.__repr__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "super",
+      "callers": [],
+      "callees": [
+        "super",
+        "make_str"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "unidiff.patch.Hunk.source",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "unidiff.patch.Hunk.source_lines"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_parser.TestVCSSamples.test_samples",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "os.path.realpath",
+        "diff_file.read",
+        "unidiff.PatchSet",
+        "os.path.join",
+        "codecs.open",
+        "os.path.dirname",
+        "len",
+        "tests.test_parser.TestVCSSamples.assertEqual",
+        "str"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_hunks.TestHunk.test_append_deleted_line",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "hunk.source_lines",
+        "tests.test_hunks.TestHunk.assertEqual",
+        "hunk.is_valid",
+        "len",
+        "hunk.append",
+        "str",
+        "list",
+        "unidiff.patch.Hunk",
+        "tests.test_hunks.TestHunk.assertTrue",
+        "tests.test_hunks.TestHunk.assertIn"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_parser.TestVCSSamples.test_git_renaming",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "tests.test_parser.TestVCSSamples.assertTrue",
+        "os.path.realpath",
+        "diff_file.read",
+        "unidiff.PatchSet",
+        "os.path.join",
+        "codecs.open",
+        "os.path.dirname",
+        "len",
+        "tests.test_parser.TestVCSSamples.assertEqual",
+        "str"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_hunks.TestHunk.test_append_context",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "hunk.source_lines",
+        "tests.test_hunks.TestHunk.assertEqual",
+        "hunk.is_valid",
+        "hunk.target_lines",
+        "len",
+        "hunk.append",
+        "str",
+        "list",
+        "unidiff.patch.Hunk",
+        "tests.test_hunks.TestHunk.assertTrue",
+        "tests.test_hunks.TestHunk.assertIn"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_line.TestLine.test_str",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "tests.test_line.TestLine.assertEqual"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "unidiff.patch.Hunk.target",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "unidiff.patch.Hunk.target_lines"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "unidiff.patch.PatchedFile.__str__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "unicode"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_hunks.TestHunk.test_append_added_line",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "tests.test_hunks.TestHunk.assertEqual",
+        "hunk.is_valid",
+        "hunk.target_lines",
+        "len",
+        "hunk.append",
+        "str",
+        "list",
+        "unidiff.patch.Hunk",
+        "tests.test_hunks.TestHunk.assertTrue",
+        "tests.test_hunks.TestHunk.assertIn"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_parser.TestUnidiffParser.test_parse_round_trip_with_binary_files_in_diff",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "unidiff.PatchSet",
+        "os.path.join",
+        "tests.test_parser.TestUnidiffParser.assertEqual",
+        "open",
+        "str"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-26T19:55:22"
+}
