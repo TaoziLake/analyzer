@@ -215,7 +215,7 @@ def _insert_docstring_into_source(
 ) -> Tuple[bool, str, Optional[str]]:
     """
     Returns (changed, new_source, message).
-    Only inserts for FunctionDef/AsyncFunctionDef without docstring.
+    Supports both inserting new docstring and updating existing one.
     """
     try:
         nodes = _collect_target_nodes(source, module_qual)
@@ -228,27 +228,41 @@ def _insert_docstring_into_source(
     if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
         return False, source, "not_a_function"
 
-    if ast.get_docstring(node) is not None:
-        return False, source, "already_has_docstring"
-
     if not node.body:
         return False, source, "empty_body"
 
     lines = source.splitlines()
-    first_stmt = node.body[0]
-    insert_at = getattr(first_stmt, "lineno", None)
-    if not isinstance(insert_at, int) or insert_at <= 0:
-        insert_at = node.lineno + 1
-    # insert before first statement (1-based -> 0-based)
-    idx = max(insert_at - 1, 0)
+    existing_doc = ast.get_docstring(node)
 
-    # determine indentation from first statement line if exists
-    body_indent = _indent_of_line(lines[idx]) if idx < len(lines) else "    "
-    doc_lines = _make_docstring(_func_param_names(node))
-    doc_block = [body_indent + dl if dl else "" for dl in doc_lines]
+    if existing_doc is not None:
+        # Update existing docstring: find and replace it
+        first_stmt = node.body[0]
+        if isinstance(first_stmt, ast.Expr) and isinstance(first_stmt.value, (ast.Str, ast.Constant)):
+            doc_start = first_stmt.lineno - 1  # 0-based
+            doc_end = getattr(first_stmt, "end_lineno", first_stmt.lineno)  # 1-based end
+            body_indent = _indent_of_line(lines[doc_start]) if doc_start < len(lines) else "    "
+            doc_lines = _make_docstring(_func_param_names(node))
+            doc_block = [body_indent + dl if dl else "" for dl in doc_lines]
+            new_lines = lines[:doc_start] + doc_block + lines[doc_end:]
+            return True, "\n".join(new_lines) + ("\n" if source.endswith("\n") else ""), "updated"
+        else:
+            return False, source, "docstring_node_not_found"
+    else:
+        # Insert new docstring
+        first_stmt = node.body[0]
+        insert_at = getattr(first_stmt, "lineno", None)
+        if not isinstance(insert_at, int) or insert_at <= 0:
+            insert_at = node.lineno + 1
+        # insert before first statement (1-based -> 0-based)
+        idx = max(insert_at - 1, 0)
 
-    new_lines = lines[:idx] + doc_block + lines[idx:]
-    return True, "\n".join(new_lines) + ("\n" if source.endswith("\n") else ""), "inserted"
+        # determine indentation from first statement line if exists
+        body_indent = _indent_of_line(lines[idx]) if idx < len(lines) else "    "
+        doc_lines = _make_docstring(_func_param_names(node))
+        doc_block = [body_indent + dl if dl else "" for dl in doc_lines]
+
+        new_lines = lines[:idx] + doc_block + lines[idx:]
+        return True, "\n".join(new_lines) + ("\n" if source.endswith("\n") else ""), "inserted"
 
 
 def _verify_docstrings(
@@ -417,7 +431,7 @@ def main():
             continue
         rel_path = _posix(rel_path)
 
-        # Only keep real function defs that exist in this commit and currently have no docstring.
+        # Keep real function defs that exist in this commit (with or without docstring).
         if rel_path not in file_nodes_cache:
             base = _git_show_text(repo_path, commit, rel_path)
             file_source_cache[rel_path] = base
@@ -431,8 +445,10 @@ def main():
         node = file_nodes_cache[rel_path].get(qn)
         if node is None or not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             continue
-        if ast.get_docstring(node) is not None:
-            continue
+
+        existing_doc = ast.get_docstring(node)
+        has_docstring = existing_doc is not None
+        target_action = "update" if has_docstring else "insert"
 
         targets.append(
             {
@@ -441,6 +457,8 @@ def main():
                 "source": src,
                 "rel_path": rel_path,
                 "params": _func_param_names(node),
+                "has_docstring": has_docstring,
+                "target_action": target_action,
             }
         )
 

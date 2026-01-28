@@ -1,0 +1,3557 @@
+{
+  "commit": "73ee8232",
+  "parent": "36fe3f7ca9becca4777861d5e6e625f5a4a37545",
+  "repo": "d:\\locbench\\rich",
+  "num_seeds": 3,
+  "num_seeds_used": 1,
+  "seed_scope": "code_only",
+  "num_impacted": 166,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "rich.cells.get_character_cell_size",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "tests.test_cells.test_get_character_cell_size",
+        "rich.cells._cell_len",
+        "rich.cells.split_graphemes"
+      ],
+      "callees": [
+        "ord",
+        "rich._unicode_data.load",
+        "len",
+        "functools.lru_cache"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_cells.test_get_character_cell_size",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "rich.cells.get_character_cell_size",
+      "callers": [],
+      "callees": [
+        "rich.cells.get_character_cell_size",
+        "pytest.mark.parametrize",
+        "chr"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.cells._cell_len",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "rich.cells.get_character_cell_size",
+      "callers": [
+        "rich.cells.cached_cell_len",
+        "rich.cells.cell_len"
+      ],
+      "callees": [
+        "len",
+        "rich._unicode_data.load",
+        "iter",
+        "sum",
+        "_is_single_cell_widths",
+        "next",
+        "rich.cells.get_character_cell_size"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.cells.split_graphemes",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "rich.cells.get_character_cell_size",
+      "callers": [
+        "rich.cells._split_text",
+        "tests.test_cells.test_split_graphemes",
+        "rich.cells.chop_cells"
+      ],
+      "callees": [
+        "spans.append",
+        "rich._unicode_data.load",
+        "len",
+        "rich.cells.get_character_cell_size"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "ord",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "rich.cells.get_character_cell_size",
+      "callers": [
+        "tests.test_cells.test_is_single_cell_widths",
+        "rich.cells.get_character_cell_size"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "rich._unicode_data.load",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "rich.cells.get_character_cell_size",
+      "callers": [
+        "rich.cells._cell_len",
+        "rich.cells.split_graphemes",
+        "tests.test_unicode_data.test_load",
+        "tests.test_unicode_data.test_load_version_invalid",
+        "rich.cells.get_character_cell_size",
+        "tests.test_unicode_data.test_load_version"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "len",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "rich.cells.get_character_cell_size",
+      "callers": [
+        "rich._log_render.LogRender.__call__",
+        "rich.file_proxy.FileProxy.write",
+        "rich.pretty.traverse.to_repr",
+        "rich.progress._Reader.readline",
+        "tests.test_text.test_wrap_tabs",
+        "rich._ratio.ratio_distribute",
+        "rich.pretty.Node.render",
+        "rich.text.Text.markup",
+        "rich.spinner.Spinner.render",
+        "rich.text.Text.plain",
+        "rich.repr.auto.do_replace.auto_repr",
+        "rich.align.VerticalCenter.__rich_console__",
+        "tests.test_traceback.test_rich_traceback_omit_optional_local_flag",
+        "rich.segment.Segment.align_top",
+        "rich.text.Text._trim_spans",
+        "rich.highlighter.JSONHighlighter.highlight",
+        "tests.test_table.test_min_width",
+        "rich.segment.Segment.align_middle",
+        "rich.progress_bar.ProgressBar._render_pulse",
+        "rich.cells._cell_len",
+        "rich.table.Table._collapse_widths",
+        "rich.pretty._Line.check_length",
+        "rich.progress._Reader.__next__",
+        "rich.prompt",
+        "rich.syntax._get_code_index_for_syntax_position",
+        "rich._wrap.divide_line",
+        "tests.test_text.test_split",
+        "rich.table.Table._render",
+        "tests.test_traceback.test_traceback_finely_grained",
+        "rich.theme.ThemeStack.pop_theme",
+        "rich.palette.Palette.match",
+        "tests.test_style.test_link_id",
+        "rich.pretty.traverse._traverse.iter_rich_args",
+        "tests.test_traceback.test_suppress",
+        "rich.text.Text.stylize_before",
+        "tests.test_text.test_wrap_long_words_justify_left",
+        "rich.ansi._ansi_tokenize",
+        "benchmarks.benchmarks.TextSuite.setup",
+        "tests.test_layout.test_unsplit",
+        "tests.test_text.test_len",
+        "rich.text.Text.remove_suffix",
+        "rich.text.Text.detect_indentation",
+        "rich.live",
+        "rich.text.Text.render",
+        "rich.segment.Segment.align_bottom",
+        "rich.syntax.Syntax._get_syntax",
+        "rich.table.Table.__init__",
+        "rich.table.Table.add_row",
+        "tests.test_text.test_highlight_regex_callable",
+        "tests.test_text.test_wrap_4",
+        "rich.traceback.Traceback._render_syntax_error",
+        "rich.table.Table.add_column",
+        "rich.emoji",
+        "tests.test_layout.test_add_split",
+        "rich.color.Color.parse",
+        "rich.pretty._Line.expand",
+        "rich.markdown.ListElement.__rich_console__",
+        "rich._win32_console.LegacyWindowsTerm.set_title",
+        "rich.text.Text.join",
+        "rich._inspect.Inspect._render",
+        "rich.cells.split_graphemes",
+        "rich.console.Console.export_svg",
+        "tests.test_win32_console.test_write_styled",
+        "rich.pretty.Node.iter_tokens",
+        "tests.test_traceback.test_handler",
+        "rich.cells._split_text",
+        "rich.syntax.Syntax._numbers_column_width",
+        "rich.text.Text.get_style_at_offset",
+        "rich.cells.get_character_cell_size",
+        "rich.markdown.ListItem.render_number",
+        "tests.test_text.test_divide",
+        "rich.text.Text.pad",
+        "rich.text.Text.append_text",
+        "rich.palette.Palette.__rich__",
+        "rich.console.Console.render_lines",
+        "rich.text.Text.append",
+        "rich.text.Text.stylize",
+        "examples.cp_progress",
+        "rich.table.Table._get_cells",
+        "rich.progress.Progress.advance",
+        "rich.text.Text.with_indent_guides",
+        "tests.test_text.test_highlight_regex",
+        "tests.test_text.test_wrap_3",
+        "rich.console.Console._write_buffer",
+        "rich.table.Table._extra_width",
+        "rich.segment.Segment.get_shape",
+        "rich.text.Text.set_length",
+        "rich.traceback.Traceback._render_stack",
+        "examples.downloader.copy_url",
+        "tests.test_markdown.test_table_with_empty_cells",
+        "rich.containers.Lines.justify",
+        "rich.progress.MofNCompleteColumn.render",
+        "rich.padding.Padding.unpack",
+        "rich.text.Text.append_tokens",
+        "rich.text.Text.__getitem__",
+        "tests.test_text.test_wrap_long",
+        "tools.profile_divide",
+        "rich.console.Console.export_html",
+        "rich.cells.chop_cells",
+        "rich.table.Table._calculate_column_widths",
+        "tests.test_text.test_wrap_overflow",
+        "rich.color.parse_rgb_hex",
+        "rich.markup._parse",
+        "rich.text.Text.right_crop",
+        "rich.syntax.Syntax._apply_stylized_ranges",
+        "rich.cells.cell_len",
+        "tests.test_padding.test_rich_console",
+        "tests.test_win32_console.test_hide_cursor",
+        "rich._unicode_data.__init__._parse_version",
+        "rich.tree.Tree.__rich_console__",
+        "rich.text.Text.pad_left",
+        "rich.columns.Columns.__rich_console__",
+        "rich.segment.Segment.split_cells",
+        "rich.text.Text.expand_tabs",
+        "rich.segment.Segment.set_shape",
+        "rich.bar.Bar.__rich_console__",
+        "rich.text.Text.__init__",
+        "rich.cells.set_cell_size",
+        "examples.dynamic_progress",
+        "rich.console.Console.print",
+        "rich.text.Text.extend_style",
+        "rich.pretty.traverse._traverse",
+        "rich.columns.Columns.__rich_console__.iter_renderables",
+        "rich.text.Text.divide",
+        "examples.rainbow.RainbowHighlighter.highlight",
+        "rich.text.Text.pad_right",
+        "rich.table.Table.get_row_style",
+        "tests.test_text.test_wrap_overflow_long",
+        "rich.text.Text.rstrip_end",
+        "rich.console.Console.set_live",
+        "rich.text.Text.truncate",
+        "tests.test_syntax.test_syntax_highlight_ranges",
+        "tests.test_text.test_wrap_long_multi_codepoint",
+        "rich.table.Table._get_padding_width",
+        "rich.console.ScreenContext.update",
+        "rich.progress._Reader.read",
+        "rich.table.Table.row_count",
+        "rich.segment.Segment._split_cells",
+        "rich.markup.render",
+        "tests.test_win32_console.test_show_cursor"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "functools.lru_cache",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "rich.cells.get_character_cell_size",
+      "callers": [
+        "rich.progress_bar.ProgressBar._get_pulse_segments",
+        "rich.cells.get_character_cell_size",
+        "rich.palette.Palette.match",
+        "rich.style.Style.parse",
+        "rich.cells.cached_cell_len",
+        "rich.segment.Segment._split_cells",
+        "rich.style.Style.normalize",
+        "rich.style.Style._add",
+        "rich.style.Style.clear_meta_and_links",
+        "rich.style.Style.get_html_style",
+        "rich.color.Color.downgrade",
+        "rich.color.Color.get_ansi_codes",
+        "rich.color.Color.parse"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "pytest.mark.parametrize",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "tests.test_cells.test_get_character_cell_size",
+      "callers": [
+        "tests.test_text.test_truncate_ellipsis",
+        "tests.test_unicode_data.test_parse_version",
+        "tests.test_segment.test_split_cells_emoji",
+        "tests.test_inspect.test_object_is_one_of_types",
+        "tests.test_text.test_print_sep_end",
+        "tests.test_rule.test_rule_just_enough_width_available_for_title",
+        "tests.test_inspect.test_can_handle_special_characters_in_docstrings",
+        "tests.test_text.test_tabs_to_spaces_spans",
+        "tests.test_text.test_truncate_ellipsis_pad",
+        "tests.test_panel.test_render_panel",
+        "tests.test_traceback.test_rich_traceback_omit_optional_local_flag",
+        "tests.test_rule.test_rule_side_aligned_not_enough_space_for_rule",
+        "tests.test_cells.test_split_graphemes",
+        "tests.test_table.test_placement_table_box_elements",
+        "tests.test_console.test_force_color",
+        "tests.test_cells.test_get_character_cell_size",
+        "tests.test_console.test_size_can_fall_back_to_std_descriptors",
+        "tests.test_rule.test_rule_not_enough_space_for_title_text",
+        "tests.test_table.test_table_show_header_false_substitution",
+        "tests.test_highlighter.test_highlight_iso8601_regex",
+        "tests.test_rule_in_table.test_rule_in_unexpanded_table",
+        "tests.test_inspect.test_object_types_mro_as_strings",
+        "tests.test_ansi.test_strip_private_escape_sequences",
+        "tests.test_highlighter.test_highlight_regex",
+        "tests.test_text.test_print",
+        "tests.test_inspect.test_object_types_mro",
+        "tests.test_unicode_data.test_load_version",
+        "tests.test_windows_renderer.test_control_erase_line",
+        "tests.test_ansi.test_decode_issue_2688",
+        "tests.test_windows_renderer.test_control_cursor_single_cell_movement",
+        "tests.test_ratio.test_ratio_reduce",
+        "tests.test_segment.test_split_cells_mixed",
+        "tests.test_progress.test_compact_time_remaining_column",
+        "tests.test_cells.test_split_text"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "chr",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "tests.test_cells.test_get_character_cell_size",
+      "callers": [
+        "tests.test_cells.test_get_character_cell_size",
+        "tools.make_width_tables"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "rich.cells.cached_cell_len",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "rich.cells._cell_len",
+      "callers": [
+        "rich.cells.cell_len"
+      ],
+      "callees": [
+        "rich.cells._cell_len",
+        "functools.lru_cache"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.cells.cell_len",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "rich.cells._cell_len",
+      "callers": [
+        "rich.segment.Segment.cell_length",
+        "rich.syntax.Syntax.__rich_measure__",
+        "tests.test_segment.test_split_cells_doubles",
+        "rich.rule.Rule.__rich_console__",
+        "rich.panel.Panel.__rich_console__.align_text",
+        "tests.test_cells.test_nerd_font",
+        "tests.test_cells.test_cell_len_short_string",
+        "rich.cells.set_cell_size",
+        "rich.text.Text.align",
+        "tests.test_segment.test_split_cells_single",
+        "tests.test_cells.test_split_graphemes",
+        "rich.pretty.Node.check_length",
+        "rich.containers.Lines.justify",
+        "rich.pretty._Line.check_length",
+        "tests.test_cells.test_cell_len_long_string",
+        "rich.text.Text.truncate",
+        "rich.console.Console.export_svg",
+        "rich.pretty.Pretty.__rich_measure__",
+        "rich.segment.Segment._split_cells",
+        "tests.test_cells.test_set_cell_size_infinite",
+        "tests.test_segment.test_split_cells_mixed",
+        "rich.text.Text.__rich_measure__",
+        "rich.rule.Rule.__init__",
+        "rich.text.Text.cell_len"
+      ],
+      "callees": [
+        "rich.cells.cached_cell_len",
+        "rich.cells._cell_len",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "iter",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "rich.cells._cell_len",
+      "callers": [
+        "rich._loop.loop_first",
+        "tests.test_progress.test_track",
+        "rich.segment.Segment.simplify",
+        "tests.test_progress.test_no_output_if_progress_is_disabled_non_interactive",
+        "rich.box.Box.__init__",
+        "rich._loop.loop_last",
+        "rich.style.Style.parse",
+        "tests.test_progress.test_no_output_if_progress_is_disabled",
+        "rich.pretty.traverse._traverse",
+        "rich.segment.Segment.divide",
+        "rich.syntax.Syntax.highlight.tokens_to_spans",
+        "tests.test_progress.test_progress_track",
+        "examples.downloader.copy_url",
+        "rich.style.Style.combine",
+        "rich.cells._cell_len",
+        "rich.containers.Lines.__iter__",
+        "rich._loop.loop_first_last",
+        "rich.style.Style.chain",
+        "rich.tree.Tree.__rich_measure__",
+        "rich._null_file.NullFile.__iter__",
+        "rich.ansi.AnsiDecoder.decode_line",
+        "rich.table.Table._calculate_column_widths",
+        "rich.console.Console.render",
+        "tests.test_null_file.test_null_file",
+        "rich.progress.Task.speed",
+        "rich.containers.Renderables.__iter__",
+        "rich.tree.Tree.__rich_console__"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "sum",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "rich.cells._cell_len",
+      "callers": [
+        "examples.jobs",
+        "rich.progress._Reader.readlines",
+        "rich.segment.Segment.get_line_length",
+        "rich._ratio.ratio_distribute",
+        "rich.columns.Columns.__rich_console__",
+        "examples.fullscreen",
+        "rich.style.Style.__init__",
+        "rich._ratio.ratio_resolve",
+        "rich.style.Style.combine",
+        "rich.cells._cell_len",
+        "rich.table.Table._collapse_widths",
+        "rich.containers.Lines.justify",
+        "rich.segment.Segment.adjust_line_length",
+        "rich._ratio.ratio_reduce",
+        "rich.style.Style.chain",
+        "rich.table.Table.__rich_measure__",
+        "rich.table.Table._calculate_column_widths",
+        "examples.live_progress",
+        "rich._ratio",
+        "rich.table.Table.__rich_console__",
+        "rich.progress.Task.speed",
+        "rich.cells._split_text",
+        "rich.tree.Tree.__rich_console__"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "_is_single_cell_widths",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "rich.cells._cell_len",
+      "callers": [
+        "rich.cells._cell_len",
+        "rich.cells.split_text",
+        "rich.cells.set_cell_size",
+        "rich.cells.chop_cells"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "next",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "rich.cells._cell_len",
+      "callers": [
+        "rich._loop.loop_first",
+        "tests.test_progress.test_track",
+        "rich.segment.Segment.simplify",
+        "rich.live",
+        "tests.test_progress.test_no_output_if_progress_is_disabled_non_interactive",
+        "rich._loop.loop_last",
+        "rich.style.Style.parse",
+        "tests.test_progress.test_no_output_if_progress_is_disabled",
+        "rich.segment.Segment.divide",
+        "rich.syntax.Syntax.highlight.tokens_to_spans",
+        "tests.test_progress.test_progress_track",
+        "rich.traceback.Traceback.extract",
+        "rich.style.Style.combine",
+        "rich.cells._cell_len",
+        "rich.progress._Reader.__next__",
+        "rich._loop.loop_first_last",
+        "tests.test_tools.test_loop_first_last",
+        "rich.style.Style.chain",
+        "rich.tree.Tree.__rich_measure__",
+        "rich.ansi.AnsiDecoder.decode_line",
+        "rich.table.Table._calculate_column_widths",
+        "tests.test_null_file.test_null_file",
+        "tests.test_tools.test_loop_first",
+        "rich.progress.Task.speed",
+        "rich.progress",
+        "tests.test_tools.test_loop_last",
+        "rich.tree.Tree.__rich_console__"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "rich.cells._split_text",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "rich.cells.split_graphemes",
+      "callers": [
+        "rich.cells.split_text",
+        "rich.cells.set_cell_size"
+      ],
+      "callees": [
+        "len",
+        "sum",
+        "int",
+        "rich.cells.split_graphemes",
+        "map"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_cells.test_split_graphemes",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "rich.cells.split_graphemes",
+      "callers": [],
+      "callees": [
+        "rich.cells.cell_len",
+        "pytest.mark.parametrize",
+        "rich.cells.split_graphemes"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.cells.chop_cells",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "rich.cells.split_graphemes",
+      "callers": [
+        "tests.test_cells.test_chop_cells_double_width_boundary",
+        "tests.test_cells.test_chop_cells",
+        "rich._wrap.divide_line",
+        "rich._wrap",
+        "tests.test_cells.test_chop_cells_mixed_width"
+      ],
+      "callees": [
+        "len",
+        "lines.append",
+        "_is_single_cell_widths",
+        "rich.cells.split_graphemes",
+        "range"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "spans.append",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "rich.cells.split_graphemes",
+      "callers": [
+        "rich.cells.split_graphemes"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "tests.test_cells.test_is_single_cell_widths",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "ord",
+      "callers": [],
+      "callees": [
+        "ord",
+        "rich.cells._is_single_cell_widths"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_unicode_data.test_load",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "rich._unicode_data.load",
+      "callers": [],
+      "callees": [
+        "rich._unicode_data.load"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_unicode_data.test_load_version_invalid",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "rich._unicode_data.load",
+      "callers": [],
+      "callees": [
+        "rich._unicode_data.load"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_unicode_data.test_load_version",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "rich._unicode_data.load",
+      "callers": [],
+      "callees": [
+        "rich._unicode_data.load",
+        "pytest.mark.parametrize"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich._log_render.LogRender.__call__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "time_format",
+        "output.add_row",
+        "callable",
+        "path_text.append",
+        "rich.text.Text",
+        "log_time.strftime",
+        "rich.table.Table.grid",
+        "rich.containers.Renderables",
+        "output.add_column",
+        "console.get_datetime",
+        "row.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.file_proxy.FileProxy.write",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "text.partition",
+        "buffer.append",
+        "isinstance",
+        "len",
+        "lines.append",
+        "buffer.clear",
+        "rich.text.Text",
+        "console.print",
+        "type",
+        "rich.file_proxy.FileProxy.__ansi_decoder.decode_line",
+        "TypeError"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.pretty.traverse.to_repr",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "rich.pretty._safe_isinstance",
+        "repr",
+        "str"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.progress._Reader.readline",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.progress._Reader.handle.readline",
+        "len",
+        "rich.progress._Reader.progress.advance"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_text.test_wrap_tabs",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "str",
+        "text.wrap",
+        "rich.text.Text",
+        "rich.console.Console"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich._ratio.ratio_distribute",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "tests.test_tools.test_ratio_distribute",
+        "rich.table.Table._calculate_column_widths"
+      ],
+      "callees": [
+        "zip",
+        "len",
+        "max",
+        "math.ceil",
+        "append",
+        "sum"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.pretty.Node.render",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "str",
+        "rich.pretty._Line",
+        "line.check_length",
+        "line.expand"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.markup",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "operator.itemgetter",
+        "markup_spans.sort",
+        "len",
+        "append",
+        "rich.markup.escape"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.spinner.Spinner.render",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.spinner.Spinner.__rich_measure__",
+        "rich.spinner.Spinner.__rich_console__"
+      ],
+      "callees": [
+        "len",
+        "isinstance",
+        "table.add_row",
+        "rich.text.Text",
+        "int",
+        "rich.text.Text.assemble",
+        "rich.table.Table.grid"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.plain",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.control.strip_control_codes",
+        "len",
+        "rich.text.Text._trim_spans"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.repr.auto.do_replace.auto_repr",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.repr.auto.do_replace.__rich_repr__",
+        "len",
+        "isinstance",
+        "append",
+        "getattr",
+        "repr"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.align.VerticalCenter.__rich_console__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "console.get_style",
+        "rich.segment.Segment",
+        "rich.segment.Segment.line",
+        "rich.segment.Segment.get_shape",
+        "console.render_lines",
+        "options.update",
+        "blank_lines"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_traceback.test_rich_traceback_omit_optional_local_flag",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "sys.exc_info",
+        "level1",
+        "pytest.mark.parametrize",
+        "rich.traceback.Traceback.from_exception"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.segment.Segment.align_top",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "tests.test_segment.test_align_top"
+      ],
+      "callees": [
+        "cls",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text._trim_spans",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.text.Text.plain"
+      ],
+      "callees": [
+        "_Span",
+        "min",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.highlighter.JSONHighlighter.highlight",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "re.finditer",
+        "match.span",
+        "append",
+        "super",
+        "rich.text.Span"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_table.test_min_width",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "print",
+        "all",
+        "table.add_row",
+        "console.end_capture",
+        "table.__rich_measure__",
+        "console.begin_capture",
+        "output.splitlines",
+        "rich.measure.Measurement",
+        "rich.console.Console",
+        "console.print",
+        "console.options.update_width",
+        "rich.table.Table"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.segment.Segment.align_middle",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "tests.test_segment.test_align_middle"
+      ],
+      "callees": [
+        "cls",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.progress_bar.ProgressBar._render_pulse",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.progress_bar.ProgressBar.__rich_console__"
+      ],
+      "callees": [
+        "rich.progress_bar.ProgressBar._get_pulse_segments",
+        "len",
+        "console.get_style",
+        "int",
+        "time.monotonic"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.table.Table._collapse_widths",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.table.Table._calculate_column_widths"
+      ],
+      "callees": [
+        "min",
+        "zip",
+        "len",
+        "rich._ratio.ratio_reduce",
+        "any",
+        "max",
+        "sum"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.pretty._Line.check_length",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.cells.cell_len",
+        "len",
+        "rich.pretty._Line.node.check_length"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.progress._Reader.__next__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.progress._Reader.progress.advance",
+        "next",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.prompt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.print",
+        "Confirm.ask",
+        "len",
+        "IntPrompt.ask",
+        "typing.TypeVar",
+        "Prompt.ask"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.syntax._get_code_index_for_syntax_position",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.syntax.Syntax._apply_stylized_ranges"
+      ],
+      "callees": [
+        "min",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich._wrap.divide_line",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.text.Text.wrap"
+      ],
+      "callees": [
+        "rich._loop.loop_last",
+        "rich._wrap.words",
+        "len",
+        "append",
+        "rich.cells.chop_cells",
+        "_cell_len",
+        "word.rstrip"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_text.test_split",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "list",
+        "line1.append",
+        "rich.text.Text",
+        "line2.append",
+        "text.append",
+        "text.split"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.table.Table._render",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.table.Table.__rich_console__"
+      ],
+      "callees": [
+        "align_cell",
+        "get_style",
+        "len",
+        "_Segment.set_shape",
+        "_divider.text.strip",
+        "console.get_style",
+        "_box.get_row",
+        "options.update",
+        "_box.get_bottom",
+        "rich._pick.pick_bool",
+        "rich.table.Table._get_cells",
+        "rich._loop.loop_last",
+        "rich.table.Table.box.substitute",
+        "max",
+        "enumerate",
+        "range",
+        "rich.style.Style.null",
+        "_Segment",
+        "list",
+        "_box.get_top",
+        "rich._loop.loop_first_last",
+        "console.render_lines",
+        "zip",
+        "_box.get_plain_headed_box",
+        "get_row_style",
+        "rich.segment.Segment.line",
+        "cells.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_traceback.test_traceback_finely_grained",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "print",
+        "rich.traceback.Traceback",
+        "isinstance",
+        "pytest.mark.skipif"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.theme.ThemeStack.pop_theme",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.theme.ThemeStackError",
+        "rich.theme.ThemeStack._entries.pop",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.palette.Palette.match",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "min",
+        "len",
+        "range",
+        "functools.lru_cache"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_style.test_link_id",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.style.Style",
+        "len",
+        "rich.style.Style.parse",
+        "isinstance"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.pretty.traverse._traverse.iter_rich_args",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "rich.pretty._safe_isinstance"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_traceback.test_suppress",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "rich.traceback.Traceback"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.stylize_before",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.text.Span",
+        "min",
+        "len",
+        "rich.text.Text._spans.insert"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_text.test_wrap_long_words_justify_left",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.console.Console",
+        "len",
+        "rich.text.Text",
+        "text.wrap"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.ansi._ansi_tokenize",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.ansi.AnsiDecoder.decode_line"
+      ],
+      "callees": [
+        "len",
+        "match.span",
+        "sgr.endswith",
+        "re_ansi.finditer",
+        "match.groups",
+        "rich.ansi._AnsiToken"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "benchmarks.benchmarks.TextSuite.setup",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.text.Text.from_markup",
+        "rich.console.Console",
+        "len",
+        "io.StringIO"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_layout.test_unsplit",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "rich.layout.Layout",
+        "layout.split",
+        "layout.unsplit"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_text.test_len",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "rich.text.Text"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.remove_suffix",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.text.Text.right_crop",
+        "len",
+        "rich.text.Text.plain.endswith"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.detect_indentation",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.text.Text.with_indent_guides"
+      ],
+      "callees": [
+        "match.group",
+        "len",
+        "functools.reduce",
+        "re.finditer"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.live",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "exchange_rate_dict.items",
+        "len",
+        "itertools.cycle",
+        "live_table.update",
+        "table.add_column",
+        "exchange_rate_dict.keys",
+        "rich.rule.Rule",
+        "console.log",
+        "rich.live.Live",
+        "range",
+        "rich.align.Align.center",
+        "rich.panel.Panel",
+        "list",
+        "random.randint",
+        "exchange_rate_dict.pop",
+        "rich.syntax.Syntax",
+        "next",
+        "random.random",
+        "time.sleep",
+        "rich.table.Table",
+        "table.add_row",
+        "rich.text.Text",
+        "rich.console.Console"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.render",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "operator.itemgetter",
+        "rich.style.Style.null",
+        "spans.sort",
+        "zip",
+        "_Segment",
+        "list",
+        "get_style",
+        "len",
+        "stack_pop",
+        "enumerate",
+        "rich.segment.Segment",
+        "functools.partial",
+        "stack_append",
+        "get_current_style"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.segment.Segment.align_bottom",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "tests.test_segment.test_align_bottom"
+      ],
+      "callees": [
+        "cls",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.syntax.Syntax._get_syntax",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.syntax.Syntax.__rich_console__"
+      ],
+      "callees": [
+        "rich.syntax.Syntax._theme.get_style_for_token",
+        "len",
+        "rich._loop.loop_first",
+        "rich.syntax.Syntax._get_number_styles",
+        "rich.syntax.Syntax._get_base_style",
+        "options.update",
+        "str",
+        "max",
+        "enumerate",
+        "line.render",
+        "text.remove_suffix",
+        "render_options.update",
+        "console.render",
+        "_Segment",
+        "text.with_indent_guides",
+        "list",
+        "highlight_line",
+        "console.render_lines",
+        "rich.style.Style",
+        "rich.syntax.Syntax._process_code",
+        "text.split",
+        "_Segment.adjust_line_length",
+        "rich.text.Text",
+        "rich.syntax.Syntax.highlight"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.table.Table.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "isinstance",
+        "list",
+        "rich.padding.Padding.unpack",
+        "rich.table.Table.add_column",
+        "append_column"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.table.Table.add_row",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "add_cell",
+        "len",
+        "list",
+        "rich.table.Table.columns.append",
+        "rich.table.Table.rows.append",
+        "enumerate",
+        "rich.text.Text",
+        "rich.errors.NotRenderableError",
+        "rich.table.Column",
+        "rich.protocol.is_renderable",
+        "type",
+        "rich.table.Row"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_text.test_highlight_regex_callable",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "text.highlight_regex",
+        "text._spans.clear",
+        "rich.text.Text",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_text.test_wrap_4",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.console.Console",
+        "len",
+        "rich.text.Text",
+        "text.wrap"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.traceback.Traceback._render_syntax_error",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.traceback.Traceback.__rich_console__.render_stack"
+      ],
+      "callees": [
+        "rich.highlighter.ReprHighlighter",
+        "syntax_error.line.rstrip",
+        "min",
+        "len",
+        "syntax_error_text.stylize",
+        "str",
+        "os.path.exists",
+        "rich.console.group",
+        "rich.traceback.PathHighlighter",
+        "rich.text.Text.assemble",
+        "path_highlighter",
+        "highlighter",
+        "rich.text.Text.from_markup"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.table.Table.add_column",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.table.Table.__init__"
+      ],
+      "callees": [
+        "len",
+        "rich.table.Column",
+        "rich.table.Table.columns.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.emoji",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "rich._emoji_codes.EMOJI.keys",
+        "console.save_html",
+        "rich.console.Console",
+        "console.print",
+        "sorted",
+        "rich.columns.Columns"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_layout.test_add_split",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "layout.add_split",
+        "rich.layout.Layout",
+        "layout.split"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.color.Color.parse",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.style.Style.parse",
+        "tests.test_color.test_rich",
+        "tests.test_color.test_parse_error",
+        "tests.test_style.test_clear_meta_and_links",
+        "tests.test_color.test_system",
+        "benchmarks.benchmarks.ColorSuiteCached.setup",
+        "tests.test_color.test_parse_success",
+        "tests.test_color.test_downgrade",
+        "tests.test_color.test_repr",
+        "tests.test_color.test_truecolor",
+        "benchmarks.benchmarks.ColorSuite.setup",
+        "tests.test_color.test_get_ansi_codes",
+        "tests.test_color.test_str",
+        "rich.style.Style.__init__._make_color"
+      ],
+      "callees": [
+        "len",
+        "color.lower",
+        "color_match.groups",
+        "cls",
+        "int",
+        "rich.color.ColorParseError",
+        "functools.lru_cache",
+        "rich.color_triplet.ColorTriplet",
+        "ANSI_COLOR_NAMES.get",
+        "color_rgb.split",
+        "all",
+        "RE_COLOR.match"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.pretty._Line.expand",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich._loop.loop_last",
+        "rich.pretty._Line",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.markdown.ListElement.__rich_console__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "item.render_bullet",
+        "len",
+        "item.render_number",
+        "enumerate"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich._win32_console.LegacyWindowsTerm.set_title",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich._win32_console.SetConsoleTitle",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.join",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "_Span",
+        "append_span",
+        "len",
+        "iter_text",
+        "extend_spans",
+        "rich.text.Text.blank_copy",
+        "extend_text"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich._inspect.Inspect._render",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich._inspect.Inspect.__rich__"
+      ],
+      "callees": [
+        "items_table.add_column",
+        "len",
+        "repr",
+        "rich.text.Text.assemble",
+        "rich.table.Table.grid",
+        "highlighter",
+        "add_row",
+        "warning.stylize",
+        "items.sort",
+        "dir",
+        "key.startswith",
+        "rich.panel.Panel",
+        "callable",
+        "inspect.ismodule",
+        "key_text.copy",
+        "inspect.isclass",
+        "doc.stylize",
+        "rich._inspect.Inspect._get_formatted_doc",
+        "safe_getattr",
+        "_signature_text.append",
+        "rich.text.Text",
+        "rich.pretty.Pretty",
+        "rich._inspect.Inspect._get_signature",
+        "rich.text.Text.from_markup"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.console.Console.export_svg",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.console.Console.save_svg"
+      ],
+      "callees": [
+        "len",
+        "text_group.append",
+        "rich.console.Console._record_buffer.clear",
+        "repr",
+        "classes.items",
+        "title.encode",
+        "str",
+        "math.ceil",
+        "enumerate",
+        "zlib.adler32",
+        "range",
+        "list",
+        "rich.segment.Segment.filter_control",
+        "rich.style.Style",
+        "make_tag",
+        "rich.segment.Segment.split_and_crop_lines",
+        "style.color.get_truecolor",
+        "style.bgcolor.get_truecolor",
+        "get_svg_style",
+        "rich.cells.cell_len",
+        "escape_text",
+        "code_format.format",
+        "text_backgrounds.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_win32_console.test_write_styled",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "rich._win32_console.LegacyWindowsTerm",
+        "rich.style.Style.parse",
+        "capsys.readouterr",
+        "unittest.mock.patch.object",
+        "term.write_styled"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.pretty.Node.iter_tokens",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.pretty.Node.check_length",
+        "rich.pretty.Node.__str__"
+      ],
+      "callees": [
+        "len",
+        "child.iter_tokens"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_traceback.test_handler",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "sys.exc_info",
+        "print",
+        "io.StringIO",
+        "re.finditer",
+        "level1",
+        "repr",
+        "console.file.getvalue",
+        "rich.console.Console",
+        "frame_start.start",
+        "rich.traceback.install",
+        "pytest.fail",
+        "sys.excepthook"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.syntax.Syntax._numbers_column_width",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.syntax.Syntax.code.count",
+        "len",
+        "str"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.get_style_at_offset",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "get_style"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.markdown.ListItem.render_number",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "rich._loop.loop_first",
+        "str",
+        "console.get_style",
+        "rich.segment.Segment",
+        "console.render_lines",
+        "options.update"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_text.test_divide",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "text.divide",
+        "str",
+        "rich.text.Text",
+        "rich.text.Span",
+        "text.append"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.pad",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "_Span",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.append_text",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "_Span",
+        "rich.text.Text._spans.extend",
+        "text._spans.copy",
+        "len",
+        "rich.text.Text._spans.append",
+        "rich.text.Text._text.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.palette.Palette.__rich__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "str",
+        "table.add_row",
+        "enumerate",
+        "repr",
+        "rich.text.Text",
+        "rich.style.Style",
+        "rich.color.Color.from_rgb",
+        "rich.table.Table"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.console.Console.render_lines",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.console.Console.update_screen"
+      ],
+      "callees": [
+        "itertools.islice",
+        "list",
+        "len",
+        "max",
+        "rich.segment.Segment.split_and_crop_lines",
+        "rich.segment.Segment",
+        "lines.extend",
+        "rich.segment.Segment.apply_style",
+        "rich.console.Console.render"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.append",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "_Span",
+        "rich.text.Text._spans.extend",
+        "text._spans.copy",
+        "len",
+        "isinstance",
+        "rich.control.strip_control_codes",
+        "rich.text.Span",
+        "rich.text.Text._spans.append",
+        "rich.text.Text._text.append",
+        "TypeError",
+        "ValueError"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.stylize",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.text.Text.on",
+        "rich.text.Text.apply_meta"
+      ],
+      "callees": [
+        "rich.text.Span",
+        "rich.text.Text._spans.append",
+        "len",
+        "min"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "examples.cp_progress",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "progress.open",
+        "shutil.copyfileobj",
+        "len",
+        "print",
+        "os.path.basename",
+        "open",
+        "rich.progress.Progress"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.table.Table._get_cells",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.table.Table._render",
+        "rich.table.Table._measure_column"
+      ],
+      "callees": [
+        "len",
+        "get_style",
+        "rich.table._Cell",
+        "get_padding",
+        "any",
+        "rich._loop.loop_first_last",
+        "getattr",
+        "_Padding",
+        "_append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.progress.Progress.advance",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "rich.progress.ProgressSample",
+        "popleft",
+        "rich.progress.Progress.get_time",
+        "_progress.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.with_indent_guides",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "new_lines.extend",
+        "rich.text.Text.copy",
+        "len",
+        "line.stylize",
+        "re_indent.match",
+        "divmod",
+        "rich.text.Text.detect_indentation",
+        "rich.text.Text",
+        "add_line",
+        "match.group",
+        "text.blank_copy",
+        "text.split",
+        "re.compile",
+        "text.expand_tabs"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_text.test_highlight_regex",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "text.highlight_regex",
+        "rich.text.Text",
+        "rich.text.Span",
+        "sorted",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_text.test_wrap_3",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "print",
+        "text.wrap",
+        "repr",
+        "rich.text.Text",
+        "rich.console.Console"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.console.Console._write_buffer",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.console.Console._check_buffer"
+      ],
+      "callees": [
+        "rich.console.Console._render_buffer",
+        "rich._win32_console.LegacyWindowsTerm",
+        "list",
+        "len",
+        "rich._windows_renderer.legacy_windows_render",
+        "text.splitlines",
+        "batch_append",
+        "rich.console.Console.file.write",
+        "rich.jupyter.display",
+        "rich.console.Console.file.flush",
+        "rich._fileno.get_fileno",
+        "batch.clear",
+        "write",
+        "rich.segment.Segment.remove_color",
+        "rich.console.Console._record_buffer.extend"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.table.Table._extra_width",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.segment.Segment.get_shape",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.align.VerticalCenter.__rich_console__",
+        "tests.test_segment.test_get_shape",
+        "rich.live_render.LiveRender.__rich_console__",
+        "rich.align.Align.__rich_console__"
+      ],
+      "callees": [
+        "max",
+        "get_line_length",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.set_length",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.text.Text.pad_right",
+        "rich.text.Text.right_crop",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.traceback.Traceback._render_stack",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.traceback.Traceback.__rich_console__.render_stack"
+      ],
+      "callees": [
+        "len",
+        "frame_filename.startswith",
+        "any",
+        "rich.text.Text.assemble",
+        "str",
+        "rich.console.group",
+        "rich.traceback._iter_syntax_lines",
+        "enumerate",
+        "path_highlighter",
+        "range",
+        "line.lstrip",
+        "os.path.exists",
+        "rich.traceback.PathHighlighter",
+        "syntax.stylize_range",
+        "rich.syntax.Syntax",
+        "rich.traceback.Traceback._guess_lexer",
+        "frame.filename.startswith",
+        "rich.text.Text",
+        "render_locals",
+        "linecache.getlines",
+        "rich.columns.Columns"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "examples.downloader.copy_url",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "dest_file.write",
+        "response.info",
+        "len",
+        "urllib.request.urlopen",
+        "iter",
+        "progress.update",
+        "progress.start_task",
+        "int",
+        "functools.partial",
+        "done_event.is_set",
+        "progress.console.log",
+        "open"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_markdown.test_table_with_empty_cells",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "tests.test_markdown.render",
+        "rich.markdown.Markdown"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.containers.Lines.justify",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "line.truncate",
+        "tokens.append",
+        "len",
+        "line.pad_left",
+        "enumerate",
+        "sum",
+        "line.split",
+        "next_word.get_style_at_offset",
+        "itertools.zip_longest",
+        "word.get_style_at_offset",
+        "rich.text.Text",
+        "rich.cells.cell_len",
+        "line.rstrip",
+        "line.pad_right",
+        "range"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.progress.MofNCompleteColumn.render",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "int",
+        "len",
+        "rich.text.Text",
+        "str"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.padding.Padding.unpack",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.table.Table.__init__",
+        "rich.padding.Padding.__init__",
+        "rich.panel.Panel.__rich_measure__",
+        "tests.test_padding.test_unpack",
+        "rich.columns.Columns.__rich_console__",
+        "rich.syntax.PaddingProperty.__set__",
+        "rich.syntax.Syntax.__init__",
+        "rich.panel.Panel.__rich_console__",
+        "rich.table.Table.padding"
+      ],
+      "callees": [
+        "ValueError",
+        "len",
+        "isinstance"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.append_tokens",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "_Span",
+        "append_span",
+        "len",
+        "rich.control.strip_control_codes",
+        "append_text"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.__getitem__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "isinstance",
+        "rich.text.Text.divide",
+        "slice.indices",
+        "get_text_at",
+        "TypeError"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_text.test_wrap_long",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.console.Console",
+        "len",
+        "rich.text.Text",
+        "text.wrap"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tools.profile_divide",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "list",
+        "print",
+        "time.perf_counter",
+        "rich.segment.Segment.divide",
+        "rich.segment.Segment",
+        "range"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.console.Console.export_html",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.console.Console.save_html"
+      ],
+      "callees": [
+        "stylesheet_append",
+        "style.get_html_style",
+        "len",
+        "append",
+        "render_code_format.format",
+        "rich.segment.Segment.simplify",
+        "rich.segment.Segment.filter_control",
+        "styles.setdefault",
+        "styles.items",
+        "html.escape"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.table.Table._calculate_column_widths",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.table.Table.__rich_console__",
+        "rich.table.Table.__rich_measure__"
+      ],
+      "callees": [
+        "zip",
+        "rich.table.Table._collapse_widths",
+        "len",
+        "min",
+        "get_padding_width",
+        "rich._ratio.ratio_reduce",
+        "any",
+        "iter",
+        "sum",
+        "enumerate",
+        "rich._ratio.ratio_distribute",
+        "options.update_width",
+        "next",
+        "rich.table.Table._measure_column"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_text.test_wrap_overflow",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.console.Console",
+        "len",
+        "rich.text.Text",
+        "text.wrap"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.color.parse_rgb_hex",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "tests.test_color.test_parse_rgb_hex"
+      ],
+      "callees": [
+        "int",
+        "len",
+        "rich.color_triplet.ColorTriplet"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.markup._parse",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "tests.test_markup.test_parse_link",
+        "rich.markup.render",
+        "tests.test_markup.test_parse"
+      ],
+      "callees": [
+        "_Tag",
+        "len",
+        "match.span",
+        "tag_text.partition",
+        "_divmod",
+        "RE_TAGS.finditer",
+        "match.groups"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.right_crop",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.text.Text.set_length",
+        "rich.text.Text.rstrip_end",
+        "rich.text.Text.remove_suffix"
+      ],
+      "callees": [
+        "_Span",
+        "min",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.syntax.Syntax._apply_stylized_ranges",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.syntax.Syntax.highlight"
+      ],
+      "callees": [
+        "match.start",
+        "len",
+        "re.finditer",
+        "text.stylize",
+        "rich.syntax._get_code_index_for_syntax_position",
+        "text.stylize_before"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_padding.test_rich_console",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "zip",
+        "len",
+        "rich.console.ConsoleDimensions",
+        "rich.console.ConsoleOptions",
+        "rich.segment.Segment",
+        "rich.console.Console",
+        "rich.style.Style",
+        "rich.padding.Padding"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_win32_console.test_hide_cursor",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "unittest.mock.patch.object",
+        "rich._win32_console.LegacyWindowsTerm",
+        "term.hide_cursor"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich._unicode_data.__init__._parse_version",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich._unicode_data.__init__.load"
+      ],
+      "callees": [
+        "version.split",
+        "len",
+        "typing.cast",
+        "map",
+        "ValueError",
+        "tuple"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.tree.Tree.__rich_console__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "style_stack.pop",
+        "get_style",
+        "len",
+        "guide_style_stack.pop",
+        "rich._loop.loop_first",
+        "_Segment.apply_style",
+        "style_stack.push",
+        "options.update",
+        "rich._loop.loop_last",
+        "make_guide",
+        "sum",
+        "range",
+        "rich.style.Style.null",
+        "push",
+        "rich.styled.Styled",
+        "rich.style.StyleStack",
+        "next",
+        "console.render_lines",
+        "rich.style.Style",
+        "levels.append",
+        "guide_style_stack.push",
+        "iter",
+        "rich.segment.Segment.line",
+        "pop",
+        "levels.pop"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.pad_left",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.text.Text.align"
+      ],
+      "callees": [
+        "_Span",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.columns.Columns.__rich_console__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "_Align",
+        "render_str",
+        "rich.table.Table.grid",
+        "table.add_column",
+        "add_row",
+        "rich.constrain.Constrain",
+        "max",
+        "sum",
+        "get_renderable",
+        "widths.clear",
+        "range",
+        "operator.itemgetter",
+        "collections.defaultdict",
+        "rich.padding.Padding.unpack",
+        "isinstance",
+        "get_measurement",
+        "widths.values",
+        "iter_renderables"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.segment.Segment.split_cells",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "tests.test_segment.test_split_cells_single",
+        "tests.test_segment.test_split_cells_doubles",
+        "tests.test_segment.test_split_cells_mixed"
+      ],
+      "callees": [
+        "rich.segment.Segment",
+        "len",
+        "rich.cells._is_single_cell_widths",
+        "rich.segment.Segment._split_cells"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.expand_tabs",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.text.Text.split",
+        "len",
+        "append",
+        "line.split",
+        "rich.text.Text",
+        "part.extend_style",
+        "part.plain.endswith"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.segment.Segment.set_shape",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "tests.test_segment.test_set_shape",
+        "rich.screen.Screen.__rich_console__",
+        "rich.align.Align.__rich_console__"
+      ],
+      "callees": [
+        "cls",
+        "adjust_line_length",
+        "len",
+        "shaped_lines.extend"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.bar.Bar.__rich_console__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "min",
+        "len",
+        "int",
+        "rich.segment.Segment",
+        "rich.segment.Segment.line"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.control.strip_control_codes",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.cells.set_cell_size",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.rule.Rule._rule_line",
+        "rich.segment.Segment.adjust_line_length",
+        "tests.test_cells.test_set_cell_size_infinite",
+        "rich.text.Text.truncate",
+        "rich.rule.Rule.__rich_console__",
+        "tests.test_cells.test_set_cell_size"
+      ],
+      "callees": [
+        "_is_single_cell_widths",
+        "rich.cells.cell_len",
+        "len",
+        "rich.cells._split_text"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "examples.dynamic_progress",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.progress.BarColumn",
+        "rich.progress.SpinnerColumn",
+        "rich.progress.TextColumn",
+        "rich.panel.Panel",
+        "len",
+        "current_app_progress.add_task",
+        "current_app_progress.update",
+        "enumerate",
+        "current_app_progress.stop_task",
+        "rich.progress.TimeElapsedColumn",
+        "rich.live.Live",
+        "examples.dynamic_progress.run_steps",
+        "rich.console.Group",
+        "overall_progress.add_task",
+        "app_steps_progress.update",
+        "app_steps_progress.add_task",
+        "overall_progress.update",
+        "rich.progress.Progress"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.console.Console.print",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.console.Console.rule",
+        "rich.console.Console.print_json",
+        "rich.console.Console.print_exception",
+        "rich.console.Console.input",
+        "rich.console.Console.out",
+        "rich.console.Console.line"
+      ],
+      "callees": [
+        "rich.console.Console.options.update",
+        "min",
+        "len",
+        "rich.console.NewLine",
+        "rich.console.Console._buffer.extend",
+        "render",
+        "rich.console.Console._collect_renderables",
+        "new_segments.insert",
+        "rich.segment.Segment.split_and_crop_lines",
+        "buffer_extend",
+        "rich.segment.Segment.line",
+        "rich.console.Console.get_style",
+        "rich.segment.Segment.apply_style",
+        "extend",
+        "rich.segment.Segment.split_lines_terminator",
+        "new_segments.append",
+        "hook.process_renderables"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.extend_style",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.text.Text._text.append",
+        "len",
+        "span.extend"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.pretty.traverse._traverse",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "iter_rich_args",
+        "repr_callable",
+        "getattr",
+        "obj.items",
+        "pop_visited",
+        "_traverse",
+        "dataclasses.is_dataclass",
+        "iter_attrs",
+        "rich._loop.loop_last",
+        "dataclasses.fields",
+        "obj.__rich_repr__",
+        "str",
+        "rich.pretty.Node",
+        "append",
+        "id",
+        "rich.pretty._has_default_namedtuple_repr",
+        "enumerate",
+        "rich.pretty._is_namedtuple",
+        "rich.pretty._is_attr_object",
+        "rich.pretty._is_dataclass_repr",
+        "rich.pretty._get_attr_fields",
+        "list",
+        "to_repr",
+        "obj._asdict",
+        "inspect.isclass",
+        "itertools.islice",
+        "rich.pretty._safe_isinstance",
+        "iter",
+        "hasattr",
+        "type",
+        "push_visited"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.columns.Columns.__rich_console__.iter_renderables",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "itertools.chain.from_iterable",
+        "zip",
+        "len",
+        "list",
+        "range"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.divide",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.text.Text.split",
+        "rich.text.Text.__getitem__"
+      ],
+      "callees": [
+        "_Span",
+        "rich.text.Text.copy",
+        "len",
+        "rich.containers.Lines",
+        "list",
+        "zip",
+        "min",
+        "max",
+        "_Text",
+        "range"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "examples.rainbow.RainbowHighlighter.highlight",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "random.randint",
+        "len",
+        "range",
+        "text.stylize"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.pad_right",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.text.Text.set_length",
+        "rich.text.Text.align"
+      ],
+      "callees": [
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.table.Table.get_row_style",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.style.Style.null",
+        "len",
+        "console.get_style"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_text.test_wrap_overflow_long",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.console.Console",
+        "len",
+        "rich.text.Text",
+        "text.wrap"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.rstrip_end",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "min",
+        "len",
+        "whitespace_match.group",
+        "_re_whitespace.search",
+        "rich.text.Text.right_crop"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.console.Console.set_live",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "rich.console.Console._live_stack.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.text.Text.truncate",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.text.Text.align"
+      ],
+      "callees": [
+        "rich.cells.cell_len",
+        "len",
+        "rich.cells.set_cell_size"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_syntax.test_syntax_highlight_ranges",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len",
+        "print",
+        "repr",
+        "syntax.stylize_range",
+        "tests.render.render",
+        "rich.syntax.Syntax",
+        "rich.style.Style",
+        "rich.syntax._SyntaxHighlightRange"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_text.test_wrap_long_multi_codepoint",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.console.Console",
+        "len",
+        "rich.text.Text",
+        "text.wrap"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.table.Table._get_padding_width",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.table.Table._measure_column"
+      ],
+      "callees": [
+        "len",
+        "abs"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.console.ScreenContext.update",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.console.ScreenContext.console.print",
+        "len",
+        "rich.console.Group"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.progress._Reader.read",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "rich.progress._Reader.progress.advance",
+        "rich.progress._Reader.handle.read",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.table.Table.row_count",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.segment.Segment._split_cells",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "rich.segment.Segment.split_cells"
+      ],
+      "callees": [
+        "len",
+        "_Segment",
+        "int",
+        "rich.cells.cell_len",
+        "functools.lru_cache",
+        "cell_size"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.markup.render",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [
+        "tests.test_markup.test_render_not_tags",
+        "tests.test_markup.test_events",
+        "tests.test_markup.test_render",
+        "tests.test_markup.test_render_overlap",
+        "tests.test_markup.test_render_close_ambiguous",
+        "tests.test_markup.test_escape_escape",
+        "tests.test_markup.test_render_close",
+        "rich.console.Console.render_str",
+        "tests.test_markup.test_markup_error",
+        "tests.test_markup.test_render_combine",
+        "rich.text.Text.from_markup",
+        "tests.test_markup.test_render_link",
+        "tests.test_markup.test_adjoint",
+        "tests.test_markup.test_events_broken",
+        "tests.test_markup.test_render_meta",
+        "tests.test_markup.test_markup_escape"
+      ],
+      "callees": [
+        "append_span",
+        "_Tag",
+        "len",
+        "style_stack.pop",
+        "tag.name.startswith",
+        "rich.errors.MarkupError",
+        "ast.literal_eval",
+        "emoji_replace",
+        "operator.attrgetter",
+        "str",
+        "append",
+        "sorted",
+        "_Span",
+        "plain_text.replace",
+        "rich.style.Style",
+        "open_tag.name.startswith",
+        "normalize",
+        "open_tag.parameters.strip",
+        "handler_match.groups",
+        "pop_style",
+        "isinstance",
+        "rich.markup._parse",
+        "rich.text.Text",
+        "style_stack.append",
+        "pop",
+        "RE_HANDLER.match"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_win32_console.test_show_cursor",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "len",
+      "callers": [],
+      "callees": [
+        "unittest.mock.patch.object",
+        "len",
+        "term.show_cursor",
+        "rich._win32_console.LegacyWindowsTerm"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.progress_bar.ProgressBar._get_pulse_segments",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "functools.lru_cache",
+      "callers": [
+        "rich.progress_bar.ProgressBar._render_pulse"
+      ],
+      "callees": [
+        "_Style",
+        "rich.color_triplet.ColorTriplet",
+        "cos",
+        "_Segment",
+        "rich.color.blend_rgb",
+        "append",
+        "rich.segment.Segment",
+        "from_triplet",
+        "fore_style.color.get_truecolor",
+        "functools.lru_cache",
+        "back_style.color.get_truecolor",
+        "range"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.style.Style.parse",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "functools.lru_cache",
+      "callers": [
+        "benchmarks.benchmarks.StyleSuite.time_parse_mixed_complex_style",
+        "tests.test_windows_renderer.test_text_with_style",
+        "benchmarks.benchmarks.StyleSuite.setup",
+        "tests.test_style.test_bool",
+        "tests.test_win32_console.test_write_styled_bold",
+        "benchmarks.benchmarks.StyleSuite.time_parse_ansi",
+        "tests.test_bar.test_get_pulse_segments",
+        "tests.test_style.test_parse",
+        "tests.test_table.test_get_row_style",
+        "tests.test_win32_console.test_write_styled_no_foreground_color",
+        "rich.style.Style.normalize",
+        "tests.test_win32_console.test_write_styled_no_background_color",
+        "tests.test_style.test_clear_meta_and_links_clears_hash",
+        "examples.log",
+        "tests.test_syntax.test_pygments_syntax_theme",
+        "rich._win32_console",
+        "tests.test_syntax.test_get_number_styles",
+        "rich.theme.Theme.__init__",
+        "benchmarks.benchmarks.StyleSuite.time_parse_hex",
+        "tests.test_live_render.test_rich_console",
+        "tests.test_containers.test_lines_justify",
+        "tests.test_win32_console.test_write_styled",
+        "tests.test_style.test_clear_meta_and_links",
+        "rich.theme.Theme.from_file",
+        "tests.test_style.test_link_id",
+        "tests.test_ansi.test_decode",
+        "tests.test_win32_console.test_write_styled_reverse",
+        "tests.test_theme.test_theme_stack",
+        "tests.test_text.test_highlight_regex_callable.get_style",
+        "tests.test_syntax.test_highlight_background_color",
+        "rich.console.Console.get_style"
+      ],
+      "callees": [
+        "style_definition.split",
+        "rich.style.Style.null",
+        "iter",
+        "style_definition.strip",
+        "original_word.lower",
+        "next",
+        "STYLE_ATTRIBUTES.get",
+        "rich.errors.StyleSyntaxError",
+        "functools.lru_cache",
+        "rich.style.Style",
+        "rich.color.Color.parse"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.style.Style.normalize",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "functools.lru_cache",
+      "callers": [],
+      "callees": [
+        "rich.style.Style.parse",
+        "style.strip",
+        "functools.lru_cache",
+        "str"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.style.Style._add",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "functools.lru_cache",
+      "callers": [
+        "rich.style.Style.__add__"
+      ],
+      "callees": [
+        "rich.style.Style.__new__",
+        "functools.lru_cache",
+        "pickle.dumps"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.style.Style.clear_meta_and_links",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "functools.lru_cache",
+      "callers": [],
+      "callees": [
+        "rich.style.Style.__new__",
+        "functools.lru_cache"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.style.Style.get_html_style",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "functools.lru_cache",
+      "callers": [],
+      "callees": [
+        "bgcolor.get_truecolor",
+        "rich.color.blend_rgb",
+        "append",
+        "color.get_truecolor",
+        "functools.lru_cache",
+        "rich.color.Color.from_triplet"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.color.Color.downgrade",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "functools.lru_cache",
+      "callers": [],
+      "callees": [
+        "rich._palettes.WINDOWS_PALETTE.match",
+        "rich._palettes.STANDARD_PALETTE.match",
+        "round",
+        "colorsys.rgb_to_hls",
+        "functools.lru_cache",
+        "rich.color_triplet.ColorTriplet",
+        "rich.color.Color"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.color.Color.get_ansi_codes",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "functools.lru_cache",
+      "callers": [],
+      "callees": [
+        "functools.lru_cache",
+        "str"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-28T22:11:41"
+}

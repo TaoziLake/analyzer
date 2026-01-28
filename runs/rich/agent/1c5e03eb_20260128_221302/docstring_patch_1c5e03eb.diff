@@ -1,0 +1,249 @@
+--- a/rich/table.py
++++ b/rich/table.py
+@@ -321,6 +321,12 @@
+     def __rich_measure__(
+         self, console: "Console", options: "ConsoleOptions"
+     ) -> Measurement:
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++        """
+         max_width = options.max_width
+         if self.width is not None:
+             max_width = self.width
+@@ -476,6 +482,12 @@
+     def __rich_console__(
+         self, console: "Console", options: "ConsoleOptions"
+     ) -> "RenderResult":
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++        """
+         if not self.columns:
+             yield Segment("\n")
+             return
+@@ -524,7 +536,12 @@
+     def _calculate_column_widths(
+         self, console: "Console", options: "ConsoleOptions"
+     ) -> List[int]:
+-        """Calculate the widths of each column, including padding, not including borders."""
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++        """
+         max_width = options.max_width
+         columns = self.columns
+         width_ranges = [
+@@ -590,15 +607,12 @@
+     def _collapse_widths(
+         cls, widths: List[int], wrapable: List[bool], max_width: int
+     ) -> List[int]:
+-        """Reduce widths so that the total is under max_width.
++        """TODO: docstring
+ 
+         Args:
+-            widths (List[int]): List of widths.
+-            wrapable (List[bool]): List of booleans that indicate if a column may shrink.
+-            max_width (int): Maximum width to reduce to.
+-
+-        Returns:
+-            List[int]: A new list of widths.
++            widths:
++            wrapable:
++            max_width:
+         """
+         total_width = sum(widths)
+         excess_width = total_width - max_width
+@@ -628,7 +642,13 @@
+     def _get_cells(
+         self, console: "Console", column_index: int, column: Column
+     ) -> Iterable[_Cell]:
+-        """Get all the cells with padding and optional header."""
++        """TODO: docstring
++
++        Args:
++            console:
++            column_index:
++            column:
++        """
+ 
+         collapse_padding = self.collapse_padding
+         pad_edge = self.pad_edge
+@@ -699,7 +719,11 @@
+                 )
+ 
+     def _get_padding_width(self, column_index: int) -> int:
+-        """Get extra width from padding."""
++        """TODO: docstring
++
++        Args:
++            column_index:
++        """
+         _, pad_right, _, pad_left = self.padding
+ 
+         if self.collapse_padding:
+@@ -720,7 +744,13 @@
+         options: "ConsoleOptions",
+         column: Column,
+     ) -> Measurement:
+-        """Get the minimum and maximum width of the column."""
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++            column:
++        """
+ 
+         max_width = options.max_width
+         if max_width < 1:
+@@ -756,6 +786,13 @@
+     def _render(
+         self, console: "Console", options: "ConsoleOptions", widths: List[int]
+     ) -> "RenderResult":
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++            widths:
++        """
+         table_style = console.get_style(self.style or "")
+ 
+         border_style = table_style + console.get_style(self.border_style or "")
+
+--- a/rich/style.py
++++ b/rich/style.py
+@@ -202,7 +202,7 @@
+ 
+     @classmethod
+     def null(cls) -> "Style":
+-        """Create an 'null' style, equivalent to Style(), but more performant."""
++        """TODO: docstring"""
+         return NULL_STYLE
+ 
+     @classmethod
+@@ -399,7 +399,11 @@
+ 
+     @classmethod
+     def pick_first(cls, *values: Optional[StyleType]) -> StyleType:
+-        """Pick first non-None style."""
++        """TODO: docstring
++
++        Args:
++            *values:
++        """
+         for value in values:
+             if value is not None:
+                 return value
+
+--- a/rich/_ratio.py
++++ b/rich/_ratio.py
+@@ -75,16 +75,13 @@
+ def ratio_reduce(
+     total: int, ratios: List[int], maximums: List[int], values: List[int]
+ ) -> List[int]:
+-    """Divide an integer total in to parts based on ratios.
++    """TODO: docstring
+ 
+     Args:
+-        total (int): The total to divide.
+-        ratios (List[int]): A list of integer ratios.
+-        maximums (List[int]): List of maximums values for each slot.
+-        values (List[int]): List of values
+-
+-    Returns:
+-        List[int]: A list of integers guaranteed to sum to total.
++        total:
++        ratios:
++        maximums:
++        values:
+     """
+     ratios = [ratio if _max else 0 for ratio, _max in zip(ratios, maximums)]
+     total_ratio = sum(ratios)
+@@ -107,15 +104,12 @@
+ def ratio_distribute(
+     total: int, ratios: List[int], minimums: Optional[List[int]] = None
+ ) -> List[int]:
+-    """Distribute an integer total in to parts based on ratios.
++    """TODO: docstring
+ 
+     Args:
+-        total (int): The total to divide.
+-        ratios (List[int]): A list of integer ratios.
+-        minimums (List[int]): List of minimum values for each slot.
+-
+-    Returns:
+-        List[int]: A list of integers guaranteed to sum to total.
++        total:
++        ratios:
++        minimums:
+     """
+     if minimums:
+         ratios = [ratio if _min else 0 for ratio, _min in zip(ratios, minimums)]
+
+--- a/rich/_pick.py
++++ b/rich/_pick.py
+@@ -2,13 +2,10 @@
+ 
+ 
+ def pick_bool(*values: Optional[bool]) -> bool:
+-    """Pick the first non-none bool or return the last value.
++    """TODO: docstring
+ 
+     Args:
+-        *values (bool): Any number of boolean or None values.
+-
+-    Returns:
+-        bool: First non-none boolean.
++        *values:
+     """
+     assert values, "1 or more values required"
+     for value in values:
+
+--- a/rich/_loop.py
++++ b/rich/_loop.py
+@@ -16,7 +16,11 @@
+ 
+ 
+ def loop_last(values: Iterable[T]) -> Iterable[Tuple[bool, T]]:
+-    """Iterate and generate a tuple with a flag for last value."""
++    """TODO: docstring
++
++    Args:
++        values:
++    """
+     iter_values = iter(values)
+     try:
+         previous_value = next(iter_values)
+@@ -29,7 +33,11 @@
+ 
+ 
+ def loop_first_last(values: Iterable[T]) -> Iterable[Tuple[bool, bool, T]]:
+-    """Iterate and generate a tuple with a flag for first and last value."""
++    """TODO: docstring
++
++    Args:
++        values:
++    """
+     iter_values = iter(values)
+     try:
+         previous_value = next(iter_values)
+
+--- a/rich/segment.py
++++ b/rich/segment.py
+@@ -183,7 +183,7 @@
+ 
+     @classmethod
+     def line(cls) -> "Segment":
+-        """Make a new line segment."""
++        """TODO: docstring"""
+         return cls("\n")
+ 
+     @classmethod

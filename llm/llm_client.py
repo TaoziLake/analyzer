@@ -6,7 +6,7 @@ llm_client.py
 
 LLM 客戶端封裝模組：
 - 讀取 config.yaml 配置
-- 使用 OpenAI SDK 調用 qwen3:235b
+- 使用 OpenAI SDK 調用 LLM
 - 封裝 generate_docstring() 方法
 - 包含重試邏輯和錯誤處理
 """
@@ -49,7 +49,7 @@ def _find_config_yaml() -> str:
     if os.environ.get("LOCBENCH_CONFIG"):
         return os.environ["LOCBENCH_CONFIG"]
 
-    # <locbench>/analyzer/unidiff_extract/llm_client.py -> <locbench>/config.yaml
+    # <locbench>/analyzer/llm/llm_client.py -> <locbench>/config.yaml
     here = os.path.dirname(os.path.abspath(__file__))
     locbench_root = os.path.abspath(os.path.join(here, "..", ".."))
     candidate = os.path.join(locbench_root, "config.yaml")

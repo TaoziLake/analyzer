@@ -1,0 +1,178 @@
+{
+  "commit": "36fe3f7c",
+  "parent": "9a99acc97d26d7832200a271ed8e95dd59df10c7",
+  "repo": "d:\\locbench\\rich",
+  "num_seeds": 1,
+  "num_seeds_used": 1,
+  "seed_scope": "code_only",
+  "num_impacted": 10,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "rich.progress.Progress.reset",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "task._reset",
+        "rich.progress.Progress.refresh",
+        "rich.progress.Progress.get_time"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "task._reset",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "rich.progress.Progress.reset",
+      "callers": [
+        "rich.progress.Progress.reset",
+        "rich.progress.Progress.update"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "rich.progress.Progress.refresh",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "rich.progress.Progress.reset",
+      "callers": [
+        "rich.progress.Progress.add_task",
+        "rich.progress.Progress.reset",
+        "rich.progress.Progress.update"
+      ],
+      "callees": [
+        "rich.progress.Progress.live.refresh"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.progress.Progress.get_time",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "rich.progress.Progress.reset",
+      "callers": [
+        "rich.progress.Progress.start_task",
+        "rich.progress.Progress.update",
+        "rich.progress.Progress.stop_task",
+        "rich.progress.Progress.reset",
+        "rich.progress.Progress.advance"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.progress.Progress.update",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "task._reset",
+      "callers": [
+        "rich.progress.Progress.wrap_file",
+        "rich.progress.Progress.track",
+        "rich.progress.Progress.open"
+      ],
+      "callees": [
+        "task.fields.update",
+        "rich.progress.ProgressSample",
+        "popleft",
+        "rich.progress.Progress.refresh",
+        "_progress.append",
+        "task._reset",
+        "rich.progress.Progress.get_time"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.progress.Progress.add_task",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "rich.progress.Progress.refresh",
+      "callers": [
+        "rich.progress.Progress.wrap_file",
+        "rich.progress.Progress.track",
+        "rich.progress.Progress.open"
+      ],
+      "callees": [
+        "rich.progress.Progress.start_task",
+        "rich.progress.Task",
+        "rich.progress.Progress.refresh",
+        "int",
+        "TaskID"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.progress.Progress.live.refresh",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "rich.progress.Progress.refresh",
+      "callers": [
+        "rich.progress.Progress.refresh"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.progress.Progress.start_task",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "rich.progress.Progress.get_time",
+      "callers": [
+        "rich.progress.Progress.add_task"
+      ],
+      "callees": [
+        "rich.progress.Progress.get_time"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.progress.Progress.stop_task",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "rich.progress.Progress.get_time",
+      "callers": [],
+      "callees": [
+        "rich.progress.Progress.get_time"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "rich.progress.Progress.advance",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "rich.progress.Progress.get_time",
+      "callers": [],
+      "callees": [
+        "len",
+        "rich.progress.ProgressSample",
+        "popleft",
+        "_progress.append",
+        "rich.progress.Progress.get_time"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-28T22:11:43"
+}

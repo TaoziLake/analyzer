@@ -1,0 +1,655 @@
+--- a/rich/console.py
++++ b/rich/console.py
+@@ -292,6 +292,12 @@
+     def __rich_console__(
+         self, console: "Console", options: "ConsoleOptions"
+     ) -> Iterable[Segment]:
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++        """
+         yield Segment("\n" * self.count)
+ 
+ 
+@@ -1140,10 +1146,10 @@
+         return PagerContext(self, pager=pager, styles=styles, links=links)
+ 
+     def line(self, count: int = 1) -> None:
+-        """Write new line(s).
+-
+-        Args:
+-            count (int, optional): Number of new lines. Defaults to 1.
++        """TODO: docstring
++
++        Args:
++            count:
+         """
+ 
+         assert count >= 0, "count must be >= 0"
+@@ -1357,20 +1363,14 @@
+         pad: bool = True,
+         new_lines: bool = False,
+     ) -> List[List[Segment]]:
+-        """Render objects in to a list of lines.
+-
+-        The output of render_lines is useful when further formatting of rendered console text
+-        is required, such as the Panel class which draws a border around any renderable object.
+-
+-        Args:
+-            renderable (RenderableType): Any object renderable in the console.
+-            options (Optional[ConsoleOptions], optional): Console options, or None to use self.options. Default to ``None``.
+-            style (Style, optional): Optional style to apply to renderables. Defaults to ``None``.
+-            pad (bool, optional): Pad lines shorter than render width. Defaults to ``True``.
+-            new_lines (bool, optional): Include "\n" characters at end of lines.
+-
+-        Returns:
+-            List[List[Segment]]: A list of lines, where a line is a list of Segment objects.
++        """TODO: docstring
++
++        Args:
++            renderable:
++            options:
++            style:
++            pad:
++            new_lines:
+         """
+         with self._lock:
+             render_options = options or self.options
+@@ -1476,17 +1476,11 @@
+     def get_style(
+         self, name: Union[str, Style], *, default: Optional[Union[Style, str]] = None
+     ) -> Style:
+-        """Get a Style instance by its theme name or parse a definition.
+-
+-        Args:
+-            name (str): The name of a style or a style definition.
+-
+-        Returns:
+-            Style: A Style object.
+-
+-        Raises:
+-            MissingStyle: If no style could be parsed from name.
+-
++        """TODO: docstring
++
++        Args:
++            name:
++            default:
+         """
+         if isinstance(name, Style):
+             return name
+@@ -1514,19 +1508,16 @@
+         markup: Optional[bool] = None,
+         highlight: Optional[bool] = None,
+     ) -> List[ConsoleRenderable]:
+-        """Combine a number of renderables and text into one renderable.
+-
+-        Args:
+-            objects (Iterable[Any]): Anything that Rich can render.
+-            sep (str): String to write between print data.
+-            end (str): String to write at end of print data.
+-            justify (str, optional): One of "left", "right", "center", or "full". Defaults to ``None``.
+-            emoji (Optional[bool], optional): Enable emoji code, or ``None`` to use console default.
+-            markup (Optional[bool], optional): Enable markup, or ``None`` to use console default.
+-            highlight (Optional[bool], optional): Enable automatic highlighting, or ``None`` to use console default.
+-
+-        Returns:
+-            List[ConsoleRenderable]: A list of things to render.
++        """TODO: docstring
++
++        Args:
++            objects:
++            sep:
++            end:
++            justify:
++            emoji:
++            markup:
++            highlight:
+         """
+         renderables: List[ConsoleRenderable] = []
+         _append = renderables.append
+@@ -1590,13 +1581,13 @@
+         style: Union[str, Style] = "rule.line",
+         align: AlignMethod = "center",
+     ) -> None:
+-        """Draw a line with optional centered title.
+-
+-        Args:
+-            title (str, optional): Text to render over the rule. Defaults to "".
+-            characters (str, optional): Character(s) to form the line. Defaults to "─".
+-            style (str, optional): Style of line. Defaults to "rule.line".
+-            align (str, optional): How to align the title, one of "left", "center", or "right". Defaults to "center".
++        """TODO: docstring
++
++        Args:
++            title:
++            characters:
++            style:
++            align:
+         """
+         from .rule import Rule
+ 
+@@ -1621,16 +1612,14 @@
+         style: Optional[Union[str, Style]] = None,
+         highlight: Optional[bool] = None,
+     ) -> None:
+-        """Output to the terminal. This is a low-level way of writing to the terminal which unlike
+-        :meth:`~rich.console.Console.print` won't pretty print, wrap text, or apply markup, but will
+-        optionally apply highlighting and a basic style.
+-
+-        Args:
+-            sep (str, optional): String to write between print data. Defaults to " ".
+-            end (str, optional): String to write at end of print data. Defaults to "\\\\n".
+-            style (Union[str, Style], optional): A style to apply to output. Defaults to None.
+-            highlight (Optional[bool], optional): Enable automatic highlighting, or ``None`` to use
+-                console default. Defaults to ``None``.
++        """TODO: docstring
++
++        Args:
++            *objects:
++            sep:
++            end:
++            style:
++            highlight:
+         """
+         raw_output: str = sep.join(str(_object) for _object in objects)
+         self.print(
+@@ -1663,24 +1652,24 @@
+         soft_wrap: Optional[bool] = None,
+         new_line_start: bool = False,
+     ) -> None:
+-        """Print to the console.
+-
+-        Args:
+-            objects (positional args): Objects to log to the terminal.
+-            sep (str, optional): String to write between print data. Defaults to " ".
+-            end (str, optional): String to write at end of print data. Defaults to "\\\\n".
+-            style (Union[str, Style], optional): A style to apply to output. Defaults to None.
+-            justify (str, optional): Justify method: "default", "left", "right", "center", or "full". Defaults to ``None``.
+-            overflow (str, optional): Overflow method: "ignore", "crop", "fold", or "ellipsis". Defaults to None.
+-            no_wrap (Optional[bool], optional): Disable word wrapping. Defaults to None.
+-            emoji (Optional[bool], optional): Enable emoji code, or ``None`` to use console default. Defaults to ``None``.
+-            markup (Optional[bool], optional): Enable markup, or ``None`` to use console default. Defaults to ``None``.
+-            highlight (Optional[bool], optional): Enable automatic highlighting, or ``None`` to use console default. Defaults to ``None``.
+-            width (Optional[int], optional): Width of output, or ``None`` to auto-detect. Defaults to ``None``.
+-            crop (Optional[bool], optional): Crop output to width of terminal. Defaults to True.
+-            soft_wrap (bool, optional): Enable soft wrap mode which disables word wrapping and cropping of text or ``None`` for
+-                Console default. Defaults to ``None``.
+-            new_line_start (bool, False): Insert a new line at the start if the output contains more than one line. Defaults to ``False``.
++        """TODO: docstring
++
++        Args:
++            *objects:
++            sep:
++            end:
++            style:
++            justify:
++            overflow:
++            no_wrap:
++            emoji:
++            markup:
++            highlight:
++            width:
++            height:
++            crop:
++            soft_wrap:
++            new_line_start:
+         """
+         if not objects:
+             objects = (NewLine(),)
+@@ -1762,20 +1751,19 @@
+         default: Optional[Callable[[Any], Any]] = None,
+         sort_keys: bool = False,
+     ) -> None:
+-        """Pretty prints JSON. Output will be valid JSON.
+-
+-        Args:
+-            json (Optional[str]): A string containing JSON.
+-            data (Any): If json is not supplied, then encode this data.
+-            indent (Union[None, int, str], optional): Number of spaces to indent. Defaults to 2.
+-            highlight (bool, optional): Enable highlighting of output: Defaults to True.
+-            skip_keys (bool, optional): Skip keys not of a basic type. Defaults to False.
+-            ensure_ascii (bool, optional): Escape all non-ascii characters. Defaults to False.
+-            check_circular (bool, optional): Check for circular references. Defaults to True.
+-            allow_nan (bool, optional): Allow NaN and Infinity values. Defaults to True.
+-            default (Callable, optional): A callable that converts values that can not be encoded
+-                in to something that can be JSON encoded. Defaults to None.
+-            sort_keys (bool, optional): Sort dictionary keys. Defaults to False.
++        """TODO: docstring
++
++        Args:
++            json:
++            data:
++            indent:
++            highlight:
++            skip_keys:
++            ensure_ascii:
++            check_circular:
++            allow_nan:
++            default:
++            sort_keys:
+         """
+         from rich.json import JSON
+ 
+@@ -1874,16 +1862,16 @@
+         suppress: Iterable[Union[str, ModuleType]] = (),
+         max_frames: int = 100,
+     ) -> None:
+-        """Prints a rich render of the last exception and traceback.
+-
+-        Args:
+-            width (Optional[int], optional): Number of characters used to render code. Defaults to 100.
+-            extra_lines (int, optional): Additional lines of code to render. Defaults to 3.
+-            theme (str, optional): Override pygments theme used in traceback
+-            word_wrap (bool, optional): Enable word wrapping of long lines. Defaults to False.
+-            show_locals (bool, optional): Enable display of local variables. Defaults to False.
+-            suppress (Iterable[Union[str, ModuleType]]): Optional sequence of modules or paths to exclude from traceback.
+-            max_frames (int): Maximum number of frames to show in a traceback, 0 for no maximum. Defaults to 100.
++        """TODO: docstring
++
++        Args:
++            width:
++            extra_lines:
++            theme:
++            word_wrap:
++            show_locals:
++            suppress:
++            max_frames:
+         """
+         from .traceback import Traceback
+ 
+@@ -2149,19 +2137,14 @@
+         password: bool = False,
+         stream: Optional[TextIO] = None,
+     ) -> str:
+-        """Displays a prompt and waits for input from the user. The prompt may contain color / style.
+-
+-        It works in the same way as Python's builtin :func:`input` function and provides elaborate line editing and history features if Python's builtin :mod:`readline` module is previously loaded.
+-
+-        Args:
+-            prompt (Union[str, Text]): Text to render in the prompt.
+-            markup (bool, optional): Enable console markup (requires a str prompt). Defaults to True.
+-            emoji (bool, optional): Enable emoji (requires a str prompt). Defaults to True.
+-            password: (bool, optional): Hide typed text. Defaults to False.
+-            stream: (TextIO, optional): Optional file to read input from (rather than stdin). Defaults to None.
+-
+-        Returns:
+-            str: Text read from stdin.
++        """TODO: docstring
++
++        Args:
++            prompt:
++            markup:
++            emoji:
++            password:
++            stream:
+         """
+         if prompt:
+             self.print(prompt, markup=markup, emoji=emoji, end="")
+
+--- a/rich/segment.py
++++ b/rich/segment.py
+@@ -156,16 +156,10 @@
+                 pos -= 1
+ 
+     def split_cells(self, cut: int) -> Tuple["Segment", "Segment"]:
+-        """Split segment in to two segments at the specified column.
+-
+-        If the cut point falls in the middle of a 2-cell wide character then it is replaced
+-        by two spaces, to preserve the display width of the parent segment.
+-
+-        Args:
+-            cut (int): Offset within the segment to cut.
+-
+-        Returns:
+-            Tuple[Segment, Segment]: Two segments.
++        """TODO: docstring
++
++        Args:
++            cut:
+         """
+         text, style, control = self
+         assert cut >= 0
+@@ -183,7 +177,7 @@
+ 
+     @classmethod
+     def line(cls) -> "Segment":
+-        """Make a new line segment."""
++        """TODO: docstring"""
+         return cls("\n")
+ 
+     @classmethod
+@@ -193,17 +187,12 @@
+         style: Optional[Style] = None,
+         post_style: Optional[Style] = None,
+     ) -> Iterable["Segment"]:
+-        """Apply style(s) to an iterable of segments.
+-
+-        Returns an iterable of segments where the style is replaced by ``style + segment.style + post_style``.
+-
+-        Args:
+-            segments (Iterable[Segment]): Segments to process.
+-            style (Style, optional): Base style. Defaults to None.
+-            post_style (Style, optional): Style to apply on top of segment style. Defaults to None.
+-
+-        Returns:
+-            Iterable[Segments]: A new iterable of segments (possibly the same iterable).
++        """TODO: docstring
++
++        Args:
++            segments:
++            style:
++            post_style:
+         """
+         result_segments = segments
+         if style:
+@@ -279,13 +268,10 @@
+     def split_lines_terminator(
+         cls, segments: Iterable["Segment"]
+     ) -> Iterable[Tuple[List["Segment"], bool]]:
+-        """Split a sequence of segments in to a list of lines and a boolean to indicate if there was a new line.
+-
+-        Args:
+-            segments (Iterable[Segment]): Segments potentially containing line feeds.
+-
+-        Yields:
+-            Iterable[List[Segment]]: Iterable of segment lists, one per line.
++        """TODO: docstring
++
++        Args:
++            segments:
+         """
+         line: List[Segment] = []
+         append = line.append
+@@ -315,17 +301,14 @@
+         pad: bool = True,
+         include_new_lines: bool = True,
+     ) -> Iterable[List["Segment"]]:
+-        """Split segments in to lines, and crop lines greater than a given length.
+-
+-        Args:
+-            segments (Iterable[Segment]): An iterable of segments, probably
+-                generated from console.render.
+-            length (int): Desired line length.
+-            style (Style, optional): Style to use for any padding.
+-            pad (bool): Enable padding of lines that are less than `length`.
+-
+-        Returns:
+-            Iterable[List[Segment]]: An iterable of lines of segments.
++        """TODO: docstring
++
++        Args:
++            segments:
++            length:
++            style:
++            pad:
++            include_new_lines:
+         """
+         line: List[Segment] = []
+         append = line.append
+
+--- a/rich/align.py
++++ b/rich/align.py
+@@ -143,6 +143,12 @@
+     def __rich_console__(
+         self, console: "Console", options: "ConsoleOptions"
+     ) -> "RenderResult":
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++        """
+         align = self.align
+         width = console.measure(self.renderable, options=options).maximum
+         rendered = console.render(
+@@ -159,6 +165,7 @@
+         style = console.get_style(self.style) if self.style is not None else None
+ 
+         def generate_segments() -> Iterable[Segment]:
++            """TODO: docstring"""
+             if excess_space <= 0:
+                 # Exact fit
+                 for line in lines:
+@@ -265,6 +272,12 @@
+     def __rich_console__(
+         self, console: "Console", options: "ConsoleOptions"
+     ) -> "RenderResult":
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++        """
+         style = console.get_style(self.style) if self.style is not None else None
+         lines = console.render_lines(
+             self.renderable, options.update(height=None), pad=False
+
+--- a/rich/control.py
++++ b/rich/control.py
+@@ -56,6 +56,11 @@
+     __slots__ = ["segment"]
+ 
+     def __init__(self, *codes: Union[ControlType, ControlCode]) -> None:
++        """TODO: docstring
++
++        Args:
++            *codes:
++        """
+         control_codes: List[ControlCode] = [
+             (code,) if isinstance(code, ControlType) else code for code in codes
+         ]
+
+--- a/rich/panel.py
++++ b/rich/panel.py
+@@ -141,6 +141,12 @@
+     def __rich_console__(
+         self, console: "Console", options: "ConsoleOptions"
+     ) -> "RenderResult":
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++        """
+         _padding = Padding.unpack(self.padding)
+         renderable = (
+             Padding(self.renderable, _padding) if any(_padding) else self.renderable
+
+--- a/rich/text.py
++++ b/rich/text.py
+@@ -717,14 +717,11 @@
+         return Measurement(min_text_width, max_text_width)
+ 
+     def render(self, console: "Console", end: str = "") -> Iterable["Segment"]:
+-        """Render the text as Segments.
+-
+-        Args:
+-            console (Console): Console instance.
+-            end (Optional[str], optional): Optional end character.
+-
+-        Returns:
+-            Iterable[Segment]: Result of render that may be written to the console.
++        """TODO: docstring
++
++        Args:
++            console:
++            end:
+         """
+         _Segment = Segment
+         text = self.plain
+
+--- a/rich/markdown.py
++++ b/rich/markdown.py
+@@ -199,6 +199,12 @@
+     def __rich_console__(
+         self, console: Console, options: ConsoleOptions
+     ) -> RenderResult:
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++        """
+         render_options = options.update(width=options.max_width - 4)
+         lines = console.render_lines(self.elements, render_options, style=self.style)
+         style = self.style
+@@ -367,6 +373,12 @@
+         return False
+ 
+     def render_bullet(self, console: Console, options: ConsoleOptions) -> RenderResult:
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++        """
+         render_options = options.update(width=options.max_width - 3)
+         lines = console.render_lines(self.elements, render_options, style=self.style)
+         bullet_style = console.get_style("markdown.item.bullet", default="none")
+@@ -382,6 +394,14 @@
+     def render_number(
+         self, console: Console, options: ConsoleOptions, number: int, last_number: int
+     ) -> RenderResult:
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++            number:
++            last_number:
++        """
+         number_width = len(str(last_number)) + 2
+         render_options = options.update(width=options.max_width - number_width)
+         lines = console.render_lines(self.elements, render_options, style=self.style)
+
+--- a/benchmarks/benchmarks.py
++++ b/benchmarks/benchmarks.py
+@@ -206,6 +206,7 @@
+ 
+ class SegmentSuite:
+     def setup(self):
++        """TODO: docstring"""
+         self.line = [
+             Segment("foo"),
+             Segment("bar"),
+
+--- a/rich/palette.py
++++ b/rich/palette.py
+@@ -84,6 +84,12 @@
+         def __rich_console__(
+             self, console: Console, options: ConsoleOptions
+         ) -> Iterable[Segment]:
++            """TODO: docstring
++
++            Args:
++                console:
++                options:
++            """
+             height = console.size.height - 3
+             for y in range(0, height):
+                 for x in range(options.max_width):
+
+--- a/rich/progress_bar.py
++++ b/rich/progress_bar.py
+@@ -75,10 +75,14 @@
+         no_color: bool,
+         ascii: bool = False,
+     ) -> List[Segment]:
+-        """Get a list of segments to render a pulse animation.
+-
+-        Returns:
+-            List[Segment]: A list of segments, one segment per character.
++        """TODO: docstring
++
++        Args:
++            fore_style:
++            back_style:
++            color_system:
++            no_color:
++            ascii:
+         """
+         bar = "-" if ascii else "━"
+         segments: List[Segment] = []
+
+--- a/rich/table.py
++++ b/rich/table.py
+@@ -476,6 +476,12 @@
+     def __rich_console__(
+         self, console: "Console", options: "ConsoleOptions"
+     ) -> "RenderResult":
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++        """
+         if not self.columns:
+             yield Segment("\n")
+             return
+
+--- a/rich/emoji.py
++++ b/rich/emoji.py
+@@ -70,6 +70,12 @@
+     def __rich_console__(
+         self, console: "Console", options: "ConsoleOptions"
+     ) -> "RenderResult":
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++        """
+         yield Segment(self._char, console.get_style(self.style))
+ 
+ 
+
+--- a/rich/__main__.py
++++ b/rich/__main__.py
+@@ -19,6 +19,12 @@
+     def __rich_console__(
+         self, console: Console, options: ConsoleOptions
+     ) -> RenderResult:
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++        """
+         for y in range(0, 5):
+             for x in range(options.max_width):
+                 h = x / options.max_width
+
+--- a/rich/screen.py
++++ b/rich/screen.py
+@@ -40,6 +40,12 @@
+     def __rich_console__(
+         self, console: "Console", options: "ConsoleOptions"
+     ) -> "RenderResult":
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++        """
+         width, height = options.size
+         style = console.get_style(self.style) if self.style else None
+         render_options = options.update(width=width, height=height)
+
+--- a/rich/bar.py
++++ b/rich/bar.py
+@@ -48,6 +48,12 @@
+     def __rich_console__(
+         self, console: Console, options: ConsoleOptions
+     ) -> RenderResult:
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++        """
+         width = min(
+             self.width if self.width is not None else options.max_width,
+             options.max_width,

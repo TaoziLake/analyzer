@@ -1,0 +1,79 @@
+--- a/rich/cells.py
++++ b/rich/cells.py
+@@ -48,11 +48,14 @@
+     """Get the cell size of a character.
+ 
+     Args:
+-        character (str): A single character.
+-        unicode_version: Unicode version, `"auto"` to auto detect, `"latest"` for the latest unicode version.
+-
+-    Returns:
+-        int: Number of cells (0, 1 or 2) occupied by that character.
++        character (str): A single character string.
++        unicode_version (str, optional): Unicode version to use. Defaults to "auto" (auto-detect) or "latest" for the most recent version.
++
++    Returns:
++        int: Number of cells (0, 1, or 2) occupied by the character. 0 indicates a non-printing or combining character, 1 indicates a single-width character, and 2 indicates a double-width character.
++
++    Raises:
++        TypeError: If `character` is not a single character string.
+     """
+     codepoint = ord(character)
+     table = load_cell_table(unicode_version).widths
+@@ -115,7 +118,7 @@
+         unicode_version: Unicode version, `"auto"` to auto detect, `"latest"` for the latest unicode version.
+ 
+     Returns:
+-        Length of string in terminal cells.
++        Length of string in terminal cells, accounting for Unicode characters that affect display width (e.g., combining characters, zero-width joiners, and variation selectors). Returns the actual visible cell count rather than the number of code points.
+     """
+ 
+     if _is_single_cell_widths(text):
+@@ -155,14 +158,20 @@
+ def split_graphemes(
+     text: str, unicode_version: str = "auto"
+ ) -> "tuple[list[CellSpan], int]":
+-    """Divide text into spans that define a single grapheme.
+-
+-    Args:
+-        text: String to split.
+-        unicode_version: Unicode version, `"auto"` to auto detect, `"latest"` for the latest unicode version.
+-
+-    Returns:
+-        List of spans.
++    """Split text into spans that define a single grapheme, considering Unicode rules for character composition.
++
++    Args:
++        text (str): Input string to split into grapheme spans.
++        unicode_version (str): Unicode version for width calculation. Use "auto" for automatic detection or "latest" for the most recent version.
++
++    Returns:
++        tuple[list[tuple[int, int, int]], int]: A tuple containing:
++            - List of CellSpan tuples (start_index, end_index, cell_length) representing grapheme clusters
++            - Total cell width of the text
++        Each CellSpan tuple describes a grapheme's position in the original string and its display width in terminal cells. Graphemes may consist of multiple Unicode codepoints (e.g., emojis with modifiers).
++
++    Raises:
++        ValueError: If the input text contains invalid Unicode characters.
+     """
+ 
+     cell_table = load_cell_table(unicode_version)
+
+--- a/rich/_unicode_data/__init__.py
++++ b/rich/_unicode_data/__init__.py
+@@ -57,11 +57,13 @@
+ 
+ @cache
+ def load(unicode_version: str = "auto") -> CellTable:
+-    """Load a cell table for the given unicode version.
++    """Load a cell table for the given Unicode version.
+ 
+     Args:
+-        unicode_version: Unicode version, or `None` to auto-detect.
++        unicode_version (str, optional): Unicode version string, or "auto" to auto-detect. Defaults to "auto".
+ 
++    Returns:
++        CellTable: A cell table instance for the specified Unicode version.
+     """
+     if unicode_version == "auto":
+         unicode_version = os.environ.get("UNICODE_VERSION", "latest")

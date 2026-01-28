@@ -1,0 +1,109 @@
+--- a/rich/progress.py
++++ b/rich/progress.py
+@@ -515,7 +515,7 @@
+         self._update_time: Optional[float] = None
+ 
+     def get_table_column(self) -> Column:
+-        """Get a table column, used to build tasks table."""
++        """TODO: docstring"""
+         return self._table_column or Column()
+ 
+     def __call__(self, task: "Task") -> RenderableType:
+@@ -625,6 +625,16 @@
+         highlighter: Optional[Highlighter] = None,
+         table_column: Optional[Column] = None,
+     ) -> None:
++        """TODO: docstring
++
++        Args:
++            text_format:
++            style:
++            justify:
++            markup:
++            highlighter:
++            table_column:
++        """
+         self.text_format = text_format
+         self.justify: JustifyMethod = justify
+         self.style = style
+@@ -1560,13 +1570,10 @@
+         yield table
+ 
+     def make_tasks_table(self, tasks: Iterable[Task]) -> Table:
+-        """Get a table to render the Progress display.
++        """TODO: docstring
+ 
+         Args:
+-            tasks (Iterable[Task]): An iterable of Task instances, one per row of the table.
+-
+-        Returns:
+-            Table: A table instance.
++            tasks:
+         """
+         table_columns = (
+             (
+
+--- a/rich/table.py
++++ b/rich/table.py
+@@ -379,25 +379,23 @@
+         ratio: Optional[int] = None,
+         no_wrap: bool = False,
+     ) -> None:
+-        """Add a column to the table.
++        """TODO: docstring
+ 
+         Args:
+-            header (RenderableType, optional): Text or renderable for the header.
+-                Defaults to "".
+-            footer (RenderableType, optional): Text or renderable for the footer.
+-                Defaults to "".
+-            header_style (Union[str, Style], optional): Style for the header, or None for default. Defaults to None.
+-            highlight (bool, optional): Whether to highlight the text. The default of None uses the value of the table (self) object.
+-            footer_style (Union[str, Style], optional): Style for the footer, or None for default. Defaults to None.
+-            style (Union[str, Style], optional): Style for the column cells, or None for default. Defaults to None.
+-            justify (JustifyMethod, optional): Alignment for cells. Defaults to "left".
+-            vertical (VerticalAlignMethod, optional): Vertical alignment, one of "top", "middle", or "bottom". Defaults to "top".
+-            overflow (OverflowMethod): Overflow method: "crop", "fold", "ellipsis". Defaults to "ellipsis".
+-            width (int, optional): Desired width of column in characters, or None to fit to contents. Defaults to None.
+-            min_width (Optional[int], optional): Minimum width of column, or ``None`` for no minimum. Defaults to None.
+-            max_width (Optional[int], optional): Maximum width of column, or ``None`` for no maximum. Defaults to None.
+-            ratio (int, optional): Flexible ratio for the column (requires ``Table.expand`` or ``Table.width``). Defaults to None.
+-            no_wrap (bool, optional): Set to ``True`` to disable wrapping of this column.
++            header:
++            footer:
++            header_style:
++            highlight:
++            footer_style:
++            style:
++            justify:
++            vertical:
++            overflow:
++            width:
++            min_width:
++            max_width:
++            ratio:
++            no_wrap:
+         """
+ 
+         column = Column(
+@@ -425,16 +423,12 @@
+         style: Optional[StyleType] = None,
+         end_section: bool = False,
+     ) -> None:
+-        """Add a row of renderables.
++        """TODO: docstring
+ 
+         Args:
+-            *renderables (None or renderable): Each cell in a row must be a renderable object (including str),
+-                or ``None`` for a blank cell.
+-            style (StyleType, optional): An optional style to apply to the entire row. Defaults to None.
+-            end_section (bool, optional): End a section and draw a line. Defaults to False.
+-
+-        Raises:
+-            errors.NotRenderableError: If you add something that can't be rendered.
++            *renderables:
++            style:
++            end_section:
+         """
+ 
+         def add_cell(column: Column, renderable: "RenderableType") -> None:

@@ -1,0 +1,109 @@
+--- a/rich/text.py
++++ b/rich/text.py
+@@ -689,6 +689,12 @@
+     def __rich_console__(
+         self, console: "Console", options: "ConsoleOptions"
+     ) -> Iterable[Segment]:
++        """TODO: docstring
++
++        Args:
++            console:
++            options:
++        """
+         tab_size: int = console.tab_size if self.tab_size is None else self.tab_size
+         justify = self.justify or options.justify or DEFAULT_JUSTIFY
+         overflow = self.overflow or options.overflow or DEFAULT_OVERFLOW
+@@ -1066,15 +1072,12 @@
+         include_separator: bool = False,
+         allow_blank: bool = False,
+     ) -> Lines:
+-        """Split rich text in to lines, preserving styles.
+-
+-        Args:
+-            separator (str, optional): String to split on. Defaults to "\\\\n".
+-            include_separator (bool, optional): Include the separator in the lines. Defaults to False.
+-            allow_blank (bool, optional): Return a blank line if the text ends with a separator. Defaults to False.
+-
+-        Returns:
+-            List[RichText]: A list of rich text, one per line of the original.
++        """TODO: docstring
++
++        Args:
++            separator:
++            include_separator:
++            allow_blank:
+         """
+         assert separator, "separator must not be empty"
+ 
+@@ -1208,18 +1211,15 @@
+         tab_size: int = 8,
+         no_wrap: Optional[bool] = None,
+     ) -> Lines:
+-        """Word wrap the text.
+-
+-        Args:
+-            console (Console): Console instance.
+-            width (int): Number of cells available per line.
+-            justify (str, optional): Justify method: "default", "left", "center", "full", "right". Defaults to "default".
+-            overflow (str, optional): Overflow method: "crop", "fold", or "ellipsis". Defaults to None.
+-            tab_size (int, optional): Default tab size. Defaults to 8.
+-            no_wrap (bool, optional): Disable wrapping, Defaults to False.
+-
+-        Returns:
+-            Lines: Number of lines.
++        """TODO: docstring
++
++        Args:
++            console:
++            width:
++            justify:
++            overflow:
++            tab_size:
++            no_wrap:
+         """
+         wrap_justify = justify or self.justify or DEFAULT_JUSTIFY
+         wrap_overflow = overflow or self.overflow or DEFAULT_OVERFLOW
+
+--- a/rich/_wrap.py
++++ b/rich/_wrap.py
+@@ -24,17 +24,12 @@
+ 
+ 
+ def divide_line(text: str, width: int, fold: bool = True) -> list[int]:
+-    """Given a string of text, and a width (measured in cells), return a list
+-    of cell offsets which the string should be split at in order for it to fit
+-    within the given width.
++    """TODO: docstring
+ 
+     Args:
+-        text: The text to examine.
+-        width: The available cell width.
+-        fold: If True, words longer than `width` will be folded onto a new line.
+-
+-    Returns:
+-        A list of indices to break the line at.
++        text:
++        width:
++        fold:
+     """
+     break_positions: list[int] = []  # offsets to insert the breaks at
+     append = break_positions.append
+
+--- a/rich/_pick.py
++++ b/rich/_pick.py
+@@ -2,13 +2,10 @@
+ 
+ 
+ def pick_bool(*values: Optional[bool]) -> bool:
+-    """Pick the first non-none bool or return the last value.
++    """TODO: docstring
+ 
+     Args:
+-        *values (bool): Any number of boolean or None values.
+-
+-    Returns:
+-        bool: First non-none boolean.
++        *values:
+     """
+     assert values, "1 or more values required"
+     for value in values:

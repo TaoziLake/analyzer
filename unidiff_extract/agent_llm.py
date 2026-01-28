@@ -34,7 +34,14 @@ from typing import Dict, List, Optional, Sequence, Tuple
 
 # 本地模組
 from docstring_style import detect_repo_style_cached
-from llm_client import LLMClient
+
+# LLM 模組（優先從新路徑導入）
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+try:
+    from llm.llm_client import LLMClient
+except ImportError:
+    from llm_client import LLMClient  # fallback 舊路徑
 
 
 _COUNTERS: Dict[str, int] = {
@@ -229,7 +236,7 @@ def _insert_docstring_into_source(
     docstring_lines: List[str],
 ) -> Tuple[bool, str, Optional[str]]:
     """
-    將 docstring 插入源碼中
+    將 docstring 插入或更新到源碼中
 
     Args:
         source: 原始源碼
@@ -251,24 +258,37 @@ def _insert_docstring_into_source(
     if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
         return False, source, "not_a_function"
 
-    if ast.get_docstring(node) is not None:
-        return False, source, "already_has_docstring"
-
     if not node.body:
         return False, source, "empty_body"
 
     lines = source.splitlines()
-    first_stmt = node.body[0]
-    insert_at = getattr(first_stmt, "lineno", None)
-    if not isinstance(insert_at, int) or insert_at <= 0:
-        insert_at = node.lineno + 1
-    idx = max(insert_at - 1, 0)
+    existing_doc = ast.get_docstring(node)
 
-    body_indent = _indent_of_line(lines[idx]) if idx < len(lines) else "    "
-    doc_block = [body_indent + dl if dl else "" for dl in docstring_lines]
+    if existing_doc is not None:
+        # Update existing docstring: find and replace it
+        first_stmt = node.body[0]
+        if isinstance(first_stmt, ast.Expr) and isinstance(first_stmt.value, (ast.Str, ast.Constant)):
+            doc_start = first_stmt.lineno - 1  # 0-based
+            doc_end = getattr(first_stmt, "end_lineno", first_stmt.lineno)  # 1-based end
+            body_indent = _indent_of_line(lines[doc_start]) if doc_start < len(lines) else "    "
+            doc_block = [body_indent + dl if dl else "" for dl in docstring_lines]
+            new_lines = lines[:doc_start] + doc_block + lines[doc_end:]
+            return True, "\n".join(new_lines) + ("\n" if source.endswith("\n") else ""), "updated"
+        else:
+            return False, source, "docstring_node_not_found"
+    else:
+        # Insert new docstring
+        first_stmt = node.body[0]
+        insert_at = getattr(first_stmt, "lineno", None)
+        if not isinstance(insert_at, int) or insert_at <= 0:
+            insert_at = node.lineno + 1
+        idx = max(insert_at - 1, 0)
 
-    new_lines = lines[:idx] + doc_block + lines[idx:]
-    return True, "\n".join(new_lines) + ("\n" if source.endswith("\n") else ""), "inserted"
+        body_indent = _indent_of_line(lines[idx]) if idx < len(lines) else "    "
+        doc_block = [body_indent + dl if dl else "" for dl in docstring_lines]
+
+        new_lines = lines[:idx] + doc_block + lines[idx:]
+        return True, "\n".join(new_lines) + ("\n" if source.endswith("\n") else ""), "inserted"
 
 
 def _verify_docstrings(
@@ -468,8 +488,10 @@ def main():
         node = file_nodes_cache[rel_path].get(qn)
         if node is None or not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             continue
-        if ast.get_docstring(node) is not None:
-            continue
+
+        existing_doc = ast.get_docstring(node)
+        has_docstring = existing_doc is not None
+        target_action = "update" if has_docstring else "insert"
 
         targets.append(
             {
@@ -479,6 +501,8 @@ def main():
                 "rel_path": rel_path,
                 "params": _func_param_names(node),
                 "lineno": node.lineno,
+                "has_docstring": has_docstring,
+                "target_action": target_action,
             }
         )
 

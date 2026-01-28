@@ -1,0 +1,93 @@
+--- a/rich/live.py
++++ b/rich/live.py
+@@ -68,6 +68,20 @@
+         vertical_overflow: VerticalOverflowMethod = "ellipsis",
+         get_renderable: Optional[Callable[[], RenderableType]] = None,
+     ) -> None:
++        """TODO: docstring
++
++        Args:
++            renderable:
++            console:
++            screen:
++            auto_refresh:
++            refresh_per_second:
++            transient:
++            redirect_stdout:
++            redirect_stderr:
++            vertical_overflow:
++            get_renderable:
++        """
+         assert refresh_per_second > 0, "refresh_per_second must be > 0"
+         self._renderable = renderable
+         self.console = console if console is not None else get_console()
+@@ -109,10 +123,10 @@
+         return renderable or ""
+ 
+     def start(self, refresh: bool = False) -> None:
+-        """Start live rendering display.
++        """TODO: docstring
+ 
+         Args:
+-            refresh (bool, optional): Also refresh. Defaults to False.
++            refresh:
+         """
+         with self._lock:
+             if self._started:
+@@ -143,7 +157,7 @@
+                 self._refresh_thread.start()
+ 
+     def stop(self) -> None:
+-        """Stop live rendering display."""
++        """TODO: docstring"""
+         with self._lock:
+             if not self._started:
+                 return
+@@ -190,6 +204,13 @@
+         exc_val: Optional[BaseException],
+         exc_tb: Optional[TracebackType],
+     ) -> None:
++        """TODO: docstring
++
++        Args:
++            exc_type:
++            exc_val:
++            exc_tb:
++        """
+         self.stop()
+ 
+     def _enable_redirect_io(self) -> None:
+@@ -203,7 +224,7 @@
+                 sys.stderr = cast("TextIO", FileProxy(self.console, sys.stderr))
+ 
+     def _disable_redirect_io(self) -> None:
+-        """Disable redirecting of stdout / stderr."""
++        """TODO: docstring"""
+         if self._restore_stdout:
+             sys.stdout = cast("TextIO", self._restore_stdout)
+             self._restore_stdout = None
+@@ -242,7 +263,7 @@
+                 self.refresh()
+ 
+     def refresh(self) -> None:
+-        """Update the display of the Live Render."""
++        """TODO: docstring"""
+         with self._lock:
+             self._live_render.set_renderable(self.renderable)
+             if self._nested:
+
+--- a/rich/live_render.py
++++ b/rich/live_render.py
+@@ -31,11 +31,7 @@
+ 
+     @property
+     def last_render_height(self) -> int:
+-        """The number of lines in the last render (may be 0 if nothing was rendered).
+-
+-        Returns:
+-            Height in lines
+-        """
++        """TODO: docstring"""
+         if self._shape is None:
+             return 0
+         return self._shape[1]

@@ -1,0 +1,169 @@
+--- a/rich/cells.py
++++ b/rich/cells.py
+@@ -45,14 +45,11 @@
+ 
+ @lru_cache(maxsize=4096)
+ def get_character_cell_size(character: str, unicode_version: str = "auto") -> int:
+-    """Get the cell size of a character.
+-
+-    Args:
+-        character (str): A single character.
+-        unicode_version: Unicode version, `"auto"` to auto detect, `"latest"` for the latest unicode version.
+-
+-    Returns:
+-        int: Number of cells (0, 1 or 2) occupied by that character.
++    """TODO: docstring
++
++    Args:
++        character:
++        unicode_version:
+     """
+     codepoint = ord(character)
+     table = load_cell_table(unicode_version).widths
+@@ -155,14 +152,11 @@
+ def split_graphemes(
+     text: str, unicode_version: str = "auto"
+ ) -> "tuple[list[CellSpan], int]":
+-    """Divide text into spans that define a single grapheme.
+-
+-    Args:
+-        text: String to split.
+-        unicode_version: Unicode version, `"auto"` to auto detect, `"latest"` for the latest unicode version.
+-
+-    Returns:
+-        List of spans.
++    """TODO: docstring
++
++    Args:
++        text:
++        unicode_version:
+     """
+ 
+     cell_table = load_cell_table(unicode_version)
+@@ -208,17 +202,12 @@
+ def _split_text(
+     text: str, cell_position: int, unicode_version: str = "auto"
+ ) -> tuple[str, str]:
+-    """Split text by cell position.
+-
+-    If the cell position falls within a double width character, it is converted to two spaces.
+-
+-    Args:
+-        text: Text to split.
+-        cell_position Offset in cells.
+-        unicode_version: Unicode version, `"auto"` to auto detect, `"latest"` for the latest unicode version.
+-
+-    Returns:
+-        Tuple to two split strings.
++    """TODO: docstring
++
++    Args:
++        text:
++        cell_position:
++        unicode_version:
+     """
+     if cell_position <= 0:
+         return "", text
+@@ -297,15 +286,12 @@
+ 
+ 
+ def chop_cells(text: str, width: int, unicode_version: str = "auto") -> list[str]:
+-    """Split text into lines such that each line fits within the available (cell) width.
+-
+-    Args:
+-        text: The text to fold such that it fits in the given width.
+-        width: The width available (number of cells).
+-
+-    Returns:
+-        A list of strings such that each string in the list has cell width
+-        less than or equal to the available width.
++    """TODO: docstring
++
++    Args:
++        text:
++        width:
++        unicode_version:
+     """
+     if _is_single_cell_widths(text):
+         return [text[index : index + width] for index in range(0, len(text), width)]
+
+--- a/rich/text.py
++++ b/rich/text.py
+@@ -196,6 +196,11 @@
+         return False
+ 
+     def __getitem__(self, slice: Union[int, slice]) -> "Text":
++        """TODO: docstring
++
++        Args:
++            slice:
++        """
+         def get_text_at(offset: int) -> "Text":
+             _Span = Span
+             text = Text(
+@@ -441,7 +446,7 @@
+         return copy_self
+ 
+     def copy(self) -> "Text":
+-        """Return a copy of this instance."""
++        """TODO: docstring"""
+         copy_self = Text(
+             self.plain,
+             style=self.style,
+@@ -1067,15 +1072,12 @@
+         include_separator: bool = False,
+         allow_blank: bool = False,
+     ) -> Lines:
+-        """Split rich text in to lines, preserving styles.
+-
+-        Args:
+-            separator (str, optional): String to split on. Defaults to "\\\\n".
+-            include_separator (bool, optional): Include the separator in the lines. Defaults to False.
+-            allow_blank (bool, optional): Return a blank line if the text ends with a separator. Defaults to False.
+-
+-        Returns:
+-            List[RichText]: A list of rich text, one per line of the original.
++        """TODO: docstring
++
++        Args:
++            separator:
++            include_separator:
++            allow_blank:
+         """
+         assert separator, "separator must not be empty"
+ 
+@@ -1105,13 +1107,10 @@
+         return lines
+ 
+     def divide(self, offsets: Iterable[int]) -> Lines:
+-        """Divide text into a number of lines at given offsets.
+-
+-        Args:
+-            offsets (Iterable[int]): Offsets used to divide text.
+-
+-        Returns:
+-            Lines: New RichText instances between offsets.
++        """TODO: docstring
++
++        Args:
++            offsets:
+         """
+         _offsets = list(offsets)
+ 
+
+--- a/rich/_unicode_data/__init__.py
++++ b/rich/_unicode_data/__init__.py
+@@ -57,11 +57,10 @@
+ 
+ @cache
+ def load(unicode_version: str = "auto") -> CellTable:
+-    """Load a cell table for the given unicode version.
++    """TODO: docstring
+ 
+     Args:
+-        unicode_version: Unicode version, or `None` to auto-detect.
+-
++        unicode_version:
+     """
+     if unicode_version == "auto":
+         unicode_version = os.environ.get("UNICODE_VERSION", "latest")
