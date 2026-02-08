@@ -334,14 +334,29 @@ def extract_functions_and_calls_treesitter(source: str, module_qual: str = "") -
     return defined, calls
 
 
+
+# ---------- 可编辑开关 ----------
+# 设为 True：treesitter 不可用时回退到 ast（仅打印警告）
+# 设为 False：treesitter 不可用时直接报错（当前策略）
+FALLBACK_TO_AST = False
+# --------------------------------
+
+
 def build_call_graph(repo_path: str, ext: str = ".py", parser_mode: str = "auto") -> CallGraph:
     functions: Dict[str, Set[str]] = {}
     reverse_functions: Dict[str, Set[str]] = {}
     all_functions: Set[str] = set()
 
     use_treesitter = parser_mode in ("auto", "treesitter") and _TS_PARSER is not None
-    if parser_mode == "treesitter" and _TS_PARSER is None:
-        print("Warning: tree-sitter not available, falling back to ast parser")
+    if parser_mode in ("auto", "treesitter") and _TS_PARSER is None:
+        if FALLBACK_TO_AST:
+            print("Warning: tree-sitter not available, falling back to ast parser")
+        else:
+            raise RuntimeError(
+                "tree-sitter is required but not available. "
+                "Install tree-sitter / tree_sitter_languages, "
+                "or set call_graph.FALLBACK_TO_AST = True to allow ast fallback."
+            )
 
     for root, dirs, files in os.walk(repo_path):
         dirs[:] = [d for d in dirs if not d.startswith(".") and d not in ["__pycache__", "node_modules", ".git"]]

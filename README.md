@@ -14,9 +14,9 @@ git log --oneline -10
 # 2. 運行完整工作流（模板模式，最快）
 cd d:\locbench
 python -m analyzer.main run --repo .\rich --commit <commit_sha> --mode template
-
+python -m analyzer.main run --repo .\rich --commit 73ee8232 --mode template
 # 3. 運行完整工作流（LLM 模式，需要配置）
-python -m analyzer.main run --repo .\rich --commit <commit_sha> --mode llm
+python -m analyzer.main run --repo .\rich --commit 73ee8232 --mode llm
 
 # 4. 批量測試
 python -m analyzer.main batch --repo .\rich --n 50

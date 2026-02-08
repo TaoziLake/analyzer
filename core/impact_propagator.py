@@ -11,6 +11,7 @@ import glob
 import heapq
 import json
 import os
+from collections import deque
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Set, Tuple
@@ -139,7 +140,7 @@ def propagate_impacts(
     
     impacted: Dict[str, Dict] = {}
     visited: Set[str] = set()
-    queue: List[Tuple[str, int]] = []
+    queue: deque = deque()
 
     def add_impacted(qualname: str, hop: int, reason: str, source_qualname: Optional[str]):
         if qualname not in impacted:
@@ -166,22 +167,19 @@ def propagate_impacts(
             visited.add(qn)
 
     while queue:
-        cur, hop = queue.pop(0)
+        cur, hop = queue.popleft()
         if hop >= max_hops:
             continue
         nxt = hop + 1
 
+        # P0: 只向 caller 方向传播（向上）。
+        # 被改函数的 callee 本身没变，不应被标记为受影响；
+        # 且 callee 方向会导致经由公共函数的严重交叉扩散。
         for caller in call_graph.reverse_functions.get(cur, set()):
             if caller not in visited:
                 add_impacted(caller, nxt, "calls_changed_function", cur)
                 queue.append((caller, nxt))
                 visited.add(caller)
-
-        for callee in call_graph.functions.get(cur, set()):
-            if callee not in visited:
-                add_impacted(callee, nxt, "called_by_changed_function", cur)
-                queue.append((callee, nxt))
-                visited.add(callee)
 
     return impacted
 
@@ -263,22 +261,15 @@ def propagate_impacts_typed(
         # 擴展鄰居
         next_hop = hop + 1
         
-        # 1. CALLED_BY 邊：當前節點被誰調用
+        # P0: 只沿 CALLED_BY 邊傳播（向上：誰調用了當前節點）。
+        # CALLS 邊（向下）已移除——callee 本身未變更，且向下傳播
+        # 會經由公共函數引發嚴重的交叉擴散。
         for caller in call_graph.reverse_functions.get(current, set()):
             _try_extend(
                 pq, best_scores, config,
                 caller, current_score, next_hop,
                 path + [caller], edge_types + ["CALLED_BY"],
                 "CALLED_BY"
-            )
-        
-        # 2. CALLS 邊：當前節點調用誰
-        for callee in call_graph.functions.get(current, set()):
-            _try_extend(
-                pq, best_scores, config,
-                callee, current_score, next_hop,
-                path + [callee], edge_types + ["CALLS"],
-                "CALLS"
             )
     
     return impacted
