@@ -178,6 +178,14 @@ def is_test_path(path: str) -> bool:
     return ("/tests/" in p) or p.startswith("tests/") or os.path.basename(p).startswith("test_")
 
 
+def _extract_code_snippet(source: str, start_line: int, end_line: int) -> str:
+    """Extract source code from start_line to end_line (1-based, inclusive)."""
+    lines = source.splitlines()
+    start_idx = max(0, start_line - 1)
+    end_idx = min(len(lines), end_line)
+    return "\n".join(lines[start_idx:end_idx])
+
+
 def _runs_root() -> str:
     # <locbench>/analyzer/core/seed_extractor.py -> <locbench>/analyzer
     return os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -235,11 +243,22 @@ def extract_seeds(repo: str, commit: str, ext: str = ".py", out_path: Optional[s
         if module_qual.endswith(ext):
             module_qual = module_qual[: -len(ext)]
 
+        # Pre-compute definition spans for both versions (cross-version code lookup)
+        new_spans = collect_def_spans(new_src, module_qual=module_qual) if new_src else []
+        old_spans = collect_def_spans(old_src, module_qual=module_qual) if old_src else []
+        old_span_map = {s.qualname: s for s in old_spans}
+        new_span_map = {s.qualname: s for s in new_spans}
+
         if new_src is not None and len(new_lines) > 0:
-            spans = collect_def_spans(new_src, module_qual=module_qual)
             for ln in sorted(new_lines):
-                hit = choose_innermost(spans, ln)
+                hit = choose_innermost(new_spans, ln)
                 if hit:
+                    new_code = _extract_code_snippet(new_src, hit.lineno, hit.end_lineno)
+                    old_hit = old_span_map.get(hit.qualname)
+                    old_code = (
+                        _extract_code_snippet(old_src, old_hit.lineno, old_hit.end_lineno)
+                        if old_hit and old_src else None
+                    )
                     seeds.append(
                         {
                             "path": path,
@@ -251,6 +270,8 @@ def extract_seeds(repo: str, commit: str, ext: str = ".py", out_path: Optional[s
                             "reason": "diff_new_line_in_def",
                             "is_test": test_flag,
                             "seed_type": seed_type,
+                            "new_code": new_code,
+                            "old_code": old_code,
                         }
                     )
                 else:
@@ -265,14 +286,21 @@ def extract_seeds(repo: str, commit: str, ext: str = ".py", out_path: Optional[s
                             "reason": "diff_new_line_outside_defs",
                             "is_test": test_flag,
                             "seed_type": seed_type,
+                            "new_code": None,
+                            "old_code": None,
                         }
                     )
 
         if old_src is not None and (len(old_lines) > 0) and (new_src is None or len(new_lines) == 0):
-            spans = collect_def_spans(old_src, module_qual=module_qual)
             for ln in sorted(old_lines):
-                hit = choose_innermost(spans, ln)
+                hit = choose_innermost(old_spans, ln)
                 if hit:
+                    old_code = _extract_code_snippet(old_src, hit.lineno, hit.end_lineno)
+                    new_hit = new_span_map.get(hit.qualname)
+                    new_code = (
+                        _extract_code_snippet(new_src, new_hit.lineno, new_hit.end_lineno)
+                        if new_hit and new_src else None
+                    )
                     seeds.append(
                         {
                             "path": path,
@@ -284,6 +312,8 @@ def extract_seeds(repo: str, commit: str, ext: str = ".py", out_path: Optional[s
                             "reason": "diff_old_line_in_def",
                             "is_test": test_flag,
                             "seed_type": seed_type,
+                            "new_code": new_code,
+                            "old_code": old_code,
                         }
                     )
                 else:
@@ -298,6 +328,8 @@ def extract_seeds(repo: str, commit: str, ext: str = ".py", out_path: Optional[s
                             "reason": "diff_old_line_outside_defs",
                             "is_test": test_flag,
                             "seed_type": seed_type,
+                            "new_code": None,
+                            "old_code": None,
                         }
                     )
 

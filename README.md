@@ -1,71 +1,418 @@
-# Analyzer 測試指南
+# Analyzer — 增量文档维护工具
 
-本指南將帶你從零開始測試 Analyzer 項目，包括如何找到測試用的 commit、運行完整工作流，以及查看結果。
+针对每次代码变动，自动分析所有受影响的函数，使用 LLM 更新其 docstring，并生成变更总结。
 
-## 快速參考
+---
 
-### 最常用的命令
+## 目录
 
-```powershell
-# 1. 找到 commit
-cd d:\locbench\rich
-git log --oneline -10
+1. [工作流总览](#工作流总览)
+2. [架构与模块](#架构与模块)
+3. [数据 I/O 说明](#数据-io-说明)
+4. [快速开始](#快速开始)
+5. [命令参考](#命令参考)
+6. [输出文件说明](#输出文件说明)
+7. [环境配置](#环境配置)
+8. [常见问题](#常见问题)
 
-# 2. 運行完整工作流（模板模式，最快）
-cd d:\locbench
-python -m analyzer.main run --repo .\rich --commit <commit_sha> --mode template
-python -m analyzer.main run --repo .\rich --commit 73ee8232 --mode template
-# 3. 運行完整工作流（LLM 模式，需要配置）
-python -m analyzer.main run --repo .\rich --commit 73ee8232 --mode llm
+---
 
-# 4. 批量測試
-python -m analyzer.main batch --repo .\rich --n 50
+## 工作流总览
+
+```
+Git Commit (代码变动)
+    │
+    ▼
+┌──────────────────────────────────────────────────────────────────┐
+│ Step 1: 提取种子 (seed_extractor)                                │
+│   输入: repo path + commit SHA                                   │
+│   处理: 解析 git diff → 定位变更行 → AST 映射到函数/类定义        │
+│   输出: impacted_seeds_<commit>.json                             │
+├──────────────────────────────────────────────────────────────────┤
+│ Step 2: 构建调用图 + 影响传播 (call_graph + impact_propagator)    │
+│   输入: repo path + seeds                                        │
+│   处理: 扫描全仓库构建调用图 → 从 seed 节点 BFS 传播             │
+│   输出: impacted_set_<commit>.json                               │
+├──────────────────────────────────────────────────────────────────┤
+│ Step 3: 检测 Docstring 风格 (style_detector)     [仅 LLM 模式]   │
+│   输入: repo path                                                │
+│   处理: 采样文件 → 提取现有 docstring → 正则分类风格              │
+│   输出: 风格标识 (google / numpy / sphinx)                       │
+├──────────────────────────────────────────────────────────────────┤
+│ Step 4: 选择目标函数                                              │
+│   输入: impacted_set                                             │
+│   过滤: hop ≤ 1, is_internal, 非测试文件, function/async 类型     │
+│   输出: targets 列表 (≤ limit-targets 个)                        │
+├──────────────────────────────────────────────────────────────────┤
+│ Step 5: 生成 Docstring                                           │
+│   模板模式: 生成 TODO 占位 docstring                              │
+│   LLM 模式: 调用 LLM 生成 → 失败则 fallback 到模板               │
+│   输出: docstring_patch_<commit>.diff                            │
+├──────────────────────────────────────────────────────────────────┤
+│ Step 6: AST 验证                                                 │
+│   输入: patch + 原始源码                                          │
+│   处理: AST 解析检查 + docstring 存在性 + 参数覆盖率检查          │
+│   输出: verifier_report_<commit>.json                            │
+├──────────────────────────────────────────────────────────────────┤
+│ Step 7: 生成变更总结 README                          [计划中]     │
+│   输入: seeds + impacted_set + patch                             │
+│   处理: 调用 LLM 汇总本次所有变更                                 │
+│   输出: change_summary_<commit>.md                               │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
-### 實際示例（rich 項目）
+### 两种运行模式
+
+| 模式 | 命令参数 | 特点 | 是否需要 LLM |
+|------|---------|------|-------------|
+| **Template** | `--mode template` | 生成 TODO 占位 docstring，速度快 | 否 |
+| **LLM** | `--mode llm` | 调用 LLM 生成高质量 docstring，失败自动 fallback | 是 |
+
+---
+
+## 架构与模块
+
+```
+analyzer/
+├── main.py                    # CLI 入口，命令分发
+│
+├── core/                      # 核心分析引擎（纯静态分析，不涉及 LLM）
+│   ├── seed_extractor.py      #   Step 1: git diff → 变更种子
+│   ├── call_graph.py          #   Step 2: 构建函数调用图
+│   ├── impact_propagator.py   #   Step 2: BFS 影响传播
+│   └── style_detector.py      #   Step 3: docstring 风格检测
+│
+├── agents/                    # Agent 编排层（串联 core + llm 完成完整流程）
+│   ├── llm_agent.py           #   LLM 模式 agent（Steps 1-6 全流程）
+│   ├── template_agent.py      #   模板模式 agent（Steps 1-6 全流程）
+│   └── base_agent.py          #   基类（部分实现）
+│
+├── llm/                       # LLM 调用层
+│   ├── llm_client.py          #   OpenAI SDK 封装，重试/限流/统计
+│   ├── prompt_loader.py       #   Prompt 模板加载器（从文件读取 + 渲染）
+│   └── prompts/               #   所有 Prompt 模板（独立文件，不写在源码中）
+│       ├── docstring_system.txt   # docstring 生成 - system prompt
+│       ├── docstring_user.txt     # docstring 生成 - user prompt
+│       ├── readme_system.txt      # 变更总结 - system prompt [预留]
+│       └── readme_user.txt        # 变更总结 - user prompt [预留]
+│
+├── experiments/               # 实验/批量测试
+│   ├── batch_runner.py        #   批量处理多个 commit
+│   └── negative_control.py    #   负对照实验
+│
+└── runs/                      # 输出目录（自动生成）
+    └── <repo>/
+        ├── agent/             #   模板模式输出
+        ├── agent_llm/         #   LLM 模式输出
+        └── agent_batch/       #   批量测试输出
+```
+
+### 模块间调用关系
+
+```
+main.py
+  ├─ run --mode template ──→ agents/template_agent.py
+  │                            ├── core/seed_extractor.py
+  │                            ├── core/call_graph.py
+  │                            └── core/impact_propagator.py
+  │
+  ├─ run --mode llm ──→ agents/llm_agent.py
+  │                       ├── core/seed_extractor.py
+  │                       ├── core/call_graph.py
+  │                       ├── core/impact_propagator.py
+  │                       ├── core/style_detector.py
+  │                       └── llm/llm_client.py
+  │                             └── llm/prompt_loader.py → llm/prompts/*.txt
+  │
+  ├─ extract-seeds ──→ core/seed_extractor.py
+  ├─ propagate ──→ core/call_graph.py + core/impact_propagator.py
+  └─ batch ──→ experiments/batch_runner.py → agents/template_agent.py (循环)
+```
+
+---
+
+## 数据 I/O 说明
+
+### 输入
+
+| 输入项 | 来源 | 说明 |
+|--------|------|------|
+| `--repo` | 本地 Git 仓库路径 | 如 `d:\locbench\rich` |
+| `--commit` | Git commit SHA | 短 SHA（如 `36fe3f7c`）或完整 SHA |
+| `config.yaml` | 项目根目录 `d:\locbench\config.yaml` | LLM API 配置（仅 LLM 模式需要） |
+
+### 各步骤数据流
+
+```
+[输入] repo + commit
+         │
+         ▼
+Step 1 ──→ impacted_seeds_<commit>.json
+         │   字段: commit, parent, seeds[{path, qualname, kind, seed_type, line, span}]
+         │
+         ▼
+Step 2 ──→ impacted_set_<commit>.json
+         │   字段: commit, num_impacted, impacted[{qualname, hop, reason, source,
+         │          callers, callees, is_internal, is_test, is_external}]
+         │
+         ▼
+Step 3 ──→ style: "google" | "numpy" | "sphinx"  (内存，记录在 history)
+         │
+         ▼
+Step 4 ──→ targets: [{qualname, rel_path, lineno}]  (内存)
+         │   过滤条件: hop≤1, is_internal, 非测试, function/async 类型
+         │
+         ▼
+Step 5 ──→ docstring_patch_<commit>.diff
+         │   格式: unified diff，可直接 git apply
+         │
+         ▼
+Step 6 ──→ verifier_report_<commit>.json
+         │   字段: ok, num_targets_checked, results[{qualname, ok, errors}],
+         │          per_target[{action, changed, used_llm, llm_latency_ms, tokens}]
+         │
+         ▼
+汇总   ──→ history.json
+             字段: repo, commit, steps[], counters, llm_stats, summary, outputs
+```
+
+### 输出目录结构
+
+单次运行（以 commit `36fe3f7c` 为例）：
+
+```
+analyzer/runs/rich/agent_llm/36fe3f7c_20260209_144152/
+├── impacted_seeds_36fe3f7c.json    # 变更种子（哪些函数被直接修改）
+├── impacted_set_36fe3f7c.json      # 受影响函数集（传播后的完整列表）
+├── docstring_patch_36fe3f7c.diff   # Docstring 变更补丁
+├── verifier_report_36fe3f7c.json   # AST 验证报告
+└── history.json                     # 执行历史与统计
+```
+
+批量运行：
+
+```
+analyzer/runs/rich/agent_batch/<timestamp>/
+├── <commit>_<timestamp>/            # 每个 commit 的子目录（同上述结构）
+├── summary.csv                      # CSV 格式统计摘要
+├── summary.jsonl                    # JSONL 格式详细记录
+└── aggregate.json                   # 聚合统计
+```
+
+---
+
+## 快速开始
+
+### 1. 获取一个测试 commit
 
 ```powershell
-# 完整流程示例
 cd d:\locbench\rich
 git log --oneline -5
-# 選擇：73ee8232
+# 选择一个有代码变更的 commit SHA
+```
 
+### 2. 运行单次分析
+
+```powershell
 cd d:\locbench
-python -m analyzer.main run --repo .\rich --commit 73ee8232 --mode template
+
+# 模板模式（快速，不需要 LLM）
+python -m analyzer.main run --repo .\rich --commit 36fe3f7c --mode template
+
+# LLM 模式（需要 config.yaml 配置）
+python -m analyzer.main run --repo .\rich --commit 36fe3f7c --mode llm
+```
+
+### 3. 查看输出
+
+运行完成后终端会打印所有输出文件路径，例如：
+
+```
+=== agent_llm outputs ===
+patch:    ...\docstring_patch_36fe3f7c.diff
+verifier: ...\verifier_report_36fe3f7c.json
+history:  ...\history.json
+seeds:    ...\impacted_seeds_36fe3f7c.json
+impacted: ...\impacted_set_36fe3f7c.json
+style: google
+num_targets: 1, num_changed: 1, verifier_ok: True
+llm_calls: 1, success: 1, fallback: 0
 ```
 
 ---
 
-## 目錄
+## 命令参考
 
-1. [環境準備](#環境準備)
-2. [找到測試用的 Commit](#找到測試用的-commit)
-3. [快速開始](#快速開始)
-4. [完整工作流](#完整工作流)
-5. [單步執行](#單步執行)
-6. [批量測試](#批量測試)
-7. [查看結果](#查看結果)
-8. [常見問題](#常見問題)
+### `run` — 运行完整工作流
+
+```powershell
+python -m analyzer.main run --repo <path> --commit <sha> [options]
+```
+
+| 参数 | 说明 | 默认值 |
+|------|------|--------|
+| `--repo` | Git 仓库路径 | **必填** |
+| `--commit` | Commit SHA | **必填** |
+| `--mode` | `template` 或 `llm` | `template` |
+| `--max-hops` | 影响传播最大跳数 | `2` |
+| `--parser` | 解析器: `ast` / `treesitter` / `auto` | `treesitter` |
+| `--seed-scope` | 种子范围: `code_only` / `all` | `code_only` |
+| `--limit-targets` | 最多处理的目标函数数 | `50` |
+| `--style` | Docstring 风格（仅 LLM）: `auto` / `google` / `numpy` / `sphinx` | `auto` |
+| `--no-llm` | 禁用 LLM，强制使用模板（仅 LLM 模式） | - |
+| `--run-parent` | 自定义输出父目录 | - |
+
+### `extract-seeds` — 仅提取种子
+
+```powershell
+python -m analyzer.main extract-seeds --repo <path> --commit <sha> [--out <path>]
+```
+
+### `propagate` — 构建调用图 + 影响传播
+
+```powershell
+python -m analyzer.main propagate --repo <path> --seeds <json> [--mode simple|typed] [--max-hops N]
+```
+
+### `batch` — 批量处理
+
+```powershell
+python -m analyzer.main batch --repo <path> [--n 200] [--commits-file <file>]
+```
 
 ---
 
-## 環境準備
+## 输出文件说明
 
-### 1. 確保項目依賴已安裝
+### `impacted_seeds_<commit>.json` — 变更种子
+
+从 git diff 解析出的直接变更函数：
+
+```json
+{
+  "commit": "36fe3f7c",
+  "parent": "9a99acc9...",
+  "num_seeds": 1,
+  "seeds": [
+    {
+      "path": "rich/progress.py",
+      "qualname": "rich.progress.Progress.reset",
+      "kind": "function",
+      "seed_type": "code_change",
+      "line": 1496,
+      "span": [1478, 1515]
+    }
+  ]
+}
+```
+
+### `impacted_set_<commit>.json` — 受影响函数集
+
+BFS 传播后的完整影响范围：
+
+```json
+{
+  "num_impacted": 1,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "rich.progress.Progress.reset",
+      "hop": 0,
+      "reason": "direct_change",
+      "callers": [],
+      "callees": ["task._reset"],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ]
+}
+```
+
+### `docstring_patch_<commit>.diff` — Docstring 变更补丁
+
+标准 unified diff 格式，可直接 `git apply`：
+
+```diff
+--- a/rich/progress.py
++++ b/rich/progress.py
+@@ -1486,16 +1486,21 @@
+     ) -> None:
+-        """Reset a task so completed is 0 and the clock is reset.
++        """Reset a task so completed steps are set to zero and the elapsed time is reset.
+         ...
+```
+
+### `verifier_report_<commit>.json` — AST 验证报告
+
+```json
+{
+  "ok": true,
+  "num_targets_checked": 1,
+  "results": [
+    { "qualname": "rich.progress.Progress.reset", "ok": true, "errors": [] }
+  ],
+  "per_target": [
+    {
+      "qualname": "rich.progress.Progress.reset",
+      "action": "updated",
+      "changed": true,
+      "used_llm": true,
+      "llm_latency_ms": 15442,
+      "llm_prompt_tokens": 13372,
+      "llm_completion_tokens": 608
+    }
+  ]
+}
+```
+
+### `history.json` — 执行历史
+
+完整的运行记录，包含每步输出路径、计数器、LLM 统计和最终摘要：
+
+```json
+{
+  "repo": "d:\\locbench\\rich",
+  "commit": "36fe3f7c",
+  "duration_ms": 17370,
+  "counters": {
+    "subprocess_calls": 1,
+    "git_show_calls": 1,
+    "ast_parse_calls": 3,
+    "llm_calls": 1,
+    "llm_fallbacks": 0
+  },
+  "llm_stats": {
+    "total_calls": 1,
+    "success_calls": 1,
+    "total_prompt_tokens": 13372,
+    "total_completion_tokens": 608,
+    "total_latency_ms": 15442
+  },
+  "summary": {
+    "num_targets": 1,
+    "num_changed_targets": 1,
+    "verifier_ok": true,
+    "style": "google"
+  }
+}
+```
+
+---
+
+## 环境配置
+
+### 依赖安装
 
 ```powershell
-# 進入項目根目錄
-cd d:\locbench
-
-# 安裝依賴（如果還沒安裝）
 pip install openai pyyaml
-# 可選：tree-sitter（用於更準確的解析）
+# 可选（更准确的解析）
 pip install tree_sitter tree_sitter_python
 ```
 
-### 2. 配置 LLM（可選，僅 LLM 模式需要）
+### LLM 配置（仅 LLM 模式需要）
 
-編輯 `d:\locbench\config.yaml`：
+编辑 `d:\locbench\config.yaml`：
 
 ```yaml
 llm_chat:
@@ -74,571 +421,54 @@ llm_chat:
   model_name: "qwen3:235b"
 ```
 
-如果沒有配置 LLM，可以使用模板模式（`--mode template`），不需要 LLM。
+配置文件查找顺序：
+1. 环境变量 `LOCBENCH_CONFIG` 指定的路径
+2. `d:\locbench\config.yaml`（项目根目录）
+3. 当前工作目录的 `config.yaml`
 
-### 3. 準備測試倉庫
+### 可用的测试仓库
 
-本項目已包含以下測試倉庫：
-- `rich` - Rich 終端格式化庫
-- `black` - Python 代碼格式化工具
-- `fastapi` - 現代 Web 框架
-- `sqlalchemy` - SQL 工具包
-
-如果沒有這些倉庫，可以克隆：
-
-```powershell
-# 克隆 rich 倉庫（示例）
-cd d:\locbench
-git clone https://github.com/Textualize/rich.git
-```
-
-### 4. 驗證安裝
-
-```powershell
-# 檢查 Python 版本（需要 3.8+）
-python --version
-
-# 檢查依賴
-python -c "import openai, yaml; print('Dependencies OK')"
-
-# 檢查 analyzer 模組是否可以導入
-python -c "import analyzer; print('Analyzer module OK')"
-
-# 檢查 main.py 是否可用
-python -m analyzer.main --help
-```
-
-如果出現錯誤，請檢查：
-- Python 版本是否 >= 3.8
-- 依賴是否已安裝：`pip install openai pyyaml`
-- 當前目錄是否在 `d:\locbench`
+| 仓库 | 路径 | 说明 |
+|------|------|------|
+| rich | `d:\locbench\rich` | Rich 终端格式化库 |
+| black | `d:\locbench\black` | Python 代码格式化工具 |
+| fastapi | `d:\locbench\fastapi` | 现代 Web 框架 |
+| sqlalchemy | `d:\locbench\sqlalchemy` | SQL 工具包 |
 
 ---
 
-## 找到測試用的 Commit
+## 常见问题
 
-### 方法 1：查看最近的 commits（推薦）
+### Q: LLM 调用失败怎么办？
 
-```powershell
-# 進入倉庫目錄
-cd d:\locbench\rich
-
-# 查看最近的 20 個 commits
-git log --oneline -20
-
-# 輸出示例：
-# 14713ac Fix issue with console markup
-# 5cdb4b6 Add new feature for table rendering
-# a1b2c3d Update documentation
-# ...
-```
-
-選擇一個有代碼變更的 commit（避免純文檔或配置變更）。
-
-### 方法 2：查找包含特定關鍵字的 commits
+检查 `config.yaml` 配置和网络连接。也可用 `--no-llm` 强制走模板模式：
 
 ```powershell
-# 查找包含 "def" 的 commits（通常表示函數變更）
-git log --oneline --grep="def" -10
-
-# 查找修改特定文件的 commits
-git log --oneline -- "src/rich/console.py" -10
+python -m analyzer.main run --repo .\rich --commit <sha> --mode llm --no-llm
 ```
 
-### 方法 3：查看特定文件的變更歷史
+### Q: 如何只执行分析（不生成 docstring）？
+
+分步执行前两步：
 
 ```powershell
-# 查看某個文件的變更歷史
-git log --oneline --follow -- "src/rich/console.py" -10
+# 提取种子
+python -m analyzer.main extract-seeds --repo .\rich --commit <sha>
 
-# 查看包含 Python 文件變更的 commits
-git log --oneline -- "*.py" -10
+# 影响传播（确认 seeds JSON 路径后执行）
+python -m analyzer.main propagate --repo .\rich --seeds <seeds.json路径>
 ```
 
-### 方法 4：使用 git show 預覽 commit 內容
+### Q: Prompt 在哪里修改？
 
-```powershell
-# 查看 commit 的詳細變更
-git show 14713ac --stat
+所有 prompt 模板在 `analyzer/llm/prompts/` 目录下，以 `.txt` 文件存放，修改后无需改动源码。
 
-# 只查看變更的文件列表
-git show 14713ac --name-only
-
-# 查看具體的 diff
-git show 14713ac
-```
-
-**建議**：選擇一個修改了 1-5 個 Python 文件的 commit，這樣測試結果更容易理解。
-
-**實際示例**（rich 項目）：
-```powershell
-cd d:\locbench\rich
-git log --oneline -10
-# 選擇：73ee8232 (fix fonts) - 這個 commit 修改了字體相關代碼
-# 或：36fe3f7c (docstring) - 這個 commit 可能包含 docstring 變更
-```
-
----
-
-## 快速開始
-
-### 模板模式（不需要 LLM）
-
-```powershell
-# 從項目根目錄執行
-cd d:\locbench
-
-# 運行完整工作流（模板模式）
-python -m analyzer.main run --repo .\rich --commit 14713ac --mode template
-```
-
-### LLM 模式（需要配置 LLM）
-
-```powershell
-# 運行完整工作流（LLM 模式）
-python -m analyzer.main run --repo .\rich --commit 14713ac --mode llm
-```
-
-### 參數說明
-
-| 參數 | 說明 | 默認值 |
-|------|------|--------|
-| `--repo` | Git 倉庫路徑（相對於當前目錄） | 必填 |
-| `--commit` | Commit SHA（完整或短 SHA） | 必填 |
-| `--mode` | Agent 模式：`template` 或 `llm` | `template` |
-| `--max-hops` | 影響傳播的最大跳數 | `2` |
-| `--parser` | 解析器：`ast` / `treesitter` / `auto` | `ast` |
-| `--seed-scope` | 種子範圍：`code_only` / `all` | `code_only` |
-| `--limit-targets` | 最多處理的目標函數數 | `50` |
-| `--style` | Docstring 風格（僅 LLM）：`auto` / `google` / `numpy` / `sphinx` | `auto` |
-
----
-
-## 完整工作流
-
-### 步驟 1：找到測試 commit
-
-```powershell
-cd d:\locbench\rich
-git log --oneline -10
-# 選擇一個 commit，例如：14713ac
-```
-
-### 步驟 2：運行完整工作流
-
-```powershell
-cd d:\locbench
-
-# 模板模式（快速，不需要 LLM）
-python -m analyzer.main run --repo .\rich --commit 14713ac --mode template
-
-# 或 LLM 模式（需要 LLM 配置）
-python -m analyzer.main run --repo .\rich --commit 14713ac --mode llm --style auto
-```
-
-### 步驟 3：查看輸出
-
-工作流會自動執行以下步驟：
-
-1. **提取種子**（Extract Seeds）
-   - 從 git diff 提取變更的函數/類
-   - 輸出：`analyzer/runs/rich/agent/<commit>_<timestamp>/impacted_seeds_<commit>.json`
-
-2. **構建調用圖**（Build Call Graph）
-   - 掃描整個倉庫構建函數調用關係
-   - 輸出：調用圖數據（內存中）
-
-3. **傳播影響**（Propagate Impacts）
-   - 從種子節點進行 k-hop 傳播
-   - 輸出：`impacted_set_<commit>.json`
-
-4. **選擇目標**（Select Targets）
-   - 過濾出需要生成 docstring 的函數
-   - 條件：hop <= 1, internal, 由 code_change seeds 推導
-
-5. **生成 Docstring**（Generate Docstrings）
-   - 模板模式：生成 TODO 模板
-   - LLM 模式：調用 LLM 生成（失敗時 fallback 到模板）
-
-6. **驗證**（Verify）
-   - AST 級別驗證 docstring 格式
-   - 檢查參數是否在 docstring 中提及
-   - 輸出：`verifier_report_<commit>.json`
-
-### 輸出文件結構
-
-```
-analyzer/runs/rich/agent/<commit>_<timestamp>/
-├── impacted_seeds_<commit>.json      # 變更種子
-├── impacted_set_<commit>.json       # 受影響函數集合
-├── docstring_patch_<commit>.diff    # 生成的 patch 文件
-├── verifier_report_<commit>.json     # 驗證報告
-└── history.json                      # 執行歷史和統計
-```
-
----
-
-## 單步執行
-
-如果你想逐步執行，可以使用單步命令：
-
-### 步驟 1：提取種子
-
-```powershell
-python -m analyzer.main extract-seeds --repo .\rich --commit 14713ac
-
-# 輸出：analyzer/runs/rich/impacted_seeds/impacted_seeds_14713ac_<timestamp>.json
-```
-
-### 步驟 2：傳播影響
-
-```powershell
-# 使用簡單 BFS（等權重）
-python -m analyzer.main propagate --repo .\rich --seeds analyzer\runs\rich\impacted_seeds\impacted_seeds_14713ac_*.json --mode simple
-
-# 或使用 Typed BFS（帶權重衰減）
-python -m analyzer.main propagate --repo .\rich --seeds analyzer\runs\rich\impacted_seeds\impacted_seeds_14713ac_*.json --mode typed --max-hops 4
-```
-
-### 步驟 3：運行 Agent（生成 Docstring）
-
-```powershell
-# 模板模式
-python -m analyzer.main run --repo .\rich --commit 14713ac --mode template
-
-# LLM 模式
-python -m analyzer.main run --repo .\rich --commit 14713ac --mode llm
-```
-
----
-
-## 批量測試
-
-### 批量處理多個 commits
-
-```powershell
-# 處理最近的 50 個 commits
-python -m analyzer.main batch --repo .\rich --n 50
-
-# 從文件讀取 commits（每行一個 SHA）
-# 先創建 commits.txt：
-# 14713ac
-# 5cdb4b6
-# a1b2c3d
-python -m analyzer.main batch --repo .\rich --commits-file commits.txt
-```
-
-### 批量測試輸出
-
-批量測試會生成：
-
-```
-analyzer/runs/rich/agent_batch/<timestamp>/
-├── summary.csv          # CSV 格式的統計摘要
-├── summary.jsonl        # JSONL 格式的詳細記錄
-└── aggregate.json       # 聚合統計
-```
-
-查看結果：
-
-```powershell
-# 查看 CSV（可用 Excel 打開）
-notepad analyzer\runs\rich\agent_batch\<timestamp>\summary.csv
-
-# 查看聚合統計
-type analyzer\runs\rich\agent_batch\<timestamp>\aggregate.json
-```
-
----
-
-## 查看結果
-
-### 1. 查看生成的 Patch
-
-```powershell
-# 查看 diff 文件
-notepad analyzer\runs\rich\agent\<commit>_<timestamp>\docstring_patch_<commit>.diff
-
-# 或在 Git 中應用 patch
-cd d:\locbench\rich
-git apply --check analyzer\..\..\runs\rich\agent\<commit>_<timestamp>\docstring_patch_<commit>.diff
-```
-
-### 2. 查看驗證報告
-
-```powershell
-# 查看 JSON 報告
-type analyzer\runs\rich\agent\<commit>_<timestamp>\verifier_report_<commit>.json
-
-# 或使用 Python 格式化查看
-python -m json.tool analyzer\runs\rich\agent\<commit>_<timestamp>\verifier_report_<commit>.json
-```
-
-### 3. 查看執行歷史
-
-```powershell
-# 查看完整的執行歷史
-type analyzer\runs\rich\agent\<commit>_<timestamp>\history.json
-
-# 格式化查看
-python -m json.tool analyzer\runs\rich\agent\<commit>_<timestamp>\history.json
-```
-
-### 4. 查看受影響函數列表
-
-```powershell
-# 查看 impacted set
-python -m json.tool analyzer\runs\rich\agent\<commit>_<timestamp>\impacted_set_<commit>.json | findstr "qualname"
-```
-
----
-
-## 完整測試示例
-
-### 示例：測試 rich 項目的一個 commit
-
-```powershell
-# 1. 進入 rich 目錄，找到一個 commit
-cd d:\locbench\rich
-git log --oneline -10
-# 輸出示例：
-# 1d402e0c fix dates
-# f2a1c3b8 Merge pull request #3944
-# 2e5a5dad changelog
-# 73ee8232 fix fonts
-# 36fe3f7c docstring
-# 選擇一個有代碼變更的 commit，例如：73ee8232
-
-# 2. 預覽 commit 變更（可選）
-git show 73ee8232 --stat
-# 查看修改了哪些文件
-
-# 3. 返回項目根目錄，運行測試
-cd d:\locbench
-python -m analyzer.main run --repo .\rich --commit 73ee8232 --mode template
-
-# 4. 查看輸出
-# 終端會顯示：
-# === agent outputs ===
-# patch: analyzer/runs/rich/agent/73ee8232_20260128_123456/docstring_patch_73ee8232.diff
-# verifier: analyzer/runs/rich/agent/73ee8232_20260128_123456/verifier_report_73ee8232.json
-# history: analyzer/runs/rich/agent/73ee8232_20260128_123456/history.json
-# num_targets: 5, num_files_changed: 2, verifier_ok: True
-
-# 5. 查看生成的 patch
-notepad analyzer\runs\rich\agent\73ee8232_20260128_123456\docstring_patch_73ee8232.diff
-```
-
-### 示例：使用 LLM 模式
-
-```powershell
-# 1. 確保 config.yaml 已配置 LLM（已配置在 d:\locbench\config.yaml）
-# 2. 運行 LLM 模式
-python -m analyzer.main run --repo .\rich --commit 73ee8232 --mode llm --style auto
-
-# 3. 查看結果（會包含 LLM 統計）
-# 輸出會顯示：
-# llm_calls: 5, success: 4, fallback: 1
-type analyzer\runs\rich\agent_llm\73ee8232_<timestamp>\history.json
-```
-
----
-
-## 常見問題
-
-### Q1: 找不到 commit？
-
-**A**: 確保：
-- 倉庫路徑正確（使用相對路徑 `.\rich` 或絕對路徑）
-- commit SHA 正確（可以使用短 SHA，如 `14713ac`）
-- 倉庫是 git 倉庫（有 `.git` 目錄）
-
-```powershell
-# 檢查倉庫
-cd d:\locbench\rich
-git status
-git log --oneline -5
-```
-
-### Q2: LLM 調用失敗？
-
-**A**: 
-- 檢查 `config.yaml` 配置是否正確
-- 檢查網絡連接
-- 使用 `--no-llm` 標誌強制使用模板模式
-
-```powershell
-python -m analyzer.main run --repo .\rich --commit 14713ac --mode llm --no-llm
-```
-
-### Q3: 輸出目錄不存在？
-
-**A**: 程序會自動創建目錄。如果失敗，檢查：
-- 寫入權限
-- 磁盤空間
-- 路徑長度（Windows 路徑限制）
-
-### Q4: 如何查看詳細的執行日誌？
-
-**A**: 查看 `history.json` 文件，包含：
-- 每個步驟的執行時間
-- 統計計數器（subprocess_calls, git_show_calls, ast_parse_calls）
-- 摘要信息（num_targets, num_files_changed, verifier_ok）
-
-### Q5: 如何測試 Typed BFS？
-
-**A**: 使用 `propagate` 命令的 `typed` 模式：
+### Q: 如何测试 Typed BFS（带权重衰减的传播）？
 
 ```powershell
 python -m analyzer.main propagate --repo .\rich --seeds <seeds.json> --mode typed --max-hops 4
 ```
 
-### Q6: 如何只測試特定文件？
-
-**A**: 目前不支持文件過濾，但可以：
-1. 選擇只修改特定文件的 commit
-2. 在結果中過濾 `impacted_set` JSON 文件
-
 ---
 
-## 進階用法
-
-### 自定義參數
-
-```powershell
-# 增加傳播跳數
-python -m analyzer.main run --repo .\rich --commit 14713ac --mode template --max-hops 3
-
-# 使用 tree-sitter 解析器（更準確但更慢）
-python -m analyzer.main run --repo .\rich --commit 14713ac --mode template --parser treesitter
-
-# 包含測試文件的變更
-python -m analyzer.main run --repo .\rich --commit 14713ac --mode template --seed-scope all
-
-# 限制目標數量
-python -m analyzer.main run --repo .\rich --commit 14713ac --mode template --limit-targets 10
-```
-
-### 指定輸出目錄
-
-```powershell
-# 自定義輸出父目錄
-python -m analyzer.main run --repo .\rich --commit 14713ac --mode template --run-parent .\my_output
-```
-
-### 批量測試自定義參數
-
-```powershell
-# 批量測試，自定義參數
-python -m analyzer.main batch --repo .\rich --n 100 --max-hops 3 --parser ast --limit-targets 30
-```
-
----
-
-## 輸出文件說明
-
-### `impacted_seeds_<commit>.json`
-
-包含從 git diff 提取的變更種子：
-
-```json
-{
-  "commit": "14713ac",
-  "parent": "5cdb4b6",
-  "repo": "d:\\locbench\\rich",
-  "num_seeds": 3,
-  "seeds": [
-    {
-      "path": "src/rich/console.py",
-      "qualname": "rich.console.Console.print",
-      "kind": "function",
-      "seed_type": "code_change"
-    }
-  ]
-}
-```
-
-### `impacted_set_<commit>.json`
-
-包含受影響的函數集合：
-
-```json
-{
-  "num_impacted": 15,
-  "impacted": [
-    {
-      "qualname": "rich.console.Console.print",
-      "hop": 0,
-      "is_internal": true,
-      "is_test": false
-    }
-  ]
-}
-```
-
-### `docstring_patch_<commit>.diff`
-
-標準 unified diff 格式的 patch 文件，可以直接應用：
-
-```diff
---- a/src/rich/console.py
-+++ b/src/rich/console.py
-@@ -100,6 +100,12 @@
-     def print(self, *objects):
-+        """TODO: docstring
-+
-+        Args:
-+            objects:
-+        """
-         ...
-```
-
-### `verifier_report_<commit>.json`
-
-驗證報告：
-
-```json
-{
-  "ok": true,
-  "num_targets_checked": 5,
-  "results": [
-    {
-      "qualname": "rich.console.Console.print",
-      "ok": true,
-      "errors": []
-    }
-  ]
-}
-```
-
-### `history.json`
-
-完整的執行歷史：
-
-```json
-{
-  "repo": "d:\\locbench\\rich",
-  "commit": "14713ac",
-  "duration_ms": 1234,
-  "summary": {
-    "num_targets": 5,
-    "num_changed_targets": 3,
-    "num_files_changed": 2,
-    "verifier_ok": true
-  },
-  "steps": [...]
-}
-```
-
----
-
-## 聯繫與支持
-
-如有問題，請查看：
-- 項目架構設計：`analyzer/项目架构设计.md`
-- 開發進度：`analyzer/开发进度与计划.md`
-- 舊版 README：`analyzer/unidiff_extract/README.md`
-
----
-
-**最後更新**：2026-01-28
+**最后更新**：2026-02-09

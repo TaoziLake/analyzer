@@ -1,0 +1,27 @@
+{
+  "commit": "36fe3f7c",
+  "parent": "9a99acc97d26d7832200a271ed8e95dd59df10c7",
+  "repo": "D:\\locbench\\rich",
+  "num_files_in_diff": 1,
+  "num_py_files_in_diff": 1,
+  "num_seeds": 1,
+  "seeds": [
+    {
+      "path": "rich/progress.py",
+      "version": "new",
+      "line": 1496,
+      "kind": "function",
+      "qualname": "rich.progress.Progress.reset",
+      "span": [
+        1478,
+        1515
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def reset(\n        self,\n        task_id: TaskID,\n        *,\n        start: bool = True,\n        total: Optional[float] = None,\n        completed: int = 0,\n        visible: Optional[bool] = None,\n        description: Optional[str] = None,\n        **fields: Any,\n    ) -> None:\n        \"\"\"Reset a task so completed is 0 and the clock is reset.\n\n        Args:\n            task_id (TaskID): ID of task.\n            start (bool, optional): Start the task after reset. Defaults to True.\n            total (float, optional): New total steps in task, or None to use current total. Defaults to None.\n            completed (int, optional): Number of steps completed. Defaults to 0.\n            visible (bool, optional): Set visible flag if not None.\n            description (str, optional): Change task description if not None. Defaults to None.\n            **fields (str): Additional data fields required for rendering.\n        \"\"\"\n        current_time = self.get_time()\n        with self._lock:\n            task = self._tasks[task_id]\n            task._reset()\n            task.start_time = current_time if start else None\n            if total is not None:\n                task.total = total\n            task.completed = completed\n            if visible is not None:\n                task.visible = visible\n            if fields:\n                task.fields = fields\n            if description is not None:\n                task.description = description\n            task.finished_time = None\n        self.refresh()",
+      "old_code": "    def reset(\n        self,\n        task_id: TaskID,\n        *,\n        start: bool = True,\n        total: Optional[float] = None,\n        completed: int = 0,\n        visible: Optional[bool] = None,\n        description: Optional[str] = None,\n        **fields: Any,\n    ) -> None:\n        \"\"\"Reset a task so completed is 0 and the clock is reset.\n\n        Args:\n            task_id (TaskID): ID of task.\n            start (bool, optional): Start the task after reset. Defaults to True.\n            total (float, optional): New total steps in task, or None to use current total. Defaults to None.\n            completed (int, optional): Number of steps completed. Defaults to 0.\n            visible (bool, optional): Enable display of the task. Defaults to True.\n            description (str, optional): Change task description if not None. Defaults to None.\n            **fields (str): Additional data fields required for rendering.\n        \"\"\"\n        current_time = self.get_time()\n        with self._lock:\n            task = self._tasks[task_id]\n            task._reset()\n            task.start_time = current_time if start else None\n            if total is not None:\n                task.total = total\n            task.completed = completed\n            if visible is not None:\n                task.visible = visible\n            if fields:\n                task.fields = fields\n            if description is not None:\n                task.description = description\n            task.finished_time = None\n        self.refresh()"
+    }
+  ],
+  "generated_at": "2026-02-09T15:17:39"
+}

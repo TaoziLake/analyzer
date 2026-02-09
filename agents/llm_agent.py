@@ -4,14 +4,17 @@
 """
 agent_llm.py
 
-使用 LLM 生成 docstring 的 agent。
+使用 LLM 生成 docstring 的 agent（分層處理版本）。
 
 流程：
-  1) extract_seeds.py 生成 seeds
+  1) extract_seeds.py 生成 seeds（含 old_code / new_code）
   2) process_impacted_set.py 生成 impacted set
-  3) 選 targets（hop<=1 且 internal 且由 code_change seeds 推導）
-  4) 自動檢測 repo 的 docstring 風格
-  5) 使用 LLM 生成 docstring（失敗時 fallback 到模板）
+  3) 自動檢測 repo 的 docstring 風格
+  4) 選 targets（按 hop 分層，internal 且由 code_change seeds 推導）
+  5) 分層生成 docstring：
+     - hop 0: 將 diff 源碼（舊代碼 + 新代碼）發給 LLM，生成 docstring + change_analysis
+     - hop 1+: 將受影響函式全文（非整個檔案）+ 上層分析結果發給 LLM
+     失敗時 fallback 到模板
   6) 跑 docstring verifier（AST 級校驗）
 
 輸出：patch + verifier report + history（含 LLM 統計）
@@ -28,6 +31,7 @@ import re
 import subprocess
 import time
 import warnings
+from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Dict, List, Optional, Sequence, Tuple
@@ -214,6 +218,14 @@ def _format_llm_docstring(docstring: str) -> List[str]:
                 else:
                     lines[-1] = '"""'
     return lines
+
+
+def _extract_function_text(source: str, node: ast.AST) -> str:
+    """從源碼中提取函式全文（使用 AST 節點的行號範圍）。"""
+    lines = source.splitlines()
+    start = node.lineno - 1  # 0-based
+    end = getattr(node, "end_lineno", node.lineno)  # 1-based inclusive
+    return "\n".join(lines[start:end])
 
 
 @dataclass
@@ -449,69 +461,88 @@ def main():
         detected_style = args.style
     history["steps"].append({"step": "detect_style", "style": detected_style})
 
-    # 4) pick targets
+    # 4) pick targets（按 hop 分層，支持 max_hops 層）
     print(f"[4/6] Selecting targets...")
     targets: List[Dict] = []
     file_nodes_cache: Dict[str, Dict[str, ast.AST]] = {}
     file_source_cache: Dict[str, str] = {}
 
+    # 按 hop 分組 impacted items，逐層檢查 lineage
+    impacted_by_hop: Dict[int, List[Dict]] = defaultdict(list)
     for it in impacted_items:
-        hop = int(it.get("hop", 999))
-        if hop > 1:
-            continue
-        if not it.get("is_internal", False):
-            continue
-        qn = it.get("qualname", "")
-        src = it.get("source")
-        is_code_lineage = (hop == 0 and qn in code_change_seeds) or (hop == 1 and src in code_change_seeds)
-        if not is_code_lineage:
-            continue
+        impacted_by_hop[int(it.get("hop", 999))].append(it)
 
-        resolved = _resolve_qualname_to_file(repo_path, qn, ext=".py")
-        if not resolved:
-            continue
-        _, rel_path = resolved
-        if _is_test_relpath(rel_path):
-            continue
-        rel_path = _posix(rel_path)
+    # 追蹤已接受的 qualname（具有 code_change lineage）
+    accepted_lineage = set(code_change_seeds)
 
-        if rel_path not in file_nodes_cache:
-            base = _git_show_text(repo_path, commit, rel_path)
-            file_source_cache[rel_path] = base
+    for hop_level in sorted(impacted_by_hop.keys()):
+        if hop_level > args.max_hops:
+            break
+        for it in impacted_by_hop[hop_level]:
+            if not it.get("is_internal", False):
+                continue
+            qn = it.get("qualname", "")
+            src = it.get("source")
+
+            # Lineage 檢查：hop 0 必須是 code_change seed，hop 1+ 的 source 必須在已接受集合中
+            if hop_level == 0:
+                if qn not in code_change_seeds:
+                    continue
+            else:
+                if src not in accepted_lineage:
+                    continue
+
+            resolved = _resolve_qualname_to_file(repo_path, qn, ext=".py")
+            if not resolved:
+                continue
+            _, rel_path = resolved
+            if _is_test_relpath(rel_path):
+                continue
+            rel_path = _posix(rel_path)
+
+            if rel_path not in file_nodes_cache:
+                base = _git_show_text(repo_path, commit, rel_path)
+                file_source_cache[rel_path] = base
+                module_qual = _module_qual_from_relpath(rel_path, ext=".py")
+                try:
+                    file_nodes_cache[rel_path] = _collect_target_nodes(base, module_qual)
+                except SyntaxError:
+                    file_nodes_cache[rel_path] = {}
+
             module_qual = _module_qual_from_relpath(rel_path, ext=".py")
-            try:
-                file_nodes_cache[rel_path] = _collect_target_nodes(base, module_qual)
-            except SyntaxError:
-                file_nodes_cache[rel_path] = {}
+            node = file_nodes_cache[rel_path].get(qn)
+            if node is None or not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                continue
 
-        module_qual = _module_qual_from_relpath(rel_path, ext=".py")
-        node = file_nodes_cache[rel_path].get(qn)
-        if node is None or not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-            continue
+            existing_doc = ast.get_docstring(node)
+            has_docstring = existing_doc is not None
+            target_action = "update" if has_docstring else "insert"
 
-        existing_doc = ast.get_docstring(node)
-        has_docstring = existing_doc is not None
-        target_action = "update" if has_docstring else "insert"
-
-        targets.append(
-            {
-                "qualname": qn,
-                "hop": hop,
-                "source": src,
-                "rel_path": rel_path,
-                "params": _func_param_names(node),
-                "lineno": node.lineno,
-                "has_docstring": has_docstring,
-                "target_action": target_action,
-            }
-        )
+            accepted_lineage.add(qn)
+            targets.append(
+                {
+                    "qualname": qn,
+                    "hop": hop_level,
+                    "source": src,
+                    "rel_path": rel_path,
+                    "params": _func_param_names(node),
+                    "lineno": node.lineno,
+                    "end_lineno": getattr(node, "end_lineno", node.lineno),
+                    "has_docstring": has_docstring,
+                    "target_action": target_action,
+                }
+            )
 
     targets = targets[: max(args.limit_targets, 0)]
     print(f"    Selected {len(targets)} targets")
-    history["steps"].append({"step": "select_targets", "num_targets": len(targets)})
+    hop_counts = defaultdict(int)
+    for t in targets:
+        hop_counts[t["hop"]] += 1
+    print(f"    By hop: {dict(sorted(hop_counts.items()))}")
+    history["steps"].append({"step": "select_targets", "num_targets": len(targets), "by_hop": dict(sorted(hop_counts.items()))})
 
-    # 5) 生成 docstring（LLM 或 fallback）
-    print(f"[5/6] Generating docstrings...")
+    # 5) 分層生成 docstring（LLM 或 fallback）
+    print(f"[5/6] Generating docstrings (layered)...")
     llm_client: Optional[LLMClient] = None
     if not args.no_llm:
         try:
@@ -521,75 +552,148 @@ def main():
             print(f"    Warning: Failed to initialize LLM client: {e}")
             print(f"    Falling back to template mode")
 
+    # 構建 seeds_by_qualname 以便 hop 0 查找 old_code / new_code
+    seeds_by_qualname: Dict[str, Dict] = {}
+    for s in seeds:
+        if s.get("seed_type") == "code_change":
+            qn_key = s.get("qualname", "")
+            if qn_key and qn_key not in seeds_by_qualname:
+                seeds_by_qualname[qn_key] = s
+
     edits: List[PatchEdit] = []
     file_to_old: Dict[str, List[str]] = {}
     file_to_new: Dict[str, str] = {}
 
+    # 分層分析結果：qualname -> analysis text（傳遞給下一層）
+    layer_analyses: Dict[str, str] = {}
+
+    # 按 hop 分組 targets
+    targets_by_hop: Dict[int, List[Dict]] = defaultdict(list)
+    for t in targets:
+        targets_by_hop[t["hop"]].append(t)
+
     per_target_records = []
-    for i, t in enumerate(targets):
-        rel_path = t["rel_path"]
-        qn = t["qualname"]
-        params = t["params"]
-        lineno = t["lineno"]
+    target_idx = 0
 
-        if rel_path not in file_to_old:
-            base = file_source_cache.get(rel_path)
-            if base is None:
-                base = _git_show_text(repo_path, commit, rel_path)
-            file_to_old[rel_path] = base.splitlines()
-            file_to_new[rel_path] = base
+    for hop_level in sorted(targets_by_hop.keys()):
+        hop_targets = targets_by_hop[hop_level]
+        print(f"    --- Hop {hop_level}: {len(hop_targets)} targets ---")
 
-        base_src = file_to_new[rel_path]
-        module_qual = _module_qual_from_relpath(rel_path, ext=".py")
+        for t in hop_targets:
+            target_idx += 1
+            rel_path = t["rel_path"]
+            qn = t["qualname"]
+            params = t["params"]
 
-        # 嘗試用 LLM 生成
-        llm_result = None
-        docstring_lines = None
-        used_llm = False
+            if rel_path not in file_to_old:
+                base = file_source_cache.get(rel_path)
+                if base is None:
+                    base = _git_show_text(repo_path, commit, rel_path)
+                file_to_old[rel_path] = base.splitlines()
+                file_to_new[rel_path] = base
 
-        if llm_client is not None:
-            _COUNTERS["llm_calls"] += 1
-            file_source = file_source_cache.get(rel_path, base_src)
-            llm_result = llm_client.generate_docstring(
-                file_source=file_source,
-                func_qualname=qn,
-                func_lineno=lineno,
-                style=detected_style,
-            )
+            base_src = file_to_new[rel_path]
+            module_qual = _module_qual_from_relpath(rel_path, ext=".py")
 
-            if llm_result["success"] and llm_result["docstring"]:
-                docstring_lines = _format_llm_docstring(llm_result["docstring"])
-                used_llm = True
-                print(f"    [{i+1}/{len(targets)}] {qn}: LLM generated ({llm_result['latency_ms']}ms)")
-            else:
-                _COUNTERS["llm_fallbacks"] += 1
-                print(f"    [{i+1}/{len(targets)}] {qn}: LLM failed, using template")
+            # 嘗試用 LLM 生成（分層策略）
+            llm_result = None
+            docstring_lines = None
+            used_llm = False
 
-        # Fallback 到模板
-        if docstring_lines is None:
-            docstring_lines = _make_docstring_template(params)
-            if llm_client is None:
-                print(f"    [{i+1}/{len(targets)}] {qn}: template (no LLM)")
+            if llm_client is not None:
+                _COUNTERS["llm_calls"] += 1
 
-        changed, new_src, msg = _insert_docstring_into_source(base_src, qn, module_qual, docstring_lines)
-        if changed:
-            file_to_new[rel_path] = new_src
+                if hop_level == 0:
+                    # ---- Hop 0: diff-based prompt（舊代碼 + 新代碼）----
+                    seed_info = seeds_by_qualname.get(qn, {})
+                    old_code = seed_info.get("old_code") or ""
+                    new_code = seed_info.get("new_code") or ""
 
-        record = {
-            "qualname": qn,
-            "rel_path": rel_path,
-            "action": msg,
-            "changed": changed,
-            "used_llm": used_llm,
-        }
-        if llm_result:
-            record["llm_latency_ms"] = llm_result.get("latency_ms", 0)
-            record["llm_prompt_tokens"] = llm_result.get("prompt_tokens", 0)
-            record["llm_completion_tokens"] = llm_result.get("completion_tokens", 0)
-            if llm_result.get("error"):
-                record["llm_error"] = llm_result["error"]
+                    # 若 seed 中沒有 code，回退到從 file_source 提取
+                    if not new_code:
+                        orig_source = file_source_cache.get(rel_path, base_src)
+                        node = file_nodes_cache.get(rel_path, {}).get(qn)
+                        if node:
+                            new_code = _extract_function_text(orig_source, node)
 
-        per_target_records.append(record)
+                    llm_result = llm_client.generate_docstring_with_diff(
+                        old_code=old_code,
+                        new_code=new_code,
+                        func_qualname=qn,
+                        style=detected_style,
+                    )
+
+                    if llm_result["success"] and llm_result["docstring"]:
+                        docstring_lines = _format_llm_docstring(llm_result["docstring"])
+                        used_llm = True
+                        layer_analyses[qn] = llm_result.get("change_analysis", "")
+                        print(f"    [{target_idx}/{len(targets)}] {qn} (hop={hop_level}): "
+                              f"LLM diff-mode ({llm_result['latency_ms']}ms)")
+                    else:
+                        _COUNTERS["llm_fallbacks"] += 1
+                        print(f"    [{target_idx}/{len(targets)}] {qn} (hop={hop_level}): "
+                              f"LLM diff-mode failed, using template")
+
+                else:
+                    # ---- Hop 1+: impact-based prompt（函式全文 + 上層分析）----
+                    orig_source = file_source_cache.get(rel_path, base_src)
+                    node = file_nodes_cache.get(rel_path, {}).get(qn)
+                    if node:
+                        func_source = _extract_function_text(orig_source, node)
+                    else:
+                        func_source = ""
+
+                    parent_qn = t.get("source", "") or ""
+                    parent_analysis = layer_analyses.get(parent_qn, "")
+                    relationship = f"this function calls {parent_qn}" if parent_qn else "unknown"
+
+                    llm_result = llm_client.generate_docstring_with_impact(
+                        func_source=func_source,
+                        func_qualname=qn,
+                        parent_qualname=parent_qn,
+                        parent_analysis=parent_analysis,
+                        relationship=relationship,
+                        style=detected_style,
+                    )
+
+                    if llm_result["success"] and llm_result["docstring"]:
+                        docstring_lines = _format_llm_docstring(llm_result["docstring"])
+                        used_llm = True
+                        layer_analyses[qn] = llm_result.get("impact_analysis", "")
+                        print(f"    [{target_idx}/{len(targets)}] {qn} (hop={hop_level}): "
+                              f"LLM impact-mode ({llm_result['latency_ms']}ms)")
+                    else:
+                        _COUNTERS["llm_fallbacks"] += 1
+                        print(f"    [{target_idx}/{len(targets)}] {qn} (hop={hop_level}): "
+                              f"LLM impact-mode failed, using template")
+
+            # Fallback 到模板
+            if docstring_lines is None:
+                docstring_lines = _make_docstring_template(params)
+                if llm_client is None:
+                    print(f"    [{target_idx}/{len(targets)}] {qn} (hop={hop_level}): template (no LLM)")
+
+            changed, new_src, msg = _insert_docstring_into_source(base_src, qn, module_qual, docstring_lines)
+            if changed:
+                file_to_new[rel_path] = new_src
+
+            record = {
+                "qualname": qn,
+                "rel_path": rel_path,
+                "hop": hop_level,
+                "action": msg,
+                "changed": changed,
+                "used_llm": used_llm,
+            }
+            if llm_result:
+                record["llm_latency_ms"] = llm_result.get("latency_ms", 0)
+                record["llm_prompt_tokens"] = llm_result.get("prompt_tokens", 0)
+                record["llm_completion_tokens"] = llm_result.get("completion_tokens", 0)
+                record["llm_mode"] = "diff" if hop_level == 0 else "impact"
+                if llm_result.get("error"):
+                    record["llm_error"] = llm_result["error"]
+
+            per_target_records.append(record)
 
     # build unified diffs
     patch_lines: List[str] = []

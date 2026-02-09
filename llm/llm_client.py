@@ -21,6 +21,8 @@ from typing import Dict, Optional
 
 import yaml
 
+from .prompt_loader import load_prompt
+
 try:
     from openai import OpenAI
 except ImportError:
@@ -55,7 +57,7 @@ def _find_config_yaml() -> str:
     candidate = os.path.join(locbench_root, "config.yaml")
     if os.path.isfile(candidate):
         return candidate
-
+    # d:\locbench\config.yaml
     if os.path.isfile("config.yaml"):
         return "config.yaml"
 
@@ -195,28 +197,18 @@ class LLMClient:
             "sphinx": "Sphinx reST style (:param/:returns: tags)",
         }.get(style.lower(), "Google style")
 
-        # 構建 prompt
-        system_prompt = f"""You are a Python docstring expert. Generate high-quality docstrings in {style_desc}.
-
-Rules:
-1. Output ONLY the docstring content (without triple quotes)
-2. Include: brief description, Args/Parameters, Returns, Raises (if applicable)
-3. Be concise but informative
-4. Language: {language}
-5. Do NOT include any explanation or markdown formatting outside the docstring"""
-
-        user_prompt = f"""Generate a docstring for the following function.
-
-## File Context
-```python
-{file_source}
-```
-
-## Target Function
-- Qualified name: {func_qualname}
-- Line number: {func_lineno}
-
-Output the docstring content only (no triple quotes, no extra text):"""
+        # 從外部模板載入 prompt
+        system_prompt = load_prompt(
+            "docstring_system.txt",
+            style_desc=style_desc,
+            language=language,
+        )
+        user_prompt = load_prompt(
+            "docstring_user.txt",
+            file_source=file_source,
+            func_qualname=func_qualname,
+            func_lineno=func_lineno,
+        )
 
         messages = [
             {"role": "system", "content": system_prompt},
@@ -308,6 +300,271 @@ Output the docstring content only (no triple quotes, no extra text):"""
         text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
 
         return text
+
+    def _parse_structured_response(self, content: str) -> Dict[str, str]:
+        """
+        解析包含 [DOCSTRING] 和 [ANALYSIS] 標籤的結構化回應。
+
+        Returns:
+            {"docstring": str, "analysis": str}
+            如果解析失敗，docstring 回退到整段文本，analysis 為空。
+        """
+        text = content.strip()
+        # 移除 <think>...</think> 標籤
+        text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
+
+        docstring = ""
+        analysis = ""
+
+        # 提取 [DOCSTRING]...[/DOCSTRING]
+        m_doc = re.search(r"\[DOCSTRING\]\s*(.*?)\s*\[/DOCSTRING\]", text, re.DOTALL)
+        if m_doc:
+            docstring = m_doc.group(1).strip()
+
+        # 提取 [ANALYSIS]...[/ANALYSIS]
+        m_ana = re.search(r"\[ANALYSIS\]\s*(.*?)\s*\[/ANALYSIS\]", text, re.DOTALL)
+        if m_ana:
+            analysis = m_ana.group(1).strip()
+
+        # 如果結構化解析失敗，回退：把整段文本當 docstring
+        if not docstring:
+            docstring = self._parse_docstring_response(text)
+
+        # 清理 docstring 中的三引號
+        docstring = self._clean_docstring_quotes(docstring)
+
+        return {"docstring": docstring, "analysis": analysis}
+
+    def _clean_docstring_quotes(self, text: str) -> str:
+        """移除 docstring 中可能殘留的三引號和 markdown 代碼塊。"""
+        # 移除 markdown 代碼塊
+        if text.startswith("```"):
+            lines = text.split("\n")
+            start = 1
+            end = len(lines)
+            for i, line in enumerate(lines[1:], 1):
+                if line.strip().startswith("```"):
+                    end = i
+                    break
+            text = "\n".join(lines[start:end]).strip()
+
+        if text.startswith('"""') and text.endswith('"""'):
+            text = text[3:-3].strip()
+        elif text.startswith("'''") and text.endswith("'''"):
+            text = text[3:-3].strip()
+        if text.startswith('"""'):
+            text = text[3:].strip()
+        if text.startswith("'''"):
+            text = text[3:].strip()
+        if text.endswith('"""'):
+            text = text[:-3].strip()
+        if text.endswith("'''"):
+            text = text[:-3].strip()
+        return text
+
+    def _get_style_desc(self, style: str) -> str:
+        """將風格名稱轉換為描述文字。"""
+        return {
+            "google": "Google style (Args/Returns/Raises sections)",
+            "numpy": "NumPy style (Parameters/Returns sections)",
+            "sphinx": "Sphinx reST style (:param/:returns: tags)",
+        }.get(style.lower(), "Google style")
+
+    def generate_docstring_with_diff(
+        self,
+        old_code: str,
+        new_code: str,
+        func_qualname: str,
+        style: str = "google",
+        language: str = "English",
+    ) -> Dict:
+        """
+        Hop 0 專用：基於 diff（舊代碼 + 新代碼）生成 docstring 並產出變更分析。
+
+        Args:
+            old_code: 修改前的函式源碼（可能為空字串表示新增函式）
+            new_code: 修改後的函式源碼
+            func_qualname: 函式完整限定名
+            style: docstring 風格
+            language: 輸出語言
+
+        Returns:
+            {
+                "success": bool,
+                "docstring": str,
+                "change_analysis": str,
+                "prompt_tokens": int,
+                "completion_tokens": int,
+                "latency_ms": int,
+                "error": Optional[str],
+            }
+        """
+        style_desc = self._get_style_desc(style)
+
+        system_prompt = load_prompt(
+            "docstring_diff_system.txt",
+            style_desc=style_desc,
+            language=language,
+        )
+        user_prompt = load_prompt(
+            "docstring_diff_user.txt",
+            func_qualname=func_qualname,
+            old_code=old_code or "(new function — no previous version)",
+            new_code=new_code or "(deleted function)",
+        )
+
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ]
+
+        self.stats.total_calls += 1
+
+        try:
+            result = self._call_llm(messages)
+            parsed = self._parse_structured_response(result["content"])
+
+            if not parsed["docstring"].strip():
+                self.stats.failed_calls += 1
+                self.stats.errors.append(f"{func_qualname}: empty response (diff)")
+                return {
+                    "success": False,
+                    "docstring": "",
+                    "change_analysis": "",
+                    "prompt_tokens": result["prompt_tokens"],
+                    "completion_tokens": result["completion_tokens"],
+                    "latency_ms": result["latency_ms"],
+                    "error": "empty_response",
+                }
+
+            self.stats.success_calls += 1
+            self.stats.total_prompt_tokens += result["prompt_tokens"]
+            self.stats.total_completion_tokens += result["completion_tokens"]
+            self.stats.total_latency_ms += result["latency_ms"]
+
+            return {
+                "success": True,
+                "docstring": parsed["docstring"],
+                "change_analysis": parsed["analysis"],
+                "prompt_tokens": result["prompt_tokens"],
+                "completion_tokens": result["completion_tokens"],
+                "latency_ms": result["latency_ms"],
+                "error": None,
+            }
+
+        except Exception as e:
+            self.stats.failed_calls += 1
+            self.stats.errors.append(f"{func_qualname}: {str(e)}")
+            return {
+                "success": False,
+                "docstring": "",
+                "change_analysis": "",
+                "prompt_tokens": 0,
+                "completion_tokens": 0,
+                "latency_ms": 0,
+                "error": str(e),
+            }
+
+    def generate_docstring_with_impact(
+        self,
+        func_source: str,
+        func_qualname: str,
+        parent_qualname: str,
+        parent_analysis: str,
+        relationship: str,
+        style: str = "google",
+        language: str = "English",
+    ) -> Dict:
+        """
+        Hop 1+ 專用：基於函式全文和上層分析結果生成 docstring。
+
+        Args:
+            func_source: 當前函式的完整源碼（僅函式，非整個檔案）
+            func_qualname: 函式完整限定名
+            parent_qualname: 上游被變更函式的限定名
+            parent_analysis: 上游變更的分析摘要
+            relationship: 與上游函式的關係描述（如 "calls parent_func"）
+            style: docstring 風格
+            language: 輸出語言
+
+        Returns:
+            {
+                "success": bool,
+                "docstring": str,
+                "impact_analysis": str,
+                "prompt_tokens": int,
+                "completion_tokens": int,
+                "latency_ms": int,
+                "error": Optional[str],
+            }
+        """
+        style_desc = self._get_style_desc(style)
+
+        system_prompt = load_prompt(
+            "docstring_impact_system.txt",
+            style_desc=style_desc,
+            language=language,
+        )
+        user_prompt = load_prompt(
+            "docstring_impact_user.txt",
+            func_qualname=func_qualname,
+            func_source=func_source,
+            parent_qualname=parent_qualname,
+            parent_analysis=parent_analysis or "(no upstream analysis available)",
+            relationship=relationship,
+        )
+
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ]
+
+        self.stats.total_calls += 1
+
+        try:
+            result = self._call_llm(messages)
+            parsed = self._parse_structured_response(result["content"])
+
+            if not parsed["docstring"].strip():
+                self.stats.failed_calls += 1
+                self.stats.errors.append(f"{func_qualname}: empty response (impact)")
+                return {
+                    "success": False,
+                    "docstring": "",
+                    "impact_analysis": "",
+                    "prompt_tokens": result["prompt_tokens"],
+                    "completion_tokens": result["completion_tokens"],
+                    "latency_ms": result["latency_ms"],
+                    "error": "empty_response",
+                }
+
+            self.stats.success_calls += 1
+            self.stats.total_prompt_tokens += result["prompt_tokens"]
+            self.stats.total_completion_tokens += result["completion_tokens"]
+            self.stats.total_latency_ms += result["latency_ms"]
+
+            return {
+                "success": True,
+                "docstring": parsed["docstring"],
+                "impact_analysis": parsed["analysis"],
+                "prompt_tokens": result["prompt_tokens"],
+                "completion_tokens": result["completion_tokens"],
+                "latency_ms": result["latency_ms"],
+                "error": None,
+            }
+
+        except Exception as e:
+            self.stats.failed_calls += 1
+            self.stats.errors.append(f"{func_qualname}: {str(e)}")
+            return {
+                "success": False,
+                "docstring": "",
+                "impact_analysis": "",
+                "prompt_tokens": 0,
+                "completion_tokens": 0,
+                "latency_ms": 0,
+                "error": str(e),
+            }
 
     def get_stats_dict(self) -> Dict:
         """返回統計數據的字典形式"""

@@ -1,0 +1,22 @@
+--- a/src/black/concurrency.py
++++ b/src/black/concurrency.py
+@@ -144,6 +144,19 @@
+ 
+     `write_back`, `fast`, and `mode` options are passed to
+     :func:`format_file_in_place`.
++
++    Args:
++        sources: Set of file paths to format
++        fast: If True, skip temporary file creation
++        write_back: How to handle writing formatted output
++        mode: Configuration object for formatting style
++        report: Reporting object for tracking results
++        loop: Async event loop for scheduling tasks
++        executor: Executor for running formatting jobs
++        no_cache: If True, skip cache checks
++
++    Returns:
++        None
+     """
+     cache = None if no_cache else Cache.read(mode)
+     if cache is not None and write_back not in (
