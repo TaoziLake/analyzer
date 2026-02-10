@@ -16,7 +16,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Set, Tuple
 
-from .call_graph import CallGraph, build_call_graph
+from .call_graph import CallGraph, build_call_graph, _build_suffix_index, _fuzzy_match_seed
 
 
 # ============================================================================
@@ -122,14 +122,19 @@ def propagate_impacts(
     seed_scope: str = "all",
 ) -> Dict[str, Dict]:
     """
-    簡單 BFS 傳播（等權重版本）
-    
+    BFS 傳播（等權重版本），支持後綴模糊匹配。
+
+    改進點:
+      - Seed 匹配使用 _fuzzy_match_seed（精確 → 後綴 → 前綴截短）
+      - BFS 遍歷 reverse_functions 時，使用後綴匹配解決
+        callee 短名稱 vs. 完全限定名不一致的問題
+
     Args:
         seeds: 種子節點列表
         call_graph: 調用圖
         max_hops: 最大跳數
         seed_scope: "all" 或 "code_only"
-    
+
     Returns:
         {qualname: Dict} - 每個 impacted 節點的字典表示
     """
@@ -137,10 +142,78 @@ def propagate_impacts(
     seeds_used = seeds
     if seed_scope == "code_only":
         seeds_used = [s for s in seeds if s.get("seed_type") == "code_change"]
-    
+
     impacted: Dict[str, Dict] = {}
     visited: Set[str] = set()
     queue: deque = deque()
+
+    # ------------------------------------------------------------------
+    # 構建索引
+    # ------------------------------------------------------------------
+
+    # P1: 後綴索引（用於 seed 模糊匹配）
+    suffix_index = _build_suffix_index(call_graph.all_functions)
+
+    # P2-fix: 為 reverse_functions 的 key（callee 名稱）構建後綴索引。
+    # 解決 BFS 節點（完全限定名）與 reverse_functions key（可能是短名稱）不匹配的問題。
+    # 例如: BFS 節點 "rich.traceback.Traceback.from_exception"
+    #        但 reverse_functions key 是 "Traceback.from_exception"
+    _rev_key_suffix_index: Dict[str, Set[str]] = {}
+    for rk in call_graph.reverse_functions:
+        parts = rk.split(".")
+        for i in range(len(parts)):
+            suffix = ".".join(parts[i:])
+            _rev_key_suffix_index.setdefault(suffix, set()).add(rk)
+
+    # BFS 查詢緩存
+    _caller_cache: Dict[str, Set[str]] = {}
+
+    def _find_callers(qualname: str) -> Set[str]:
+        """
+        在 reverse_functions 中查找 callers，帶後綴模糊匹配。
+
+        匹配策略（按優先級）:
+          1. 精確匹配: reverse_functions[qualname]
+          2. qualname 的後綴是某個 key:
+             e.g. qualname="pkg.mod.Cls.method" → 嘗試 key="mod.Cls.method",
+                  "Cls.method", "method"（最長優先）
+          3. qualname 本身是某個 key 的後綴（透過 _rev_key_suffix_index）:
+             e.g. qualname="Cls.method" → key="pkg.mod.Cls.method"
+        """
+        if qualname in _caller_cache:
+            return _caller_cache[qualname]
+
+        # 1. 精確匹配
+        callers = call_graph.reverse_functions.get(qualname)
+        if callers:
+            _caller_cache[qualname] = callers
+            return callers
+
+        # 2. 逐步截短 qualname 前綴，用後綴查找 key（最長後綴優先）
+        parts = qualname.split(".")
+        for i in range(1, len(parts)):
+            suffix = ".".join(parts[i:])
+            callers = call_graph.reverse_functions.get(suffix)
+            if callers:
+                _caller_cache[qualname] = callers
+                return callers
+
+        # 3. qualname 作為後綴，匹配更長的 key
+        candidates = _rev_key_suffix_index.get(qualname, set())
+        if candidates:
+            merged: Set[str] = set()
+            for cand in candidates:
+                merged.update(call_graph.reverse_functions.get(cand, set()))
+            if merged:
+                _caller_cache[qualname] = merged
+                return merged
+
+        _caller_cache[qualname] = set()
+        return set()
+
+    # ------------------------------------------------------------------
+    # add_impacted
+    # ------------------------------------------------------------------
 
     def add_impacted(qualname: str, hop: int, reason: str, source_qualname: Optional[str]):
         if qualname not in impacted:
@@ -149,7 +222,7 @@ def propagate_impacts(
                 "hop": hop,
                 "reason": reason,
                 "source": source_qualname,
-                "callers": list(call_graph.reverse_functions.get(qualname, set())),
+                "callers": list(_find_callers(qualname)),
                 "callees": list(call_graph.functions.get(qualname, set())),
             }
         elif hop < impacted[qualname]["hop"]:
@@ -157,14 +230,35 @@ def propagate_impacts(
             impacted[qualname]["reason"] = reason
             impacted[qualname]["source"] = source_qualname
 
+    # ------------------------------------------------------------------
+    # Seed 入隊（帶模糊匹配）
+    # ------------------------------------------------------------------
+
+    unmatched_seeds: List[str] = []
     for seed in seeds_used:
         qn = seed.get("qualname")
         if not qn:
             continue
-        if qn in call_graph.all_functions:
-            add_impacted(qn, 0, "direct_change", None)
-            queue.append((qn, 0))
-            visited.add(qn)
+        matched, match_type = _fuzzy_match_seed(qn, call_graph.all_functions, suffix_index)
+        if matched:
+            if match_type != "exact":
+                print(f"  [seed-match] fuzzy ({match_type}): '{qn}' -> '{matched}'")
+            add_impacted(matched, 0, "direct_change", None)
+            queue.append((matched, 0))
+            visited.add(matched)
+        else:
+            unmatched_seeds.append(qn)
+
+    if unmatched_seeds:
+        print(f"  [propagate] WARNING: {len(unmatched_seeds)} seed(s) unmatched in call graph:")
+        for s in unmatched_seeds[:10]:
+            print(f"    - {s}")
+        if len(unmatched_seeds) > 10:
+            print(f"    ... and {len(unmatched_seeds) - 10} more")
+
+    # ------------------------------------------------------------------
+    # BFS（帶模糊 caller 查詢）
+    # ------------------------------------------------------------------
 
     while queue:
         cur, hop = queue.popleft()
@@ -175,7 +269,7 @@ def propagate_impacts(
         # P0: 只向 caller 方向传播（向上）。
         # 被改函数的 callee 本身没变，不应被标记为受影响；
         # 且 callee 方向会导致经由公共函数的严重交叉扩散。
-        for caller in call_graph.reverse_functions.get(cur, set()):
+        for caller in _find_callers(cur):
             if caller not in visited:
                 add_impacted(caller, nxt, "calls_changed_function", cur)
                 queue.append((caller, nxt))

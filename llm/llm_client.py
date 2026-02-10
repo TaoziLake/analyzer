@@ -17,7 +17,8 @@ import os
 import re
 import time
 from dataclasses import dataclass, field
-from typing import Dict, Optional
+import json as _json
+from typing import Dict, List, Optional
 
 import yaml
 
@@ -377,6 +378,7 @@ class LLMClient:
         func_qualname: str,
         style: str = "google",
         language: str = "English",
+        commit_hash: str = "",
     ) -> Dict:
         """
         Hop 0 專用：基於 diff（舊代碼 + 新代碼）生成 docstring 並產出變更分析。
@@ -387,6 +389,7 @@ class LLMClient:
             func_qualname: 函式完整限定名
             style: docstring 風格
             language: 輸出語言
+            commit_hash: commit SHA（用於在 docstring 的 Changelog 段落中引用）
 
         Returns:
             {
@@ -405,12 +408,14 @@ class LLMClient:
             "docstring_diff_system.txt",
             style_desc=style_desc,
             language=language,
+            commit_hash=commit_hash or "unknown",
         )
         user_prompt = load_prompt(
             "docstring_diff_user.txt",
             func_qualname=func_qualname,
             old_code=old_code or "(new function — no previous version)",
             new_code=new_code or "(deleted function)",
+            commit_hash=commit_hash or "unknown",
         )
 
         messages = [
@@ -474,6 +479,7 @@ class LLMClient:
         relationship: str,
         style: str = "google",
         language: str = "English",
+        commit_hash: str = "",
     ) -> Dict:
         """
         Hop 1+ 專用：基於函式全文和上層分析結果生成 docstring。
@@ -486,6 +492,7 @@ class LLMClient:
             relationship: 與上游函式的關係描述（如 "calls parent_func"）
             style: docstring 風格
             language: 輸出語言
+            commit_hash: commit SHA（用於在 docstring 的 Changelog 段落中引用）
 
         Returns:
             {
@@ -504,6 +511,7 @@ class LLMClient:
             "docstring_impact_system.txt",
             style_desc=style_desc,
             language=language,
+            commit_hash=commit_hash or "unknown",
         )
         user_prompt = load_prompt(
             "docstring_impact_user.txt",
@@ -512,6 +520,7 @@ class LLMClient:
             parent_qualname=parent_qualname,
             parent_analysis=parent_analysis or "(no upstream analysis available)",
             relationship=relationship,
+            commit_hash=commit_hash or "unknown",
         )
 
         messages = [
@@ -560,6 +569,259 @@ class LLMClient:
                 "success": False,
                 "docstring": "",
                 "impact_analysis": "",
+                "prompt_tokens": 0,
+                "completion_tokens": 0,
+                "latency_ms": 0,
+                "error": str(e),
+            }
+
+    # ------------------------------------------------------------------
+    # README generation
+    # ------------------------------------------------------------------
+
+    def generate_readme(
+        self,
+        commit_hash: str,
+        repo_name: str,
+        seeds_summary: str,
+        targets_summary: str,
+        per_target_details: str,
+        diff_text: str,
+        language: str = "English",
+    ) -> Dict:
+        """
+        生成 commit 級別的 README 文檔，描述本次 commit 的完整作用。
+
+        Args:
+            commit_hash: commit SHA
+            repo_name: 倉庫名稱
+            seeds_summary: 直接修改的 seeds 摘要文本
+            targets_summary: 受影響的 targets 列表摘要
+            per_target_details: 每個 target 的 docstring 更新和分析詳情
+            diff_text: git diff 文本
+            language: 輸出語言
+
+        Returns:
+            {
+                "success": bool,
+                "readme_content": str,
+                "prompt_tokens": int,
+                "completion_tokens": int,
+                "latency_ms": int,
+                "error": Optional[str],
+            }
+        """
+        system_prompt = load_prompt(
+            "readme_system.txt",
+            language=language,
+        )
+        user_prompt = load_prompt(
+            "readme_user.txt",
+            commit_hash=commit_hash,
+            repo_name=repo_name,
+            seeds_summary=seeds_summary,
+            targets_summary=targets_summary,
+            per_target_details=per_target_details,
+            diff_text=diff_text[:8000],  # 截斷過長的 diff
+        )
+
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ]
+
+        self.stats.total_calls += 1
+
+        # README 需要更長的輸出，臨時使用更高的 max_tokens
+        saved_max_tokens = self.max_tokens
+        self.max_tokens = max(self.max_tokens, 2048)
+
+        try:
+            result = self._call_llm(messages, temperature=0.3)
+            content = result["content"].strip()
+
+            # 移除 <think>...</think> 標籤
+            content = re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL).strip()
+
+            if not content:
+                self.stats.failed_calls += 1
+                return {
+                    "success": False,
+                    "readme_content": "",
+                    "prompt_tokens": result["prompt_tokens"],
+                    "completion_tokens": result["completion_tokens"],
+                    "latency_ms": result["latency_ms"],
+                    "error": "empty_response",
+                }
+
+            self.stats.success_calls += 1
+            self.stats.total_prompt_tokens += result["prompt_tokens"]
+            self.stats.total_completion_tokens += result["completion_tokens"]
+            self.stats.total_latency_ms += result["latency_ms"]
+
+            return {
+                "success": True,
+                "readme_content": content,
+                "prompt_tokens": result["prompt_tokens"],
+                "completion_tokens": result["completion_tokens"],
+                "latency_ms": result["latency_ms"],
+                "error": None,
+            }
+
+        except Exception as e:
+            self.stats.failed_calls += 1
+            self.stats.errors.append(f"readme_{commit_hash}: {str(e)}")
+            return {
+                "success": False,
+                "readme_content": "",
+                "prompt_tokens": 0,
+                "completion_tokens": 0,
+                "latency_ms": 0,
+                "error": str(e),
+            }
+        finally:
+            self.max_tokens = saved_max_tokens
+
+    # ------------------------------------------------------------------
+    # Module-level change analysis (fallback when targets == 0)
+    # ------------------------------------------------------------------
+
+    def _parse_affected_functions_response(self, content: str) -> List[Dict]:
+        """
+        解析 [AFFECTED_FUNCTIONS]...[/AFFECTED_FUNCTIONS] 結構化回應。
+
+        Returns:
+            list of {"qualname": str, "path": str, "reason": str}
+            解析失敗時返回空列表。
+        """
+        text = content.strip()
+        # 移除 <think>...</think> 標籤
+        text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
+
+        m = re.search(
+            r"\[AFFECTED_FUNCTIONS\]\s*(.*?)\s*\[/AFFECTED_FUNCTIONS\]",
+            text,
+            re.DOTALL,
+        )
+        if not m:
+            return []
+
+        json_text = m.group(1).strip()
+        if not json_text:
+            return []
+
+        try:
+            items = _json.loads(json_text)
+            if not isinstance(items, list):
+                return []
+            # 校驗每個元素
+            result: List[Dict] = []
+            for it in items:
+                if isinstance(it, dict) and "qualname" in it:
+                    result.append({
+                        "qualname": str(it["qualname"]),
+                        "path": str(it.get("path", "")),
+                        "reason": str(it.get("reason", "")),
+                    })
+            return result
+        except (_json.JSONDecodeError, TypeError, ValueError):
+            return []
+
+    def analyze_module_level_changes(
+        self,
+        diff_text: str,
+        file_sources: Dict[str, str],
+        file_functions: Dict[str, List[str]],
+        language: str = "English",
+    ) -> Dict:
+        """
+        分析模塊級變更，識別受影響的函式。
+
+        當 seed extractor 只產生 module-level seeds（kind="module"）且 target
+        selector 未找到任何函式級 target 時，由此方法讓 LLM 分析 diff 並回傳
+        受影響的函式列表。
+
+        Args:
+            diff_text: commit 的 unified diff 文本
+            file_sources: {rel_path: 完整源碼} 已變更的 .py 檔案
+            file_functions: {rel_path: [qualname, ...]} 每個檔案中的函式列表
+            language: 輸出語言
+
+        Returns:
+            {
+                "success": bool,
+                "affected_functions": [{"qualname": str, "path": str, "reason": str}, ...],
+                "prompt_tokens": int,
+                "completion_tokens": int,
+                "latency_ms": int,
+                "error": Optional[str],
+            }
+        """
+        # 構建檔案源碼段
+        file_section_parts: List[str] = []
+        for rel_path, src in file_sources.items():
+            file_section_parts.append(f"### {rel_path}\n```python\n{src}\n```")
+        file_sections = "\n\n".join(file_section_parts) if file_section_parts else "(no Python files)"
+
+        # 構建可用函式列表段
+        func_section_parts: List[str] = []
+        for rel_path, funcs in file_functions.items():
+            if funcs:
+                func_list = "\n".join(f"- {qn}" for qn in funcs)
+                func_section_parts.append(f"### {rel_path}\n{func_list}")
+            else:
+                func_section_parts.append(f"### {rel_path}\n(no functions found)")
+        function_sections = "\n\n".join(func_section_parts) if func_section_parts else "(no functions)"
+
+        system_prompt = load_prompt(
+            "module_analysis_system.txt",
+            language=language,
+        )
+        user_prompt = load_prompt(
+            "module_analysis_user.txt",
+            diff_text=diff_text,
+            file_sections=file_sections,
+            function_sections=function_sections,
+        )
+
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt},
+        ]
+
+        self.stats.total_calls += 1
+
+        try:
+            result = self._call_llm(messages)
+            affected = self._parse_affected_functions_response(result["content"])
+
+            # 過濾：只保留在 file_functions 中出現的 qualname
+            valid_qualnames: set = set()
+            for funcs in file_functions.values():
+                valid_qualnames.update(funcs)
+
+            affected = [a for a in affected if a["qualname"] in valid_qualnames]
+
+            self.stats.success_calls += 1
+            self.stats.total_prompt_tokens += result["prompt_tokens"]
+            self.stats.total_completion_tokens += result["completion_tokens"]
+            self.stats.total_latency_ms += result["latency_ms"]
+
+            return {
+                "success": True,
+                "affected_functions": affected,
+                "prompt_tokens": result["prompt_tokens"],
+                "completion_tokens": result["completion_tokens"],
+                "latency_ms": result["latency_ms"],
+                "error": None,
+            }
+
+        except Exception as e:
+            self.stats.failed_calls += 1
+            self.stats.errors.append(f"module_analysis: {str(e)}")
+            return {
+                "success": False,
+                "affected_functions": [],
                 "prompt_tokens": 0,
                 "completion_tokens": 0,
                 "latency_ms": 0,

@@ -4,7 +4,15 @@ Output format — you MUST include BOTH sections in your response:
 
 [DOCSTRING]
 (The docstring content in {style_desc}, without triple quotes.
-Include: brief description, Args/Parameters, Returns, Raises as applicable.)
+Include: brief description, Args/Parameters, Returns, Raises as applicable.
+
+IMPORTANT: After the standard docstring sections, add a blank line and then a "Changelog" section like this:
+
+Changelog:
+    {commit_hash}: <concise description of how the upstream commit affects this function —
+    which called functions changed, what behavioral differences callers of THIS function
+    might observe, and any impact on parameters or return values.>
+)
 [/DOCSTRING]
 
 [ANALYSIS]
@@ -17,5 +25,6 @@ Rules:
 1. Language: {language}
 2. Be concise but informative
 3. The docstring should accurately describe the current function behavior, accounting for upstream changes
-4. Do NOT fabricate information — only describe what is evident from the code and the upstream analysis
-5. Do NOT include any markdown formatting or extra text outside the two sections above
+4. The Changelog section MUST reference the commit hash and describe concrete impacts
+5. Do NOT fabricate information — only describe what is evident from the code and the upstream analysis
+6. Do NOT include any markdown formatting or extra text outside the two sections above

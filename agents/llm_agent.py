@@ -27,7 +27,9 @@ import ast
 import difflib
 import json
 import os
+import random
 import re
+import string
 import subprocess
 import time
 import warnings
@@ -235,6 +237,106 @@ class PatchEdit:
     new: List[str]
 
 
+def _select_targets(
+    impacted_items: List[Dict],
+    code_change_seeds: set,
+    max_hops: int,
+    repo_path: str,
+    commit: str,
+    limit_targets: int,
+    file_nodes_cache: Dict[str, Dict[str, ast.AST]],
+    file_source_cache: Dict[str, str],
+) -> List[Dict]:
+    """
+    從 impacted items 中挑選可生成 docstring 的函式級 targets。
+
+    此函式封裝了 target selection 的核心邏輯，可被主流程和 LLM fallback 共用。
+
+    Args:
+        impacted_items: impacted set 中的條目列表
+        code_change_seeds: code_change 類型 seed 的 qualname 集合
+        max_hops: 最大跳數
+        repo_path: git repo 根目錄絕對路徑
+        commit: commit SHA
+        limit_targets: 最多選擇的 target 數量
+        file_nodes_cache: 檔案 AST 節點快取（會被就地修改）
+        file_source_cache: 檔案源碼快取（會被就地修改）
+
+    Returns:
+        targets 列表，每個 target 是一個 dict
+    """
+    targets: List[Dict] = []
+
+    # 按 hop 分組 impacted items，逐層檢查 lineage
+    impacted_by_hop: Dict[int, List[Dict]] = defaultdict(list)
+    for it in impacted_items:
+        impacted_by_hop[int(it.get("hop", 999))].append(it)
+
+    # 追蹤已接受的 qualname（具有 code_change lineage）
+    accepted_lineage = set(code_change_seeds)
+
+    for hop_level in sorted(impacted_by_hop.keys()):
+        if hop_level > max_hops:
+            break
+        for it in impacted_by_hop[hop_level]:
+            if not it.get("is_internal", False):
+                continue
+            qn = it.get("qualname", "")
+            src = it.get("source")
+
+            # Lineage 檢查：hop 0 必須是 code_change seed，hop 1+ 的 source 必須在已接受集合中
+            if hop_level == 0:
+                if qn not in code_change_seeds:
+                    continue
+            else:
+                if src not in accepted_lineage:
+                    continue
+
+            resolved = _resolve_qualname_to_file(repo_path, qn, ext=".py")
+            if not resolved:
+                continue
+            _, rel_path = resolved
+            if _is_test_relpath(rel_path):
+                continue
+            rel_path = _posix(rel_path)
+
+            if rel_path not in file_nodes_cache:
+                base = _git_show_text(repo_path, commit, rel_path)
+                file_source_cache[rel_path] = base
+                module_qual = _module_qual_from_relpath(rel_path, ext=".py")
+                try:
+                    file_nodes_cache[rel_path] = _collect_target_nodes(base, module_qual)
+                except SyntaxError:
+                    file_nodes_cache[rel_path] = {}
+
+            module_qual = _module_qual_from_relpath(rel_path, ext=".py")
+            node = file_nodes_cache[rel_path].get(qn)
+            if node is None or not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                continue
+
+            existing_doc = ast.get_docstring(node)
+            has_docstring = existing_doc is not None
+            target_action = "update" if has_docstring else "insert"
+
+            accepted_lineage.add(qn)
+            targets.append(
+                {
+                    "qualname": qn,
+                    "hop": hop_level,
+                    "source": src,
+                    "rel_path": rel_path,
+                    "params": _func_param_names(node),
+                    "lineno": node.lineno,
+                    "end_lineno": getattr(node, "end_lineno", node.lineno),
+                    "has_docstring": has_docstring,
+                    "target_action": target_action,
+                }
+            )
+
+    targets = targets[: max(limit_targets, 0)]
+    return targets
+
+
 def _insert_docstring_into_source(
     source: str,
     qualname: str,
@@ -400,14 +502,19 @@ def main():
     report_path = os.path.join(run_dir, f"verifier_report_{commit}.json")
     history_path = os.path.join(run_dir, "history.json")
 
+    # README 文件名：commit_timestamp_randomstring.md
+    rand_suffix = "".join(random.choices(string.ascii_lowercase + string.digits, k=6))
+    readme_filename = f"README_{commit}_{_now_tag()}_{rand_suffix}.md"
+    readme_path = os.path.join(run_dir, readme_filename)
+
     # 1) seeds
-    print(f"[1/6] Extracting seeds for {commit}...")
+    print(f"[1/7] Extracting seeds for {commit}...")
     history["steps"].append({"step": "extract_seeds", "out": seeds_path})
     from ..core.seed_extractor import extract_seeds as extract_seeds_func
     extract_seeds_func(repo_path, commit, out_path=seeds_path)
 
     # 2) impacted
-    print(f"[2/6] Processing impacted set...")
+    print(f"[2/7] Processing impacted set...")
     history["steps"].append({"step": "process_impacted_set", "out": impacted_path})
     import json
     from ..core import build_call_graph, propagate_impacts
@@ -453,7 +560,7 @@ def main():
     impacted_items = impacted_data["impacted"]
 
     # 3) 檢測風格
-    print(f"[3/6] Detecting docstring style...")
+    print(f"[3/7] Detecting docstring style...")
     if args.style == "auto":
         detected_style = detect_repo_style_cached(repo_path, cache_dir=run_dir)
         print(f"    Detected style: {detected_style}")
@@ -461,88 +568,7 @@ def main():
         detected_style = args.style
     history["steps"].append({"step": "detect_style", "style": detected_style})
 
-    # 4) pick targets（按 hop 分層，支持 max_hops 層）
-    print(f"[4/6] Selecting targets...")
-    targets: List[Dict] = []
-    file_nodes_cache: Dict[str, Dict[str, ast.AST]] = {}
-    file_source_cache: Dict[str, str] = {}
-
-    # 按 hop 分組 impacted items，逐層檢查 lineage
-    impacted_by_hop: Dict[int, List[Dict]] = defaultdict(list)
-    for it in impacted_items:
-        impacted_by_hop[int(it.get("hop", 999))].append(it)
-
-    # 追蹤已接受的 qualname（具有 code_change lineage）
-    accepted_lineage = set(code_change_seeds)
-
-    for hop_level in sorted(impacted_by_hop.keys()):
-        if hop_level > args.max_hops:
-            break
-        for it in impacted_by_hop[hop_level]:
-            if not it.get("is_internal", False):
-                continue
-            qn = it.get("qualname", "")
-            src = it.get("source")
-
-            # Lineage 檢查：hop 0 必須是 code_change seed，hop 1+ 的 source 必須在已接受集合中
-            if hop_level == 0:
-                if qn not in code_change_seeds:
-                    continue
-            else:
-                if src not in accepted_lineage:
-                    continue
-
-            resolved = _resolve_qualname_to_file(repo_path, qn, ext=".py")
-            if not resolved:
-                continue
-            _, rel_path = resolved
-            if _is_test_relpath(rel_path):
-                continue
-            rel_path = _posix(rel_path)
-
-            if rel_path not in file_nodes_cache:
-                base = _git_show_text(repo_path, commit, rel_path)
-                file_source_cache[rel_path] = base
-                module_qual = _module_qual_from_relpath(rel_path, ext=".py")
-                try:
-                    file_nodes_cache[rel_path] = _collect_target_nodes(base, module_qual)
-                except SyntaxError:
-                    file_nodes_cache[rel_path] = {}
-
-            module_qual = _module_qual_from_relpath(rel_path, ext=".py")
-            node = file_nodes_cache[rel_path].get(qn)
-            if node is None or not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                continue
-
-            existing_doc = ast.get_docstring(node)
-            has_docstring = existing_doc is not None
-            target_action = "update" if has_docstring else "insert"
-
-            accepted_lineage.add(qn)
-            targets.append(
-                {
-                    "qualname": qn,
-                    "hop": hop_level,
-                    "source": src,
-                    "rel_path": rel_path,
-                    "params": _func_param_names(node),
-                    "lineno": node.lineno,
-                    "end_lineno": getattr(node, "end_lineno", node.lineno),
-                    "has_docstring": has_docstring,
-                    "target_action": target_action,
-                }
-            )
-
-    targets = targets[: max(args.limit_targets, 0)]
-    print(f"    Selected {len(targets)} targets")
-    hop_counts = defaultdict(int)
-    for t in targets:
-        hop_counts[t["hop"]] += 1
-    print(f"    By hop: {dict(sorted(hop_counts.items()))}")
-    history["steps"].append({"step": "select_targets", "num_targets": len(targets), "by_hop": dict(sorted(hop_counts.items()))})
-
-    # 5) 分層生成 docstring（LLM 或 fallback）
-    print(f"[5/6] Generating docstrings (layered)...")
+    # Initialize LLM client early (needed for both step 4.5 fallback and step 5 generation)
     llm_client: Optional[LLMClient] = None
     if not args.no_llm:
         try:
@@ -551,6 +577,144 @@ def main():
         except Exception as e:
             print(f"    Warning: Failed to initialize LLM client: {e}")
             print(f"    Falling back to template mode")
+
+    # 4) pick targets（按 hop 分層，支持 max_hops 層）
+    print(f"[4/7] Selecting targets...")
+    file_nodes_cache: Dict[str, Dict[str, ast.AST]] = {}
+    file_source_cache: Dict[str, str] = {}
+
+    targets = _select_targets(
+        impacted_items=impacted_items,
+        code_change_seeds=code_change_seeds,
+        max_hops=args.max_hops,
+        repo_path=repo_path,
+        commit=commit,
+        limit_targets=args.limit_targets,
+        file_nodes_cache=file_nodes_cache,
+        file_source_cache=file_source_cache,
+    )
+    print(f"    Selected {len(targets)} targets")
+    hop_counts = defaultdict(int)
+    for t in targets:
+        hop_counts[t["hop"]] += 1
+    print(f"    By hop: {dict(sorted(hop_counts.items()))}")
+    history["steps"].append({"step": "select_targets", "num_targets": len(targets), "by_hop": dict(sorted(hop_counts.items()))})
+
+    # 4.5) LLM module-level fallback
+    # 當所有 seed 都是模塊級別（kind="module"）且 target selection 沒找到任何
+    # 函式級 target 時，讓 LLM 分析 diff 來識別受影響的函式。
+    module_seeds = [s for s in seeds_data["seeds"] if s.get("kind") == "module"]
+    llm_fallback_used = False
+
+    if len(targets) == 0 and len(module_seeds) > 0 and llm_client is not None:
+        print(f"[4.5/7] LLM module-level fallback (0 targets from {len(module_seeds)} module seed(s))...")
+
+        # 1. 取得 diff 文本
+        diff_text = _run(["git", "-C", repo_path, "show", commit, "--unified=3", "--format="])
+
+        # 2. 收集每個變動 .py 檔案的源碼和函式列表
+        fallback_file_sources: Dict[str, str] = {}
+        fallback_file_functions: Dict[str, list] = {}
+        for s in module_seeds:
+            rel = _posix(s["path"])
+            if rel in fallback_file_sources:
+                continue
+            try:
+                src = _git_show_text(repo_path, commit, rel)
+            except Exception:
+                continue
+            fallback_file_sources[rel] = src
+            mqual = _module_qual_from_relpath(rel, ext=".py")
+            try:
+                nodes = _collect_target_nodes(src, mqual)
+                fallback_file_functions[rel] = list(nodes.keys())
+            except SyntaxError:
+                fallback_file_functions[rel] = []
+
+        if fallback_file_functions and any(fallback_file_functions.values()):
+            # 3. 呼叫 LLM 分析模塊級變更
+            _COUNTERS["llm_calls"] += 1
+            llm_analysis = llm_client.analyze_module_level_changes(
+                diff_text=diff_text,
+                file_sources=fallback_file_sources,
+                file_functions=fallback_file_functions,
+            )
+
+            if llm_analysis["success"] and llm_analysis["affected_functions"]:
+                llm_fallback_used = True
+                affected_qns = []
+                for af in llm_analysis["affected_functions"]:
+                    qn = af["qualname"]
+                    affected_qns.append(qn)
+                    # 注入到 code_change_seeds
+                    code_change_seeds.add(qn)
+                    # 注入到 impacted_items（如果尚未存在）
+                    if not any(it.get("qualname") == qn for it in impacted_items):
+                        impacted_items.append({
+                            "qualname": qn,
+                            "hop": 0,
+                            "reason": "llm_module_analysis",
+                            "source": None,
+                            "is_internal": True,
+                            "is_test": False,
+                            "is_external": False,
+                        })
+
+                print(f"    LLM identified {len(affected_qns)} affected function(s): {affected_qns}")
+                print(f"    ({llm_analysis['latency_ms']}ms)")
+
+                # 4. 用更新後的 seeds + impacted 重新選擇 targets
+                targets = _select_targets(
+                    impacted_items=impacted_items,
+                    code_change_seeds=code_change_seeds,
+                    max_hops=args.max_hops,
+                    repo_path=repo_path,
+                    commit=commit,
+                    limit_targets=args.limit_targets,
+                    file_nodes_cache=file_nodes_cache,
+                    file_source_cache=file_source_cache,
+                )
+                # 標記 fallback 來源
+                for t in targets:
+                    t["source_step"] = "llm_module_fallback"
+
+                print(f"    Re-selected {len(targets)} targets after fallback")
+                hop_counts = defaultdict(int)
+                for t in targets:
+                    hop_counts[t["hop"]] += 1
+                print(f"    By hop: {dict(sorted(hop_counts.items()))}")
+
+                history["steps"].append({
+                    "step": "llm_module_fallback",
+                    "num_module_seeds": len(module_seeds),
+                    "llm_affected_functions": [af["qualname"] for af in llm_analysis["affected_functions"]],
+                    "num_targets_after": len(targets),
+                    "by_hop": dict(sorted(hop_counts.items())),
+                    "latency_ms": llm_analysis["latency_ms"],
+                    "prompt_tokens": llm_analysis["prompt_tokens"],
+                    "completion_tokens": llm_analysis["completion_tokens"],
+                })
+            else:
+                reason = llm_analysis.get("error") or "no affected functions identified"
+                print(f"    LLM fallback: {reason}")
+                history["steps"].append({
+                    "step": "llm_module_fallback",
+                    "num_module_seeds": len(module_seeds),
+                    "llm_affected_functions": [],
+                    "num_targets_after": 0,
+                    "error": reason,
+                })
+        else:
+            print(f"    No functions found in changed files, skipping LLM fallback")
+            history["steps"].append({
+                "step": "llm_module_fallback",
+                "num_module_seeds": len(module_seeds),
+                "skipped": True,
+                "reason": "no_functions_in_changed_files",
+            })
+
+    # 5) 分層生成 docstring（LLM 或 fallback）
+    print(f"[5/7] Generating docstrings (layered)...")
 
     # 構建 seeds_by_qualname 以便 hop 0 查找 old_code / new_code
     seeds_by_qualname: Dict[str, Dict] = {}
@@ -621,6 +785,7 @@ def main():
                         new_code=new_code,
                         func_qualname=qn,
                         style=detected_style,
+                        commit_hash=commit,
                     )
 
                     if llm_result["success"] and llm_result["docstring"]:
@@ -654,6 +819,7 @@ def main():
                         parent_analysis=parent_analysis,
                         relationship=relationship,
                         style=detected_style,
+                        commit_hash=commit,
                     )
 
                     if llm_result["success"] and llm_result["docstring"]:
@@ -729,7 +895,7 @@ def main():
     history["steps"].append({"step": "generate_patch", "patch_path": patch_path, "num_files_changed": len(edits)})
 
     # 6) verifier
-    print(f"[6/6] Running verifier...")
+    print(f"[6/7] Running verifier...")
     changed_targets = [t for t in targets if any(r["qualname"] == t["qualname"] and r["changed"] for r in per_target_records)]
     report = _verify_docstrings(repo_path, commit, changed_targets, file_to_new)
     report["per_target"] = per_target_records
@@ -737,6 +903,89 @@ def main():
     with open(report_path, "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
     history["steps"].append({"step": "verifier", "report_path": report_path, "ok": report.get("ok")})
+
+    # 7) 生成 README 文件
+    readme_generated = False
+    if llm_client is not None and len(changed_targets) > 0:
+        print(f"[7/7] Generating commit README...")
+
+        # 構建 seeds 摘要
+        seeds_summary_parts = []
+        for s in seeds:
+            if s.get("seed_type") == "code_change":
+                qn = s.get("qualname", "")
+                path = s.get("path", "")
+                kind = s.get("kind", "")
+                seeds_summary_parts.append(f"- `{qn}` ({kind}) in `{path}`")
+        seeds_summary_text = "\n".join(seeds_summary_parts) if seeds_summary_parts else "(no direct code changes)"
+
+        # 構建 targets 摘要
+        targets_summary_parts = []
+        for t in targets:
+            qn = t["qualname"]
+            hop = t["hop"]
+            rel = t["rel_path"]
+            action = "directly modified" if hop == 0 else f"indirectly affected (hop {hop})"
+            targets_summary_parts.append(f"- `{qn}` in `{rel}` — {action}")
+        targets_summary_text = "\n".join(targets_summary_parts) if targets_summary_parts else "(no targets)"
+
+        # 構建每個 target 的詳細信息（docstring 更新 + 分析）
+        per_target_detail_parts = []
+        for rec in per_target_records:
+            qn = rec["qualname"]
+            hop = rec.get("hop", "?")
+            action = rec.get("action", "?")
+            used_llm = rec.get("used_llm", False)
+            analysis = layer_analyses.get(qn, "")
+            detail = f"### `{qn}` (hop {hop})\n"
+            detail += f"- Action: {action}\n"
+            detail += f"- Used LLM: {used_llm}\n"
+            if analysis:
+                detail += f"- Analysis: {analysis}\n"
+            per_target_detail_parts.append(detail)
+        per_target_details_text = "\n".join(per_target_detail_parts) if per_target_detail_parts else "(no details)"
+
+        # 獲取 diff 文本
+        try:
+            diff_for_readme = _run(["git", "-C", repo_path, "show", commit, "--unified=3", "--format="])
+        except Exception:
+            diff_for_readme = patch_text
+
+        _COUNTERS["llm_calls"] += 1
+        readme_result = llm_client.generate_readme(
+            commit_hash=commit,
+            repo_name=_repo_name(repo_path),
+            seeds_summary=seeds_summary_text,
+            targets_summary=targets_summary_text,
+            per_target_details=per_target_details_text,
+            diff_text=diff_for_readme,
+        )
+
+        if readme_result["success"] and readme_result["readme_content"]:
+            with open(readme_path, "w", encoding="utf-8") as f:
+                f.write(readme_result["readme_content"])
+            readme_generated = True
+            print(f"    README generated: {readme_path} ({readme_result['latency_ms']}ms)")
+            history["steps"].append({
+                "step": "generate_readme",
+                "readme_path": readme_path,
+                "latency_ms": readme_result["latency_ms"],
+                "prompt_tokens": readme_result["prompt_tokens"],
+                "completion_tokens": readme_result["completion_tokens"],
+            })
+        else:
+            print(f"    README generation failed: {readme_result.get('error', 'unknown')}")
+            history["steps"].append({
+                "step": "generate_readme",
+                "readme_path": None,
+                "error": readme_result.get("error", "unknown"),
+            })
+    else:
+        if len(changed_targets) == 0:
+            print(f"[7/7] Skipping README (no changed targets)")
+        else:
+            print(f"[7/7] Skipping README (no LLM client)")
+        history["steps"].append({"step": "generate_readme", "skipped": True})
 
     # LLM 統計
     llm_stats = {}
@@ -756,23 +1005,37 @@ def main():
         "patch_total_lines": patch_added + patch_removed,
         "verifier_ok": bool(report.get("ok")),
         "style": detected_style,
+        "llm_module_fallback_used": llm_fallback_used,
+        "readme_generated": readme_generated,
         "llm_success_rate": (
             llm_stats.get("success_calls", 0) / llm_stats.get("total_calls", 1)
             if llm_stats.get("total_calls", 0) > 0 else 0.0
         ),
     }
-    history["outputs"] = {"patch": patch_path, "verifier_report": report_path, "impacted": impacted_path, "seeds": seeds_path}
+    history["outputs"] = {
+        "patch": patch_path,
+        "verifier_report": report_path,
+        "impacted": impacted_path,
+        "seeds": seeds_path,
+        "readme": readme_path if readme_generated else None,
+    }
     with open(history_path, "w", encoding="utf-8") as f:
         json.dump(history, f, ensure_ascii=False, indent=2)
 
     print("\n=== agent_llm outputs ===")
     print("patch:", patch_path)
     print("verifier:", report_path)
+    if readme_generated:
+        print("readme:", readme_path)
     print("history:", history_path)
     print("seeds:", seeds_path)
     print("impacted:", impacted_path)
     print(f"style: {detected_style}")
     print(f"num_targets: {len(targets)}, num_changed: {len(changed_targets)}, verifier_ok: {report.get('ok')}")
+    if readme_generated:
+        print(f"readme: generated ({readme_filename})")
+    if llm_fallback_used:
+        print(f"module_fallback: used (injected targets from LLM module-level analysis)")
     if llm_stats:
         print(f"llm_calls: {llm_stats.get('total_calls', 0)}, success: {llm_stats.get('success_calls', 0)}, "
               f"fallback: {_COUNTERS['llm_fallbacks']}")
