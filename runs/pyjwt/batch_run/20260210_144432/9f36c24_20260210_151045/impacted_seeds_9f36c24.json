@@ -1,0 +1,184 @@
+{
+  "commit": "9f36c24",
+  "parent": "cc8b4619b9800091e632c99f065692fa62d57138",
+  "repo": "D:\\locbench\\pyjwt",
+  "num_files_in_diff": 6,
+  "num_py_files_in_diff": 4,
+  "num_seeds": 11,
+  "seeds": [
+    {
+      "path": "jwt/algorithms.py",
+      "version": "new",
+      "line": 254,
+      "kind": "function",
+      "qualname": "jwt.algorithms.Algorithm.to_jwk",
+      "span": [
+        254,
+        254
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def to_jwk(key_obj, as_dict: Literal[True]) -> JWKDict: ...",
+      "old_code": "    def to_jwk(key_obj, as_dict: bool = False) -> JWKDict | str:\n        \"\"\"\n        Serializes a given key into a JWK\n        \"\"\""
+    },
+    {
+      "path": "jwt/algorithms.py",
+      "version": "new",
+      "line": 332,
+      "kind": "function",
+      "qualname": "jwt.algorithms.HMACAlgorithm.to_jwk",
+      "span": [
+        332,
+        332
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def to_jwk(key_obj: str | bytes, as_dict: Literal[True]) -> JWKDict: ...",
+      "old_code": "    def to_jwk(key_obj: str | bytes, as_dict: bool = False) -> JWKDict | str:\n        jwk = {\n            \"k\": base64url_encode(force_bytes(key_obj)).decode(),\n            \"kty\": \"oct\",\n        }\n\n        if as_dict:\n            return jwk\n        else:\n            return json.dumps(jwk)"
+    },
+    {
+      "path": "jwt/algorithms.py",
+      "version": "new",
+      "line": 423,
+      "kind": "function",
+      "qualname": "jwt.algorithms.RSAAlgorithm.to_jwk",
+      "span": [
+        423,
+        423
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "        def to_jwk(key_obj: AllowedRSAKeys, as_dict: Literal[True]) -> JWKDict: ...",
+      "old_code": "        def to_jwk(key_obj: AllowedRSAKeys, as_dict: bool = False) -> JWKDict | str:\n            obj: dict[str, Any] | None = None\n\n            if hasattr(key_obj, \"private_numbers\"):\n                # Private key\n                numbers = key_obj.private_numbers()\n\n                obj = {\n                    \"kty\": \"RSA\",\n                    \"key_ops\": [\"sign\"],\n                    \"n\": to_base64url_uint(numbers.public_numbers.n).decode(),\n                    \"e\": to_base64url_uint(numbers.public_numbers.e).decode(),\n                    \"d\": to_base64url_uint(numbers.d).decode(),\n                    \"p\": to_base64url_uint(numbers.p).decode(),\n                    \"q\": to_base64url_uint(numbers.q).decode(),\n                    \"dp\": to_base64url_uint(numbers.dmp1).decode(),\n                    \"dq\": to_base64url_uint(numbers.dmq1).decode(),\n                    \"qi\": to_base64url_uint(numbers.iqmp).decode(),\n                }\n\n            elif hasattr(key_obj, \"verify\"):\n                # Public key\n                numbers = key_obj.public_numbers()\n\n                obj = {\n                    \"kty\": \"RSA\",\n                    \"key_ops\": [\"verify\"],\n                    \"n\": to_base64url_uint(numbers.n).decode(),\n                    \"e\": to_base64url_uint(numbers.e).decode(),\n                }\n            else:\n                raise InvalidKeyError(\"Not a public or private key\")\n\n            if as_dict:\n                return obj\n            else:\n                return json.dumps(obj)"
+    },
+    {
+      "path": "jwt/algorithms.py",
+      "version": "new",
+      "line": 615,
+      "kind": "function",
+      "qualname": "jwt.algorithms.ECAlgorithm.to_jwk",
+      "span": [
+        615,
+        615
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "        def to_jwk(key_obj: AllowedECKeys, as_dict: Literal[True]) -> JWKDict: ...",
+      "old_code": "        def to_jwk(key_obj: AllowedECKeys, as_dict: bool = False) -> JWKDict | str:\n            if isinstance(key_obj, EllipticCurvePrivateKey):\n                public_numbers = key_obj.public_key().public_numbers()\n            elif isinstance(key_obj, EllipticCurvePublicKey):\n                public_numbers = key_obj.public_numbers()\n            else:\n                raise InvalidKeyError(\"Not a public or private key\")\n\n            if isinstance(key_obj.curve, SECP256R1):\n                crv = \"P-256\"\n            elif isinstance(key_obj.curve, SECP384R1):\n                crv = \"P-384\"\n            elif isinstance(key_obj.curve, SECP521R1):\n                crv = \"P-521\"\n            elif isinstance(key_obj.curve, SECP256K1):\n                crv = \"secp256k1\"\n            else:\n                raise InvalidKeyError(f\"Invalid curve: {key_obj.curve}\")\n\n            obj: dict[str, Any] = {\n                \"kty\": \"EC\",\n                \"crv\": crv,\n                \"x\": to_base64url_uint(\n                    public_numbers.x,\n                    bit_length=key_obj.curve.key_size,\n                ).decode(),\n                \"y\": to_base64url_uint(\n                    public_numbers.y,\n                    bit_length=key_obj.curve.key_size,\n                ).decode(),\n            }\n\n            if isinstance(key_obj, EllipticCurvePrivateKey):\n                obj[\"d\"] = to_base64url_uint(\n                    key_obj.private_numbers().private_value,\n                    bit_length=key_obj.curve.key_size,\n                ).decode()\n\n            if as_dict:\n                return obj\n            else:\n                return json.dumps(obj)"
+    },
+    {
+      "path": "jwt/algorithms.py",
+      "version": "new",
+      "line": 844,
+      "kind": "function",
+      "qualname": "jwt.algorithms.OKPAlgorithm.to_jwk",
+      "span": [
+        844,
+        844
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "        def to_jwk(key: AllowedOKPKeys, as_dict: Literal[True]) -> JWKDict: ...",
+      "old_code": "        def to_jwk(key: AllowedOKPKeys, as_dict: bool = False) -> JWKDict | str:\n            if isinstance(key, (Ed25519PublicKey, Ed448PublicKey)):\n                x = key.public_bytes(\n                    encoding=Encoding.Raw,\n                    format=PublicFormat.Raw,\n                )\n                crv = \"Ed25519\" if isinstance(key, Ed25519PublicKey) else \"Ed448\"\n\n                obj = {\n                    \"x\": base64url_encode(force_bytes(x)).decode(),\n                    \"kty\": \"OKP\",\n                    \"crv\": crv,\n                }\n\n                if as_dict:\n                    return obj\n                else:\n                    return json.dumps(obj)\n\n            if isinstance(key, (Ed25519PrivateKey, Ed448PrivateKey)):\n                d = key.private_bytes(\n                    encoding=Encoding.Raw,\n                    format=PrivateFormat.Raw,\n                    encryption_algorithm=NoEncryption(),\n                )\n\n                x = key.public_key().public_bytes(\n                    encoding=Encoding.Raw,\n                    format=PublicFormat.Raw,\n                )\n\n                crv = \"Ed25519\" if isinstance(key, Ed25519PrivateKey) else \"Ed448\"\n                obj = {\n                    \"x\": base64url_encode(force_bytes(x)).decode(),\n                    \"d\": base64url_encode(force_bytes(d)).decode(),\n                    \"kty\": \"OKP\",\n                    \"crv\": crv,\n                }\n\n                if as_dict:\n                    return obj\n                else:\n                    return json.dumps(obj)\n\n            raise InvalidKeyError(\"Not a public or private key\")"
+    },
+    {
+      "path": "tests/keys/__init__.py",
+      "version": "old",
+      "line": 30,
+      "kind": "function",
+      "qualname": "tests.keys.__init__.load_rsa_key",
+      "span": [
+        30,
+        32
+      ],
+      "reason": "diff_old_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": "def load_rsa_key():\n    with open(os.path.join(BASE_PATH, \"jwk_rsa_key.json\")) as infile:\n        return RSAAlgorithm.from_jwk(infile.read())"
+    },
+    {
+      "path": "tests/keys/__init__.py",
+      "version": "old",
+      "line": 33,
+      "kind": "module",
+      "qualname": "tests.keys.__init__",
+      "span": null,
+      "reason": "diff_old_line_outside_defs",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "tests/keys/__init__.py",
+      "version": "old",
+      "line": 40,
+      "kind": "function",
+      "qualname": "tests.keys.__init__.load_ec_key",
+      "span": [
+        40,
+        47
+      ],
+      "reason": "diff_old_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": "def load_ec_key():\n    with open(os.path.join(BASE_PATH, \"jwk_ec_key.json\")) as infile:\n        keyobj = json.load(infile)\n\n    return ec.EllipticCurvePrivateNumbers(\n        private_value=decode_value(keyobj[\"d\"]),\n        public_numbers=load_ec_pub_key_p_521().public_numbers(),\n    )"
+    },
+    {
+      "path": "tests/test_api_jws.py",
+      "version": "new",
+      "line": 712,
+      "kind": "function",
+      "qualname": "tests.test_api_jws.TestJWS.test_custom_json_encoder.CustomJSONEncoder.default",
+      "span": [
+        711,
+        713
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "            def default(self, o):\n                assert isinstance(o, Decimal)\n                return \"it worked\"",
+      "old_code": "            def default(self, o):\n                if isinstance(o, Decimal):\n                    return \"it worked\"\n                return super().default(o)"
+    },
+    {
+      "path": "tests/test_api_jws.py",
+      "version": "new",
+      "line": 736,
+      "kind": "function",
+      "qualname": "tests.test_api_jws.TestJWS.test_encode_headers_parameter_adds_headers",
+      "span": [
+        730,
+        741
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "    def test_encode_headers_parameter_adds_headers(self, jws, payload):\n        headers = {\"testheader\": True}\n        token = jws.encode(payload, \"secret\", headers=headers)\n\n        header = token[0 : token.index(\".\")].encode()\n        header = base64url_decode(header)\n        header = header.decode()\n\n        header_obj = json.loads(header)\n\n        assert \"testheader\" in header_obj\n        assert header_obj[\"testheader\"] == headers[\"testheader\"]",
+      "old_code": "    def test_encode_headers_parameter_adds_headers(self, jws, payload):\n        headers = {\"testheader\": True}\n        token = jws.encode(payload, \"secret\", headers=headers)\n\n        if not isinstance(token, str):\n            token = token.decode()\n\n        header = token[0 : token.index(\".\")].encode()\n        header = base64url_decode(header)\n\n        if not isinstance(header, str):\n            header = header.decode()\n\n        header_obj = json.loads(header)\n\n        assert \"testheader\" in header_obj\n        assert header_obj[\"testheader\"] == headers[\"testheader\"]"
+    },
+    {
+      "path": "tests/test_api_jwt.py",
+      "version": "new",
+      "line": 661,
+      "kind": "function",
+      "qualname": "tests.test_api_jwt.TestJWT.test_custom_json_encoder.CustomJSONEncoder.default",
+      "span": [
+        660,
+        662
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "            def default(self, o):\n                assert isinstance(o, Decimal)\n                return \"it worked\"",
+      "old_code": "            def default(self, o):\n                if isinstance(o, Decimal):\n                    return \"it worked\"\n                return super().default(o)"
+    }
+  ],
+  "generated_at": "2026-02-10T15:10:46"
+}

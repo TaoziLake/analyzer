@@ -1,0 +1,47 @@
+--- a/src/black/nodes.py
++++ b/src/black/nodes.py
+@@ -556,6 +556,11 @@
+     """Whether whitespace around `**` should be removed."""
+ 
+     def is_simple(node: LN) -> bool:
++        """TODO: docstring
++
++        Args:
++            node:
++        """
+         if isinstance(node, Leaf):
+             return node.type in (token.NAME, token.NUMBER, token.DOT, token.DOUBLESTAR)
+         elif node.type == syms.factor:  # unary operators
+
+--- a/src/black/linegen.py
++++ b/src/black/linegen.py
+@@ -685,6 +685,13 @@
+     features: Collection[Feature],
+     mode: Mode,
+ ) -> str | None:
++    """TODO: docstring
++
++    Args:
++        line:
++        features:
++        mode:
++    """
+     try:
+         return line_to_string(next(hug_power_op(line, features, mode)))
+     except CannotTransform:
+@@ -1999,6 +2006,15 @@
+     *,
+     line_str: str = "",
+ ) -> list[Line]:
++    """TODO: docstring
++
++    Args:
++        line:
++        transform:
++        mode:
++        features:
++        line_str:
++    """
+     if not line_str:
+         line_str = line_to_string(line)
+     result: list[Line] = []

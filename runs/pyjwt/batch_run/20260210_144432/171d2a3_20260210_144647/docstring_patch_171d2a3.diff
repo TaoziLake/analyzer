@@ -1,0 +1,24 @@
+--- a/jwt/jwks_client.py
++++ b/jwt/jwks_client.py
+@@ -45,7 +45,7 @@
+         cache with **no time-based expiration**. Keys are evicted only when
+         the cache reaches its maximum size. Controlled by:
+ 
+-        - ``cache_keys``: Set to ``True`` to enable this cache.
++        - ``cache_keys``: Enable the per-key LRU cache (Tier 2).
+           Defaults to ``False``.
+         - ``max_cached_keys``: Maximum number of signing keys to keep in
+           the LRU cache. Defaults to ``16``.
+@@ -66,6 +66,12 @@
+         :type timeout: float
+         :param ssl_context: Optional SSL context for the request.
+         :type ssl_context: ssl.SSLContext or None
++
++        Changelog:
++            171d2a3: Added detailed docstring explaining the two-tier caching system.
++            Documented behavior of both JWK Set cache (Tier 1) and signing key cache
++            (Tier 2) with parameter descriptions and operational characteristics.
++        ```
+         """
+         if headers is None:
+             headers = {}

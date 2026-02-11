@@ -1,0 +1,81 @@
+--- a/docs_src/header_params/tutorial003_an_py39.py
++++ b/docs_src/header_params/tutorial003_an_py39.py
+@@ -7,4 +7,12 @@
+ 
+ @app.get("/items/")
+ async def read_items(x_token: Annotated[Union[list[str], None], Header()] = None):
++    """Read X-Token header values from the request.
++
++    Args:
++        x_token (Union[list[str], None], optional): List of X-Token values from the request header. Defaults to None.
++
++    Returns:
++        dict: A dictionary containing the X-Token values with the key "X-Token values".
++    """
+     return {"X-Token values": x_token}
+
+--- a/fastapi/_compat/shared.py
++++ b/fastapi/_compat/shared.py
+@@ -49,6 +49,20 @@
+ def lenient_issubclass(
+     cls: Any, class_or_tuple: Union[type[Any], tuple[type[Any], ...], None]
+ ) -> bool:
++    """Determine if cls is a subclass of class_or_tuple, handling cases where cls may be a generic type.
++
++    This function attempts to use issubclass but gracefully handles TypeErrors for non-class types.
++
++    Args:
++        cls: The class or type to check.
++        class_or_tuple: The target class or tuple of classes to compare against.
++
++    Returns:
++        bool: True if cls is a subclass of class_or_tuple, False otherwise.
++
++    Raises:
++        TypeError: If cls is not a class or a valid generic type that can be checked.
++    """
+     try:
+         return isinstance(cls, type) and issubclass(cls, class_or_tuple)  # type: ignore[arg-type]
+     except TypeError:  # pragma: no cover
+@@ -58,12 +72,28 @@
+ 
+ 
+ def _annotation_is_sequence(annotation: Union[type[Any], None]) -> bool:
++    """Check if an annotation represents a sequence type, excluding strings and bytes.
++
++    Args:
++        annotation (Union[type[Any], None]): The type annotation to check.
++
++    Returns:
++        bool: True if the annotation is a sequence type (excluding str/bytes), False otherwise.
++    """
+     if lenient_issubclass(annotation, (str, bytes)):
+         return False
+     return lenient_issubclass(annotation, sequence_types)
+ 
+ 
+ def field_annotation_is_sequence(annotation: Union[type[Any], None]) -> bool:
++    """Determine if a type annotation represents a sequence type (excluding str and bytes).
++
++    Args:
++        annotation (Union[type, None]): The type annotation to check. May be a direct type (e.g., list), a generic type (e.g., List[int]), or a Union of types.
++
++    Returns:
++        bool: True if the annotation is a sequence type (e.g., list, tuple, set, frozenset, deque, or a Union containing such types), False otherwise (including str and bytes annotations).
++    """
+     origin = get_origin(annotation)
+     if origin is Union or origin is UnionType:
+         for arg in get_args(annotation):
+@@ -76,6 +106,14 @@
+ 
+ 
+ def value_is_sequence(value: Any) -> bool:
++    """Check if a value is a sequence type (list, tuple, set, frozenset, deque) but not a string or bytes.
++
++    Args:
++        value (Any): The value to check.
++
++    Returns:
++        bool: True if the value is a sequence type (excluding str/bytes), False otherwise.
++    """
+     return isinstance(value, sequence_types) and not isinstance(value, (str, bytes))

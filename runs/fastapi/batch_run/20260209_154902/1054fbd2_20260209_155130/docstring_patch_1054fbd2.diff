@@ -1,0 +1,23 @@
+--- a/scripts/docs.py
++++ b/scripts/docs.py
+@@ -120,8 +120,18 @@
+ 
+ @app.command()
+ def new_lang(lang: str = typer.Argument(..., callback=lang_callback)):
+-    """
+-    Generate a new docs translation directory for the language LANG.
++    """Generate a new docs translation directory for the language LANG.
++
++    Creates a new language directory under docs/ with the specified language code.
++    Initializes the directory with mkdocs.yml inheritance configuration and an empty
++    LLM prompt file for translation workflows. If the directory already exists,
++    aborts with a warning message.
++
++    Args:
++        lang (str): Language code to create (e.g., 'es' for Spanish)
++
++    Raises:
++        typer.Abort: If the language directory already exists
+     """
+     new_path: Path = Path("docs") / lang
+     if new_path.exists():

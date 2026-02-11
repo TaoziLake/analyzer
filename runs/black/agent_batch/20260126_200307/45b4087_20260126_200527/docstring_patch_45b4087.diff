@@ -1,0 +1,658 @@
+--- a/action/main.py
++++ b/action/main.py
+@@ -44,6 +44,7 @@
+ 
+ 
+ def read_version_specifier_from_pyproject() -> str:
++    """TODO: docstring"""
+     if sys.version_info < (3, 11):
+         print(
+             "::error::'with.use_pyproject' input requires Python 3.11 or later.",
+@@ -95,6 +96,11 @@
+ 
+ 
+ def find_black_version_in_array(array: object) -> str | None:
++    """TODO: docstring
++
++    Args:
++        array:
++    """
+     if not isinstance(array, list):
+         return None
+     try:
+
+--- a/gallery/gallery.py
++++ b/gallery/gallery.py
+@@ -32,6 +32,12 @@
+ 
+ 
+ def get_pypi_download_url(package: str, version: str | None) -> str:
++    """TODO: docstring
++
++    Args:
++        package:
++        version:
++    """
+     with urlopen(PYPI_INSTANCE + f"/{package}/json") as page:
+         metadata = json.load(page)
+ 
+@@ -63,6 +69,12 @@
+ 
+ 
+ def get_package_source(package: str, version: str | None) -> str:
++    """TODO: docstring
++
++    Args:
++        package:
++        version:
++    """
+     if package == "cpython":
+         if version is None:
+             version = "main"
+@@ -78,6 +90,11 @@
+ 
+ 
+ def get_archive_manager(local_file: str) -> ArchiveKind:
++    """TODO: docstring
++
++    Args:
++        local_file:
++    """
+     if tarfile.is_tarfile(local_file):
+         return tarfile.open(local_file)
+     elif zipfile.is_zipfile(local_file):
+@@ -87,6 +104,11 @@
+ 
+ 
+ def get_first_archive_member(archive: ArchiveKind) -> str:
++    """TODO: docstring
++
++    Args:
++        archive:
++    """
+     if isinstance(archive, tarfile.TarFile):
+         return archive.getnames()[0]
+     elif isinstance(archive, zipfile.ZipFile):
+@@ -94,6 +116,13 @@
+ 
+ 
+ def download_and_extract(package: str, version: str | None, directory: Path) -> Path:
++    """TODO: docstring
++
++    Args:
++        package:
++        version:
++        directory:
++    """
+     source = get_package_source(package, version)
+ 
+     local_file, _ = urlretrieve(source, directory / f"{package}-src")
+@@ -106,6 +135,13 @@
+ def get_package(
+     package: str, version: str | None, directory: Path
+ ) -> Path | None:
++    """TODO: docstring
++
++    Args:
++        package:
++        version:
++        directory:
++    """
+     try:
+         return download_and_extract(package, version, directory)
+     except Exception:
+@@ -135,6 +171,12 @@
+ 
+ 
+ def git_add_and_commit(msg: str, repo: Path) -> None:
++    """TODO: docstring
++
++    Args:
++        msg:
++        repo:
++    """
+     subprocess.run(["git", "add", "."], cwd=repo)
+     subprocess.run(["git", "commit", "-m", msg, "--allow-empty"], cwd=repo)
+ 
+@@ -142,6 +184,14 @@
+ def git_switch_branch(
+     branch: str, repo: Path, new: bool = False, from_branch: str | None = None
+ ) -> None:
++    """TODO: docstring
++
++    Args:
++        branch:
++        repo:
++        new:
++        from_branch:
++    """
+     args = ["git", "checkout"]
+     if new:
+         args.append("-b")
+@@ -152,6 +202,11 @@
+ 
+ 
+ def init_repos(options: Namespace) -> tuple[Path, ...]:
++    """TODO: docstring
++
++    Args:
++        options:
++    """
+     options.output.mkdir(exist_ok=True)
+ 
+     if options.top_packages:
+@@ -186,6 +241,12 @@
+ 
+ @lru_cache(8)
+ def black_runner(version: str, black_repo: Path) -> Path:
++    """TODO: docstring
++
++    Args:
++        version:
++        black_repo:
++    """
+     directory = tempfile.TemporaryDirectory()
+     venv.create(directory.name, with_pip=True)
+ 
+@@ -203,6 +264,15 @@
+     black_version: BlackVersion,
+     input_directory: Path,
+ ) -> str:
++    """TODO: docstring
++
++    Args:
++        repo:
++        from_branch:
++        black_repo:
++        black_version:
++        input_directory:
++    """
+     current_branch = f"black-{black_version.version}"
+     git_switch_branch(black_version.version, repo=black_repo)
+     git_switch_branch(current_branch, repo=repo, new=True, from_branch=from_branch)
+@@ -224,6 +294,12 @@
+ 
+ 
+ def format_repos(repos: tuple[Path, ...], options: Namespace) -> None:
++    """TODO: docstring
++
++    Args:
++        repos:
++        options:
++    """
+     black_versions = tuple(
+         BlackVersion(*version.split(":")) for version in options.versions
+     )
+@@ -244,6 +320,7 @@
+ 
+ 
+ def main() -> None:
++    """TODO: docstring"""
+     parser = ArgumentParser(description="""Black Gallery is a script that
+     automates the process of applying different Black versions to a selected
+     PyPI package and seeing the results between versions.""")
+
+--- a/scripts/check_pre_commit_rev_in_example.py
++++ b/scripts/check_pre_commit_rev_in_example.py
+@@ -18,6 +18,12 @@
+ 
+ 
+ def main(changes: str, source_version_control: str) -> None:
++    """TODO: docstring
++
++    Args:
++        changes:
++        source_version_control:
++    """
+     changes_html = commonmark.commonmark(changes)
+     changes_soup = BeautifulSoup(changes_html, "html.parser")
+     headers = changes_soup.find_all("h2")
+
+--- a/scripts/migrate-black.py
++++ b/scripts/migrate-black.py
+@@ -9,10 +9,22 @@
+ 
+ 
+ def git(*args: str) -> str:
++    """TODO: docstring
++
++    Args:
++        *args:
++    """
+     return check_output(["git", *args]).decode("utf8").strip()
+ 
+ 
+ def blackify(base_branch: str, black_command: str, logger: logging.Logger) -> int:
++    """TODO: docstring
++
++    Args:
++        base_branch:
++        black_command:
++        logger:
++    """
+     current_branch = git("branch", "--show-current")
+ 
+     if not current_branch or base_branch == current_branch:
+
+--- a/src/black/files.py
++++ b/src/black/files.py
+@@ -34,12 +34,22 @@
+ 
+ @lru_cache
+ def _load_toml(path: Path | str) -> dict[str, Any]:
++    """TODO: docstring
++
++    Args:
++        path:
++    """
+     with open(path, "rb") as f:
+         return tomllib.load(f)
+ 
+ 
+ @lru_cache
+ def _cached_resolve(path: Path) -> Path:
++    """TODO: docstring
++
++    Args:
++        path:
++    """
+     return path.resolve()
+ 
+ 
+@@ -294,6 +304,13 @@
+     root: Path,
+     gitignore_dict: dict[Path, PathSpec],
+ ) -> bool:
++    """TODO: docstring
++
++    Args:
++        root_relative_path:
++        root:
++        gitignore_dict:
++    """
+     path = root / root_relative_path
+     # Note that this logic is sensitive to the ordering of gitignore_dict. Callers must
+     # ensure that gitignore_dict is ordered from least specific to most specific.
+@@ -313,6 +330,12 @@
+     normalized_path: str,
+     pattern: Pattern[str] | None,
+ ) -> bool:
++    """TODO: docstring
++
++    Args:
++        normalized_path:
++        pattern:
++    """
+     match = pattern.search(normalized_path) if pattern else None
+     return bool(match and match.group(0))
+ 
+
+--- a/src/black/handle_ipynb_magics.py
++++ b/src/black/handle_ipynb_magics.py
+@@ -383,6 +383,11 @@
+     """
+ 
+     def __init__(self, cell_magic: CellMagic | None = None) -> None:
++        """TODO: docstring
++
++        Args:
++            cell_magic:
++        """
+         self.cell_magic = cell_magic
+ 
+     def visit_Expr(self, node: ast.Expr) -> None:
+
+--- a/src/black/linegen.py
++++ b/src/black/linegen.py
+@@ -668,6 +668,13 @@
+     features: Collection[Feature],
+     mode: Mode,
+ ) -> str | None:
++    """TODO: docstring
++
++    Args:
++        line:
++        features:
++        mode:
++    """
+     try:
+         return line_to_string(next(hug_power_op(line, features, mode)))
+     except CannotTransform:
+@@ -1032,6 +1039,15 @@
+     features: Collection[Feature] = (),
+     omit: Collection[LeafID] = (),
+ ) -> Iterator[Line]:
++    """TODO: docstring
++
++    Args:
++        rhs:
++        line:
++        mode:
++        features:
++        omit:
++    """
+     if (
+         Feature.FORCE_OPTIONAL_PARENTHESES not in features
+         # the opening bracket is an optional paren
+@@ -1297,6 +1313,11 @@
+ 
+ 
+ def _get_last_non_comment_leaf(line: Line) -> int | None:
++    """TODO: docstring
++
++    Args:
++        line:
++    """
+     for leaf_idx in range(len(line.leaves) - 1, 0, -1):
+         if line.leaves[leaf_idx].type != STANDALONE_COMMENT:
+             return leaf_idx
+
+--- a/src/black/lines.py
++++ b/src/black/lines.py
+@@ -467,6 +467,7 @@
+             yield index, leaf, length
+ 
+     def clone(self) -> "Line":
++        """TODO: docstring"""
+         return Line(
+             mode=self.mode,
+             depth=self.depth,
+@@ -524,6 +525,7 @@
+     form_feed: bool = False
+ 
+     def all_lines(self) -> list[str]:
++        """TODO: docstring"""
+         empty_line = str(Line(mode=self.mode))
+         prefix = make_simple_prefix(self.before, self.form_feed, empty_line)
+         return [prefix] + self.content_lines + [empty_line * self.after]
+@@ -617,6 +619,11 @@
+         return True
+ 
+     def _maybe_empty_lines(self, current_line: Line) -> tuple[int, int]:  # noqa: C901
++        """TODO: docstring
++
++        Args:
++            current_line:
++        """
+         max_allowed = 1
+         if current_line.depth == 0:
+             max_allowed = 1 if self.mode.is_pyi else 2
+@@ -712,6 +719,13 @@
+     def _maybe_empty_lines_for_class_or_def(  # noqa: C901
+         self, current_line: Line, before: int, user_had_newline: bool
+     ) -> tuple[int, int]:
++        """TODO: docstring
++
++        Args:
++            current_line:
++            before:
++            user_had_newline:
++        """
+         assert self.previous_line is not None
+ 
+         if self.previous_line.is_decorator:
+
+--- a/src/black/output.py
++++ b/src/black/output.py
+@@ -14,6 +14,13 @@
+ 
+ @mypyc_attr(patchable=True)
+ def _out(message: str | None = None, nl: bool = True, **styles: Any) -> None:
++    """TODO: docstring
++
++    Args:
++        message:
++        nl:
++        **styles:
++    """
+     if message is not None:
+         if "bold" not in styles:
+             styles["bold"] = True
+@@ -23,6 +30,13 @@
+ 
+ @mypyc_attr(patchable=True)
+ def _err(message: str | None = None, nl: bool = True, **styles: Any) -> None:
++    """TODO: docstring
++
++    Args:
++        message:
++        nl:
++        **styles:
++    """
+     if message is not None:
+         if "fg" not in styles:
+             styles["fg"] = "red"
+@@ -32,10 +46,24 @@
+ 
+ @mypyc_attr(patchable=True)
+ def out(message: str | None = None, nl: bool = True, **styles: Any) -> None:
++    """TODO: docstring
++
++    Args:
++        message:
++        nl:
++        **styles:
++    """
+     _out(message, nl=nl, **styles)
+ 
+ 
+ def err(message: str | None = None, nl: bool = True, **styles: Any) -> None:
++    """TODO: docstring
++
++    Args:
++        message:
++        nl:
++        **styles:
++    """
+     _err(message, nl=nl, **styles)
+ 
+ 
+
+--- a/src/blib2to3/pgen2/driver.py
++++ b/src/blib2to3/pgen2/driver.py
+@@ -107,6 +107,12 @@
+ 
+ class Driver:
+     def __init__(self, grammar: Grammar, logger: Logger | None = None) -> None:
++        """TODO: docstring
++
++        Args:
++            grammar:
++            logger:
++        """
+         self.grammar = grammar
+         if logger is None:
+             logger = logging.getLogger(__name__)
+@@ -228,6 +234,12 @@
+ 
+ 
+ def _generate_pickle_name(gt: Path, cache_dir: Path | None = None) -> str:
++    """TODO: docstring
++
++    Args:
++        gt:
++        cache_dir:
++    """
+     head, tail = os.path.splitext(gt)
+     if tail == ".txt":
+         tail = ""
+
+--- a/src/blib2to3/pgen2/parse.py
++++ b/src/blib2to3/pgen2/parse.py
+@@ -100,6 +100,12 @@
+     def determine_route(
+         self, value: str | None = None, force: bool = False
+     ) -> int | None:
++        """TODO: docstring
++
++        Args:
++            value:
++            force:
++        """
+         alive_ilabels = self.ilabels
+         if len(alive_ilabels) == 0:
+             *_, most_successful_ilabel = self._dead_ilabels
+@@ -118,6 +124,14 @@
+     def __init__(
+         self, msg: str, type: int | None, value: str | None, context: Context
+     ) -> None:
++        """TODO: docstring
++
++        Args:
++            msg:
++            type:
++            value:
++            context:
++        """
+         Exception.__init__(
+             self, f"{msg}: type={type!r}, value={value!r}, context={context!r}"
+         )
+
+--- a/src/blib2to3/pgen2/pgen.py
++++ b/src/blib2to3/pgen2/pgen.py
+@@ -22,6 +22,12 @@
+     first: dict[str, dict[str, int] | None]
+ 
+     def __init__(self, filename: Path, stream: IO[str] | None = None) -> None:
++        """TODO: docstring
++
++        Args:
++            filename:
++            stream:
++        """
+         close_stream = None
+         if stream is None:
+             stream = open(filename, encoding="utf-8")
+@@ -162,6 +168,7 @@
+         self.first[name] = totalset
+ 
+     def parse(self) -> tuple[dict[str, list["DFAState"]], str]:
++        """TODO: docstring"""
+         dfas = {}
+         startsymbol: str | None = None
+         # MSTART: (NEWLINE | RULE)* ENDMARKER
+@@ -334,6 +341,12 @@
+             )
+ 
+     def expect(self, type: int, value: Any | None = None) -> str:
++        """TODO: docstring
++
++        Args:
++            type:
++            value:
++        """
+         if self.type != type or (value is not None and self.value != value):
+             self.raise_error(f"expected {type}/{value}, got {self.type}/{self.value}")
+         value = self.value
+@@ -360,6 +373,12 @@
+         self.arcs = []  # list of (label, NFAState) pairs
+ 
+     def addarc(self, next: "NFAState", label: str | None = None) -> None:
++        """TODO: docstring
++
++        Args:
++            next:
++            label:
++        """
+         assert label is None or isinstance(label, str)
+         assert isinstance(next, NFAState)
+         self.arcs.append((label, next))
+
+--- a/src/blib2to3/pgen2/tokenize.py
++++ b/src/blib2to3/pgen2/tokenize.py
+@@ -142,6 +142,12 @@
+ 
+ 
+ def tokenize(source: str, grammar: Grammar | None = None) -> Iterator[TokenInfo]:
++    """TODO: docstring
++
++    Args:
++        source:
++        grammar:
++    """
+     lines = source.split("\n")
+     lines += [""]  # For newline tokens in files that don't end in a newline
+     line, column = 1, 0
+
+--- a/src/blib2to3/pytree.py
++++ b/src/blib2to3/pytree.py
+@@ -28,6 +28,11 @@
+ 
+ 
+ def type_repr(type_num: int) -> str | int:
++    """TODO: docstring
++
++    Args:
++        type_num:
++    """
+     global _type_reprs
+     if not _type_reprs:
+         from . import pygram
+@@ -349,10 +354,12 @@
+         self.invalidate_sibling_maps()
+ 
+     def invalidate_sibling_maps(self) -> None:
++        """TODO: docstring"""
+         self.prev_sibling_map: dict[int, NL | None] | None = None
+         self.next_sibling_map: dict[int, NL | None] | None = None
+ 
+     def update_sibling_maps(self) -> None:
++        """TODO: docstring"""
+         _prev: dict[int, NL | None] = {}
+         _next: dict[int, NL | None] = {}
+         self.prev_sibling_map = _prev
+
+--- a/src/black/nodes.py
++++ b/src/black/nodes.py
+@@ -544,6 +544,11 @@
+ 
+ 
+ def is_docstring(node: NL) -> bool:
++    """TODO: docstring
++
++    Args:
++        node:
++    """
+     if isinstance(node, Leaf):
+         if node.type != token.STRING:
+             return False
+
+--- a/src/black/ranges.py
++++ b/src/black/ranges.py
+@@ -211,6 +211,11 @@
+     def visit_simple_stmt(self, node: Node) -> Iterator[None]:
+         # This is only called for top-level statements, since `visit_suite`
+         # won't visit its children nodes.
++        """TODO: docstring
++
++        Args:
++            node:
++        """
+         yield from []
+         newline_leaf = last_leaf(node)
+         if not newline_leaf:
+@@ -226,6 +231,11 @@
+             _convert_node_to_standalone_comment(ancestor)
+ 
+     def visit_suite(self, node: Node) -> Iterator[None]:
++        """TODO: docstring
++
++        Args:
++            node:
++        """
+         yield from []
+         # If there is a STANDALONE_COMMENT node, it means parts of the node tree
+         # have fmt on/off/skip markers. Those STANDALONE_COMMENT nodes can't
+
+--- a/src/black/strings.py
++++ b/src/black/strings.py
+@@ -163,6 +163,11 @@
+ # caching overhead is much lower.
+ @lru_cache(maxsize=64)
+ def _cached_compile(pattern: str) -> Pattern[str]:
++    """TODO: docstring
++
++    Args:
++        pattern:
++    """
+     return re.compile(pattern)

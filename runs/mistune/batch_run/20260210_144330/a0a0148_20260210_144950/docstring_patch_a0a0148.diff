@@ -1,0 +1,73 @@
+--- a/src/mistune/directives/toc.py
++++ b/src/mistune/directives/toc.py
+@@ -59,6 +59,20 @@
+         return {"type": "toc", "text": title or "", "attrs": attrs}
+ 
+     def toc_hook(self, md: "Markdown", state: "BlockState") -> None:
++        """Process tokens to generate table of contents entries with hierarchical structure.
++
++        Args:
++            md: Markdown parser instance
++            state: Block state containing tokens to process
++
++        Returns:
++            None: Modifies tokens in place to add TOC entries and heading IDs
++
++        Changelog:
++            a0a0148: Added parent=state parameter to normalize_toc_item() call —
++            heading tokens now include parent block state during TOC item normalization,
++            enabling contextual processing of heading relationships in the generated TOC.
++        """
+         sections = []
+         headings = []
+ 
+
+--- a/src/mistune/toc.py
++++ b/src/mistune/toc.py
+@@ -37,6 +37,20 @@
+             return "toc_" + str(index + 1)
+ 
+     def toc_hook(md: "Markdown", state: "BlockState") -> None:
++        """Hook to generate table of contents (TOC) items from headings in markdown.
++
++        Args:
++            md (Markdown): Markdown parser instance
++            state (BlockState): Current parsing state containing tokens and environment
++
++        Returns:
++            None: Modifies state.env["toc_items"] in-place with list of TOC items
++
++        Changelog:
++            a0a0148: Added parent=state parameter to normalize_toc_item calls —
++            TOC items now inherit parent state context during normalization,
++            enabling hierarchical TOC structures and improved state-aware processing.
++        """
+         headings = []
+ 
+         for tok in state.tokens:
+@@ -57,6 +71,25 @@
+ 
+ 
+ def normalize_toc_item(md: "Markdown", token: Dict[str, Any], parent: Optional[Any] = None) -> Tuple[int, str, str]:
++    """def normalize_toc_item(md: "Markdown", token: Dict[str, Any], parent: Optional[Any] = None) -> Tuple[int, str, str]:
++        """Normalize a TOC item by extracting level, id, and text content from a token.
++        
++        Args:
++            md: Markdown parser instance
++            token: Dictionary containing token data with 'text' and 'attrs' keys
++            parent: Optional parent context providing environment data for inline processing
++        
++        Returns:
++            Tuple containing (heading_level, heading_id, stripped_text_content)
++        
++        Raises:
++            AssertionError: If markdown renderer is not available
++        
++        Changelog:
++            a0a0148: Added optional 'parent' parameter to pass environment context to inline processing.
++            Modified md.inline() call to use parent.env when available instead of empty dict.
++            This allows TOC item rendering to inherit environment variables from parent context.
++    """
+     text = token["text"]
+     tokens = md.inline(text, parent.env if parent else {})
+     assert md.renderer is not None

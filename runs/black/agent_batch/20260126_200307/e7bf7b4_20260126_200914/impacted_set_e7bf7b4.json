@@ -1,0 +1,100 @@
+{
+  "commit": "e7bf7b4",
+  "parent": "71e380aedf9e319be24b3b6b68a093a5066d158c",
+  "repo": "D:\\locbench\\black",
+  "num_seeds": 1,
+  "num_seeds_used": 1,
+  "seed_scope": "code_only",
+  "num_impacted": 6,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 3415,
+    "total_call_relations": 4447
+  },
+  "impacted": [
+    {
+      "qualname": "src.blib2to3.pgen2.parse.Recorder.add_token",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.blib2to3.pgen2.parse.Recorder.parser._addtoken",
+        "src.blib2to3.pgen2.parse.Recorder.parser.addtoken",
+        "src.blib2to3.pgen2.parse.Recorder.switch_to"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.parse.Recorder.parser._addtoken",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.parse.Recorder.add_token",
+      "callers": [
+        "src.blib2to3.pgen2.parse.Recorder.add_token"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.parse.Recorder.parser.addtoken",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.parse.Recorder.add_token",
+      "callers": [
+        "src.blib2to3.pgen2.parse.Recorder.add_token"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.parse.Recorder.switch_to",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.parse.Recorder.add_token",
+      "callers": [
+        "src.blib2to3.pgen2.parse.Recorder.add_token"
+      ],
+      "callees": [
+        "src.blib2to3.pgen2.parse.Recorder.backtrack",
+        "src.blib2to3.pgen2.parse.Recorder._dead_ilabels.add"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.parse.Recorder.backtrack",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.parse.Recorder.switch_to",
+      "callers": [
+        "src.blib2to3.pgen2.parse.Recorder.switch_to"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.parse.Recorder._dead_ilabels.add",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.parse.Recorder.switch_to",
+      "callers": [
+        "src.blib2to3.pgen2.parse.Recorder.switch_to"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-26T20:09:16"
+}

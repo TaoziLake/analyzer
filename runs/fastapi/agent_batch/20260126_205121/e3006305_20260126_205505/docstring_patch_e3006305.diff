@@ -1,0 +1,1122 @@
+--- a/fastapi/_compat/shared.py
++++ b/fastapi/_compat/shared.py
+@@ -49,6 +49,11 @@
+ def lenient_issubclass(
+     cls: Any, class_or_tuple: Union[type[Any], tuple[type[Any], ...], None]
+ ) -> bool:
++    """TODO: docstring
++
++    Args:
++        class_or_tuple:
++    """
+     try:
+         return isinstance(cls, type) and issubclass(cls, class_or_tuple)  # type: ignore[arg-type]
+     except TypeError:  # pragma: no cover
+@@ -58,6 +63,11 @@
+ 
+ 
+ def _annotation_is_sequence(annotation: Union[type[Any], None]) -> bool:
++    """TODO: docstring
++
++    Args:
++        annotation:
++    """
+     if lenient_issubclass(annotation, (str, bytes)):
+         return False
+     return lenient_issubclass(annotation, sequence_types)
+@@ -80,6 +90,11 @@
+ 
+ 
+ def _annotation_is_complex(annotation: Union[type[Any], None]) -> bool:
++    """TODO: docstring
++
++    Args:
++        annotation:
++    """
+     return (
+         lenient_issubclass(annotation, (BaseModel, Mapping, UploadFile))
+         or _annotation_is_sequence(annotation)
+@@ -88,6 +103,11 @@
+ 
+ 
+ def field_annotation_is_complex(annotation: Union[type[Any], None]) -> bool:
++    """TODO: docstring
++
++    Args:
++        annotation:
++    """
+     origin = get_origin(annotation)
+     if origin is Union or origin is UnionType:
+         return any(field_annotation_is_complex(arg) for arg in get_args(annotation))
+@@ -178,6 +198,11 @@
+ 
+ 
+ def is_pydantic_v1_model_instance(obj: Any) -> bool:
++    """TODO: docstring
++
++    Args:
++        obj:
++    """
+     with warnings.catch_warnings():
+         warnings.simplefilter("ignore", UserWarning)
+         from pydantic import v1
+@@ -185,6 +210,7 @@
+ 
+ 
+ def is_pydantic_v1_model_class(cls: Any) -> bool:
++    """TODO: docstring"""
+     with warnings.catch_warnings():
+         warnings.simplefilter("ignore", UserWarning)
+         from pydantic import v1
+@@ -192,6 +218,11 @@
+ 
+ 
+ def annotation_is_pydantic_v1(annotation: Any) -> bool:
++    """TODO: docstring
++
++    Args:
++        annotation:
++    """
+     if is_pydantic_v1_model_class(annotation):
+         return True
+     origin = get_origin(annotation)
+
+--- a/fastapi/_compat/v2.py
++++ b/fastapi/_compat/v2.py
+@@ -170,6 +170,13 @@
+         *,
+         loc: tuple[Union[int, str], ...] = (),
+     ) -> tuple[Any, Union[list[dict[str, Any]], None]]:
++        """TODO: docstring
++
++        Args:
++            value:
++            values:
++            loc:
++        """
+         try:
+             return (
+                 self._type_adapter.validate_python(value, from_attributes=True),
+@@ -477,6 +484,11 @@
+ 
+ @lru_cache
+ def get_cached_model_fields(model: type[BaseModel]) -> list[ModelField]:
++    """TODO: docstring
++
++    Args:
++        model:
++    """
+     return get_model_fields(model)  # type: ignore[return-value]
+ 
+ 
+@@ -492,6 +504,11 @@
+ 
+ 
+ def get_model_name_map(unique_models: TypeModelSet) -> dict[TypeModelOrEnum, str]:
++    """TODO: docstring
++
++    Args:
++        unique_models:
++    """
+     name_model_map = {}
+     for model in unique_models:
+         model_name = normalize_name(model.__name__)
+@@ -500,6 +517,11 @@
+ 
+ 
+ def get_compat_model_name_map(fields: list[ModelField]) -> ModelNameMap:
++    """TODO: docstring
++
++    Args:
++        fields:
++    """
+     all_flat_models = set()
+ 
+     v2_model_fields = [field for field in fields if isinstance(field, ModelField)]
+@@ -561,6 +583,12 @@
+ def _regenerate_error_with_loc(
+     *, errors: Sequence[Any], loc_prefix: tuple[Union[str, int], ...]
+ ) -> list[dict[str, Any]]:
++    """TODO: docstring
++
++    Args:
++        errors:
++        loc_prefix:
++    """
+     updated_loc_errors: list[Any] = [
+         {**err, "loc": loc_prefix + err.get("loc", ())} for err in errors
+     ]
+
+--- a/fastapi/datastructures.py
++++ b/fastapi/datastructures.py
+@@ -141,12 +141,24 @@
+     def __get_pydantic_json_schema__(
+         cls, core_schema: Mapping[str, Any], handler: GetJsonSchemaHandler
+     ) -> dict[str, Any]:
++        """TODO: docstring
++
++        Args:
++            core_schema:
++            handler:
++        """
+         return {"type": "string", "format": "binary"}
+ 
+     @classmethod
+     def __get_pydantic_core_schema__(
+         cls, source: type[Any], handler: Callable[[Any], Mapping[str, Any]]
+     ) -> Mapping[str, Any]:
++        """TODO: docstring
++
++        Args:
++            source:
++            handler:
++        """
+         from ._compat.v2 import with_info_plain_validator_function
+ 
+         return with_info_plain_validator_function(cls._validate)
+
+--- a/fastapi/dependencies/utils.py
++++ b/fastapi/dependencies/utils.py
+@@ -179,6 +179,11 @@
+ 
+ 
+ def _get_flat_fields_from_params(fields: list[ModelField]) -> list[ModelField]:
++    """TODO: docstring
++
++    Args:
++        fields:
++    """
+     if not fields:
+         return fields
+     first_field = fields[0]
+@@ -258,6 +263,17 @@
+     use_cache: bool = True,
+     scope: Union[Literal["function", "request"], None] = None,
+ ) -> Dependant:
++    """TODO: docstring
++
++    Args:
++        path:
++        call:
++        name:
++        own_oauth_scopes:
++        parent_oauth_scopes:
++        use_cache:
++        scope:
++    """
+     dependant = Dependant(
+         call=call,
+         name=name,
+@@ -361,6 +377,14 @@
+     value: Any,
+     is_path_param: bool,
+ ) -> ParamDetails:
++    """TODO: docstring
++
++    Args:
++        param_name:
++        annotation:
++        value:
++        is_path_param:
++    """
+     field_info = None
+     depends = None
+     type_annotation: Any = Any
+@@ -703,6 +727,14 @@
+ def _validate_value_with_model_field(
+     *, field: ModelField, value: Any, values: dict[str, Any], loc: tuple[str, ...]
+ ) -> tuple[Any, list[Any]]:
++    """TODO: docstring
++
++    Args:
++        field:
++        value:
++        values:
++        loc:
++    """
+     if value is None:
+         if field.required:
+             return None, [get_missing_field_error(loc=loc)]
+@@ -719,6 +751,13 @@
+ def _get_multidict_value(
+     field: ModelField, values: Mapping[str, Any], alias: Union[str, None] = None
+ ) -> Any:
++    """TODO: docstring
++
++    Args:
++        field:
++        values:
++        alias:
++    """
+     alias = alias or get_validation_alias(field)
+     if is_sequence_field(field) and isinstance(values, (ImmutableMultiDict, Headers)):
+         value = values.getlist(alias)
+@@ -744,6 +783,12 @@
+     fields: Sequence[ModelField],
+     received_params: Union[Mapping[str, Any], QueryParams, Headers],
+ ) -> tuple[dict[str, Any], list[Any]]:
++    """TODO: docstring
++
++    Args:
++        fields:
++        received_params:
++    """
+     values: dict[str, Any] = {}
+     errors: list[dict[str, Any]] = []
+ 
+@@ -843,6 +888,11 @@
+ 
+ 
+ def _should_embed_body_fields(fields: list[ModelField]) -> bool:
++    """TODO: docstring
++
++    Args:
++        fields:
++    """
+     if not fields:
+         return False
+     # More than one dependency could have the same field, it would show up as multiple
+@@ -870,6 +920,12 @@
+     body_fields: list[ModelField],
+     received_body: FormData,
+ ) -> dict[str, Any]:
++    """TODO: docstring
++
++    Args:
++        body_fields:
++        received_body:
++    """
+     values = {}
+ 
+     for field in body_fields:
+@@ -918,6 +974,13 @@
+     received_body: Optional[Union[dict[str, Any], FormData]],
+     embed_body_fields: bool,
+ ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
++    """TODO: docstring
++
++    Args:
++        body_fields:
++        received_body:
++        embed_body_fields:
++    """
+     values: dict[str, Any] = {}
+     errors: list[dict[str, Any]] = []
+     assert body_fields, "request_body_to_args() should be called with fields"
+
+--- a/fastapi/openapi/models.py
++++ b/fastapi/openapi/models.py
+@@ -45,12 +45,24 @@
+         def __get_pydantic_json_schema__(
+             cls, core_schema: Mapping[str, Any], handler: GetJsonSchemaHandler
+         ) -> dict[str, Any]:
++            """TODO: docstring
++
++            Args:
++                core_schema:
++                handler:
++            """
+             return {"type": "string", "format": "email"}
+ 
+         @classmethod
+         def __get_pydantic_core_schema__(
+             cls, source: type[Any], handler: Callable[[Any], Mapping[str, Any]]
+         ) -> Mapping[str, Any]:
++            """TODO: docstring
++
++            Args:
++                source:
++                handler:
++            """
+             return with_info_plain_validator_function(cls._validate)
+ 
+ 
+
+--- a/fastapi/openapi/utils.py
++++ b/fastapi/openapi/utils.py
+@@ -110,6 +110,14 @@
+     ],
+     separate_input_output_schemas: bool = True,
+ ) -> list[dict[str, Any]]:
++    """TODO: docstring
++
++    Args:
++        dependant:
++        model_name_map:
++        field_mapping:
++        separate_input_output_schemas:
++    """
+     parameters = []
+     flat_dependant = get_flat_dependant(dependant, skip_repeats=True)
+     path_params = _get_flat_fields_from_params(flat_dependant.path_params)
+@@ -183,6 +191,14 @@
+     ],
+     separate_input_output_schemas: bool = True,
+ ) -> Optional[dict[str, Any]]:
++    """TODO: docstring
++
++    Args:
++        body_field:
++        model_name_map:
++        field_mapping:
++        separate_input_output_schemas:
++    """
+     if not body_field:
+         return None
+     assert isinstance(body_field, ModelField)
+@@ -266,6 +282,15 @@
+     ],
+     separate_input_output_schemas: bool = True,
+ ) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
++    """TODO: docstring
++
++    Args:
++        route:
++        operation_ids:
++        model_name_map:
++        field_mapping:
++        separate_input_output_schemas:
++    """
+     path = {}
+     security_schemes: dict[str, Any] = {}
+     definitions: dict[str, Any] = {}
+@@ -445,6 +470,11 @@
+ def get_fields_from_routes(
+     routes: Sequence[BaseRoute],
+ ) -> list[ModelField]:
++    """TODO: docstring
++
++    Args:
++        routes:
++    """
+     body_fields_from_routes: list[ModelField] = []
+     responses_from_routes: list[ModelField] = []
+     request_fields_from_routes: list[ModelField] = []
+
+--- a/fastapi/param_functions.py
++++ b/fastapi/param_functions.py
+@@ -606,6 +606,39 @@
+         ),
+     ],
+ ) -> Any:
++    """TODO: docstring
++
++    Args:
++        default:
++        default_factory:
++        alias:
++        alias_priority:
++        validation_alias:
++        serialization_alias:
++        title:
++        description:
++        gt:
++        ge:
++        lt:
++        le:
++        min_length:
++        max_length:
++        pattern:
++        regex:
++        discriminator:
++        strict:
++        multiple_of:
++        allow_inf_nan:
++        max_digits:
++        decimal_places:
++        examples:
++        example:
++        openapi_examples:
++        deprecated:
++        include_in_schema:
++        json_schema_extra:
++        **extra:
++    """
+     return params.Query(
+         default=default,
+         default_factory=default_factory,
+@@ -919,6 +952,40 @@
+         ),
+     ],
+ ) -> Any:
++    """TODO: docstring
++
++    Args:
++        default:
++        default_factory:
++        alias:
++        alias_priority:
++        validation_alias:
++        serialization_alias:
++        convert_underscores:
++        title:
++        description:
++        gt:
++        ge:
++        lt:
++        le:
++        min_length:
++        max_length:
++        pattern:
++        regex:
++        discriminator:
++        strict:
++        multiple_of:
++        allow_inf_nan:
++        max_digits:
++        decimal_places:
++        examples:
++        example:
++        openapi_examples:
++        deprecated:
++        include_in_schema:
++        json_schema_extra:
++        **extra:
++    """
+     return params.Header(
+         default=default,
+         default_factory=default_factory,
+@@ -1222,6 +1289,39 @@
+         ),
+     ],
+ ) -> Any:
++    """TODO: docstring
++
++    Args:
++        default:
++        default_factory:
++        alias:
++        alias_priority:
++        validation_alias:
++        serialization_alias:
++        title:
++        description:
++        gt:
++        ge:
++        lt:
++        le:
++        min_length:
++        max_length:
++        pattern:
++        regex:
++        discriminator:
++        strict:
++        multiple_of:
++        allow_inf_nan:
++        max_digits:
++        decimal_places:
++        examples:
++        example:
++        openapi_examples:
++        deprecated:
++        include_in_schema:
++        json_schema_extra:
++        **extra:
++    """
+     return params.Cookie(
+         default=default,
+         default_factory=default_factory,
+@@ -1547,6 +1647,41 @@
+         ),
+     ],
+ ) -> Any:
++    """TODO: docstring
++
++    Args:
++        default:
++        default_factory:
++        embed:
++        media_type:
++        alias:
++        alias_priority:
++        validation_alias:
++        serialization_alias:
++        title:
++        description:
++        gt:
++        ge:
++        lt:
++        le:
++        min_length:
++        max_length:
++        pattern:
++        regex:
++        discriminator:
++        strict:
++        multiple_of:
++        allow_inf_nan:
++        max_digits:
++        decimal_places:
++        examples:
++        example:
++        openapi_examples:
++        deprecated:
++        include_in_schema:
++        json_schema_extra:
++        **extra:
++    """
+     return params.Body(
+         default=default,
+         default_factory=default_factory,
+@@ -1860,6 +1995,40 @@
+         ),
+     ],
+ ) -> Any:
++    """TODO: docstring
++
++    Args:
++        default:
++        default_factory:
++        media_type:
++        alias:
++        alias_priority:
++        validation_alias:
++        serialization_alias:
++        title:
++        description:
++        gt:
++        ge:
++        lt:
++        le:
++        min_length:
++        max_length:
++        pattern:
++        regex:
++        discriminator:
++        strict:
++        multiple_of:
++        allow_inf_nan:
++        max_digits:
++        decimal_places:
++        examples:
++        example:
++        openapi_examples:
++        deprecated:
++        include_in_schema:
++        json_schema_extra:
++        **extra:
++    """
+     return params.Form(
+         default=default,
+         default_factory=default_factory,
+@@ -2172,6 +2341,40 @@
+         ),
+     ],
+ ) -> Any:
++    """TODO: docstring
++
++    Args:
++        default:
++        default_factory:
++        media_type:
++        alias:
++        alias_priority:
++        validation_alias:
++        serialization_alias:
++        title:
++        description:
++        gt:
++        ge:
++        lt:
++        le:
++        min_length:
++        max_length:
++        pattern:
++        regex:
++        discriminator:
++        strict:
++        multiple_of:
++        allow_inf_nan:
++        max_digits:
++        decimal_places:
++        examples:
++        example:
++        openapi_examples:
++        deprecated:
++        include_in_schema:
++        json_schema_extra:
++        **extra:
++    """
+     return params.File(
+         default=default,
+         default_factory=default_factory,
+
+--- a/fastapi/params.py
++++ b/fastapi/params.py
+@@ -72,6 +72,40 @@
+         json_schema_extra: Union[dict[str, Any], None] = None,
+         **extra: Any,
+     ):
++        """TODO: docstring
++
++        Args:
++            default:
++            default_factory:
++            annotation:
++            alias:
++            alias_priority:
++            validation_alias:
++            serialization_alias:
++            title:
++            description:
++            gt:
++            ge:
++            lt:
++            le:
++            min_length:
++            max_length:
++            pattern:
++            regex:
++            discriminator:
++            strict:
++            multiple_of:
++            allow_inf_nan:
++            max_digits:
++            decimal_places:
++            examples:
++            example:
++            openapi_examples:
++            deprecated:
++            include_in_schema:
++            json_schema_extra:
++            **extra:
++        """
+         if example is not _Unset:
+             warnings.warn(
+                 "`example` has been deprecated, please use `examples` instead",
+@@ -183,6 +217,40 @@
+         json_schema_extra: Union[dict[str, Any], None] = None,
+         **extra: Any,
+     ):
++        """TODO: docstring
++
++        Args:
++            default:
++            default_factory:
++            annotation:
++            alias:
++            alias_priority:
++            validation_alias:
++            serialization_alias:
++            title:
++            description:
++            gt:
++            ge:
++            lt:
++            le:
++            min_length:
++            max_length:
++            pattern:
++            regex:
++            discriminator:
++            strict:
++            multiple_of:
++            allow_inf_nan:
++            max_digits:
++            decimal_places:
++            examples:
++            example:
++            openapi_examples:
++            deprecated:
++            include_in_schema:
++            json_schema_extra:
++            **extra:
++        """
+         assert default is ..., "Path parameters cannot have a default value"
+         self.in_ = self.in_
+         super().__init__(
+@@ -267,6 +335,40 @@
+         json_schema_extra: Union[dict[str, Any], None] = None,
+         **extra: Any,
+     ):
++        """TODO: docstring
++
++        Args:
++            default:
++            default_factory:
++            annotation:
++            alias:
++            alias_priority:
++            validation_alias:
++            serialization_alias:
++            title:
++            description:
++            gt:
++            ge:
++            lt:
++            le:
++            min_length:
++            max_length:
++            pattern:
++            regex:
++            discriminator:
++            strict:
++            multiple_of:
++            allow_inf_nan:
++            max_digits:
++            decimal_places:
++            examples:
++            example:
++            openapi_examples:
++            deprecated:
++            include_in_schema:
++            json_schema_extra:
++            **extra:
++        """
+         super().__init__(
+             default=default,
+             default_factory=default_factory,
+@@ -350,6 +452,41 @@
+         json_schema_extra: Union[dict[str, Any], None] = None,
+         **extra: Any,
+     ):
++        """TODO: docstring
++
++        Args:
++            default:
++            default_factory:
++            annotation:
++            alias:
++            alias_priority:
++            validation_alias:
++            serialization_alias:
++            convert_underscores:
++            title:
++            description:
++            gt:
++            ge:
++            lt:
++            le:
++            min_length:
++            max_length:
++            pattern:
++            regex:
++            discriminator:
++            strict:
++            multiple_of:
++            allow_inf_nan:
++            max_digits:
++            decimal_places:
++            examples:
++            example:
++            openapi_examples:
++            deprecated:
++            include_in_schema:
++            json_schema_extra:
++            **extra:
++        """
+         self.convert_underscores = convert_underscores
+         super().__init__(
+             default=default,
+@@ -433,6 +570,40 @@
+         json_schema_extra: Union[dict[str, Any], None] = None,
+         **extra: Any,
+     ):
++        """TODO: docstring
++
++        Args:
++            default:
++            default_factory:
++            annotation:
++            alias:
++            alias_priority:
++            validation_alias:
++            serialization_alias:
++            title:
++            description:
++            gt:
++            ge:
++            lt:
++            le:
++            min_length:
++            max_length:
++            pattern:
++            regex:
++            discriminator:
++            strict:
++            multiple_of:
++            allow_inf_nan:
++            max_digits:
++            decimal_places:
++            examples:
++            example:
++            openapi_examples:
++            deprecated:
++            include_in_schema:
++            json_schema_extra:
++            **extra:
++        """
+         super().__init__(
+             default=default,
+             default_factory=default_factory,
+@@ -515,6 +686,42 @@
+         json_schema_extra: Union[dict[str, Any], None] = None,
+         **extra: Any,
+     ):
++        """TODO: docstring
++
++        Args:
++            default:
++            default_factory:
++            annotation:
++            embed:
++            media_type:
++            alias:
++            alias_priority:
++            validation_alias:
++            serialization_alias:
++            title:
++            description:
++            gt:
++            ge:
++            lt:
++            le:
++            min_length:
++            max_length:
++            pattern:
++            regex:
++            discriminator:
++            strict:
++            multiple_of:
++            allow_inf_nan:
++            max_digits:
++            decimal_places:
++            examples:
++            example:
++            openapi_examples:
++            deprecated:
++            include_in_schema:
++            json_schema_extra:
++            **extra:
++        """
+         self.embed = embed
+         self.media_type = media_type
+         if example is not _Unset:
+@@ -626,6 +833,41 @@
+         json_schema_extra: Union[dict[str, Any], None] = None,
+         **extra: Any,
+     ):
++        """TODO: docstring
++
++        Args:
++            default:
++            default_factory:
++            annotation:
++            media_type:
++            alias:
++            alias_priority:
++            validation_alias:
++            serialization_alias:
++            title:
++            description:
++            gt:
++            ge:
++            lt:
++            le:
++            min_length:
++            max_length:
++            pattern:
++            regex:
++            discriminator:
++            strict:
++            multiple_of:
++            allow_inf_nan:
++            max_digits:
++            decimal_places:
++            examples:
++            example:
++            openapi_examples:
++            deprecated:
++            include_in_schema:
++            json_schema_extra:
++            **extra:
++        """
+         super().__init__(
+             default=default,
+             default_factory=default_factory,
+@@ -708,6 +950,41 @@
+         json_schema_extra: Union[dict[str, Any], None] = None,
+         **extra: Any,
+     ):
++        """TODO: docstring
++
++        Args:
++            default:
++            default_factory:
++            annotation:
++            media_type:
++            alias:
++            alias_priority:
++            validation_alias:
++            serialization_alias:
++            title:
++            description:
++            gt:
++            ge:
++            lt:
++            le:
++            min_length:
++            max_length:
++            pattern:
++            regex:
++            discriminator:
++            strict:
++            multiple_of:
++            allow_inf_nan:
++            max_digits:
++            decimal_places:
++            examples:
++            example:
++            openapi_examples:
++            deprecated:
++            include_in_schema:
++            json_schema_extra:
++            **extra:
++        """
+         super().__init__(
+             default=default,
+             default_factory=default_factory,
+
+--- a/fastapi/routing.py
++++ b/fastapi/routing.py
+@@ -200,6 +200,20 @@
+     is_coroutine: bool = True,
+     endpoint_ctx: Optional[EndpointContext] = None,
+ ) -> Any:
++    """TODO: docstring
++
++    Args:
++        field:
++        response_content:
++        include:
++        exclude:
++        by_alias:
++        exclude_unset:
++        exclude_defaults:
++        exclude_none:
++        is_coroutine:
++        endpoint_ctx:
++    """
+     if field:
+         errors = []
+         if is_coroutine:
+@@ -260,6 +274,23 @@
+     dependency_overrides_provider: Optional[Any] = None,
+     embed_body_fields: bool = False,
+ ) -> Callable[[Request], Coroutine[Any, Any, Response]]:
++    """TODO: docstring
++
++    Args:
++        dependant:
++        body_field:
++        status_code:
++        response_class:
++        response_field:
++        response_model_include:
++        response_model_exclude:
++        response_model_by_alias:
++        response_model_exclude_unset:
++        response_model_exclude_defaults:
++        response_model_exclude_none:
++        dependency_overrides_provider:
++        embed_body_fields:
++    """
+     assert dependant.call is not None, "dependant.call must be a function"
+     is_coroutine = dependant.is_coroutine_callable
+     is_body_form = body_field and isinstance(body_field.field_info, params.Form)
+@@ -269,6 +300,11 @@
+         actual_response_class = response_class
+ 
+     async def app(request: Request) -> Response:
++        """TODO: docstring
++
++        Args:
++            request:
++        """
+         response: Union[Response, None] = None
+         file_stack = request.scope.get("fastapi_middleware_astack")
+         assert isinstance(file_stack, AsyncExitStack), (
+@@ -409,6 +445,11 @@
+     embed_body_fields: bool = False,
+ ) -> Callable[[WebSocket], Coroutine[Any, Any, Any]]:
+     async def app(websocket: WebSocket) -> None:
++        """TODO: docstring
++
++        Args:
++            websocket:
++        """
+         endpoint_ctx = (
+             _extract_endpoint_context(dependant.call)
+             if dependant.call
+@@ -517,6 +558,36 @@
+             Callable[["APIRoute"], str], DefaultPlaceholder
+         ] = Default(generate_unique_id),
+     ) -> None:
++        """TODO: docstring
++
++        Args:
++            path:
++            endpoint:
++            response_model:
++            status_code:
++            tags:
++            dependencies:
++            summary:
++            description:
++            response_description:
++            responses:
++            deprecated:
++            name:
++            methods:
++            operation_id:
++            response_model_include:
++            response_model_exclude:
++            response_model_by_alias:
++            response_model_exclude_unset:
++            response_model_exclude_defaults:
++            response_model_exclude_none:
++            include_in_schema:
++            response_class:
++            dependency_overrides_provider:
++            callbacks:
++            openapi_extra:
++            generate_unique_id_function:
++        """
+         self.path = path
+         self.endpoint = endpoint
+         if isinstance(response_model, DefaultPlaceholder):
+
+--- a/fastapi/utils.py
++++ b/fastapi/utils.py
+@@ -80,6 +80,20 @@
+     mode: Literal["validation", "serialization"] = "validation",
+     version: Literal["1", "auto"] = "auto",
+ ) -> ModelField:
++    """TODO: docstring
++
++    Args:
++        name:
++        type_:
++        class_validators:
++        default:
++        required:
++        model_config:
++        field_info:
++        alias:
++        mode:
++        version:
++    """
+     if annotation_is_pydantic_v1(type_):
+         raise PydanticV1NotSupportedError(
+             "pydantic.v1 models are no longer supported by FastAPI."
+@@ -102,6 +116,12 @@
+     *,
+     cloned_types: Optional[MutableMapping[type[BaseModel], type[BaseModel]]] = None,
+ ) -> ModelField:
++    """TODO: docstring
++
++    Args:
++        field:
++        cloned_types:
++    """
+     return field

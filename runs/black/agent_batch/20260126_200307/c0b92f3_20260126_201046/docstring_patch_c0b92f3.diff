@@ -1,0 +1,98 @@
+--- a/src/black/linegen.py
++++ b/src/black/linegen.py
+@@ -104,6 +104,12 @@
+     """
+ 
+     def __init__(self, mode: Mode, features: Collection[Feature]) -> None:
++        """TODO: docstring
++
++        Args:
++            mode:
++            features:
++        """
+         self.mode = mode
+         self.features = features
+         self.current_line: Line
+@@ -414,6 +420,11 @@
+         yield from self.visit_default(node)
+ 
+     def visit_STRING(self, leaf: Leaf) -> Iterator[Line]:
++        """TODO: docstring
++
++        Args:
++            leaf:
++        """
+         normalize_unicode_escape_sequences(leaf)
+ 
+         if is_docstring(leaf) and not re.search(r"\\\s*\n", leaf.value):
+@@ -520,6 +531,11 @@
+ 
+     def visit_fstring(self, node: Node) -> Iterator[Line]:
+         # currently we don't want to format and split f-strings at all.
++        """TODO: docstring
++
++        Args:
++            node:
++        """
+         string_leaf = fstring_to_string(node)
+         node.replace(string_leaf)
+         if "\\" in string_leaf.value and any(
+@@ -1112,6 +1128,13 @@
+ def _ensure_trailing_comma(
+     leaves: list[Leaf], original: Line, opening_bracket: Leaf
+ ) -> bool:
++    """TODO: docstring
++
++    Args:
++        leaves:
++        original:
++        opening_bracket:
++    """
+     if not leaves:
+         return False
+     # Ensure a trailing comma for imports
+@@ -1478,6 +1501,13 @@
+ def _normalize_import_from(parent: Node, child: LN, index: int) -> None:
+     # "import from" nodes store parentheses directly as part of
+     # the statement
++    """TODO: docstring
++
++    Args:
++        parent:
++        child:
++        index:
++    """
+     if is_lpar_token(child):
+         assert is_rpar_token(parent.children[-1])
+         # make parentheses invisible
+
+--- a/src/black/nodes.py
++++ b/src/black/nodes.py
+@@ -546,6 +546,11 @@
+ 
+ 
+ def is_docstring(node: NL) -> bool:
++    """TODO: docstring
++
++    Args:
++        node:
++    """
+     if isinstance(node, Leaf):
+         if node.type != token.STRING:
+             return False
+
+--- a/src/black/trans.py
++++ b/src/black/trans.py
+@@ -82,6 +82,12 @@
+         # Brackets and parentheses indicate calls, subscripts, etc. ...
+         # basically stuff that doesn't count as "simple". Only a NAME lookup
+         # or dotted lookup (eg. NAME.NAME) is OK.
++        """TODO: docstring
++
++        Args:
++            index:
++            kind:
++        """
+         if kind == -1:
+             return handle_is_simple_look_up_prev(line, index, {token.RPAR, token.RSQB})
+         else:

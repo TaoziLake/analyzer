@@ -1,0 +1,712 @@
+{
+  "commit": "6729cab54",
+  "parent": "d9d947eb8b5c05eb3d1172ed25950bbf1418df62",
+  "repo": "D:\\locbench\\sqlalchemy",
+  "num_seeds": 1,
+  "num_seeds_used": 1,
+  "seed_scope": "code_only",
+  "num_impacted": 36,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 53612,
+    "total_call_relations": 107959
+  },
+  "impacted": [
+    {
+      "qualname": "lib.sqlalchemy.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "locals",
+        "lib.sqlalchemy.__init__.__go"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "locals",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "lib.sqlalchemy.__init__",
+      "callers": [
+        "test.orm.declarative.test_dc_transforms.DataclassesForNonMappedClassesTest.test_mixin_w_inheritance.check_args",
+        "test.orm.test_query.RowTupleTest.test_dupe_cols",
+        "lib.sqlalchemy.testing.plugin.bootstrap",
+        "test.orm.test_lambdas.LambdaTest.test_join_entity_arg",
+        "test.ext.test_extendedattr.UserDefinedExtensionTest.setup_test_class",
+        "test.orm.declarative.test_dc_transforms_future_anno_sync.DataclassesForNonMappedClassesTest.test_mixin_w_inheritance.check_args",
+        "test.perf.compiled_extensions.cache_key.setup_objects",
+        "lib.sqlalchemy.orm.collections._set_decorators",
+        "lib.sqlalchemy.util.langhelpers.attrsetter",
+        "lib.sqlalchemy.orm.collections._dict_decorators",
+        "lib.sqlalchemy.orm.instrumentation._generate_init",
+        "lib.sqlalchemy.orm.collections",
+        "test.perf.compiled_extensions.cache_key.setup_statements",
+        "lib.sqlalchemy.util.langhelpers.monkeypatch_proxied_specials",
+        "test.perf.orm2010.run_with_profile",
+        "lib.sqlalchemy.__init__",
+        "lib.sqlalchemy.orm.__init__",
+        "test.orm.declarative.test_dc_transforms.DataclassesForNonMappedClassesTest.test_unmapped_decorator.check_args",
+        "lib.sqlalchemy.orm.collections._list_decorators",
+        "lib.sqlalchemy.ext.associationproxy",
+        "lib.sqlalchemy.sql.__init__",
+        "test.orm.test_query.RowTupleTest.test_modern_tuple_future",
+        "test.orm.test_core_compilation.JoinTest.test_params_with_join",
+        "test.orm.test_query.RowTupleTest.test_column_metadata",
+        "lib.sqlalchemy.ext.orderinglist",
+        "test.orm.test_joins.JoinRawTablesWLegacyTest.test_join_render",
+        "test.orm.test_query.RowTupleTest.test_modern_tuple",
+        "test.orm.declarative.test_dc_transforms_future_anno_sync.DataclassesForNonMappedClassesTest.test_unmapped_decorator.check_args",
+        "test.orm.inheritance.test_basic.SyncCompileTest.test_joins",
+        "lib.sqlalchemy.util.preloaded._ModuleRegistry.import_prefix",
+        "test.orm.test_query.RowTupleTest.test_legacy_tuple_old_select",
+        "test.conftest"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "lib.sqlalchemy.__init__.__go",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "lib.sqlalchemy.__init__",
+      "callers": [
+        "lib.sqlalchemy.__init__"
+      ],
+      "callees": [
+        "__version__.split",
+        "lib.sqlalchemy.util.preloaded.import_prefix"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.declarative.test_dc_transforms.DataclassesForNonMappedClassesTest.test_mixin_w_inheritance.check_args",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "getattr",
+        "dataclasses.dataclass",
+        "locals",
+        "sqlalchemy.util.typing.de_stringify_annotation"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.test_query.RowTupleTest.test_dupe_cols",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "test.orm.test_query.RowTupleTest.assert_compile",
+        "q.order_by",
+        "sqlalchemy.testing.combinations",
+        "s.query",
+        "sqlalchemy.testing.assertions.eq_",
+        "tuple",
+        "len",
+        "sqlalchemy.null",
+        "sqlalchemy.testing.resolve_lambda",
+        "test.orm.test_query.RowTupleTest.mapper_registry.map_imperatively",
+        "sqlalchemy.testing.fixtures.fixture_session",
+        "locals"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.testing.plugin.bootstrap",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.testing.plugin.bootstrap.load_file_as_module",
+        "locals",
+        "Exception"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.test_lambdas.LambdaTest.test_join_entity_arg",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.testing.combinations",
+        "s.query",
+        "test.orm.test_lambdas.LambdaTest.assert_compile",
+        "sqlalchemy.orm.Session",
+        "sqlalchemy.future.select",
+        "sqlalchemy.testing.resolve_lambda",
+        "locals"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.ext.test_extendedattr.UserDefinedExtensionTest.setup_test_class",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "staticmethod",
+        "locals"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.declarative.test_dc_transforms_future_anno_sync.DataclassesForNonMappedClassesTest.test_mixin_w_inheritance.check_args",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "getattr",
+        "dataclasses.dataclass",
+        "locals",
+        "sqlalchemy.util.typing.de_stringify_annotation"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.perf.compiled_extensions.cache_key.setup_objects",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [
+        "test.perf.compiled_extensions.cache_key.CacheKey.init_class"
+      ],
+      "callees": [
+        "registry.map_imperatively",
+        "registry.configure",
+        "types.SimpleNamespace",
+        "sqlalchemy.Table",
+        "sqlalchemy.Column",
+        "sqlalchemy.MetaData",
+        "sqlalchemy.String",
+        "sqlalchemy.orm.registry",
+        "sqlalchemy.ARRAY",
+        "sqlalchemy.orm.relationship",
+        "sqlalchemy.ForeignKey",
+        "locals"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.orm.collections._set_decorators",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [
+        "lib.sqlalchemy.orm.collections"
+      ],
+      "callees": [
+        "l.pop",
+        "locals"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.util.langhelpers.attrsetter",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "locals",
+        "exec"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.orm.collections._dict_decorators",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [
+        "lib.sqlalchemy.orm.collections"
+      ],
+      "callees": [
+        "l.pop",
+        "locals"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.orm.instrumentation._generate_init",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [
+        "lib.sqlalchemy.orm.instrumentation.ClassManager._instrument_init"
+      ],
+      "callees": [
+        "getattr",
+        "locals",
+        "lib.sqlalchemy.util.format_argspec_init",
+        "exec"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.orm.collections",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "threading.Lock",
+        "typing.cast",
+        "lib.sqlalchemy.orm.collections.__go",
+        "typing.TypeVar",
+        "lib.sqlalchemy.orm.collections._set_decorators",
+        "lib.sqlalchemy.util.immutabledict",
+        "operator.attrgetter",
+        "lib.sqlalchemy.orm.collections._dict_decorators",
+        "locals",
+        "lib.sqlalchemy.orm.collections._list_decorators"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.perf.compiled_extensions.cache_key.setup_statements",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [
+        "test.perf.compiled_extensions.cache_key.CacheKey.init_class"
+      ],
+      "callees": [
+        "types.SimpleNamespace",
+        "sqlalchemy.orm.join",
+        "sqlalchemy.select",
+        "setup.Parent.data.like",
+        "locals"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.util.langhelpers.monkeypatch_proxied_specials",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "m.startswith",
+        "typing.cast",
+        "lib.sqlalchemy.util.compat.inspect_getfullargspec",
+        "setattr",
+        "exec",
+        "lib.sqlalchemy.util.compat.inspect_formatargspec",
+        "hasattr",
+        "m.endswith",
+        "dir",
+        "getattr",
+        "locals"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.perf.orm2010.run_with_profile",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [
+        "test.perf.orm2010"
+      ],
+      "callees": [
+        "pstats.Stats",
+        "counts_by_methname.get",
+        "print",
+        "os.remove",
+        "os.system",
+        "cProfile.runctx",
+        "globals",
+        "os.path.exists",
+        "stats.sort_stats",
+        "stats.print_stats",
+        "locals"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.orm.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "locals",
+        "lib.sqlalchemy.orm.__init__.__go"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.declarative.test_dc_transforms.DataclassesForNonMappedClassesTest.test_unmapped_decorator.check_args",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "getattr",
+        "dataclasses.dataclass",
+        "locals",
+        "sqlalchemy.util.typing.de_stringify_annotation"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.orm.collections._list_decorators",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [
+        "lib.sqlalchemy.orm.collections"
+      ],
+      "callees": [
+        "l.pop",
+        "locals"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.ext.associationproxy",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "list",
+        "property",
+        "typing.TypeVar",
+        "lib.sqlalchemy.ext.associationproxy._AssociationCollection.lazy_collection",
+        "hasattr",
+        "getattr",
+        "callable",
+        "locals"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.sql.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "locals",
+        "lib.sqlalchemy.sql.__init__.__go"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.test_query.RowTupleTest.test_modern_tuple_future",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.testing.combinations",
+        "q.order_by",
+        "s.query",
+        "sqlalchemy.select",
+        "q.first",
+        "isinstance",
+        "sqlalchemy.testing.resolve_lambda",
+        "test.orm.test_query.RowTupleTest.mapper_registry.map_imperatively",
+        "s.execute",
+        "sqlalchemy.testing.fixtures.fixture_session",
+        "locals"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.test_core_compilation.JoinTest.test_params_with_join",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.bindparam",
+        "sqlalchemy.testing.combinations",
+        "sqlalchemy.select",
+        "sqlalchemy.testing.util.resolve_lambda",
+        "test.orm.test_core_compilation.JoinTest.assert_compile",
+        "test.orm.test_core_compilation.JoinTest.classes",
+        "locals",
+        "stmt.params"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.test_query.RowTupleTest.test_column_metadata",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "User.name.label",
+        "sqlalchemy.testing.combinations",
+        "sqlalchemy.orm.aliased",
+        "sqlalchemy.testing.assertions.eq_",
+        "sqlalchemy.orm.Bundle",
+        "sess.query",
+        "sqlalchemy.func.count",
+        "test.orm.test_query.RowTupleTest.mapper_registry.map_imperatively",
+        "sqlalchemy.testing.resolve_lambda",
+        "sqlalchemy.testing.fixtures.fixture_session",
+        "locals",
+        "user_alias.id.label"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.ext.orderinglist",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "list",
+        "typing.TypeVar",
+        "callable",
+        "hasattr",
+        "getattr",
+        "lib.sqlalchemy.orm.collections.collection.adds",
+        "locals"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.test_joins.JoinRawTablesWLegacyTest.test_join_render",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "test.orm.test_joins.JoinRawTablesWLegacyTest.classes",
+        "sqlalchemy.testing.combinations",
+        "test.orm.test_joins.JoinRawTablesWLegacyTest.assert_compile",
+        "sess.query",
+        "test.orm.test_joins.JoinRawTablesWLegacyTest.tables",
+        "sqlalchemy.testing.resolve_lambda",
+        "q.set_label_style",
+        "sqlalchemy.testing.fixtures.fixture_session",
+        "locals"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.test_query.RowTupleTest.test_modern_tuple",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.testing.combinations",
+        "q.order_by",
+        "s.query",
+        "sqlalchemy.testing.resolve_lambda",
+        "test.orm.test_query.RowTupleTest.mapper_registry.map_imperatively",
+        "sqlalchemy.testing.fixtures.fixture_session",
+        "locals"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.declarative.test_dc_transforms_future_anno_sync.DataclassesForNonMappedClassesTest.test_unmapped_decorator.check_args",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "getattr",
+        "dataclasses.dataclass",
+        "locals",
+        "sqlalchemy.util.typing.de_stringify_annotation"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.inheritance.test_basic.SyncCompileTest.test_joins",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.testing.combinations",
+        "session.flush",
+        "session.expunge_all",
+        "C",
+        "session.add",
+        "session.query",
+        "test.orm.inheritance.test_basic.SyncCompileTest.tables",
+        "len",
+        "sqlalchemy.testing.resolve_lambda",
+        "B",
+        "sqlalchemy.testing.fixtures.fixture_session",
+        "locals",
+        "A",
+        "test.orm.inheritance.test_basic.SyncCompileTest.mapper_registry.map_imperatively"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.util.preloaded._ModuleRegistry.import_prefix",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "module.startswith",
+        "module.split",
+        "globals",
+        "__import__",
+        "locals"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.test_query.RowTupleTest.test_legacy_tuple_old_select",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.testing.combinations",
+        "q.order_by",
+        "sqlalchemy.select",
+        "sqlalchemy.testing.resolve_lambda",
+        "test.orm.test_query.RowTupleTest.mapper_registry.map_imperatively",
+        "s.execute",
+        "sqlalchemy.testing.fixtures.fixture_session",
+        "locals"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.conftest",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "locals",
+      "callers": [],
+      "callees": [
+        "os.path.dirname",
+        "os.path.abspath",
+        "open",
+        "os.path.join",
+        "exec",
+        "sys.path.insert",
+        "pytest.register_assert_rewrite",
+        "globals",
+        "f.read",
+        "compile",
+        "locals",
+        "collect_ignore_glob.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "__version__.split",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "lib.sqlalchemy.__init__.__go",
+      "callers": [
+        "lib.sqlalchemy.__init__.__go"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "lib.sqlalchemy.util.preloaded.import_prefix",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "lib.sqlalchemy.__init__.__go",
+      "callers": [
+        "lib.sqlalchemy.ext.__init__",
+        "lib.sqlalchemy.sql.__init__.__go",
+        "lib.sqlalchemy.orm.__init__.__go",
+        "lib.sqlalchemy.__init__.__go"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-26T22:14:07"
+}

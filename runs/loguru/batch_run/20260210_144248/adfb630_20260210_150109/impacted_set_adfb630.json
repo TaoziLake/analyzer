@@ -1,0 +1,110 @@
+{
+  "commit": "adfb630",
+  "parent": "8a4e85993a641c4f3749d65fb41c6d89e565cdbf",
+  "repo": "D:\\locbench\\loguru",
+  "num_seeds": 1,
+  "num_seeds_used": 1,
+  "seed_scope": "code_only",
+  "num_impacted": 5,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "loguru._logger.Logger.add",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "loguru.__init__",
+        "loguru._logger.Logger.start",
+        "loguru._logger.Logger.configure"
+      ],
+      "callees": [
+        "loguru._simple_sinks.StreamSink",
+        "loguru._colorama.should_wrap",
+        "loguru._logger.Logger.level",
+        "loguru._asyncio_loop.get_running_loop",
+        "loguru._colorizer.Colorizer.prepare_format",
+        "loguru._better_exceptions.ExceptionFormatter",
+        "loguru._handler.Handler",
+        "kwargs.pop",
+        "loguru._simple_sinks.AsyncSink",
+        "loguru._logger.Logger._core.handlers.copy",
+        "loguru._colorama.should_colorize",
+        "filter.items",
+        "loguru._error_interceptor.ErrorInterceptor",
+        "loguru._simple_sinks.StandardSink",
+        "loguru._colorama.wrap",
+        "loguru._simple_sinks.CallableSink",
+        "loguru._file_sink.FileSink"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "loguru.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "loguru._logger.Logger.add",
+      "callers": [
+        "tests.test_pickling.StandardHandler.__init__"
+      ],
+      "callees": [
+        "loguru._logger.Core",
+        "loguru._logger.Logger.add",
+        "loguru._logger.Logger"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "loguru._logger.Logger.start",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "loguru._logger.Logger.add",
+      "callers": [],
+      "callees": [
+        "loguru._logger.Logger.add"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "loguru._logger.Logger.configure",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "loguru._logger.Logger.add",
+      "callers": [],
+      "callees": [
+        "loguru._logger.Logger.level",
+        "loguru._logger.Logger.disable",
+        "loguru._logger.Logger._core.extra.update",
+        "loguru._logger.Logger.add",
+        "loguru._logger.Logger.remove",
+        "loguru._logger.Logger._core.extra.clear",
+        "loguru._logger.Logger.enable"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_pickling.StandardHandler.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "loguru.__init__",
+      "callers": [
+        "tests.test_pickling.StandardHandler.__init__"
+      ],
+      "callees": [
+        "__init__"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-10T15:01:09"
+}

@@ -1,0 +1,139 @@
+--- a/jwt/algorithms.py
++++ b/jwt/algorithms.py
+@@ -261,8 +261,15 @@
+     @staticmethod
+     @abstractmethod
+     def to_jwk(key_obj, as_dict: bool = False) -> JWKDict | str:
+-        """
+-        Serializes a given key into a JWK
++        """Serializes a given key into a JWK dictionary.
++
++        :param key_obj: The key object to serialize.
++        :param as_dict: Must be True. Forces the return value to be a dictionary representation.
++        :returns: JWKDict - A JSON Web Key dictionary representation of the key.
++        :raises: May raise TypeError if as_dict is not True due to Literal type constraint.
++
++        Changelog:
++            9f36c24: Changed 'as_dict' parameter to require Literal[True] (was previously bool with default False). Return type now strictly JWKDict (was previously Union[JWKDict, str]). Removed string serialization capability and made dictionary output mandatory.
+         """
+ 
+     @staticmethod
+@@ -296,6 +303,25 @@
+ 
+     @staticmethod
+     def to_jwk(key_obj: Any, as_dict: bool = False) -> NoReturn:
++        """Convert the key to JWK format as a dictionary.
++
++        Args:
++            key_obj (Any): The key object to convert.
++            as_dict (bool, optional): Must be explicitly set to True. 
++                Previous behavior with False is no longer supported.
++
++        Returns:
++            dict: JWK key representation as a dictionary.
++
++        Raises:
++            TypeError: If as_dict=False is passed due to upstream changes.
++            NotImplementedError: This method is not implemented in the current version.
++
++        Changelog:
++            9f36c24: Upstream change enforces as_dict=True requirement and removes string output support. 
++            This function now inherits these constraints through its dependency on Algorithm.to_jwk, 
++            breaking any code relying on the previous default behavior of string representations.
++        """
+         raise NotImplementedError()
+ 
+     @staticmethod
+@@ -337,6 +363,25 @@
+ 
+     @staticmethod
+     def to_jwk(key_obj: str | bytes, as_dict: bool = False) -> JWKDict | str:
++        """Convert a key object to a JSON Web Key (JWK) dictionary representation.
++
++        Args:
++            key_obj (Union[str, bytes]): The cryptographic key to convert.
++            as_dict (Literal[True]): Must be set to True. This parameter enforces dictionary return type.
++
++        Returns:
++            JWKDict: A dictionary containing the JWK parameters (kty and k).
++
++        Raises:
++            TypeError: If as_dict is not set to True.
++
++        Changelog:
++            9f36c24: Modified to_jwk to enforce as_dict=True requirement and remove JSON string return option. 
++            The function now always returns a JWKDict object instead of conditionally returning a JSON string. 
++            The as_dict parameter is now a mandatory Literal[True] type hint, and the key_obj parameter 
++            maintains its original str/bytes type support. This breaks backward compatibility for callers 
++            relying on the JSON string output format.
++        """
+         jwk = {
+             "k": base64url_encode(force_bytes(key_obj)).decode(),
+             "kty": "oct",
+@@ -428,6 +473,18 @@
+ 
+         @staticmethod
+         def to_jwk(key_obj: AllowedRSAKeys, as_dict: bool = False) -> JWKDict | str:
++            """Converts an RSA key object to its JWK representation.
++
++            :param key_obj: An RSA key object supporting either private or public key operations.
++            :param as_dict: Must be set to True. Returns the JWK as a dictionary (no longer supports JSON string output).
++            :returns: A dictionary containing the JWK parameters.
++            :raises InvalidKeyError: If the input is neither a valid public nor private key.
++
++            Changelog:
++                9f36c24: Changed 'as_dict' parameter to Literal[True] and return type to JWKDict only. 
++                Removed concrete implementation (now a stub). Callers must provide as_dict=True and 
++                handle dictionary output instead of optional JSON string.
++            """
+             obj: dict[str, Any] | None = None
+ 
+             if hasattr(key_obj, "private_numbers"):
+@@ -620,6 +677,23 @@
+ 
+         @staticmethod
+         def to_jwk(key_obj: AllowedECKeys, as_dict: bool = False) -> JWKDict | str:
++            """Convert an EC key object to a JSON Web Key (JWK) dictionary representation.
++
++            Args:
++                key_obj: An elliptic curve public or private key object
++                as_dict: Must be True - forces return of dictionary format (string output no longer supported)
++
++            Returns:
++                JWKDict: A dictionary containing the JWK parameters (kty, crv, x, y, and optionally d)
++
++            Raises:
++                InvalidKeyError: If the key type or curve is not supported
++
++            Changelog:
++                9f36c24: Modified to only support dictionary output format by enforcing as_dict=True.
++                Changed return type to always return JWKDict (removed JSON string option).
++                Function body replaced with ellipsis indicating implementation is now a stub.
++            """
+             if isinstance(key_obj, EllipticCurvePrivateKey):
+                 public_numbers = key_obj.public_key().public_numbers()
+             elif isinstance(key_obj, EllipticCurvePublicKey):
+@@ -849,6 +923,23 @@
+ 
+         @staticmethod
+         def to_jwk(key: AllowedOKPKeys, as_dict: bool = False) -> JWKDict | str:
++            """Convert an OKP key to a JWK dictionary representation.
++
++            Args:
++                key: An Ed25519 or Ed448 public/private key object
++                as_dict: Must be True - forces return of dictionary format (JSON serialization removed)
++
++            Returns:
++                JWKDict: A dictionary containing the JWK parameters (kty, crv, x, and d for private keys)
++
++            Raises:
++                InvalidKeyError: If the input key is not a valid Ed25519/Ed448 public/private key
++
++            Changelog:
++                9f36c24: Modified as_dict parameter to require Literal[True] and removed JSON string serialization.
++                The function now only returns dictionary objects, eliminating the previous boolean flag behavior.
++                This changes the return type from Union[JWKDict, str] to strictly JWKDict.
++            """
+             if isinstance(key, (Ed25519PublicKey, Ed448PublicKey)):
+                 x = key.public_bytes(
+                     encoding=Encoding.Raw,

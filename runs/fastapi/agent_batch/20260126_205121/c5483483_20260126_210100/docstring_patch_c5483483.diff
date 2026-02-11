@@ -1,0 +1,187 @@
+--- a/scripts/contributors.py
++++ b/scripts/contributors.py
+@@ -154,6 +154,11 @@
+ 
+ 
+ def get_pr_nodes(settings: Settings) -> list[PullRequestNode]:
++    """TODO: docstring
++
++    Args:
++        settings:
++    """
+     pr_nodes: list[PullRequestNode] = []
+     pr_edges = get_graphql_pr_edges(settings=settings)
+ 
+@@ -173,6 +178,11 @@
+ 
+ 
+ def get_contributors(pr_nodes: list[PullRequestNode]) -> ContributorsResults:
++    """TODO: docstring
++
++    Args:
++        pr_nodes:
++    """
+     contributors = Counter[str]()
+     translation_reviewers = Counter[str]()
+     translators = Counter[str]()
+@@ -210,6 +220,13 @@
+     authors: dict[str, Author],
+     min_count: int = 2,
+ ) -> dict[str, Any]:
++    """TODO: docstring
++
++    Args:
++        counter:
++        authors:
++        min_count:
++    """
+     users: dict[str, Any] = {}
+     for user, count in counter.most_common():
+         if count >= min_count:
+@@ -224,6 +241,12 @@
+ 
+ 
+ def update_content(*, content_path: Path, new_content: Any) -> bool:
++    """TODO: docstring
++
++    Args:
++        content_path:
++        new_content:
++    """
+     old_content = content_path.read_text(encoding="utf-8")
+ 
+     new_content = yaml.dump(new_content, sort_keys=False, width=200, allow_unicode=True)
+@@ -236,6 +259,7 @@
+ 
+ 
+ def main() -> None:
++    """TODO: docstring"""
+     logging.basicConfig(level=logging.INFO)
+     settings = Settings()
+     logging.info(f"Using config: {settings.model_dump_json()}")
+
+--- a/scripts/people.py
++++ b/scripts/people.py
+@@ -177,6 +177,11 @@
+ 
+ 
+ def get_discussion_nodes(settings: Settings) -> list[DiscussionsNode]:
++    """TODO: docstring
++
++    Args:
++        settings:
++    """
+     discussion_nodes: list[DiscussionsNode] = []
+     discussion_edges = get_graphql_question_discussion_edges(settings=settings)
+ 
+@@ -195,6 +200,11 @@
+ def get_discussions_experts(
+     discussion_nodes: list[DiscussionsNode],
+ ) -> DiscussionExpertsResults:
++    """TODO: docstring
++
++    Args:
++        discussion_nodes:
++    """
+     commenters = Counter[str]()
+     last_month_commenters = Counter[str]()
+     three_months_commenters = Counter[str]()
+@@ -285,6 +295,13 @@
+     authors: dict[str, Author],
+     min_count: int = 2,
+ ) -> list[dict[str, Any]]:
++    """TODO: docstring
++
++    Args:
++        counter:
++        authors:
++        min_count:
++    """
+     users: dict[str, Any] = {}
+     users_list: list[dict[str, Any]] = []
+     for user, count in counter.most_common(60):
+@@ -302,6 +319,12 @@
+ 
+ 
+ def update_content(*, content_path: Path, new_content: Any) -> bool:
++    """TODO: docstring
++
++    Args:
++        content_path:
++        new_content:
++    """
+     old_content = content_path.read_text(encoding="utf-8")
+ 
+     new_content = yaml.dump(new_content, sort_keys=False, width=200, allow_unicode=True)
+@@ -314,6 +337,7 @@
+ 
+ 
+ def main() -> None:
++    """TODO: docstring"""
+     logging.basicConfig(level=logging.INFO)
+     settings = Settings()
+     logging.info(f"Using config: {settings.model_dump_json()}")
+
+--- a/scripts/sponsors.py
++++ b/scripts/sponsors.py
+@@ -127,6 +127,11 @@
+ def get_individual_sponsors(
+     settings: Settings,
+ ) -> defaultdict[float, dict[str, SponsorEntity]]:
++    """TODO: docstring
++
++    Args:
++        settings:
++    """
+     nodes: list[SponsorshipAsMaintainerNode] = []
+     edges = get_graphql_sponsor_edges(settings=settings)
+ 
+@@ -145,6 +150,12 @@
+ 
+ 
+ def update_content(*, content_path: Path, new_content: Any) -> bool:
++    """TODO: docstring
++
++    Args:
++        content_path:
++        new_content:
++    """
+     old_content = content_path.read_text(encoding="utf-8")
+ 
+     new_content = yaml.dump(new_content, sort_keys=False, width=200, allow_unicode=True)
+@@ -157,6 +168,7 @@
+ 
+ 
+ def main() -> None:
++    """TODO: docstring"""
+     logging.basicConfig(level=logging.INFO)
+     settings = Settings()
+     logging.info(f"Using config: {settings.model_dump_json()}")
+
+--- a/scripts/topic_repos.py
++++ b/scripts/topic_repos.py
+@@ -23,6 +23,7 @@
+ 
+ 
+ def main() -> None:
++    """TODO: docstring"""
+     logging.basicConfig(level=logging.INFO)
+     settings = Settings()
+ 
+
+--- a/scripts/translate.py
++++ b/scripts/translate.py
+@@ -942,6 +942,13 @@
+     github_token: Annotated[str, typer.Option(envvar="GITHUB_TOKEN")],
+     github_repository: Annotated[str, typer.Option(envvar="GITHUB_REPOSITORY")],
+ ) -> None:
++    """TODO: docstring
++
++    Args:
++        language:
++        github_token:
++        github_repository:
++    """
+     print("Setting up GitHub Actions git user")
+     repo = git.Repo(Path(__file__).absolute().parent.parent)
+     if not repo.is_dirty(untracked_files=True):

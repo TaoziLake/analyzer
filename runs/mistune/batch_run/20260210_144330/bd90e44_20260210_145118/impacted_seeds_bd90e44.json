@@ -1,0 +1,27 @@
+{
+  "commit": "bd90e44",
+  "parent": "4adac1c6e7e14e7deeb1bf6c6cd8c6816f537691",
+  "repo": "D:\\locbench\\mistune",
+  "num_files_in_diff": 2,
+  "num_py_files_in_diff": 1,
+  "num_seeds": 1,
+  "seeds": [
+    {
+      "path": "src/mistune/plugins/footnotes.py",
+      "version": "new",
+      "line": 92,
+      "kind": "function",
+      "qualname": "src.mistune.plugins.footnotes.md_footnotes_hook",
+      "span": [
+        84,
+        95
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def md_footnotes_hook(\n    md: \"Markdown\", result: Union[str, List[Dict[str, Any]]], state: BlockState\n) -> Union[str, List[Dict[str, Any]]]:\n    notes = state.env.get(\"footnotes\")\n    if not notes:\n        return result\n\n    children = [parse_footnote_item(md.block, k, i + 1, state) for i, k in enumerate(notes)]\n    state = BlockState(parent=state)\n    state.tokens = [{\"type\": \"footnotes\", \"children\": children}]\n    output = md.render_state(state)\n    return result + output  # type: ignore[operator]",
+      "old_code": "def md_footnotes_hook(\n    md: \"Markdown\", result: Union[str, List[Dict[str, Any]]], state: BlockState\n) -> Union[str, List[Dict[str, Any]]]:\n    notes = state.env.get(\"footnotes\")\n    if not notes:\n        return result\n\n    children = [parse_footnote_item(md.block, k, i + 1, state) for i, k in enumerate(notes)]\n    state = BlockState()\n    state.tokens = [{\"type\": \"footnotes\", \"children\": children}]\n    output = md.render_state(state)\n    return result + output  # type: ignore[operator]"
+    }
+  ],
+  "generated_at": "2026-02-10T14:51:18"
+}

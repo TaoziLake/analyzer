@@ -1,0 +1,149 @@
+{
+  "commit": "407f0bd",
+  "parent": "1c99468bd623f5bc52e280abbdbf9b7719b094ff",
+  "repo": "D:\\locbench\\pyjwt",
+  "num_files_in_diff": 7,
+  "num_py_files_in_diff": 3,
+  "num_seeds": 9,
+  "seeds": [
+    {
+      "path": "jwt/algorithms.py",
+      "version": "new",
+      "line": 8,
+      "kind": "module",
+      "qualname": "jwt.algorithms",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "jwt/algorithms.py",
+      "version": "new",
+      "line": 221,
+      "kind": "function",
+      "qualname": "jwt.algorithms.Algorithm.check_crypto_key_type",
+      "span": [
+        221,
+        242
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def check_crypto_key_type(self, key: PublicKeyTypes | PrivateKeyTypes) -> None:\n        \"\"\"Check that the key belongs to the right cryptographic family.\n\n        Note that this method only works when ``cryptography`` is installed.\n\n        :param key: Potentially a cryptography key\n        :type key: :py:data:`PublicKeyTypes <cryptography.hazmat.primitives.asymmetric.types.PublicKeyTypes>` | :py:data:`PrivateKeyTypes <cryptography.hazmat.primitives.asymmetric.types.PrivateKeyTypes>`\n        :raises ValueError: if ``cryptography`` is not installed, or this method is called by a non-cryptography algorithm\n        :raises InvalidKeyError: if the key doesn't match the expected key classes\n        \"\"\"\n        if not has_crypto or self._crypto_key_types is None:\n            raise ValueError(\n                \"This method requires the cryptography library, and should only be used by cryptography-based algorithms.\"\n            )\n\n        if not isinstance(key, self._crypto_key_types):\n            valid_classes = (cls.__name__ for cls in self._crypto_key_types)\n            actual_class = key.__class__.__name__\n            self_class = self.__class__.__name__\n            raise InvalidKeyError(\n                f\"Expected one of {valid_classes}, got: {actual_class}. Invalid Key type for {self_class}\"\n            )",
+      "old_code": "    def check_crypto_key_type(self, key: PublicKeyTypes | PrivateKeyTypes):\n        \"\"\"Check that the key belongs to the right cryptographic family.\n\n        Note that this method only works when ``cryptography`` is installed.\n\n        :param key: Potentially a cryptography key\n        :type key: :py:data:`PublicKeyTypes <cryptography.hazmat.primitives.asymmetric.types.PublicKeyTypes>` | :py:data:`PrivateKeyTypes <cryptography.hazmat.primitives.asymmetric.types.PrivateKeyTypes>`\n        :raises ValueError: if ``cryptography`` is not installed, or this method is called by a non-cryptography algorithm\n        :raises InvalidKeyError: if the key doesn't match the expected key classes\n        \"\"\"\n        if not has_crypto or self._crypto_key_types is None:\n            raise ValueError(\n                \"This method requires the cryptography library, and should only be used by cryptography-based algorithms.\"\n            )\n\n        if not isinstance(key, self._crypto_key_types):\n            valid_classes = (cls.__name__ for cls in self._crypto_key_types)\n            actual_class = key.__class__.__name__\n            self_class = self.__class__.__name__\n            raise InvalidKeyError(\n                f\"Expected one of {valid_classes}, got: {actual_class}. Invalid Key type for {self_class}\"\n            )"
+    },
+    {
+      "path": "jwt/algorithms.py",
+      "version": "new",
+      "line": 268,
+      "kind": "function",
+      "qualname": "jwt.algorithms.Algorithm.to_jwk",
+      "span": [
+        268,
+        268
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def to_jwk(key_obj: Any, as_dict: Literal[True]) -> JWKDict: ...  # pragma: no cover",
+      "old_code": "    def to_jwk(key_obj, as_dict: bool = False) -> JWKDict | str:\n        \"\"\"\n        Serializes a given key into a JWK\n        \"\"\""
+    },
+    {
+      "path": "jwt/algorithms.py",
+      "version": "new",
+      "line": 557,
+      "kind": "function",
+      "qualname": "jwt.algorithms.RSAAlgorithm.sign",
+      "span": [
+        556,
+        558
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "        def sign(self, msg: bytes, key: RSAPrivateKey) -> bytes:\n            signature: bytes = key.sign(msg, padding.PKCS1v15(), self.hash_alg())\n            return signature",
+      "old_code": "        def sign(self, msg: bytes, key: RSAPrivateKey) -> bytes:\n            return key.sign(msg, padding.PKCS1v15(), self.hash_alg())"
+    },
+    {
+      "path": "jwt/algorithms.py",
+      "version": "new",
+      "line": 762,
+      "kind": "function",
+      "qualname": "jwt.algorithms.RSAPSSAlgorithm.sign",
+      "span": [
+        761,
+        770
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "        def sign(self, msg: bytes, key: RSAPrivateKey) -> bytes:\n            signature: bytes = key.sign(\n                msg,\n                padding.PSS(\n                    mgf=padding.MGF1(self.hash_alg()),\n                    salt_length=self.hash_alg().digest_size,\n                ),\n                self.hash_alg(),\n            )\n            return signature",
+      "old_code": "        def sign(self, msg: bytes, key: RSAPrivateKey) -> bytes:\n            return key.sign(\n                msg,\n                padding.PSS(\n                    mgf=padding.MGF1(self.hash_alg()),\n                    salt_length=self.hash_alg().digest_size,\n                ),\n                self.hash_alg(),\n            )"
+    },
+    {
+      "path": "jwt/algorithms.py",
+      "version": "new",
+      "line": 832,
+      "kind": "function",
+      "qualname": "jwt.algorithms.OKPAlgorithm.sign",
+      "span": [
+        821,
+        833
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "        def sign(\n            self, msg: str | bytes, key: Ed25519PrivateKey | Ed448PrivateKey\n        ) -> bytes:\n            \"\"\"\n            Sign a message ``msg`` using the EdDSA private key ``key``\n            :param str|bytes msg: Message to sign\n            :param Ed25519PrivateKey}Ed448PrivateKey key: A :class:`.Ed25519PrivateKey`\n                or :class:`.Ed448PrivateKey` isinstance\n            :return bytes signature: The signature, as bytes\n            \"\"\"\n            msg_bytes = msg.encode(\"utf-8\") if isinstance(msg, str) else msg\n            signature: bytes = key.sign(msg_bytes)\n            return signature",
+      "old_code": "        def sign(\n            self, msg: str | bytes, key: Ed25519PrivateKey | Ed448PrivateKey\n        ) -> bytes:\n            \"\"\"\n            Sign a message ``msg`` using the EdDSA private key ``key``\n            :param str|bytes msg: Message to sign\n            :param Ed25519PrivateKey}Ed448PrivateKey key: A :class:`.Ed25519PrivateKey`\n                or :class:`.Ed448PrivateKey` isinstance\n            :return bytes signature: The signature, as bytes\n            \"\"\"\n            msg_bytes = msg.encode(\"utf-8\") if isinstance(msg, str) else msg\n            return key.sign(msg_bytes)"
+    },
+    {
+      "path": "jwt/api_jwt.py",
+      "version": "new",
+      "line": 9,
+      "kind": "module",
+      "qualname": "jwt.api_jwt",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "jwt/api_jwt.py",
+      "version": "new",
+      "line": 369,
+      "kind": "function",
+      "qualname": "jwt.api_jwt.PyJWT.decode",
+      "span": [
+        292,
+        369
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def decode(\n        self,\n        jwt: str | bytes,\n        key: AllowedPublicKeys | PyJWK | str | bytes = \"\",\n        algorithms: Sequence[str] | None = None,\n        options: Options | None = None,\n        # deprecated arg, remove in pyjwt3\n        verify: bool | None = None,\n        # could be used as passthrough to api_jws, consider removal in pyjwt3\n        detached_payload: bytes | None = None,\n        # passthrough arguments to _validate_claims\n        # consider putting in options\n        audience: str | Iterable[str] | None = None,\n        subject: str | None = None,\n        issuer: str | Container[str] | None = None,\n        leeway: float | timedelta = 0,\n        # kwargs\n        **kwargs: Any,\n    ) -> dict[str, Any]:\n        \"\"\"Verify the ``jwt`` token signature and return the token claims.\n\n        :param jwt: the token to be decoded\n        :type jwt: str or bytes\n        :param key: the key suitable for the allowed algorithm\n        :type key: str or bytes or PyJWK or :py:class:`jwt.algorithms.AllowedPublicKeys`\n\n        :param algorithms: allowed algorithms, e.g. ``[\"ES256\"]``\n            If ``key`` is a :class:`PyJWK` object, allowed algorithms will default to the key algorithm.\n\n            .. warning::\n\n               Do **not** compute the ``algorithms`` parameter based on\n               the ``alg`` from the token itself, or on any other data\n               that an attacker may be able to influence, as that might\n               expose you to various vulnerabilities (see `RFC 8725 §2.1\n               <https://www.rfc-editor.org/rfc/rfc8725.html#section-2.1>`_). Instead,\n               either hard-code a fixed value for ``algorithms``, or\n               configure it in the same place you configure the\n               ``key``. Make sure not to mix symmetric and asymmetric\n               algorithms that interpret the ``key`` in different ways\n               (e.g. HS\\\\* and RS\\\\*).\n        :type algorithms: typing.Sequence[str] or None\n\n        :param jwt.types.Options options: extended decoding and validation options\n            Refer to :py:class:`jwt.types.Options` for more information.\n\n        :param audience: optional, the value for ``verify_aud`` check\n        :type audience: str or typing.Iterable[str] or None\n        :param subject: optional, the value for ``verify_sub`` check\n        :type subject: str or None\n        :param issuer: optional, the value for ``verify_iss`` check\n        :type issuer: str or typing.Container[str] or None\n        :param leeway: a time margin in seconds for the expiration check\n        :type leeway: float or datetime.timedelta\n        :rtype: dict[str, typing.Any]\n        :returns: the JWT claims\n        \"\"\"\n        if kwargs:\n            warnings.warn(\n                \"passing additional kwargs to decode() is deprecated \"\n                \"and will be removed in pyjwt version 3. \"\n                f\"Unsupported kwargs: {tuple(kwargs.keys())}\",\n                RemovedInPyjwt3Warning,\n                stacklevel=2,\n            )\n        decoded = self.decode_complete(\n            jwt,\n            key,\n            algorithms,\n            options,\n            verify=verify,\n            detached_payload=detached_payload,\n            audience=audience,\n            subject=subject,\n            issuer=issuer,\n            leeway=leeway,\n        )\n        return cast(dict[str, Any], decoded[\"payload\"])",
+      "old_code": "    def decode(\n        self,\n        jwt: str | bytes,\n        key: AllowedPublicKeys | PyJWK | str | bytes = \"\",\n        algorithms: Sequence[str] | None = None,\n        options: Options | None = None,\n        # deprecated arg, remove in pyjwt3\n        verify: bool | None = None,\n        # could be used as passthrough to api_jws, consider removal in pyjwt3\n        detached_payload: bytes | None = None,\n        # passthrough arguments to _validate_claims\n        # consider putting in options\n        audience: str | Iterable[str] | None = None,\n        subject: str | None = None,\n        issuer: str | Container[str] | None = None,\n        leeway: float | timedelta = 0,\n        # kwargs\n        **kwargs: Any,\n    ) -> dict[str, Any]:\n        \"\"\"Verify the ``jwt`` token signature and return the token claims.\n\n        :param jwt: the token to be decoded\n        :type jwt: str or bytes\n        :param key: the key suitable for the allowed algorithm\n        :type key: str or bytes or PyJWK or :py:class:`jwt.algorithms.AllowedPublicKeys`\n\n        :param algorithms: allowed algorithms, e.g. ``[\"ES256\"]``\n            If ``key`` is a :class:`PyJWK` object, allowed algorithms will default to the key algorithm.\n\n            .. warning::\n\n               Do **not** compute the ``algorithms`` parameter based on\n               the ``alg`` from the token itself, or on any other data\n               that an attacker may be able to influence, as that might\n               expose you to various vulnerabilities (see `RFC 8725 §2.1\n               <https://www.rfc-editor.org/rfc/rfc8725.html#section-2.1>`_). Instead,\n               either hard-code a fixed value for ``algorithms``, or\n               configure it in the same place you configure the\n               ``key``. Make sure not to mix symmetric and asymmetric\n               algorithms that interpret the ``key`` in different ways\n               (e.g. HS\\\\* and RS\\\\*).\n        :type algorithms: typing.Sequence[str] or None\n\n        :param jwt.types.Options options: extended decoding and validation options\n            Refer to :py:class:`jwt.types.Options` for more information.\n\n        :param audience: optional, the value for ``verify_aud`` check\n        :type audience: str or typing.Iterable[str] or None\n        :param subject: optional, the value for ``verify_sub`` check\n        :type subject: str or None\n        :param issuer: optional, the value for ``verify_iss`` check\n        :type issuer: str or typing.Container[str] or None\n        :param leeway: a time margin in seconds for the expiration check\n        :type leeway: float or datetime.timedelta\n        :rtype: dict[str, typing.Any]\n        :returns: the JWT claims\n        \"\"\"\n        if kwargs:\n            warnings.warn(\n                \"passing additional kwargs to decode() is deprecated \"\n                \"and will be removed in pyjwt version 3. \"\n                f\"Unsupported kwargs: {tuple(kwargs.keys())}\",\n                RemovedInPyjwt3Warning,\n                stacklevel=2,\n            )\n        decoded = self.decode_complete(\n            jwt,\n            key,\n            algorithms,\n            options,\n            verify=verify,\n            detached_payload=detached_payload,\n            audience=audience,\n            subject=subject,\n            issuer=issuer,\n            leeway=leeway,\n        )\n        return decoded[\"payload\"]"
+    },
+    {
+      "path": "jwt/jwks_client.py",
+      "version": "new",
+      "line": 49,
+      "kind": "function",
+      "qualname": "jwt.jwks_client.PyJWKClient.__init__",
+      "span": [
+        17,
+        51
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def __init__(\n        self,\n        uri: str,\n        cache_keys: bool = False,\n        max_cached_keys: int = 16,\n        cache_jwk_set: bool = True,\n        lifespan: float = 300,\n        headers: dict[str, Any] | None = None,\n        timeout: float = 30,\n        ssl_context: SSLContext | None = None,\n    ):\n        if headers is None:\n            headers = {}\n        self.uri = uri\n        self.jwk_set_cache: JWKSetCache | None = None\n        self.headers = headers\n        self.timeout = timeout\n        self.ssl_context = ssl_context\n\n        if cache_jwk_set:\n            # Init jwt set cache with default or given lifespan.\n            # Default lifespan is 300 seconds (5 minutes).\n            if lifespan <= 0:\n                raise PyJWKClientError(\n                    f'Lifespan must be greater than 0, the input is \"{lifespan}\"'\n                )\n            self.jwk_set_cache = JWKSetCache(lifespan)\n        else:\n            self.jwk_set_cache = None\n\n        if cache_keys:\n            # Cache signing keys\n            get_signing_key = lru_cache(maxsize=max_cached_keys)(self.get_signing_key)\n            # Ignore mypy (https://github.com/python/mypy/issues/2427)\n            self.get_signing_key = get_signing_key  # type: ignore[method-assign]",
+      "old_code": "    def __init__(\n        self,\n        uri: str,\n        cache_keys: bool = False,\n        max_cached_keys: int = 16,\n        cache_jwk_set: bool = True,\n        lifespan: float = 300,\n        headers: dict[str, Any] | None = None,\n        timeout: float = 30,\n        ssl_context: SSLContext | None = None,\n    ):\n        if headers is None:\n            headers = {}\n        self.uri = uri\n        self.jwk_set_cache: JWKSetCache | None = None\n        self.headers = headers\n        self.timeout = timeout\n        self.ssl_context = ssl_context\n\n        if cache_jwk_set:\n            # Init jwt set cache with default or given lifespan.\n            # Default lifespan is 300 seconds (5 minutes).\n            if lifespan <= 0:\n                raise PyJWKClientError(\n                    f'Lifespan must be greater than 0, the input is \"{lifespan}\"'\n                )\n            self.jwk_set_cache = JWKSetCache(lifespan)\n        else:\n            self.jwk_set_cache = None\n\n        if cache_keys:\n            # Cache signing keys\n            # Ignore mypy (https://github.com/python/mypy/issues/2427)\n            self.get_signing_key = lru_cache(maxsize=max_cached_keys)(\n                self.get_signing_key\n            )  # type: ignore"
+    }
+  ],
+  "generated_at": "2026-02-10T15:00:43"
+}

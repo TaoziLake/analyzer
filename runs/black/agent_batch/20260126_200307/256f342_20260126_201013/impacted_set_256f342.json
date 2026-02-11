@@ -1,0 +1,306 @@
+{
+  "commit": "256f342",
+  "parent": "00cb6d15c52de09d0b7966b20dd42af4f0fc0195",
+  "repo": "D:\\locbench\\black",
+  "num_seeds": 1,
+  "num_seeds_used": 1,
+  "seed_scope": "code_only",
+  "num_impacted": 17,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 3415,
+    "total_call_relations": 4447
+  },
+  "impacted": [
+    {
+      "qualname": "scripts.fuzz",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "atheris.Setup",
+        "atheris.Fuzz",
+        "scripts.fuzz.test_idempotent_any_syntatically_valid_python"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "atheris.Setup",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.fuzz",
+      "callers": [
+        "scripts.fuzz"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "atheris.Fuzz",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.fuzz",
+      "callers": [
+        "scripts.fuzz"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "scripts.fuzz.test_idempotent_any_syntatically_valid_python",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.fuzz",
+      "callers": [
+        "scripts.fuzz"
+      ],
+      "callees": [
+        "hypothesis.settings",
+        "hypothesis.given",
+        "black.format_str",
+        "list",
+        "hypothesmith.from_node",
+        "black.assert_equivalent",
+        "hypothesis.strategies.booleans",
+        "hypothesis.strategies.integers",
+        "hypothesis.strategies.builds",
+        "black.assert_stable",
+        "hypothesmith.from_grammar",
+        "compile",
+        "hypothesis.strategies.just"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "hypothesis.settings",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.fuzz.test_idempotent_any_syntatically_valid_python",
+      "callers": [
+        "scripts.fuzz.test_idempotent_any_syntatically_valid_python"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "hypothesis.given",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.fuzz.test_idempotent_any_syntatically_valid_python",
+      "callers": [
+        "scripts.fuzz.test_idempotent_any_syntatically_valid_python"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "black.format_str",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.fuzz.test_idempotent_any_syntatically_valid_python",
+      "callers": [
+        "tests.test_black.BlackTestCase.test_code_option_fast",
+        "tests.test_black.BlackTestCase.test_code_option_color_diff",
+        "tests.test_black.BlackTestCase.test_newline_type_detection",
+        "tests.test_black.BlackTestCase.test_carriage_return_edge_cases",
+        "tests.util._assert_format_inner",
+        "tests.test_tokenize",
+        "tests.test_black.BlackTestCase.test_code_option_changed",
+        "tests.test_black.BlackTestCase.test_newline_comment_interaction",
+        "tests.test_black.BlackTestCase.test_code_option_diff",
+        "tests.test_black.TestDeFactoAPI.test_format_str",
+        "scripts.fuzz.test_idempotent_any_syntatically_valid_python"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "list",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.fuzz.test_idempotent_any_syntatically_valid_python",
+      "callers": [
+        "src.black.ranges.convert_unchanged_lines",
+        "src.black.trans.CustomSplitMapMixin.pop_custom_splits",
+        "tests.util._assert_format_equal",
+        "src.black.debug.DebugVisitor.show",
+        "src.black.trans.StringSplitter._get_string_operator_leaves",
+        "tests.test_black.TestFileCollection.test_nested_gitignore",
+        "src.black.lines.Line.append_comment",
+        "tests.test_black.TestFileCollection.test_symlinks",
+        "src.black.comments.convert_one_fmt_off_pair",
+        "src.black.lines.Line.contains_implicit_multiline_string_with_comments",
+        "src.blib2to3.pgen2.token",
+        "src.blib2to3.pytree.Node.__init__",
+        "src.blib2to3.pgen2.pgen.ParserGenerator.addfirstsets",
+        "src.black.files.find_project_root",
+        "src.black.nodes.preceding_leaf",
+        "src.black.linegen._first_right_hand_split",
+        "src.black.files.parse_req_python_specifier",
+        "tests.test_trans.test_fexpr_spans.check",
+        "src.blib2to3.pytree.NodePattern.__init__",
+        "src.black.comments._generate_ignored_nodes_from_fmt_skip",
+        "src.blib2to3.pgen2.conv.Converter.parse_graminit_c",
+        "src.blib2to3.pytree.WildcardPattern.match_seq",
+        "src.blib2to3.pgen2.pgen.ParserGenerator.make_grammar",
+        "src.black.linegen.normalize_invisible_parens",
+        "tests.data.miscellaneous.debug_visitor.DebugVisitor.show",
+        "src.black.linegen.transform_line._rhs",
+        "src.black.__init__.read_pyproject_toml",
+        "scripts.fuzz.test_idempotent_any_syntatically_valid_python"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "hypothesmith.from_node",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.fuzz.test_idempotent_any_syntatically_valid_python",
+      "callers": [
+        "scripts.fuzz.test_idempotent_any_syntatically_valid_python"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "black.assert_equivalent",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.fuzz.test_idempotent_any_syntatically_valid_python",
+      "callers": [
+        "tests.test_black.BlackTestCase.test_piping",
+        "tests.test_black.BlackTestCase.test_expression_ff",
+        "tests.test_black.BlackTestCase.test_string_quotes",
+        "tests.util._assert_format_inner",
+        "tests.test_black.BlackTestCase.test_python37",
+        "tests.test_black.TestASTSafety.test_equivalency_ast_parse_failure_includes_error",
+        "tests.test_black.TestASTSafety.check_ast_equivalence",
+        "tests.test_black.BlackTestCase.test_single_file_force_pyi",
+        "scripts.fuzz.test_idempotent_any_syntatically_valid_python"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "hypothesis.strategies.booleans",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.fuzz.test_idempotent_any_syntatically_valid_python",
+      "callers": [
+        "scripts.fuzz.test_idempotent_any_syntatically_valid_python"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "hypothesis.strategies.integers",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.fuzz.test_idempotent_any_syntatically_valid_python",
+      "callers": [
+        "scripts.fuzz.test_idempotent_any_syntatically_valid_python"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "hypothesis.strategies.builds",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.fuzz.test_idempotent_any_syntatically_valid_python",
+      "callers": [
+        "scripts.fuzz.test_idempotent_any_syntatically_valid_python"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "black.assert_stable",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.fuzz.test_idempotent_any_syntatically_valid_python",
+      "callers": [
+        "tests.test_black.BlackTestCase.test_piping",
+        "tests.test_black.BlackTestCase.test_expression_ff",
+        "tests.test_black.BlackTestCase.test_string_quotes",
+        "tests.util._assert_format_inner",
+        "tests.test_black.BlackTestCase.test_python37",
+        "tests.test_black.BlackTestCase.test_newline_comment_interaction",
+        "tests.test_black.BlackTestCase.test_single_file_force_pyi",
+        "scripts.fuzz.test_idempotent_any_syntatically_valid_python"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "hypothesmith.from_grammar",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.fuzz.test_idempotent_any_syntatically_valid_python",
+      "callers": [
+        "scripts.fuzz.test_idempotent_any_syntatically_valid_python"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "compile",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.fuzz.test_idempotent_any_syntatically_valid_python",
+      "callers": [
+        "scripts.fuzz.test_idempotent_any_syntatically_valid_python"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "hypothesis.strategies.just",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.fuzz.test_idempotent_any_syntatically_valid_python",
+      "callers": [
+        "scripts.fuzz.test_idempotent_any_syntatically_valid_python"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    }
+  ],
+  "generated_at": "2026-01-26T20:10:15"
+}

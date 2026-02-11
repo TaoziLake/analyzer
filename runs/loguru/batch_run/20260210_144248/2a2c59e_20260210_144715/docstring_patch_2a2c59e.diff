@@ -1,0 +1,150 @@
+--- a/loguru/_colorizer.py
++++ b/loguru/_colorizer.py
+@@ -235,6 +235,27 @@
+         return output
+ 
+     def feed(self, text, *, raw=False):
++        """Process input text, parsing ANSI color tags and generating corresponding tokens.
++
++        Parses markup tags in the input text and converts them to ANSI codes using the internal state.
++        Tags are processed according to the modified _get_ansicode behavior in upstream commit.
++
++        Parameters:
++            text (str): Input string containing text and optional ANSI markup tags
++            raw (bool): If True, treats the text as raw string without any tag processing
++
++        Returns:
++            None: Tokens are stored internally in self._tokens
++
++        Raises:
++            ValueError: If encountering invalid tags or incorrect nesting of tags
++
++        Changelog:
++            2a2c59e: Updated to use modified _get_ansicode implementation. This affects which tags are
++            recognized as valid and their corresponding ANSI code mappings. Tag parsing behavior and
++            error messages for unknown tags may differ based on upstream changes to color directive
++            handling.
++        """
+         if raw:
+             self._tokens.append((TokenType.TEXT, text))
+             return
+@@ -302,6 +323,22 @@
+         return list(self._color_tokens)
+ 
+     def _get_ansicode(self, tag):
++        """Get ANSI escape code for a given color tag.
++
++        Parameters:
++            tag (str): Color tag specification (e.g., "red", "fg #ff0000", "bg 255,128,0").
++
++        Returns:
++            str or None: ANSI escape code string if valid, None otherwise.
++
++        Changelog:
++            2a2c59e: Enhanced color parsing with stricter hex validation and improved whitespace handling:
++                - Replaced regex hex validation with manual checks for # prefix and valid hex characters
++                - Added color name stripping to remove spaces in fg/bg specifications
++                - Changed 3-digit hex expansion to use explicit character duplication
++                - Fixed hex color length validation for both 3 and 6 character formats
++                - Maintained backward compatibility with existing valid color formats
++        """
+         style = self._style
+         foreground = self._foreground
+         background = self._background
+@@ -400,6 +437,17 @@
+ 
+     @staticmethod
+     def prepare_simple_message(string):
++        """Prepare a colored message from a string by parsing ANSI sequences.
++
++        Parameters:
++            string (str): The input string containing ANSI sequences to be parsed.
++
++        Returns:
++            ColoredMessage: An object representing the parsed colored message tokens.
++
++        Changelog:
++            2a2c59e: The behavior of ANSI sequence parsing may have changed due to modifications in AnsiParser.feed. This affects how input strings are tokenized into ColoredMessage content, potentially altering color application or sequence handling in the output.
++        """
+         parser = AnsiParser()
+         parser.feed(string)
+         tokens = parser.done()
+@@ -407,6 +455,24 @@
+ 
+     @staticmethod
+     def ansify(text):
++        """Colorize the input text using ANSI escape codes.
++
++        Parameters
++        ----------
++        text : str
++            The input text to be colorized. Leading/trailing whitespace is stripped before processing.
++
++        Returns
++        -------
++        str
++            The ANSI escape code-formatted string ready for terminal output.
++
++        Changelog:
++            2a2c59e: AnsiParser.feed behavior modified, which may affect how text is tokenized internally.
++            This could lead to differences in colorization output, particularly in handling of special
++            characters or nested formatting sequences. The strict=False parameter in parser.done()
++            remains unchanged, preserving lenient parsing of incomplete sequences.
++        """
+         parser = AnsiParser()
+         parser.feed(text.strip())
+         tokens = parser.done(strict=False)
+@@ -418,6 +484,27 @@
+     ):
+         # This function re-implements Formatter._vformat()
+ 
++        """Parse a string with ANSI formatting, handling nested format specifications.
++
++        Parameters:
++            string (str): The string to parse.
++            args (tuple): Positional arguments for string formatting.
++            kwargs (dict): Keyword arguments for string formatting.
++            recursion_depth (int, optional): Maximum recursion depth for nested formatting. Defaults to 2.
++            auto_arg_index (int, optional): Automatic argument index counter. Defaults to 0.
++            recursive (bool, optional): Whether this is a recursive call. Defaults to False.
++
++        Returns:
++            list: If recursive=False, returns list of ANSI tokens. If recursive=True, returns tuple of (stripped_tokens, auto_arg_index).
++
++        Raises:
++            ValueError: If recursion depth is exceeded or manual/auto field numbering is mixed.
++            TypeError: If field access fails during formatting.
++            KeyError | IndexError | AttributeError: If field lookup fails during formatting.
++
++        Changelog:
++            2a2c59e: AnsiParser.feed behavior modified, which may affect ANSI token generation and formatting logic. Changes to raw text handling in AnsiParser could alter output token structure or formatting errors.
++        """
+         if recursion_depth < 0:
+             raise ValueError("Max string recursion exceeded")
+ 
+@@ -475,6 +562,26 @@
+ 
+     @staticmethod
+     def _parse_without_formatting(string, *, recursion_depth=2, recursive=False):
++        """Colorizer._parse_without_formatting(string, *, recursion_depth=2, recursive=False)
++
++        Parses a string containing ANSI formatting codes while preserving message tokens.
++
++        Parameters:
++            string (str): Input string containing ANSI codes and format specifiers
++            recursion_depth (int): Maximum recursion depth for nested format parsing (default: 2)
++            recursive (bool): Whether this is a recursive call during format parsing (default: False)
++
++        Returns:
++            tuple: (parsed_string, color_tokens) where:
++                - parsed_string is the processed string with ANSI codes stripped
++                - color_tokens is a list of ANSI color tokens associated with message fields
++
++        Raises:
++            ValueError: If recursion_depth becomes negative during parsing
++
++        Changelog:
++            2a2c59e: Indirectly affected by AnsiParser.feed changes. Modified ANSI sequence handling in feed() may alter color token generation and string parsing behavior, particularly for complex nested ANSI codes. Callers may observe different token sequences or parsing errors for edge-case ANSI inputs.
++        """
+         if recursion_depth < 0:
+             raise ValueError("Max string recursion exceeded")

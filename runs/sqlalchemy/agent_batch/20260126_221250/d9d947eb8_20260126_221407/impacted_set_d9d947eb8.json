@@ -1,0 +1,430 @@
+{
+  "commit": "d9d947eb8",
+  "parent": "70a06821d91bd8d3dac482a4f8bc8af8bf5bf2b8",
+  "repo": "D:\\locbench\\sqlalchemy",
+  "num_seeds": 1,
+  "num_seeds_used": 1,
+  "seed_scope": "code_only",
+  "num_impacted": 21,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 53612,
+    "total_call_relations": 107959
+  },
+  "impacted": [
+    {
+      "qualname": "doc.build.conf",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "os.environ.get",
+        "sys.path.insert",
+        "os.path.abspath",
+        "release.replace"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "os.environ.get",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "doc.build.conf",
+      "callers": [
+        "noxfile._tests",
+        "lib.sqlalchemy.testing.plugin.plugin_base.__ensure_cext",
+        "test.sql.test_types.PickleTypesTest.test_pickle_types_other_process",
+        "setup",
+        "noxfile._setup_for_driver",
+        "test.sql.test_resultset.CursorResultTest.test_pickle_rows_other_process",
+        "lib.sqlalchemy.testing.plugin.pytestplugin.PytestFixtureFunctions.get_current_test_name",
+        "doc.build.conf"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "sys.path.insert",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "doc.build.conf",
+      "callers": [
+        "test.base.test_examples",
+        "test.perf.compiled_extensions.__main__",
+        "noxfile",
+        "test.conftest",
+        "doc.build.conf"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "os.path.abspath",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "doc.build.conf",
+      "callers": [
+        "lib.sqlalchemy.testing.plugin.pytestplugin.pytest_collection_finish._filter",
+        "test.conftest",
+        "lib.sqlalchemy.testing.profiling.ProfileStatsFile.__init__",
+        "lib.sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite.create_connect_args",
+        "test.dialect.sqlite.test_dialect.DialectTest.test_connect_args",
+        "lib.sqlalchemy.testing.plugin.pytestplugin.pytest_collection_finish",
+        "doc.build.conf"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "release.replace",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "doc.build.conf",
+      "callers": [
+        "doc.build.conf"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "noxfile._tests",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "os.environ.get",
+      "callers": [
+        "noxfile.tests",
+        "noxfile.coverage",
+        "noxfile.github_cext_greenlet",
+        "noxfile.github_cext",
+        "noxfile.github_nocext"
+      ],
+      "callees": [
+        "os.unlink",
+        "includes_excludes.items",
+        "cmd.extend",
+        "session.python.endswith",
+        "multiprocessing.cpu_count",
+        "os.environ.get",
+        "session.run",
+        "tools.toxnox.apply_pytest_opts",
+        "isinstance",
+        "noxfile._setup_for_driver",
+        "int",
+        "nox.project.dependency_groups",
+        "os.path.exists",
+        "session.install"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.testing.plugin.plugin_base.__ensure_cext",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "os.environ.get",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.util.has_compiled_ext",
+        "os.environ.get",
+        "AssertionError"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_types.PickleTypesTest.test_pickle_types_other_process",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "os.environ.get",
+      "callers": [],
+      "callees": [
+        "type_.copy",
+        "tempfile.mkstemp",
+        "sqlalchemy.Text",
+        "sqlalchemy.Time",
+        "name.replace",
+        "sqlalchemy.testing.combinations",
+        "subprocess.run",
+        "list",
+        "sqlalchemy.MetaData",
+        "sqlalchemy.Date",
+        "sqlalchemy.Enum",
+        "sqlalchemy.String",
+        "sqlalchemy.DateTime",
+        "sqlalchemy.LargeBinary",
+        "parts.append",
+        "pickle.dump",
+        "sqlalchemy.Boolean",
+        "sqlalchemy.Unicode",
+        "sqlalchemy.testing.eq_",
+        "sqlalchemy.PickleType",
+        "os.unlink",
+        "os.environ.get",
+        "os.fdopen",
+        "os.pathsep.join",
+        "proc.stderr.decode",
+        "sqlalchemy.testing.schema.Table",
+        "sqlalchemy.Interval",
+        "sqlalchemy.testing.schema.Column",
+        "sqlalchemy.testing.variation"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "setup",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "os.environ.get",
+      "callers": [],
+      "callees": [
+        "module.replace",
+        "bool",
+        "Cython.Distutils.extension.Extension",
+        "RuntimeError",
+        "os.environ.get",
+        "setuptools.setup",
+        "reasons.append",
+        "platform.python_implementation",
+        "typing.cast"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "noxfile._setup_for_driver",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "os.environ.get",
+      "callers": [
+        "noxfile._tests"
+      ],
+      "callees": [
+        "basename.replace",
+        "cmd.extend",
+        "os.environ.get",
+        "basename.upper",
+        "nox.project.dependency_groups",
+        "session.install",
+        "dbdrivers.update",
+        "env_dbdrivers.split"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_resultset.CursorResultTest.test_pickle_rows_other_process",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "os.environ.get",
+      "callers": [],
+      "callees": [
+        "list",
+        "tempfile.mkstemp",
+        "os.unlink",
+        "proc.stdout.strip",
+        "sqlalchemy.testing.variation",
+        "os.environ.get",
+        "os.fdopen",
+        "os.pathsep.join",
+        "sqlalchemy.testing.eq_",
+        "test.sql.test_resultset.CursorResultTest._pickle_row_data",
+        "str",
+        "name.replace",
+        "subprocess.run",
+        "parts.append",
+        "pickle.dump"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.testing.plugin.pytestplugin.PytestFixtureFunctions.get_current_test_name",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "os.environ.get",
+      "callers": [],
+      "callees": [
+        "os.environ.get"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.base.test_examples",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "sys.path.insert",
+      "callers": [],
+      "callees": [
+        "__import__",
+        "os.path.dirname",
+        "os.path.join",
+        "os.path.normpath",
+        "sys.path.insert"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.perf.compiled_extensions.__main__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "sys.path.insert",
+      "callers": [],
+      "callees": [
+        "pathlib.Path",
+        "compiled_extensions.command.main",
+        "parent_dir.absolute",
+        "sys.path.insert",
+        "str"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "noxfile",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "sys.path.insert",
+      "callers": [],
+      "callees": [
+        "nox.project.load_toml",
+        "sys.path.insert"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.conftest",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "sys.path.insert",
+      "callers": [],
+      "callees": [
+        "pytest.register_assert_rewrite",
+        "compile",
+        "os.path.dirname",
+        "collect_ignore_glob.append",
+        "os.path.join",
+        "exec",
+        "sys.path.insert",
+        "os.path.abspath",
+        "globals",
+        "open",
+        "f.read",
+        "locals"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.testing.plugin.pytestplugin.pytest_collection_finish._filter",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "os.path.abspath",
+      "callers": [],
+      "callees": [
+        "os.path.commonpath",
+        "os.path.abspath",
+        "os.path.normpath"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.testing.profiling.ProfileStatsFile.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "os.path.abspath",
+      "callers": [],
+      "callees": [
+        "os.path.split",
+        "lib.sqlalchemy.testing.profiling.ProfileStatsFile._read",
+        "os.path.abspath",
+        "lib.sqlalchemy.testing.profiling.ProfileStatsFile._write",
+        "collections.defaultdict"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite.create_connect_args",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "os.path.abspath",
+      "callers": [],
+      "callees": [
+        "pysqlite_opts.get",
+        "pysqlite_opts.setdefault",
+        "lib.sqlalchemy.util.coerce_kw_type",
+        "lib.sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite._is_url_file_db",
+        "lib.sqlalchemy.exc.ArgumentError",
+        "os.path.abspath",
+        "dict",
+        "sorted",
+        "uri_opts.pop"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.sqlite.test_dialect.DialectTest.test_connect_args",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "os.path.abspath",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.dialects.sqlite.pysqlite.dialect",
+        "d.create_connect_args",
+        "sqlalchemy.testing.eq_",
+        "os.path.abspath",
+        "sqlalchemy.engine.url.make_url",
+        "sqlalchemy.testing.combinations"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.testing.plugin.pytestplugin.pytest_collection_finish",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "os.path.abspath",
+      "callers": [],
+      "callees": [
+        "os.path.abspath",
+        "pyannotate_runtime.collect_types.init_types_collection"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-26T22:14:17"
+}

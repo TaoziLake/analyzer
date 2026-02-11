@@ -1,0 +1,31 @@
+--- a/scripts/docs.py
++++ b/scripts/docs.py
+@@ -89,10 +89,12 @@
+ 
+ 
+ def get_en_config() -> dict[str, Any]:
++    """TODO: docstring"""
+     return mkdocs.utils.yaml_load(en_config_path.read_text(encoding="utf-8"))
+ 
+ 
+ def get_lang_paths() -> list[Path]:
++    """TODO: docstring"""
+     return sorted(docs_path.iterdir())
+ 
+ 
+@@ -203,6 +205,7 @@
+ 
+ 
+ def generate_readme_content() -> str:
++    """TODO: docstring"""
+     en_index = en_docs_path / "docs" / "index.md"
+     content = en_index.read_text("utf-8")
+     content = remove_header_permalinks(content)  # remove permalinks from headers
+@@ -339,6 +342,7 @@
+ 
+ 
+ def get_updated_config_content() -> dict[str, Any]:
++    """TODO: docstring"""
+     config = get_en_config()
+     languages = [{"en": "/"}]
+     new_alternate: list[dict[str, str]] = []

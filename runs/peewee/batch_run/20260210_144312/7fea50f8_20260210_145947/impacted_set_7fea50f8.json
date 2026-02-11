@@ -1,0 +1,113 @@
+{
+  "commit": "7fea50f8",
+  "parent": "b9eb5f13a3052670dcf23d914ca10cb93b8839d2",
+  "repo": "D:\\locbench\\peewee",
+  "num_seeds": 5,
+  "num_seeds_used": 4,
+  "seed_scope": "code_only",
+  "num_impacted": 5,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "playhouse.cysqlite_ext",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "playhouse.cysqlite_ext.__status__",
+        "playhouse.cysqlite_ext.__dbstatus__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.cysqlite_ext.TDecimalField",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "tests.sqlite"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.cysqlite_ext.TDecimalField.get_modifiers",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "peewee.DecimalField.get_modifiers"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.cysqlite_ext.TDecimalField.db_value",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "peewee.DecimalField.db_value"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.sqlite",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.TDecimalField",
+      "callers": [],
+      "callees": [
+        "FloatField",
+        "tests.base.db_loader",
+        "tests.base.get_in_memory_db",
+        "playhouse.cysqlite_ext.CySqliteDatabase.register_function",
+        "playhouse.cysqlite_ext.CySqliteDatabase.func",
+        "ForeignKeyField",
+        "SqliteExtDatabase.func",
+        "SearchField",
+        "tests.sqlite_helpers.json_patch_installed",
+        "ISODateTimeField",
+        "tests.base.requires_models",
+        "tests.base.skip_if",
+        "playhouse.cysqlite_ext.CySqliteDatabase.register_collation",
+        "SqliteExtDatabase.register_aggregate",
+        "tests.sqlite_helpers.json_installed",
+        "DateTimeField",
+        "SqliteExtDatabase.register_function",
+        "playhouse.cysqlite_ext.CySqliteDatabase.register_aggregate",
+        "playhouse.cysqlite_ext.CySqliteDatabase.collation",
+        "playhouse.cysqlite_ext.CySqliteDatabase",
+        "JSONField",
+        "FTS5Model.fts5_installed",
+        "tests.sqlite_helpers.compile_option",
+        "SqliteExtDatabase.register_collation",
+        "RowIDField",
+        "SqliteExtDatabase",
+        "IntegerField",
+        "JSONBField",
+        "BareField",
+        "tests.sqlite_helpers.json_text_installed",
+        "tests.sqlite_helpers.jsonb_installed",
+        "TDecimalField",
+        "TextField",
+        "SqliteExtDatabase.collation",
+        "tests.base.skip_unless"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-10T14:59:49"
+}

@@ -1,0 +1,137 @@
+--- a/scripts/release_tests.py
++++ b/scripts/release_tests.py
+@@ -14,10 +14,22 @@
+     """Used to mock the date to test generating next calver function"""
+ 
+     def today(*args: Any, **kwargs: Any) -> "FakeDateTime":  # noqa: B902
++        """TODO: docstring
++
++        Args:
++            *args:
++            **kwargs:
++        """
+         return FakeDateTime()
+ 
+     # Add leading 0 on purpose to ensure we remove it
+     def strftime(*args: Any, **kwargs: Any) -> str:  # noqa: B902
++        """TODO: docstring
++
++        Args:
++            *args:
++            **kwargs:
++        """
+         return "69.01"
+ 
+ 
+
+--- a/src/black/lines.py
++++ b/src/black/lines.py
+@@ -617,6 +617,11 @@
+         return True
+ 
+     def _maybe_empty_lines(self, current_line: Line) -> tuple[int, int]:
++        """TODO: docstring
++
++        Args:
++            current_line:
++        """
+         max_allowed = 1
+         if current_line.depth == 0:
+             max_allowed = 1 if self.mode.is_pyi else 2
+@@ -712,6 +717,13 @@
+     def _maybe_empty_lines_for_class_or_def(
+         self, current_line: Line, before: int, user_had_newline: bool
+     ) -> tuple[int, int]:
++        """TODO: docstring
++
++        Args:
++            current_line:
++            before:
++            user_had_newline:
++        """
+         assert self.previous_line is not None
+ 
+         if self.previous_line.is_decorator:
+
+--- a/src/black/parsing.py
++++ b/src/black/parsing.py
+@@ -159,6 +159,12 @@
+ def _normalize(lineend: str, value: str) -> str:
+     # To normalize, we strip any leading and trailing space from
+     # each line...
++    """TODO: docstring
++
++    Args:
++        lineend:
++        value:
++    """
+     stripped: list[str] = [i.strip() for i in value.splitlines()]
+     normalized = lineend.join(stripped)
+     # ...and remove any blank lines at the beginning and end of
+@@ -174,12 +180,25 @@
+ def _stringify_ast_with_new_parent(
+     node: ast.AST, parent_stack: list[ast.AST], new_parent: ast.AST
+ ) -> Iterator[str]:
++    """TODO: docstring
++
++    Args:
++        node:
++        parent_stack:
++        new_parent:
++    """
+     parent_stack.append(new_parent)
+     yield from _stringify_ast(node, parent_stack)
+     parent_stack.pop()
+ 
+ 
+ def _stringify_ast(node: ast.AST, parent_stack: list[ast.AST]) -> Iterator[str]:
++    """TODO: docstring
++
++    Args:
++        node:
++        parent_stack:
++    """
+     if (
+         isinstance(node, ast.Constant)
+         and isinstance(node.value, str)
+@@ -253,6 +272,11 @@
+ 
+ 
+ def _unwrap_tuples(node: ast.Tuple) -> Iterator[ast.AST]:
++    """TODO: docstring
++
++    Args:
++        node:
++    """
+     for elt in node.elts:
+         if isinstance(elt, ast.Tuple):
+             yield from _unwrap_tuples(elt)
+
+--- a/src/black/linegen.py
++++ b/src/black/linegen.py
+@@ -643,6 +643,11 @@
+         # yield from self.visit_default(node)
+ 
+     def visit_comp_for(self, node: Node) -> Iterator[Line]:
++        """TODO: docstring
++
++        Args:
++            node:
++        """
+         if Preview.wrap_comprehension_in in self.mode:
+             normalize_invisible_parens(
+                 node, parens_after={"in"}, mode=self.mode, features=self.features
+@@ -1611,6 +1616,13 @@
+ def _normalize_import_from(parent: Node, child: LN, index: int) -> None:
+     # "import from" nodes store parentheses directly as part of
+     # the statement
++    """TODO: docstring
++
++    Args:
++        parent:
++        child:
++        index:
++    """
+     if is_lpar_token(child):
+         assert is_rpar_token(parent.children[-1])
+         # make parentheses invisible

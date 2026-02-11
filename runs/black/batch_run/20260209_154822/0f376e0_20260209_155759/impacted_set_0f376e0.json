@@ -1,0 +1,237 @@
+{
+  "commit": "0f376e0",
+  "parent": "a8bfcc1040fdfce2e02cdd85dc8bf4e7abe0462f",
+  "repo": "D:\\locbench\\black",
+  "num_seeds": 11,
+  "num_seeds_used": 10,
+  "seed_scope": "code_only",
+  "num_impacted": 12,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "src.black.comments.make_comment",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "content.rstrip",
+        "content.split",
+        "contains_fmt_directive",
+        "content.lstrip",
+        "type_part.strip",
+        "value_part.strip",
+        "black.nodes.is_type_comment_string",
+        "content.startswith"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments._should_process_fmt_comment",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.comments.convert_one_fmt_off_pair"
+      ],
+      "callees": [
+        "contains_fmt_directive"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments._handle_comment_only_fmt_block",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.comments.convert_one_fmt_off_pair"
+      ],
+      "callees": [
+        "parent.insert_child",
+        "original_prefix.split",
+        "fmt_off_prefix.split",
+        "hidden_value.endswith",
+        "src.black.comments.list_comments",
+        "blib2to3.pytree.Leaf",
+        "contains_fmt_directive"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments._handle_regular_fmt_block",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "parts.append",
+        "parent.insert_child",
+        "fmt_off_prefix.split",
+        "hidden_value.endswith",
+        "stringify_node",
+        "node_str.endswith",
+        "contains_fmt_directive",
+        "join",
+        "node.leaves",
+        "blib2to3.pytree.Leaf",
+        "black.nodes.first_leaf_of",
+        "ignored.remove",
+        "prefix.split"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments.generate_ignored_nodes",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "_generate_ignored_nodes_from_fmt_skip",
+        "black.nodes.container_of",
+        "contains_fmt_directive",
+        "children_contains_fmt_on",
+        "is_fmt_on"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments.is_fmt_on",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.comments.children_contains_fmt_on"
+      ],
+      "callees": [
+        "contains_fmt_directive",
+        "src.black.comments.list_comments"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments.contains_fmt_directive",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "comment.strip",
+        "comment_line.split",
+        "comment_line.strip",
+        "split"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen.LineGenerator.visit_STANDALONE_COMMENT",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "startswith",
+        "src.black.linegen.LineGenerator.visit_default",
+        "src.black.linegen.LineGenerator.line",
+        "leaf.prefix.split",
+        "black.comments.generate_comments",
+        "src.black.linegen.LineGenerator.current_line.append",
+        "value.splitlines",
+        "line.strip",
+        "black.comments.contains_fmt_directive",
+        "src.black.linegen.LineGenerator.current_line.bracket_tracker.any_open_brackets"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen.normalize_invisible_parens",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.linegen.normalize_invisible_parens"
+      ],
+      "callees": [
+        "black.nodes.is_rpar_token",
+        "black.nodes.is_one_tuple",
+        "remove_with_parens",
+        "src.black.linegen.normalize_invisible_parens",
+        "black.nodes.is_multiline_string",
+        "black.nodes.wrap_in_parentheses",
+        "_is_atom_multiline",
+        "black.nodes.is_lpar_token",
+        "maybe_make_parens_invisible_in_atom",
+        "black.comments.list_comments",
+        "_normalize_import_from",
+        "_maybe_wrap_cms_in_parens",
+        "_atom_has_magic_trailing_comma",
+        "black.comments.contains_fmt_directive"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments.convert_one_fmt_off_pair",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.comments._should_process_fmt_comment",
+      "callers": [],
+      "callees": [
+        "generate_ignored_nodes",
+        "src.black.comments.list_comments",
+        "src.black.comments._is_valid_standalone_fmt_comment",
+        "node.leaves",
+        "src.black.comments._handle_comment_only_fmt_block",
+        "_handle_regular_fmt_block",
+        "src.black.comments._should_process_fmt_comment"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments.children_contains_fmt_on",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.comments.is_fmt_on",
+      "callers": [],
+      "callees": [
+        "src.black.comments.is_fmt_on",
+        "black.nodes.first_leaf_of"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-09T15:58:02"
+}

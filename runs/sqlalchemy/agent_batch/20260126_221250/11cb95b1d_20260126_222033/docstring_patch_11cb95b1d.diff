@@ -1,0 +1,275 @@
+--- a/lib/sqlalchemy/orm/context.py
++++ b/lib/sqlalchemy/orm/context.py
+@@ -169,6 +169,18 @@
+         execution_options: Optional[OrmExecuteOptionsParameter] = None,
+         bind_arguments: Optional[_BindArguments] = None,
+     ):
++        """TODO: docstring
++
++        Args:
++            compile_state:
++            statement:
++            user_passed_query:
++            params:
++            session:
++            load_options:
++            execution_options:
++            bind_arguments:
++        """
+         self.load_options = load_options
+         self.execution_options = execution_options or util.EMPTY_DICT
+         self.bind_arguments = bind_arguments or util.EMPTY_DICT
+@@ -1110,6 +1122,14 @@
+         **kw: Any,
+     ) -> _ORMSelectCompileState:
+ 
++        """TODO: docstring
++
++        Args:
++            statement:
++            toplevel:
++            compiler:
++            **kw:
++        """
+         self = cls.__new__(cls)
+ 
+         select_statement = statement
+@@ -1276,6 +1296,7 @@
+                 print(f"    {self.attributes[key]}")
+ 
+     def _setup_for_generate(self):
++        """TODO: docstring"""
+         query = self.select_statement
+ 
+         self.statement = None
+
+--- a/lib/sqlalchemy/orm/strategies.py
++++ b/lib/sqlalchemy/orm/strategies.py
+@@ -850,6 +850,12 @@
+         return criterion, params
+ 
+     def _generate_lazy_clause(self, state, passive):
++        """TODO: docstring
++
++        Args:
++            state:
++            passive:
++        """
+         criterion, param_keys = self._simple_lazy_clause
+ 
+         if state is None:
+@@ -882,6 +888,13 @@
+         return criterion, params
+ 
+     def _invoke_raise_load(self, state, passive, lazy):
++        """TODO: docstring
++
++        Args:
++            state:
++            passive:
++            lazy:
++        """
+         raise sa_exc.InvalidRequestError(
+             "'%s' is not available due to lazy='%s'" % (self, lazy)
+         )
+@@ -896,6 +909,17 @@
+         alternate_effective_path=None,
+         execution_options=util.EMPTY_DICT,
+     ):
++        """TODO: docstring
++
++        Args:
++            state:
++            passive:
++            loadopt:
++            extra_criteria:
++            extra_options:
++            alternate_effective_path:
++            execution_options:
++        """
+         if not state.key and (
+             (
+                 not self.parent_property.load_on_pending
+@@ -1033,6 +1057,19 @@
+         alternate_effective_path,
+         execution_options,
+     ):
++        """TODO: docstring
++
++        Args:
++            session:
++            state:
++            primary_key_identity:
++            passive:
++            loadopt:
++            extra_criteria:
++            extra_options:
++            alternate_effective_path:
++            execution_options:
++        """
+         strategy_options = util.preloaded.orm_strategy_options
+ 
+         clauseelement = self.entity.__clause_element__()
+
+--- a/lib/sqlalchemy/util/_immutabledict_cy.py
++++ b/lib/sqlalchemy/util/_immutabledict_cy.py
+@@ -150,6 +150,11 @@
+     def union(
+         self, *dicts: Optional[Mapping[_KT, _VT]]
+     ) -> immutabledict[_KT, _VT]:
++        """TODO: docstring
++
++        Args:
++            *dicts:
++        """
+         return self._union_other(dicts)  # type: ignore[no-any-return]
+ 
+     @cython.annotation_typing(False)  # avoid cython crash from generic return
+@@ -157,11 +162,21 @@
+         self, *dicts: Optional[Mapping[_KT, _VT]]
+     ) -> immutabledict[_KT, _VT]:
+         # this is an alias of union
++        """TODO: docstring
++
++        Args:
++            *dicts:
++        """
+         return self._union_other(dicts)  # type: ignore[no-any-return]
+ 
+     @cython.cfunc
+     @cython.inline
+     def _union_other(self, others: tuple) -> immutabledict:
++        """TODO: docstring
++
++        Args:
++            others:
++        """
+         size = len(others)
+         if size == 0:
+             return self
+@@ -228,6 +243,11 @@
+     def __or__(  # type: ignore[override]
+         self, __value: Mapping[_KT, _VT], /
+     ) -> immutabledict[_KT, _VT]:
++        """TODO: docstring
++
++        Args:
++            __value:
++        """
+         return immutabledict(
+             dict.__or__(self, __value),  # type: ignore[call-overload]
+         )
+@@ -235,6 +255,11 @@
+     def __ror__(  # type: ignore[override]
+         self, __value: Mapping[_KT, _VT], /
+     ) -> immutabledict[_KT, _VT]:
++        """TODO: docstring
++
++        Args:
++            __value:
++        """
+         return immutabledict(
+             dict.__ror__(self, __value),  # type: ignore[call-overload]
+         )
+
+--- a/test/perf/compiled_extensions/collections_.py
++++ b/test/perf/compiled_extensions/collections_.py
+@@ -28,6 +28,7 @@
+     }
+ 
+     def init_objects(self):
++        """TODO: docstring"""
+         self.small = {"a": 5, "b": 4}
+         self.large = {f"k{i}": f"v{i}" for i in range(50)}
+         self.empty = self.impl()
+@@ -46,6 +47,7 @@
+ 
+     @test_case
+     def init_kw(self):
++        """TODO: docstring"""
+         self.impl(a=1, b=2)
+ 
+     @test_case
+@@ -76,6 +78,7 @@
+ 
+     @test_case
+     def union_imm(self):
++        """TODO: docstring"""
+         self.empty.union(self.d1)
+         self.d1.union(self.d2)
+         self.d1.union(self.empty)
+@@ -91,17 +94,20 @@
+ 
+     @test_case
+     def merge_with_imm(self):
++        """TODO: docstring"""
+         self.d1.merge_with(self.d2)
+         self.empty.merge_with(self.d1)
+         self.empty.merge_with(self.d1, self.d2)
+ 
+     @test_case
+     def merge_with_only_one(self):
++        """TODO: docstring"""
+         self.d1.merge_with(self.empty, None, self.empty)
+         self.empty.merge_with(self.empty, self.d1, self.empty)
+ 
+     @test_case
+     def merge_with_many(self):
++        """TODO: docstring"""
+         self.d1.merge_with(self.d2, self.small, None, self.small, self.large)
+ 
+     @test_case
+
+--- a/lib/sqlalchemy/sql/selectable.py
++++ b/lib/sqlalchemy/sql/selectable.py
+@@ -4821,6 +4821,13 @@
+         compiler: SQLCompiler,
+         **kw: Any,
+     ):
++        """TODO: docstring
++
++        Args:
++            statement:
++            compiler:
++            **kw:
++        """
+         self.statement = statement
+         self.from_clauses = statement._from_obj
+ 
+
+--- a/lib/sqlalchemy/orm/loading.py
++++ b/lib/sqlalchemy/orm/loading.py
+@@ -716,6 +716,18 @@
+     identity_token=None,
+     is_user_refresh=None,
+ ):
++    """TODO: docstring
++
++    Args:
++        compile_opt:
++        load_opt:
++        populate_existing:
++        version_check:
++        only_load_props:
++        refresh_state:
++        identity_token:
++        is_user_refresh:
++    """
+     compile_options = {}
+     load_options = {}
+     if version_check:
+
+--- a/lib/sqlalchemy/util/_collections.py
++++ b/lib/sqlalchemy/util/_collections.py
+@@ -112,6 +112,11 @@
+ 
+ 
+ def coerce_to_immutabledict(d: Mapping[_KT, _VT]) -> immutabledict[_KT, _VT]:
++    """TODO: docstring
++
++    Args:
++        d:
++    """
+     if not d:
+         return EMPTY_DICT
+     elif isinstance(d, immutabledict):

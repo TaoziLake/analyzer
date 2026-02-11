@@ -1,0 +1,271 @@
+{
+  "commit": "24e4cb2",
+  "parent": "e7bf7b4619928da69d486f36fcb456fb201ff53e",
+  "repo": "D:\\locbench\\black",
+  "num_seeds": 3,
+  "num_seeds_used": 1,
+  "seed_scope": "code_only",
+  "num_impacted": 13,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 3415,
+    "total_call_relations": 4447
+  },
+  "impacted": [
+    {
+      "qualname": "src.blib2to3.pgen2.tokenize.transform_whitespace",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.blib2to3.pgen2.tokenize.tokenize"
+      ],
+      "callees": [
+        "token_str.startswith",
+        "pytokens.Token"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.tokenize.tokenize",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.transform_whitespace",
+      "callers": [
+        "src.blib2to3.pgen2.driver.Driver.parse_string",
+        "src.blib2to3.pgen2.tokenize"
+      ],
+      "callees": [
+        "src.blib2to3.pgen2.tokenize.transform_whitespace",
+        "range",
+        "TOKEN_TYPE_MAP.get",
+        "source.split",
+        "type",
+        "ValueError",
+        "src.blib2to3.pgen2.tokenize.TokenError",
+        "pytokens.tokenize"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "token_str.startswith",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.transform_whitespace",
+      "callers": [
+        "src.blib2to3.pgen2.tokenize.transform_whitespace"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "pytokens.Token",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.transform_whitespace",
+      "callers": [
+        "src.blib2to3.pgen2.tokenize.transform_whitespace"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.driver.Driver.parse_string",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "src.blib2to3.pgen2.driver.Driver.parse_file"
+      ],
+      "callees": [
+        "src.blib2to3.pgen2.driver.Driver.parse_tokens",
+        "src.blib2to3.pgen2.tokenize.tokenize"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.tokenize",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [],
+      "callees": [
+        "len",
+        "dir",
+        "sys.stdin.read",
+        "open",
+        "src.blib2to3.pgen2.tokenize.tokenize",
+        "src.blib2to3.pgen2.tokenize.printtoken"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "range",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "src.black.trans.StringSplitter._get_illegal_split_indices",
+        "tests.data.cases.allow_empty_first_line.foo",
+        "tests.data.cases.line_ranges_basic",
+        "tests.data.cases.fmtskip6.A.f",
+        "tests.data.cases.import_line_collapse",
+        "tests.data.cases.torture.A.foo",
+        "tests.data.cases.expression",
+        "src.black.linegen._maybe_wrap_cms_in_parens",
+        "tests.test_black.TestCaching.test_cache_file_length",
+        "tests.data.cases.pep_572_py310",
+        "tests.data.cases.power_op_spacing",
+        "scripts.make_width_table.make_width_table",
+        "src.black.trans.StringMerger._merge_one_string_group",
+        "src.black.lines.Line.is_stub_class",
+        "tests.data.cases.fmtonoff5",
+        "src.black.ranges.convert_unchanged_lines",
+        "tests.data.cases.fmtonoff.func_no_args",
+        "tests.data.cases.remove_newline_after_code_block_open",
+        "tests.data.cases.fmtskip10",
+        "src.black.ranges._get_line_range",
+        "src.blib2to3.pytree.WildcardPattern.generate_matches",
+        "tests.test_black.TestCaching.test_output_locking_when_writeback_diff",
+        "src.black.brackets.get_leaves_inside_matching_brackets",
+        "tests.data.line_ranges_formatted.basic",
+        "src.black.linegen.bracket_split_build_line",
+        "src.blib2to3.pgen2.pgen.ParserGenerator.simplify_dfa",
+        "tests.data.cases.preview_hug_parens_with_braces_and_square_brackets",
+        "src.black.parsing.parse_ast",
+        "tests.data.cases.comments5",
+        "src.black.linegen._get_last_non_comment_leaf",
+        "src.black.lines.Line.is_stub_def",
+        "tests.data.cases.comments_in_blocks",
+        "tests.data.cases.pep_572_py39",
+        "src.blib2to3.pgen2.literals.test",
+        "src.blib2to3.pgen2.tokenize.tokenize",
+        "tests.test_format.test_line_ranges_line_by_line",
+        "tests.data.cases.function.func_no_args",
+        "tests.data.cases.preview_long_strings__regression",
+        "tests.data.cases.preview_simplify_power_operator_hugging",
+        "tests.data.cases.slices",
+        "tests.data.cases.pattern_matching_generic.get_grammars.test_patma_155",
+        "tests.data.cases.python37.make_arange",
+        "src.blib2to3.pgen2.conv.Converter.parse_graminit_c"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "TOKEN_TYPE_MAP.get",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "src.blib2to3.pgen2.tokenize.tokenize"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "source.split",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "src.blib2to3.pgen2.tokenize.tokenize"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "type",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "tests.data.cases.preview_long_strings__regression.A.foo",
+        "src.black.concurrency.schedule_formatting",
+        "tests.data.cases.type_aliases",
+        "src.blib2to3.pgen2.tokenize.tokenize",
+        "src.blib2to3.pgen2.token",
+        "src.black.linegen.transform_line",
+        "src.blib2to3.pytree.type_repr"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "ValueError",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "src.blib2to3.pgen2.literals.escape",
+        "tests.data.cases.pep_654_style",
+        "src.blib2to3.pgen2.pgen.ParserGenerator.calcfirst",
+        "tests.data.cases.preview_long_strings__regression.A.B.foo",
+        "tests.data.cases.pattern_matching_simple",
+        "gallery.gallery.get_archive_manager",
+        "src.black.lines.Line.append_safe",
+        "src.blib2to3.pgen2.tokenize.tokenize",
+        "tests.optional.pytest_configure",
+        "src.black.mode.supports_feature",
+        "gallery.gallery.get_pypi_download_url",
+        "scripts.diff_shades_gha_helper.config",
+        "src.black.ranges.parse_line_ranges",
+        "src.black.__init__.format_file_in_place",
+        "tests.data.cases.cantfit",
+        "tests.data.cases.pep_654",
+        "tests.data.cases.pep_701"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "src.blib2to3.pgen2.tokenize.TokenError",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "src.blib2to3.pgen2.tokenize.tokenize"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "pytokens.tokenize",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.blib2to3.pgen2.tokenize.tokenize",
+      "callers": [
+        "src.blib2to3.pgen2.tokenize.tokenize"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    }
+  ],
+  "generated_at": "2026-01-26T20:09:14"
+}

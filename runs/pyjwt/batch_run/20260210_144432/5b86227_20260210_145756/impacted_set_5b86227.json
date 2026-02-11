@@ -1,0 +1,666 @@
+{
+  "commit": "5b86227",
+  "parent": "04947d75dc45ba1a4a66eaa2b24fbb0eb512ceab",
+  "repo": "D:\\locbench\\pyjwt",
+  "num_seeds": 22,
+  "num_seeds_used": 5,
+  "seed_scope": "code_only",
+  "num_impacted": 36,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "jwt.algorithms.get_default_algorithms",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "jwt.api_jwk.PyJWK.__init__",
+        "tests.test_advisory.TestAdvisory.test_ghsa_ffqj_6fqr_9h24",
+        "tests.test_algorithms.TestECCurveValidation.test_default_algorithms_have_correct_expected_curve",
+        "jwt.api_jws.PyJWS.__init__"
+      ],
+      "callees": [
+        "RSAAlgorithm",
+        "ECAlgorithm",
+        "RSAPSSAlgorithm",
+        "NoneAlgorithm",
+        "default_algorithms.update",
+        "OKPAlgorithm",
+        "HMACAlgorithm"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.algorithms.ECAlgorithm.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.algorithms.ECAlgorithm",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_rejects_wrong_curve_for_es256",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_rejects_wrong_curve_for_es384",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_accepts_correct_curve_for_es512",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_with_pem_key",
+        "tests.test_algorithms.TestAlgorithms.test_ec_to_jwk_returns_correct_values_for_public_key",
+        "tests.test_algorithms.TestAlgorithms.test_ec_to_jwk_raises_exception_on_invalid_key",
+        "tests.test_algorithms.TestAlgorithms.test_ec_public_key_to_jwk_works_with_from_jwk",
+        "tests.test_algorithms.TestAlgorithms.test_ec_to_jwk_returns_correct_values_for_private_key",
+        "tests.test_algorithms.TestAlgorithms.test_ec_verify_should_return_false_if_signature_invalid",
+        "tests.test_algorithms.TestAlgorithms.test_ec_private_key_to_jwk_works_with_from_jwk",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_rejects_wrong_curve_for_es512",
+        "tests.test_algorithms.TestAlgorithms.test_ec_to_jwk_with_invalid_curve",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_accepts_correct_curve_for_es256k",
+        "tests.test_algorithms.TestAlgorithms.test_ec_jwk_fails_on_invalid_json",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_accepts_correct_curve_for_es384",
+        "tests.test_algorithms.TestAlgorithms.test_ec_to_jwk_with_valid_curves",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_rejects_p192_for_es256",
+        "tests.test_algorithms.TestAlgorithmsRFC7520.test_ec_verify_should_return_true_for_test_vector",
+        "tests.test_algorithms.TestAlgorithms.test_ec_should_reject_non_string_key",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_rejects_wrong_curve_for_es256k",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_accepts_correct_curve_for_es256",
+        "tests.test_algorithms.TestAlgorithms.test_ec_should_accept_ssh_public_key_bytes",
+        "tests.test_algorithms.TestAlgorithms.test_ec_should_throw_exception_on_wrong_key",
+        "tests.test_algorithms.TestAlgorithms.test_ec_should_accept_pem_private_key_bytes",
+        "tests.test_algorithms.TestAlgorithms.test_ec_verify_should_return_false_if_signature_wrong_length",
+        "tests.test_algorithms.TestAlgorithms.test_ec_jwk_public_and_private_keys_should_parse_and_verify",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_algorithm_without_expected_curve_accepts_any_curve"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.algorithms.ECAlgorithm._validate_curve",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "jwt.algorithms.ECAlgorithm.prepare_key"
+      ],
+      "callees": [
+        "jwt.exceptions.InvalidKeyError"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.algorithms.ECAlgorithm.prepare_key",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_rejects_wrong_curve_for_es256",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_rejects_wrong_curve_for_es384",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_accepts_correct_curve_for_es512",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_with_pem_key",
+        "tests.test_algorithms.TestAlgorithms.test_ec_to_jwk_returns_correct_values_for_public_key",
+        "tests.test_algorithms.TestAlgorithms.test_ec_public_key_to_jwk_works_with_from_jwk",
+        "tests.test_algorithms.TestAlgorithms.test_ec_to_jwk_returns_correct_values_for_private_key",
+        "tests.test_algorithms.TestAlgorithms.test_ec_verify_should_return_false_if_signature_invalid",
+        "tests.test_algorithms.TestAlgorithms.test_ec_private_key_to_jwk_works_with_from_jwk",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_rejects_wrong_curve_for_es512",
+        "tests.test_algorithms.TestAlgorithms.test_ec_to_jwk_with_invalid_curve",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_accepts_correct_curve_for_es256k",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_accepts_correct_curve_for_es384",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_rejects_p192_for_es256",
+        "tests.test_algorithms.TestAlgorithmsRFC7520.test_ec_verify_should_return_true_for_test_vector",
+        "tests.test_algorithms.TestAlgorithms.test_ec_should_reject_non_string_key",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_rejects_wrong_curve_for_es256k",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_accepts_correct_curve_for_es256",
+        "tests.test_algorithms.TestAlgorithms.test_ec_should_accept_ssh_public_key_bytes",
+        "tests.test_algorithms.TestAlgorithms.test_ec_should_throw_exception_on_wrong_key",
+        "tests.test_algorithms.TestAlgorithms.test_ec_should_accept_pem_private_key_bytes",
+        "tests.test_algorithms.TestAlgorithms.test_ec_verify_should_return_false_if_signature_wrong_length",
+        "tests.test_algorithms.TestECCurveValidation.test_ec_algorithm_without_expected_curve_accepts_any_curve"
+      ],
+      "callees": [
+        "cryptography.hazmat.primitives.serialization.load_ssh_public_key",
+        "jwt.utils.force_bytes",
+        "cryptography.hazmat.primitives.serialization.load_pem_private_key",
+        "jwt.algorithms.ECAlgorithm._validate_curve",
+        "key_bytes.startswith",
+        "cryptography.hazmat.primitives.serialization.load_pem_public_key",
+        "jwt.algorithms.Algorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm.check_crypto_key_type"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.api_jwk.PyJWK.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.get_default_algorithms",
+      "callers": [],
+      "callees": [
+        "jwt.exceptions.PyJWKError",
+        "jwt.api_jwk.PyJWK._jwk_data.get",
+        "jwt.api_jwk.PyJWK.Algorithm.from_jwk",
+        "jwt.algorithms.get_default_algorithms",
+        "jwt.exceptions.InvalidKeyError",
+        "jwt.exceptions.MissingCryptographyError"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_advisory.TestAdvisory.test_ghsa_ffqj_6fqr_9h24",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.get_default_algorithms",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.get_default_algorithms",
+        "jwt.decode"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestECCurveValidation.test_default_algorithms_have_correct_expected_curve",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.get_default_algorithms",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.get_default_algorithms"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.api_jws.PyJWS.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.get_default_algorithms",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.get_default_algorithms",
+        "jwt.api_jws.PyJWS._get_default_options",
+        "jwt.api_jws.PyJWS._algorithms.keys"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_rejects_wrong_curve_for_es256",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "keyfile.read",
+        "jwt.algorithms.ECAlgorithm.from_jwk",
+        "tests.utils.key_path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_rejects_wrong_curve_for_es384",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "keyfile.read",
+        "jwt.algorithms.ECAlgorithm.from_jwk",
+        "tests.utils.key_path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_accepts_correct_curve_for_es512",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "keyfile.read",
+        "jwt.algorithms.ECAlgorithm.from_jwk",
+        "tests.utils.key_path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_with_pem_key",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "tests.utils.key_path",
+        "jwt.algorithms.ECAlgorithm",
+        "keyfile.read",
+        "jwt.algorithms.ECAlgorithm.prepare_key"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestAlgorithms.test_ec_to_jwk_returns_correct_values_for_public_key",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "keyfile.read",
+        "tests.utils.key_path",
+        "jwt.algorithms.ECAlgorithm.to_jwk"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestAlgorithms.test_ec_to_jwk_raises_exception_on_invalid_key",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm",
+        "jwt.algorithms.ECAlgorithm.to_jwk"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestAlgorithms.test_ec_public_key_to_jwk_works_with_from_jwk",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "orig_key.public_numbers",
+        "ec_key.read",
+        "parsed_key.public_numbers",
+        "jwt.algorithms.ECAlgorithm.from_jwk",
+        "tests.utils.key_path",
+        "jwt.algorithms.ECAlgorithm.to_jwk"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestAlgorithms.test_ec_to_jwk_returns_correct_values_for_private_key",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "keyfile.read",
+        "tests.utils.key_path",
+        "jwt.algorithms.ECAlgorithm.to_jwk"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestAlgorithms.test_ec_verify_should_return_false_if_signature_invalid",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "replace",
+        "keyfile.read",
+        "tests.utils.key_path",
+        "jwt.algorithms.ECAlgorithm.verify"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestAlgorithms.test_ec_private_key_to_jwk_works_with_from_jwk",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "orig_key.private_numbers",
+        "ec_key.read",
+        "jwt.algorithms.ECAlgorithm.from_jwk",
+        "parsed_key.private_numbers",
+        "tests.utils.key_path",
+        "jwt.algorithms.ECAlgorithm.to_jwk"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_rejects_wrong_curve_for_es512",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "keyfile.read",
+        "jwt.algorithms.ECAlgorithm.from_jwk",
+        "tests.utils.key_path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestAlgorithms.test_ec_to_jwk_with_invalid_curve",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "keyfile.read",
+        "tests.utils.key_path",
+        "jwt.algorithms.ECAlgorithm.to_jwk"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_accepts_correct_curve_for_es256k",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "keyfile.read",
+        "jwt.algorithms.ECAlgorithm.from_jwk",
+        "tests.utils.key_path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestAlgorithms.test_ec_jwk_fails_on_invalid_json",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm",
+        "jwt.algorithms.ECAlgorithm.from_jwk",
+        "valid_points.items"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_accepts_correct_curve_for_es384",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "keyfile.read",
+        "jwt.algorithms.ECAlgorithm.from_jwk",
+        "tests.utils.key_path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestAlgorithms.test_ec_to_jwk_with_valid_curves",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm",
+        "tests.items",
+        "keyfile.read",
+        "jwt.algorithms.ECAlgorithm.from_jwk",
+        "tests.utils.key_path",
+        "jwt.algorithms.ECAlgorithm.to_jwk"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_rejects_p192_for_es256",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "tests.utils.key_path",
+        "jwt.algorithms.ECAlgorithm",
+        "keyfile.read",
+        "jwt.algorithms.ECAlgorithm.prepare_key"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestAlgorithmsRFC7520.test_ec_verify_should_return_true_for_test_vector",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "keyfile.read",
+        "jwt.algorithms.ECAlgorithm.from_jwk",
+        "tests.keys.load_ec_pub_key_p_521",
+        "tests.utils.key_path",
+        "jwt.utils.base64url_decode",
+        "jwt.algorithms.ECAlgorithm.verify"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestAlgorithms.test_ec_should_reject_non_string_key",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_rejects_wrong_curve_for_es256k",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "keyfile.read",
+        "jwt.algorithms.ECAlgorithm.from_jwk",
+        "tests.utils.key_path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestECCurveValidation.test_ec_curve_validation_accepts_correct_curve_for_es256",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "keyfile.read",
+        "jwt.algorithms.ECAlgorithm.from_jwk",
+        "tests.utils.key_path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestAlgorithms.test_ec_should_accept_ssh_public_key_bytes",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "tests.utils.key_path",
+        "jwt.algorithms.ECAlgorithm",
+        "ec_key.read",
+        "jwt.algorithms.ECAlgorithm.prepare_key"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestAlgorithms.test_ec_should_throw_exception_on_wrong_key",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "pem_key.read",
+        "keyfile.read",
+        "tests.utils.key_path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestAlgorithms.test_ec_should_accept_pem_private_key_bytes",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "tests.utils.key_path",
+        "jwt.algorithms.ECAlgorithm",
+        "ec_key.read",
+        "jwt.algorithms.ECAlgorithm.prepare_key"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestAlgorithms.test_ec_verify_should_return_false_if_signature_wrong_length",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "keyfile.read",
+        "tests.utils.key_path",
+        "jwt.algorithms.ECAlgorithm.verify"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestAlgorithms.test_ec_jwk_public_and_private_keys_should_parse_and_verify",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm",
+        "tests.items",
+        "jwt.algorithms.ECAlgorithm.sign",
+        "keyfile.read",
+        "jwt.algorithms.ECAlgorithm.from_jwk",
+        "tests.utils.key_path",
+        "jwt.algorithms.ECAlgorithm.verify"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_algorithms.TestECCurveValidation.test_ec_algorithm_without_expected_curve_accepts_any_curve",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.algorithms.ECAlgorithm",
+      "callers": [],
+      "callees": [
+        "jwt.algorithms.ECAlgorithm.prepare_key",
+        "jwt.algorithms.ECAlgorithm",
+        "keyfile.read",
+        "jwt.algorithms.ECAlgorithm.from_jwk",
+        "tests.utils.key_path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-10T14:57:57"
+}

@@ -1,0 +1,28 @@
+--- a/src/blib2to3/pgen2/parse.py
++++ b/src/blib2to3/pgen2/parse.py
+@@ -61,6 +61,11 @@
+ 
+     @contextmanager
+     def switch_to(self, ilabel: int) -> Iterator[None]:
++        """TODO: docstring
++
++        Args:
++            ilabel:
++        """
+         with self.backtrack():
+             self.parser.stack = self._points[ilabel]
+             try:
+@@ -89,6 +94,13 @@
+             self.parser.is_backtracking = is_backtracking
+ 
+     def add_token(self, tok_type: int, tok_val: str, raw: bool = False) -> None:
++        """TODO: docstring
++
++        Args:
++            tok_type:
++            tok_val:
++            raw:
++        """
+         for ilabel in self.ilabels:
+             with self.switch_to(ilabel):
+                 if raw:

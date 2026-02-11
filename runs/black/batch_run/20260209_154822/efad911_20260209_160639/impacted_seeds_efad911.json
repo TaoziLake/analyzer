@@ -1,0 +1,85 @@
+{
+  "commit": "efad911",
+  "parent": "0c3d2ace2db3bb831258d37f92c8d3f42296b498",
+  "repo": "D:\\locbench\\black",
+  "num_files_in_diff": 4,
+  "num_py_files_in_diff": 3,
+  "num_seeds": 5,
+  "seeds": [
+    {
+      "path": "src/black/comments.py",
+      "version": "new",
+      "line": 284,
+      "kind": "function",
+      "qualname": "src.black.comments._handle_comment_only_fmt_block",
+      "span": [
+        245,
+        327
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def _handle_comment_only_fmt_block(\n    leaf: Leaf,\n    comment: ProtoComment,\n    previous_consumed: int,\n    mode: Mode,\n) -> bool:\n    \"\"\"Handle fmt:off/on blocks that contain only comments.\n\n    Returns True if a block was converted, False otherwise.\n    \"\"\"\n    all_comments = list_comments(leaf.prefix, is_endmarker=False, mode=mode)\n\n    # Find the first fmt:off and its matching fmt:on\n    fmt_off_idx = None\n    fmt_on_idx = None\n    for idx, c in enumerate(all_comments):\n        if fmt_off_idx is None and c.value in FMT_OFF:\n            fmt_off_idx = idx\n        if fmt_off_idx is not None and idx > fmt_off_idx and c.value in FMT_ON:\n            fmt_on_idx = idx\n            break\n\n    # Only proceed if we found both directives\n    if fmt_on_idx is None or fmt_off_idx is None:\n        return False\n\n    comment = all_comments[fmt_off_idx]\n    fmt_on_comment = all_comments[fmt_on_idx]\n    original_prefix = leaf.prefix\n\n    # Build the hidden value\n    start_pos = comment.consumed\n    end_pos = fmt_on_comment.consumed\n    content_between_and_fmt_on = original_prefix[start_pos:end_pos]\n    hidden_value = comment.value + \"\\n\" + content_between_and_fmt_on\n\n    if hidden_value.endswith(\"\\n\"):\n        hidden_value = hidden_value[:-1]\n\n    # Build the standalone comment prefix - preserve all content before fmt:off\n    # including any comments that precede it\n    if fmt_off_idx == 0:\n        # No comments before fmt:off, use previous_consumed\n        pre_fmt_off_consumed = previous_consumed\n    else:\n        # Use the consumed position of the last comment before fmt:off\n        # This preserves all comments and content before the fmt:off directive\n        pre_fmt_off_consumed = all_comments[fmt_off_idx - 1].consumed\n\n    standalone_comment_prefix = (\n        original_prefix[:pre_fmt_off_consumed] + \"\\n\" * comment.newlines\n    )\n\n    fmt_off_prefix = original_prefix.split(comment.value)[0]\n    if \"\\n\" in fmt_off_prefix:\n        fmt_off_prefix = fmt_off_prefix.split(\"\\n\")[-1]\n    standalone_comment_prefix += fmt_off_prefix\n\n    # Update leaf prefix\n    leaf.prefix = original_prefix[fmt_on_comment.consumed :]\n\n    # Insert the STANDALONE_COMMENT\n    parent = leaf.parent\n    assert parent is not None, \"INTERNAL ERROR: fmt: on/off handling (prefix only)\"\n\n    leaf_idx = None\n    for idx, child in enumerate(parent.children):\n        if child is leaf:\n            leaf_idx = idx\n            break\n\n    assert leaf_idx is not None, \"INTERNAL ERROR: fmt: on/off handling (leaf index)\"\n\n    parent.insert_child(\n        leaf_idx,\n        Leaf(\n            STANDALONE_COMMENT,\n            hidden_value,\n            prefix=standalone_comment_prefix,\n            fmt_pass_converted_first_leaf=None,\n        ),\n    )\n    return True",
+      "old_code": "def _handle_comment_only_fmt_block(\n    leaf: Leaf,\n    comment: ProtoComment,\n    previous_consumed: int,\n    mode: Mode,\n) -> bool:\n    \"\"\"Handle fmt:off/on blocks that contain only comments.\n\n    Returns True if a block was converted, False otherwise.\n    \"\"\"\n    all_comments = list_comments(leaf.prefix, is_endmarker=False, mode=mode)\n\n    # Find the first fmt:off and its matching fmt:on\n    fmt_off_idx = None\n    fmt_on_idx = None\n    for idx, c in enumerate(all_comments):\n        if fmt_off_idx is None and c.value in FMT_OFF:\n            fmt_off_idx = idx\n        if fmt_off_idx is not None and idx > fmt_off_idx and c.value in FMT_ON:\n            fmt_on_idx = idx\n            break\n\n    # Only proceed if we found both directives\n    if fmt_on_idx is None or fmt_off_idx is None:\n        return False\n\n    comment = all_comments[fmt_off_idx]\n    fmt_on_comment = all_comments[fmt_on_idx]\n    original_prefix = leaf.prefix\n\n    # Build the hidden value\n    start_pos = comment.consumed\n    end_pos = fmt_on_comment.consumed\n    content_between_and_fmt_on = original_prefix[start_pos:end_pos]\n    hidden_value = comment.value + \"\\n\" + content_between_and_fmt_on\n\n    if hidden_value.endswith(\"\\n\"):\n        hidden_value = hidden_value[:-1]\n\n    # Build the standalone comment prefix\n    standalone_comment_prefix = (\n        original_prefix[:previous_consumed] + \"\\n\" * comment.newlines\n    )\n\n    fmt_off_prefix = original_prefix.split(comment.value)[0]\n    if \"\\n\" in fmt_off_prefix:\n        fmt_off_prefix = fmt_off_prefix.split(\"\\n\")[-1]\n    standalone_comment_prefix += fmt_off_prefix\n\n    # Update leaf prefix\n    leaf.prefix = original_prefix[fmt_on_comment.consumed :]\n\n    # Insert the STANDALONE_COMMENT\n    parent = leaf.parent\n    assert parent is not None, \"INTERNAL ERROR: fmt: on/off handling (prefix only)\"\n\n    leaf_idx = None\n    for idx, child in enumerate(parent.children):\n        if child is leaf:\n            leaf_idx = idx\n            break\n\n    assert leaf_idx is not None, \"INTERNAL ERROR: fmt: on/off handling (leaf index)\"\n\n    parent.insert_child(\n        leaf_idx,\n        Leaf(\n            STANDALONE_COMMENT,\n            hidden_value,\n            prefix=standalone_comment_prefix,\n            fmt_pass_converted_first_leaf=None,\n        ),\n    )\n    return True"
+    },
+    {
+      "path": "src/black/comments.py",
+      "version": "new",
+      "line": 338,
+      "kind": "function",
+      "qualname": "src.black.comments.convert_one_fmt_off_pair",
+      "span": [
+        330,
+        388
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def convert_one_fmt_off_pair(\n    node: Node, mode: Mode, lines: Collection[tuple[int, int]]\n) -> bool:\n    \"\"\"Convert content of a single `# fmt: off`/`# fmt: on` into a standalone comment.\n\n    Returns True if a pair was converted.\n    \"\"\"\n    for leaf in node.leaves():\n        # Skip STANDALONE_COMMENT nodes that were created by fmt:off/on processing\n        # to avoid reprocessing them in subsequent iterations\n        if (\n            leaf.type == STANDALONE_COMMENT\n            and hasattr(leaf, \"fmt_pass_converted_first_leaf\")\n            and leaf.fmt_pass_converted_first_leaf is None\n        ):\n            continue\n\n        previous_consumed = 0\n        for comment in list_comments(leaf.prefix, is_endmarker=False, mode=mode):\n            should_process, is_fmt_off, is_fmt_skip = _should_process_fmt_comment(\n                comment, leaf\n            )\n            if not should_process:\n                previous_consumed = comment.consumed\n                continue\n\n            if not _is_valid_standalone_fmt_comment(\n                comment, leaf, is_fmt_off, is_fmt_skip\n            ):\n                previous_consumed = comment.consumed\n                continue\n\n            ignored_nodes = list(generate_ignored_nodes(leaf, comment, mode))\n\n            # Handle comment-only blocks\n            if not ignored_nodes and is_fmt_off:\n                if _handle_comment_only_fmt_block(\n                    leaf, comment, previous_consumed, mode\n                ):\n                    return True\n                continue\n\n            # Need actual nodes to process\n            if not ignored_nodes:\n                continue\n\n            # Handle regular fmt blocks\n\n            _handle_regular_fmt_block(\n                ignored_nodes,\n                comment,\n                previous_consumed,\n                is_fmt_skip,\n                lines,\n                leaf,\n            )\n            return True\n\n    return False",
+      "old_code": "def convert_one_fmt_off_pair(\n    node: Node, mode: Mode, lines: Collection[tuple[int, int]]\n) -> bool:\n    \"\"\"Convert content of a single `# fmt: off`/`# fmt: on` into a standalone comment.\n\n    Returns True if a pair was converted.\n    \"\"\"\n    for leaf in node.leaves():\n        previous_consumed = 0\n        for comment in list_comments(leaf.prefix, is_endmarker=False, mode=mode):\n            should_process, is_fmt_off, is_fmt_skip = _should_process_fmt_comment(\n                comment, leaf\n            )\n            if not should_process:\n                previous_consumed = comment.consumed\n                continue\n\n            if not _is_valid_standalone_fmt_comment(\n                comment, leaf, is_fmt_off, is_fmt_skip\n            ):\n                previous_consumed = comment.consumed\n                continue\n\n            ignored_nodes = list(generate_ignored_nodes(leaf, comment, mode))\n\n            # Handle comment-only blocks\n            if not ignored_nodes and is_fmt_off:\n                if _handle_comment_only_fmt_block(\n                    leaf, comment, previous_consumed, mode\n                ):\n                    return True\n                continue\n\n            # Need actual nodes to process\n            if not ignored_nodes:\n                continue\n\n            # Handle regular fmt blocks\n\n            _handle_regular_fmt_block(\n                ignored_nodes,\n                comment,\n                previous_consumed,\n                is_fmt_skip,\n                lines,\n                leaf,\n            )\n            return True\n\n    return False"
+    },
+    {
+      "path": "src/black/linegen.py",
+      "version": "new",
+      "line": 20,
+      "kind": "module",
+      "qualname": "src.black.linegen",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "src/black/linegen.py",
+      "version": "new",
+      "line": 414,
+      "kind": "function",
+      "qualname": "src.black.linegen.LineGenerator.visit_STANDALONE_COMMENT",
+      "span": [
+        389,
+        435
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def visit_STANDALONE_COMMENT(self, leaf: Leaf) -> Iterator[Line]:\n        if not self.current_line.bracket_tracker.any_open_brackets():\n            yield from self.line()\n        # STANDALONE_COMMENT nodes created by our special handling in\n        # normalize_fmt_off for comment-only blocks have fmt:off as the first\n        # line and fmt:on as the last line (each directive on its own line,\n        # not embedded in other text). These should be appended directly\n        # without calling visit_default, which would process their prefix and\n        # lose indentation. Normal STANDALONE_COMMENT nodes go through\n        # visit_default.\n        value = leaf.value\n        lines = value.splitlines()\n        if len(lines) >= 2:\n            # Check if first line (after stripping whitespace) is exactly a\n            # fmt:off directive\n            first_line = lines[0].lstrip()\n            first_is_fmt_off = first_line in FMT_OFF\n            # Check if last line (after stripping whitespace) is exactly a\n            # fmt:on directive\n            last_line = lines[-1].lstrip()\n            last_is_fmt_on = last_line in FMT_ON\n            is_fmt_off_block = first_is_fmt_off and last_is_fmt_on\n        else:\n            is_fmt_off_block = False\n        if is_fmt_off_block:\n            # This is a fmt:off/on block from normalize_fmt_off - we still need\n            # to process any prefix comments (like markdown comments) but append\n            # the fmt block itself directly to preserve its formatting\n\n            # Only process prefix comments if there actually is a prefix with comments\n            if leaf.prefix and any(\n                line.strip().startswith(\"#\")\n                and not _contains_fmt_directive(line.strip())\n                for line in leaf.prefix.split(\"\\n\")\n            ):\n                for comment in generate_comments(leaf, mode=self.mode):\n                    yield from self.line()\n                    self.current_line.append(comment)\n                    yield from self.line()\n                # Clear the prefix since we've processed it as comments above\n                leaf.prefix = \"\"\n\n            self.current_line.append(leaf)\n            yield from self.line()\n        else:\n            # Normal standalone comment - process through visit_default\n            yield from self.visit_default(leaf)",
+      "old_code": "    def visit_STANDALONE_COMMENT(self, leaf: Leaf) -> Iterator[Line]:\n        if not self.current_line.bracket_tracker.any_open_brackets():\n            yield from self.line()\n        # STANDALONE_COMMENT nodes created by our special handling in\n        # normalize_fmt_off for comment-only blocks have fmt:off as the first\n        # line and fmt:on as the last line (each directive on its own line,\n        # not embedded in other text). These should be appended directly\n        # without calling visit_default, which would process their prefix and\n        # lose indentation. Normal STANDALONE_COMMENT nodes go through\n        # visit_default.\n        value = leaf.value\n        lines = value.splitlines()\n        if len(lines) >= 2:\n            # Check if first line (after stripping whitespace) is exactly a\n            # fmt:off directive\n            first_line = lines[0].lstrip()\n            first_is_fmt_off = first_line in FMT_OFF\n            # Check if last line (after stripping whitespace) is exactly a\n            # fmt:on directive\n            last_line = lines[-1].lstrip()\n            last_is_fmt_on = last_line in FMT_ON\n            is_fmt_off_block = first_is_fmt_off and last_is_fmt_on\n        else:\n            is_fmt_off_block = False\n        if is_fmt_off_block:\n            # This is a fmt:off/on block from normalize_fmt_off - append directly\n            self.current_line.append(leaf)\n            yield from self.line()\n        else:\n            # Normal standalone comment - process through visit_default\n            yield from self.visit_default(leaf)"
+    },
+    {
+      "path": "tests/data/cases/jupytext_markdown_fmt.py",
+      "version": "new",
+      "line": 1,
+      "kind": "module",
+      "qualname": "tests.data.cases.jupytext_markdown_fmt",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": null
+    }
+  ],
+  "generated_at": "2026-02-09T16:06:40"
+}

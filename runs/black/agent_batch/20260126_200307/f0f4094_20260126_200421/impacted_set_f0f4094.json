@@ -1,0 +1,701 @@
+{
+  "commit": "f0f4094",
+  "parent": "70fc194172184861aafb418c124824cae0fbe3b0",
+  "repo": "D:\\locbench\\black",
+  "num_seeds": 2,
+  "num_seeds_used": 1,
+  "seed_scope": "code_only",
+  "num_impacted": 37,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 3415,
+    "total_call_relations": 4447
+  },
+  "impacted": [
+    {
+      "qualname": "src.black.lines.EmptyLineTracker._maybe_empty_lines",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.lines.EmptyLineTracker.maybe_empty_lines"
+      ],
+      "callees": [
+        "src.black.lines.EmptyLineTracker.previous_defs.pop",
+        "min",
+        "first_leaf.prefix.count",
+        "current_line.is_fmt_pass_converted",
+        "src.black.lines.EmptyLineTracker._maybe_empty_lines_for_class_or_def",
+        "bool",
+        "src.black.lines.EmptyLineTracker.previous_defs.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.EmptyLineTracker.maybe_empty_lines",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.lines.EmptyLineTracker._maybe_empty_lines",
+      "callers": [],
+      "callees": [
+        "max",
+        "src.black.lines.EmptyLineTracker._maybe_empty_lines",
+        "src.black.lines.LinesBlock",
+        "src.black.lines.EmptyLineTracker._line_is_module_docstring",
+        "bool"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.EmptyLineTracker.previous_defs.pop",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.black.lines.EmptyLineTracker._maybe_empty_lines",
+      "callers": [
+        "src.black.lines.EmptyLineTracker._maybe_empty_lines"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "min",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.black.lines.EmptyLineTracker._maybe_empty_lines",
+      "callers": [
+        "src.black.lines.EmptyLineTracker._maybe_empty_lines",
+        "src.black.concurrency.reformat_many",
+        "src.black.ranges.sanitized_lines",
+        "src.black.strings.fix_multiline_docstring",
+        "src.black.strings.assert_is_leaf_string",
+        "src.black.lines.is_line_short_enough",
+        "src.black.lines.EmptyLineTracker._maybe_empty_lines_for_class_or_def",
+        "src.blib2to3.pytree.WildcardPattern.generate_matches",
+        "src.black.linegen.delimiter_split"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "first_leaf.prefix.count",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.black.lines.EmptyLineTracker._maybe_empty_lines",
+      "callers": [
+        "src.black.lines.EmptyLineTracker._maybe_empty_lines"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "current_line.is_fmt_pass_converted",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.black.lines.EmptyLineTracker._maybe_empty_lines",
+      "callers": [
+        "src.black.lines.EmptyLineTracker._maybe_empty_lines"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "src.black.lines.EmptyLineTracker._maybe_empty_lines_for_class_or_def",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.black.lines.EmptyLineTracker._maybe_empty_lines",
+      "callers": [
+        "src.black.lines.EmptyLineTracker._maybe_empty_lines"
+      ],
+      "callees": [
+        "max",
+        "min"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "bool",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.black.lines.EmptyLineTracker._maybe_empty_lines",
+      "callers": [
+        "src.black.lines.Line.append",
+        "src.black.nodes.is_import",
+        "src.black.trans.StringSplitter.do_transform",
+        "src.black.nodes.is_with_or_async_with_stmt",
+        "src.black.brackets.BracketTracker.any_open_for_or_lambda",
+        "src.black.nodes.is_async_stmt_or_funcdef",
+        "src.black.lines.EmptyLineTracker._maybe_empty_lines",
+        "src.blackd.__init__.handle",
+        "src.blackd.__init__.parse_mode",
+        "src.black.lines.EmptyLineTracker.maybe_empty_lines",
+        "src.black.files.path_is_excluded",
+        "src.black.lines.Line.is_class",
+        "src.black.trans.StringMerger._merge_one_string_group",
+        "src.black.lines.Line.is_decorator",
+        "src.black.lines.Line.is_with_or_async_with_stmt",
+        "src.black.lines.Line.is_import",
+        "src.black.lines.Line.is_class_paren_empty",
+        "src.black.lines.Line.is_docstring",
+        "src.black.brackets.BracketTracker.any_open_brackets",
+        "src.black.lines.Line.__bool__"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "src.black.lines.EmptyLineTracker.previous_defs.append",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "src.black.lines.EmptyLineTracker._maybe_empty_lines",
+      "callers": [
+        "src.black.lines.EmptyLineTracker._maybe_empty_lines"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "max",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.black.lines.EmptyLineTracker.maybe_empty_lines",
+      "callers": [
+        "src.black.lines.EmptyLineTracker.maybe_empty_lines",
+        "src.black.ranges.sanitized_lines",
+        "src.black.parsing.lib2to3_parse",
+        "src.black.strings.assert_is_leaf_string",
+        "tests.data.cases.trailing_comma_optional_parens1",
+        "src.black.handle_ipynb_magics.create_token",
+        "src.black.brackets.BracketTracker.max_delimiter_priority",
+        "src.black.lines.EmptyLineTracker._maybe_empty_lines_for_class_or_def",
+        "src.black.files.find_project_root"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "src.black.lines.LinesBlock",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.black.lines.EmptyLineTracker.maybe_empty_lines",
+      "callers": [
+        "src.black.lines.EmptyLineTracker.maybe_empty_lines"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.EmptyLineTracker._line_is_module_docstring",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "src.black.lines.EmptyLineTracker.maybe_empty_lines",
+      "callers": [
+        "src.black.lines.EmptyLineTracker.maybe_empty_lines"
+      ],
+      "callees": [
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.concurrency.reformat_many",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "min",
+      "callers": [],
+      "callees": [
+        "executor.shutdown",
+        "mypy_extensions.mypyc_attr",
+        "min",
+        "loop.run_until_complete",
+        "src.black.concurrency.maybe_install_uvloop",
+        "int",
+        "os.environ.get",
+        "concurrent.futures.ThreadPoolExecutor",
+        "getattr",
+        "concurrent.futures.ProcessPoolExecutor",
+        "src.black.concurrency.schedule_formatting",
+        "asyncio.new_event_loop",
+        "os.cpu_count",
+        "asyncio.set_event_loop",
+        "src.black.concurrency.shutdown"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.ranges.sanitized_lines",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "min",
+      "callers": [],
+      "callees": [
+        "max",
+        "min",
+        "src_contents.endswith",
+        "good_lines.append",
+        "src_contents.count"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.strings.fix_multiline_docstring",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "min",
+      "callers": [],
+      "callees": [
+        "enumerate",
+        "src.black.strings.lines_with_leading_tabs_expanded",
+        "min",
+        "line.lstrip",
+        "len",
+        "trimmed.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.strings.assert_is_leaf_string",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "min",
+      "callers": [
+        "src.black.strings.get_string_prefix"
+      ],
+      "callees": [
+        "max",
+        "string.find",
+        "min",
+        "set",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.is_line_short_enough",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "min",
+      "callers": [],
+      "callees": [
+        "all",
+        "black.strings.str_width",
+        "enumerate",
+        "black.nodes.is_multiline_string",
+        "str",
+        "min",
+        "commas.pop",
+        "commas.append",
+        "line_str.split",
+        "src.black.lines.line_to_string",
+        "len",
+        "line.contains_standalone_comments",
+        "multiline_string_contexts.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blib2to3.pytree.WildcardPattern.generate_matches",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "min",
+      "callers": [
+        "src.blib2to3.pytree.WildcardPattern.match_seq"
+      ],
+      "callees": [
+        "hasattr",
+        "src.blib2to3.pytree.WildcardPattern._recursive_matches",
+        "range",
+        "min",
+        "src.blib2to3.pytree.WildcardPattern._bare_name_matches",
+        "src.blib2to3.pytree.WildcardPattern._iterative_matches",
+        "len",
+        "io.StringIO"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen.delimiter_split",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "min",
+      "callers": [],
+      "callees": [
+        "id",
+        "bt.delimiters.get",
+        "enumerate",
+        "bt.max_delimiter_priority",
+        "src.black.linegen._safe_add_trailing_comma",
+        "min",
+        "black.lines.Line",
+        "append_to_line",
+        "append_comments",
+        "src.black.linegen._get_last_non_comment_leaf",
+        "len",
+        "bt.delimiter_count_with_priority",
+        "src.black.linegen.CannotSplit",
+        "src.black.linegen._can_add_trailing_comma"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.Line.append",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [
+        "src.black.lines.Line.append_safe"
+      ],
+      "callees": [
+        "src.black.lines.Line.leaves.append",
+        "src.black.lines.Line.is_complex_subscript",
+        "src.black.lines.Line.remove_trailing_comma",
+        "src.black.lines.Line.bracket_tracker.mark",
+        "leaf.value.strip",
+        "black.nodes.whitespace",
+        "src.black.lines.Line.has_magic_trailing_comma",
+        "bool",
+        "src.black.lines.Line.append_comment"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.nodes.is_import",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [],
+      "callees": [
+        "bool"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.trans.StringSplitter.do_transform",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [],
+      "callees": [
+        "max_last_string_column",
+        "src.black.trans.insert_str_child_factory",
+        "black.strings.get_string_prefix",
+        "is_valid_index",
+        "src.black.trans.fstring_contains_expr",
+        "src.black.trans.TErr",
+        "insert_str_child",
+        "custom_splits.pop",
+        "more_splits_should_be_made",
+        "src.black.trans.StringSplitter._get_string_operator_leaves",
+        "black.rusty.Ok",
+        "string_line_results.append",
+        "sum",
+        "bool",
+        "maybe_append_string_operators",
+        "src.black.trans.is_valid_index_factory",
+        "str",
+        "next_line.append",
+        "last_line.append",
+        "black.strings.count_chars_in_width",
+        "src.black.trans.StringSplitter._normalize_f_string",
+        "line.clone",
+        "src.black.trans.StringSplitter.pop_custom_splits",
+        "all",
+        "src.black.trans.StringSplitter._get_break_idx",
+        "black.strings.str_width",
+        "black.lines.append_leaves",
+        "src.black.trans.StringSplitter._maybe_normalize_string_quotes",
+        "line.comments.copy",
+        "len",
+        "blib2to3.pytree.Leaf"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.nodes.is_with_or_async_with_stmt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [],
+      "callees": [
+        "bool"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.brackets.BracketTracker.any_open_for_or_lambda",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [],
+      "callees": [
+        "bool"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.nodes.is_async_stmt_or_funcdef",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [],
+      "callees": [
+        "bool"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blackd.__init__.handle",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [],
+      "callees": [
+        "req_str.find",
+        "datetime.datetime.datetime.now",
+        "req_bytes.decode",
+        "request.headers.get",
+        "str",
+        "asyncio.get_event_loop",
+        "logging.exception",
+        "loop.run_in_executor",
+        "aiohttp.web.Response",
+        "src.blackd.__init__.parse_mode",
+        "request.content.read",
+        "bool",
+        "functools.partial"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.blackd.__init__.parse_mode",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [
+        "src.blackd.__init__.handle"
+      ],
+      "callees": [
+        "black.FileMode",
+        "piece.strip",
+        "src.blackd.__init__.HeaderError",
+        "bool",
+        "int",
+        "set",
+        "src.blackd.__init__.parse_python_variant_header",
+        "headers.get",
+        "enable_features.add"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.files.path_is_excluded",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [
+        "src.black.files.gen_python_files"
+      ],
+      "callees": [
+        "pattern.search",
+        "match.group",
+        "bool"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.Line.is_class",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [],
+      "callees": [
+        "bool"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.trans.StringMerger._merge_one_string_group",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [
+        "src.black.trans.StringMerger._merge_string_group"
+      ],
+      "callees": [
+        "prefix_tracker.append",
+        "re.sub",
+        "custom_splits.append",
+        "black.strings.normalize_string_quotes",
+        "src.black.trans.CustomSplit",
+        "black.nodes.replace_child",
+        "blib2to3.pytree.Leaf",
+        "temp_string.find",
+        "range",
+        "black.strings.get_string_prefix",
+        "is_valid_index",
+        "src.black.trans.StringMerger.add_custom_splits",
+        "atom_node.insert_child",
+        "S_leaf.value.replace",
+        "make_naked",
+        "len",
+        "bool"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.Line.is_decorator",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [],
+      "callees": [
+        "bool"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.Line.is_with_or_async_with_stmt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [],
+      "callees": [
+        "black.nodes.is_with_or_async_with_stmt",
+        "bool"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.Line.is_import",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [],
+      "callees": [
+        "black.nodes.is_import",
+        "bool"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.Line.is_class_paren_empty",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [],
+      "callees": [
+        "bool",
+        "len"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.Line.is_docstring",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [],
+      "callees": [
+        "black.nodes.is_docstring",
+        "bool"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.brackets.BracketTracker.any_open_brackets",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [],
+      "callees": [
+        "bool"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.Line.__bool__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "bool",
+      "callers": [],
+      "callees": [
+        "bool"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-26T20:04:24"
+}

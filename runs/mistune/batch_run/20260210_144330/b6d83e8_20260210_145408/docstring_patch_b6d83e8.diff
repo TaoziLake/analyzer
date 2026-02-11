@@ -1,0 +1,116 @@
+--- a/src/mistune/list_parser.py
++++ b/src/mistune/list_parser.py
+@@ -18,7 +18,24 @@
+ 
+ 
+ def parse_list(block: "BlockParser", m: Match[str], state: "BlockState") -> int:
+-    """Parse tokens for ordered and unordered list."""
++    """def parse_list(block: "BlockParser", m: Match[str], state: "BlockState") -> int:
++        """Parse tokens for ordered and unordered list.
++
++        Args:
++            block: Block parser instance
++            m: Regex match object containing list components
++            state: Current block state
++
++        Returns:
++            Updated cursor position after list parsing
++
++        Raises:
++            No explicit exceptions - errors propagate from called functions
++
++        Changelog:
++            b6d83e8: Upstream change to _parse_list_item only modified string quotes around 'fenced_directive' (no behavioral impact).
++                     This function's parameters, return values, and list parsing behavior remain unchanged.
++    """
+     text = m.group("list_3")
+     if not text.strip():
+         # Example 285
+@@ -93,6 +110,27 @@
+     state: "BlockState",
+     rules: List[str],
+ ) -> Optional[Tuple[str, str, str]]:
++    """Parse a list item in markdown, handling indentation, continuation lines, and nested blocks.
++
++    Args:
++        block: Block parser instance
++        bullet: List bullet character
++        groups: Tuple of (leading_spaces, marker, text)
++        token: Current token dictionary
++        state: Block state object
++        rules: List of active parsing rules
++
++    Returns:
++        Optional tuple of next list item groups if continuation exists
++
++    Raises:
++        No exceptions explicitly raised
++
++    Changelog:
++        b6d83e8: Changed string quotes from single to double for "fenced_directive" literal.
++        No functional changes - maintained string value while aligning with codebase style
++        preferences. All logic, parameters, and return values remain identical.
++    """
+     spaces, marker, text = groups
+ 
+     leading_width = len(spaces) + len(marker)
+
+--- a/src/mistune/block_parser.py
++++ b/src/mistune/block_parser.py
+@@ -96,6 +96,20 @@
+         list_rules: Optional[List[str]] = None,
+         max_nested_level: int = 6,
+     ):
++        """Initialize a BlockParser instance with customizable parsing rules.
++
++        Args:
++            block_quote_rules: Optional list of rule names for block quote parsing.
++                If None, uses a copy of self.DEFAULT_RULES.
++            list_rules: Optional list of rule names for list parsing.
++                If None, uses a copy of self.DEFAULT_RULES.
++            max_nested_level: Maximum allowed nesting level for lists (default: 6).
++
++        Changelog:
++            b6d83e8: Upstream change in src.mistune.__init__ affects parent class initialization logic.
++            While BlockParser's interface remains unchanged, any behavioral modifications to the
++            parent class constructor may indirectly affect BlockParser's internal state initialization.
++        """
+         super(BlockParser, self).__init__()
+ 
+         if block_quote_rules is None:
+@@ -384,7 +398,16 @@
+         return state.cursor
+ 
+     def parse_list(self, m: Match[str], state: BlockState) -> int:
+-        """Parse tokens for ordered and unordered list."""
++        """Parse tokens for ordered and unordered list.
++
++        :param m: Regular expression match object containing list content
++        :param state: Current block state for parsing context
++        :returns: Number of parsed tokens
++        :raises: None
++
++        Changelog:
++            b6d83e8: Upstream changes to list item string formatting in _parse_list_item do not affect this function's behavior. The parse_list method maintains identical functionality for list parsing as before.
++        """
+         return parse_list(self, m, state)
+ 
+     def parse_block_html(self, m: Match[str], state: BlockState) -> Optional[int]:
+
+--- a/src/mistune/inline_parser.py
++++ b/src/mistune/inline_parser.py
+@@ -89,6 +89,14 @@
+     )
+ 
+     def __init__(self, hard_wrap: bool = False) -> None:
++        """Initialize an InlineParser instance with optional hard wrap behavior.
++
++        Args:
++            hard_wrap (bool): If True, line breaks are treated as hard breaks. Defaults to False.
++
++        Changelog:
++            b6d83e8: Parent class src.mistune.__init__ modified, which may affect initialization behavior of this class through super().__init__(). Changes in parent class could indirectly impact linebreak handling or other inline parsing features.
++        """
+         super(InlineParser, self).__init__()
+ 
+         self.hard_wrap = hard_wrap

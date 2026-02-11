@@ -1,0 +1,27 @@
+--- a/scripts/diff_shades_gha_helper.py
++++ b/scripts/diff_shades_gha_helper.py
+@@ -44,6 +44,12 @@
+ 
+ 
+ def set_output(name: str, value: str) -> None:
++    """TODO: docstring
++
++    Args:
++        name:
++        value:
++    """
+     if len(value) < 200:
+         print(f"[INFO]: setting '{name}' to '{value}'")
+     else:
+@@ -198,6 +204,11 @@
+ @main.command("comment-details", help="Get PR comment resources from a workflow run.")
+ @click.argument("run-id")
+ def comment_details(run_id: str) -> None:
++    """TODO: docstring
++
++    Args:
++        run_id:
++    """
+     data = http_get(f"https://api.github.com/repos/{REPO}/actions/runs/{run_id}")
+     if data["event"] != "pull_request" or data["conclusion"] == "cancelled":
+         set_output("needs-comment", "false")

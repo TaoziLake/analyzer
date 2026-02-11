@@ -1,0 +1,22 @@
+--- a/src/mistune/plugins/footnotes.py
++++ b/src/mistune/plugins/footnotes.py
+@@ -43,6 +43,19 @@
+ 
+ 
+ def parse_ref_footnote(block: "BlockParser", m: Match[str], state: BlockState) -> int:
++    """Parse a footnote reference and store it in the block state environment.
++
++    Args:
++        block: BlockParser instance handling the parsing process
++        m: Regular expression match object containing footnote reference groups
++        state: BlockState object maintaining parsing state
++
++    Returns:
++        int: End position of the matched footnote reference
++
++    Changelog:
++        2677e2d: Added new function to handle footnote reference parsing. Initializes 'ref_footnotes' dict in state.env if missing, stores footnote keys and text values, returns match end position. Creates a new environment entry for tracking footnote references during block parsing.
++    """
+     ref = state.env.get("ref_footnotes")
+     if not ref:
+         ref = {}

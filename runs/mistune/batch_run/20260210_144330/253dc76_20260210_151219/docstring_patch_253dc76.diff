@@ -1,0 +1,37 @@
+--- a/src/mistune/inline_parser.py
++++ b/src/mistune/inline_parser.py
+@@ -98,6 +98,14 @@
+     )
+ 
+     def __init__(self, hard_wrap: bool = False) -> None:
++        """Initialize an InlineParser instance with hard wrap configuration.
++
++        :param hard_wrap: If True, line breaks are treated as hard breaks. If False, soft breaks are used.
++        :type hard_wrap: bool
++
++        Changelog:
++            253dc76: Upstream modification to src.mistune.__init__ may affect initialization behavior. The parent class's __init__ method is called via super() without parameters, which could lead to compatibility issues if the parent class now requires initialization parameters. This may result in instantiation errors or altered base class configuration for InlineParser instances.
++        """
+         super(InlineParser, self).__init__()
+ 
+         self.hard_wrap = hard_wrap
+
+--- a/src/mistune/block_parser.py
++++ b/src/mistune/block_parser.py
+@@ -95,6 +95,16 @@
+             list_rules: Optional[List[str]]=None,
+             max_nested_level: int=6
+     ):
++        """Initialize a BlockParser instance with configurable block parsing rules.
++
++        Args:
++            block_quote_rules: Optional list of rule names for block quotes. Defaults to all rules in self.DEFAULT_RULES.
++            list_rules: Optional list of rule names for lists. Defaults to all rules in self.DEFAULT_RULES.
++            max_nested_level: Maximum nesting level for nested blocks (default: 6).
++
++        Changelog:
++            253dc76: Changed parent class initialization in src.mistune.__init__ which affects DEFAULT_RULES and SPECIFICATION attributes. This may alter default block parsing behavior if block_quote_rules/list_rules are not explicitly provided, as they now inherit from potentially modified parent class defaults.
++        """
+         super(BlockParser, self).__init__()
+ 
+         if block_quote_rules is None:

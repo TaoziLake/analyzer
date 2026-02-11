@@ -1,0 +1,90 @@
+--- a/lib/sqlalchemy/orm/mapper.py
++++ b/lib/sqlalchemy/orm/mapper.py
+@@ -1654,6 +1654,7 @@
+         }
+ 
+     def _configure_properties(self) -> None:
++        """TODO: docstring"""
+         self.columns = self.c = sql_base.ColumnCollection()  # type: ignore
+ 
+         # object attribute names mapped to MapperProperty objects
+@@ -1995,6 +1996,13 @@
+ 
+     @util.preload_module("sqlalchemy.orm.descriptor_props")
+     def _adapt_inherited_property(self, key, prop, init):
++        """TODO: docstring
++
++        Args:
++            key:
++            prop:
++            init:
++        """
+         descriptor_props = util.preloaded.orm_descriptor_props
+ 
+         if not self.concrete:
+@@ -2032,6 +2040,15 @@
+         setparent: bool = True,
+         warn_for_existing: bool = False,
+     ) -> MapperProperty[Any]:
++        """TODO: docstring
++
++        Args:
++            key:
++            prop_arg:
++            init:
++            setparent:
++            warn_for_existing:
++        """
+         descriptor_props = util.preloaded.orm_descriptor_props
+         self._log(
+             "_configure_property(%s, %s)", key, prop_arg.__class__.__name__
+@@ -2207,6 +2224,12 @@
+             Sequence[KeyedColumnElement[Any]], KeyedColumnElement[Any]
+         ],
+     ) -> ColumnProperty[Any]:
++        """TODO: docstring
++
++        Args:
++            key:
++            column:
++        """
+         columns = util.to_list(column)
+         mapped_column = []
+         for c in columns:
+@@ -2239,6 +2262,15 @@
+         incoming_prop: Optional[ColumnProperty[Any]] = None,
+         single_column: Optional[KeyedColumnElement[Any]] = None,
+     ) -> ColumnProperty[Any]:
++        """TODO: docstring
++
++        Args:
++            key:
++            existing_prop:
++            warn_only:
++            incoming_prop:
++            single_column:
++        """
+         if incoming_prop and (
+             self.concrete
+             or not isinstance(existing_prop, properties.ColumnProperty)
+@@ -2393,6 +2425,7 @@
+         self._init_properties[key] = prop
+ 
+     def _expire_memoizations(self) -> None:
++        """TODO: docstring"""
+         for mapper in self.iterate_to_root():
+             mapper._reset_memoizations()
+ 
+@@ -2411,6 +2444,12 @@
+         )
+ 
+     def _log(self, msg: str, *args: Any) -> None:
++        """TODO: docstring
++
++        Args:
++            msg:
++            *args:
++        """
+         self.logger.info("%s " + msg, *((self._log_desc,) + args))
+ 
+     def _log_debug(self, msg: str, *args: Any) -> None:

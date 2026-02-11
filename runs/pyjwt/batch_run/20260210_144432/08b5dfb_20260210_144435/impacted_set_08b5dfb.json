@@ -1,0 +1,108 @@
+{
+  "commit": "08b5dfb",
+  "parent": "171d2a34f394022d7d426106e414e9a7b3eb78cb",
+  "repo": "D:\\locbench\\pyjwt",
+  "num_seeds": 6,
+  "num_seeds_used": 6,
+  "seed_scope": "code_only",
+  "num_impacted": 6,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "jwt.jwks_client.PyJWKClient.fetch_data",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "jwt.jwks_client.PyJWKClient.get_jwk_set"
+      ],
+      "callees": [
+        "jwt.jwks_client.PyJWKClient.jwk_set_cache.put",
+        "jwt.exceptions.PyJWKClientConnectionError"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.jwks_client.PyJWKClient.get_jwk_set",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "jwt.jwks_client.PyJWKClient.get_signing_keys"
+      ],
+      "callees": [
+        "jwt.api_jwk.PyJWKSet.from_dict",
+        "jwt.exceptions.PyJWKClientError",
+        "jwt.jwks_client.PyJWKClient.jwk_set_cache.get",
+        "jwt.jwks_client.PyJWKClient.fetch_data"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.jwks_client.PyJWKClient.get_signing_keys",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "jwt.jwks_client.PyJWKClient.get_signing_key"
+      ],
+      "callees": [
+        "jwt.exceptions.PyJWKClientError",
+        "jwt.jwks_client.PyJWKClient.get_jwk_set"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.jwks_client.PyJWKClient.get_signing_key",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "jwt.jwks_client.PyJWKClient.get_signing_key_from_jwt"
+      ],
+      "callees": [
+        "jwt.exceptions.PyJWKClientError",
+        "jwt.jwks_client.PyJWKClient.get_signing_keys",
+        "jwt.jwks_client.PyJWKClient.match_kid"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.jwks_client.PyJWKClient.get_signing_key_from_jwt",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "jwt.jwks_client.PyJWKClient.get_signing_key",
+        "header.get",
+        "jwt.api_jwt.decode_complete"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.jwks_client.PyJWKClient.match_kid",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "jwt.jwks_client.PyJWKClient.get_signing_key"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-10T14:44:36"
+}

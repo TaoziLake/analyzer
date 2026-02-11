@@ -1,0 +1,588 @@
+{
+  "commit": "4a1d00e5",
+  "parent": "8ff5474bbdaf4cfbd04081fd2527534bfce686c0",
+  "repo": "D:\\locbench\\peewee",
+  "num_seeds": 2,
+  "num_seeds_used": 2,
+  "seed_scope": "code_only",
+  "num_impacted": 24,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "playhouse.kv",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.kv.KeyValue.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "tests.libs.mock.CallableMixin.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.PeeweeException.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "peewee._ConnectionState.__init__"
+      ],
+      "callees": [
+        "playhouse.kv.KeyValue.model.create_table",
+        "playhouse.kv.KeyValue.create_model",
+        "CharField",
+        "playhouse.fields.PickleField",
+        "playhouse.sqlite_ext.SqliteExtDatabase"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.libs.mock.CallableMixin.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.kv.KeyValue.__init__",
+      "callers": [
+        "tests.libs.mock.CallableMixin.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.PeeweeException.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "peewee._ConnectionState.__init__"
+      ],
+      "callees": [
+        "_super",
+        "__init__",
+        "tests.libs.mock.Base.__init__"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.shortcuts.ReconnectMixin.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.kv.KeyValue.__init__",
+      "callers": [
+        "tests.libs.mock.CallableMixin.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.PeeweeException.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "peewee._ConnectionState.__init__"
+      ],
+      "callees": [
+        "err_fragment.lower",
+        "append",
+        "__init__",
+        "playhouse.shortcuts.ReconnectMixin._reconnect_errors.setdefault"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee._HashableSource.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.kv.KeyValue.__init__",
+      "callers": [
+        "peewee.SelectBase.__init__",
+        "peewee.Table.__init__",
+        "peewee.CTE.__init__",
+        "peewee.ValuesList.__init__"
+      ],
+      "callees": [
+        "peewee._HashableSource._update_hash",
+        "__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.sqlite_udf.synchronized_dict.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.kv.KeyValue.__init__",
+      "callers": [
+        "tests.libs.mock.CallableMixin.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.PeeweeException.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "peewee._ConnectionState.__init__"
+      ],
+      "callees": [
+        "__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.kv.KeyValue.__init__",
+      "callers": [
+        "tests.libs.mock.CallableMixin.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.PeeweeException.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "peewee._ConnectionState.__init__"
+      ],
+      "callees": [
+        "playhouse.pwasyncio.TaskLocal",
+        "kwargs.pop",
+        "__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.libs.mock.MagicMixin.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.kv.KeyValue.__init__",
+      "callers": [
+        "tests.libs.mock.CallableMixin.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.PeeweeException.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "peewee._ConnectionState.__init__"
+      ],
+      "callees": [
+        "_super",
+        "__init__",
+        "tests.libs.mock.MagicMixin._mock_set_magics"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee._ModelQueryHelper.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.kv.KeyValue.__init__",
+      "callers": [
+        "peewee.BaseModelSelect.__init__",
+        "peewee.ModelRaw.__init__",
+        "peewee._ModelWriteQueryHelper.__init__"
+      ],
+      "callees": [
+        "__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.PeeweeException.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.kv.KeyValue.__init__",
+      "callers": [
+        "tests.libs.mock.CallableMixin.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.PeeweeException.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "peewee._ConnectionState.__init__"
+      ],
+      "callees": [
+        "__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.kv.KeyValue.__init__",
+      "callers": [
+        "playhouse.postgres_ext.ArrayField.__init__",
+        "playhouse.psycopg3_ext.BinaryJSONField.__init__"
+      ],
+      "callees": [
+        "kwargs.setdefault",
+        "__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.libs.mock.NonCallableMock.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.kv.KeyValue.__init__",
+      "callers": [
+        "tests.libs.mock.CallableMixin.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.PeeweeException.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "peewee._ConnectionState.__init__"
+      ],
+      "callees": [
+        "__init__",
+        "tests.libs.mock.NonCallableMock._mock_add_spec",
+        "tests.libs.mock.NonCallableMock.configure_mock",
+        "tests.libs.mock._CallList",
+        "_super",
+        "tests.libs.mock.Base.__init__"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.pool.PooledDatabase.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.kv.KeyValue.__init__",
+      "callers": [
+        "tests.pool.FakePooledDatabase.__init__"
+      ],
+      "callees": [
+        "playhouse.pool.make_int",
+        "__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee._ConnectionState.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.kv.KeyValue.__init__",
+      "callers": [
+        "tests.libs.mock.CallableMixin.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.PeeweeException.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "peewee._ConnectionState.__init__"
+      ],
+      "callees": [
+        "__init__",
+        "peewee._ConnectionState.reset"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.SelectBase.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "peewee._HashableSource.__init__",
+      "callers": [
+        "peewee.CompoundSelectQuery.__init__",
+        "peewee.Select.__init__"
+      ],
+      "callees": [
+        "peewee.Source.__init__",
+        "peewee._HashableSource.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Table.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "peewee._HashableSource.__init__",
+      "callers": [
+        "tests.libs.mock.CallableMixin.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.PeeweeException.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "peewee._ConnectionState.__init__"
+      ],
+      "callees": [
+        "Column",
+        "peewee._ExplicitColumn",
+        "peewee.BaseTable.__init__",
+        "peewee._HashableSource.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.CTE.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "peewee._HashableSource.__init__",
+      "callers": [
+        "tests.libs.mock.CallableMixin.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.PeeweeException.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "peewee._ConnectionState.__init__"
+      ],
+      "callees": [
+        "peewee.Source.__init__",
+        "peewee._HashableSource.__init__",
+        "Entity"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.ValuesList.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "peewee._HashableSource.__init__",
+      "callers": [
+        "tests.libs.mock.CallableMixin.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.PeeweeException.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "peewee._ConnectionState.__init__"
+      ],
+      "callees": [
+        "peewee.BaseTable.__init__",
+        "peewee._HashableSource.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.BaseModelSelect.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "peewee._ModelQueryHelper.__init__",
+      "callers": [
+        "peewee.ModelCompoundSelectQuery.__init__",
+        "peewee.ModelSelect.__init__"
+      ],
+      "callees": [
+        "peewee._ModelQueryHelper.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.ModelRaw.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "peewee._ModelQueryHelper.__init__",
+      "callers": [
+        "tests.libs.mock.CallableMixin.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.PeeweeException.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "peewee._ConnectionState.__init__"
+      ],
+      "callees": [
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.RawQuery.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee._ModelWriteQueryHelper.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "peewee._ModelQueryHelper.__init__",
+      "callers": [
+        "peewee.ModelInsert.__init__"
+      ],
+      "callees": [
+        "peewee._ModelQueryHelper.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.postgres_ext.ArrayField.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+      "callers": [
+        "tests.libs.mock.CallableMixin.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.PeeweeException.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "peewee._ConnectionState.__init__"
+      ],
+      "callees": [
+        "field_class",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "Field.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.psycopg3_ext.BinaryJSONField.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+      "callers": [
+        "tests.libs.mock.CallableMixin.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.PeeweeException.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "peewee._ConnectionState.__init__"
+      ],
+      "callees": [
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "Field.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.pool.FakePooledDatabase.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "playhouse.pool.PooledDatabase.__init__",
+      "callers": [
+        "tests.libs.mock.CallableMixin.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.PeeweeException.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "peewee._ConnectionState.__init__"
+      ],
+      "callees": [
+        "tests.pool.FakeDatabase.__init__",
+        "PooledDatabase.__init__",
+        "playhouse.pool.PooledDatabase.__init__"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-10T14:45:49"
+}

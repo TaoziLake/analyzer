@@ -1,0 +1,130 @@
+{
+  "commit": "b41acd6",
+  "parent": "6f43612766da4a2f275b575af0802c3e73b6ed83",
+  "repo": "D:\\locbench\\black",
+  "num_files_in_diff": 46,
+  "num_py_files_in_diff": 3,
+  "num_seeds": 8,
+  "seeds": [
+    {
+      "path": "docs/conf.py",
+      "version": "old",
+      "line": 79,
+      "kind": "module",
+      "qualname": "docs.conf",
+      "span": null,
+      "reason": "diff_old_line_outside_defs",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "scripts/diff_shades_gha_helper.py",
+      "version": "new",
+      "line": 24,
+      "kind": "module",
+      "qualname": "scripts.diff_shades_gha_helper",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "scripts/diff_shades_gha_helper.py",
+      "version": "new",
+      "line": 85,
+      "kind": "function",
+      "qualname": "scripts.diff_shades_gha_helper.get_latest_revision",
+      "span": [
+        85,
+        91
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def get_latest_revision(ref: str) -> str:\n    data = http_get(\n        f\"https://api.github.com/repos/{REPO}/commits\",\n        fields={\"per_page\": \"1\", \"sha\": ref},\n    )\n    assert isinstance(data[0][\"sha\"], str)\n    return data[0][\"sha\"]",
+      "old_code": null
+    },
+    {
+      "path": "scripts/diff_shades_gha_helper.py",
+      "version": "new",
+      "line": 94,
+      "kind": "function",
+      "qualname": "scripts.diff_shades_gha_helper.get_pr_branches",
+      "span": [
+        94,
+        103
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def get_pr_branches(pr: int | None = None) -> tuple[Any, Any, int]:\n    if not pr:\n        pr_ref = os.getenv(\"GITHUB_REF\")\n        assert pr_ref is not None\n        pr = int(pr_ref[10:-6])\n\n    data = http_get(f\"https://api.github.com/repos/{REPO}/pulls/{pr}\")\n    assert isinstance(data[\"base\"][\"sha\"], str)\n    assert isinstance(data[\"head\"][\"sha\"], str)\n    return data[\"base\"], data[\"head\"], pr",
+      "old_code": null
+    },
+    {
+      "path": "scripts/diff_shades_gha_helper.py",
+      "version": "new",
+      "line": 119,
+      "kind": "function",
+      "qualname": "scripts.diff_shades_gha_helper.config",
+      "span": [
+        119,
+        159
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def config() -> None:\n    import diff_shades  # type: ignore[import-not-found]\n\n    jobs = [{\"mode\": \"preview-new-changes\", \"style\": \"preview\"}]\n\n    event = os.getenv(\"GITHUB_EVENT_NAME\")\n    if event == \"push\":\n        # Push on main, let's use PyPI Black as the baseline.\n        baseline_name = str(get_pypi_version())\n        baseline_cmd = f\"git checkout {baseline_name}\"\n\n        target_rev = os.getenv(\"GITHUB_SHA\")\n        assert target_rev is not None\n        target_name = \"main-\" + target_rev[:SHA_LENGTH]\n        target_cmd = f\"git checkout {target_rev}\"\n\n    elif event == \"pull_request\":\n        jobs.insert(0, {\"mode\": \"assert-no-changes\", \"style\": \"stable\"})\n        # PR, let's use the PR base as the baseline.\n        base, head, pr_num = get_pr_branches()\n\n        baseline_rev = get_latest_revision(base[\"ref\"])\n        baseline_name = f\"{base['ref']}-{baseline_rev[:SHA_LENGTH]}\"\n        baseline_cmd = f\"git checkout {baseline_rev}\"\n\n        target_name = f\"pr-{pr_num}-{head['sha'][:SHA_LENGTH]}\"\n        target_cmd = f\"gh pr checkout {pr_num}\\ngit merge origin/{base['ref']}\"\n    else:\n        raise ValueError(f\"Unknown event {event}\")\n\n    env = f\"{platform.system()}-{platform.python_version()}-{diff_shades.__version__}\"\n    for entry in jobs:\n        entry[\"baseline-analysis\"] = f\"{entry['style']}-{baseline_name}.json\"\n        entry[\"baseline-setup-cmd\"] = baseline_cmd\n        entry[\"baseline-cache-key\"] = f\"{env}-{baseline_name}-{entry['style']}\"\n\n        entry[\"target-analysis\"] = f\"{entry['style']}-{target_name}.json\"\n        entry[\"target-setup-cmd\"] = target_cmd\n\n    set_output(\"matrix\", json.dumps(jobs, indent=None))\n    pprint.pprint(jobs)",
+      "old_code": "def config(event: Literal[\"push\", \"pull_request\"]) -> None:\n    import diff_shades  # type: ignore[import-not-found]\n\n    if event == \"push\":\n        jobs = [{\"mode\": \"preview-new-changes\", \"force-flag\": \"--force-preview-style\"}]\n        # Push on main, let's use PyPI Black as the baseline.\n        baseline_name = str(get_pypi_version())\n        baseline_cmd = f\"git checkout {baseline_name}\"\n        target_rev = os.getenv(\"GITHUB_SHA\")\n        assert target_rev is not None\n        target_name = \"main-\" + target_rev[:SHA_LENGTH]\n        target_cmd = f\"git checkout {target_rev}\"\n\n    elif event == \"pull_request\":\n        jobs = [\n            {\"mode\": \"preview-new-changes\", \"force-flag\": \"--force-preview-style\"},\n            {\"mode\": \"assert-no-changes\", \"force-flag\": \"--force-stable-style\"},\n        ]\n        # PR, let's use main as the baseline.\n        baseline_rev = get_main_revision()\n        baseline_name = \"main-\" + baseline_rev[:SHA_LENGTH]\n        baseline_cmd = f\"git checkout {baseline_rev}\"\n        pr_ref = os.getenv(\"GITHUB_REF\")\n        assert pr_ref is not None\n        pr_num = int(pr_ref[10:-6])\n        pr_rev = get_pr_revision(pr_num)\n        target_name = f\"pr-{pr_num}-{pr_rev[:SHA_LENGTH]}\"\n        target_cmd = f\"gh pr checkout {pr_num} && git merge origin/main\"\n\n    env = f\"{platform.system()}-{platform.python_version()}-{diff_shades.__version__}\"\n    for entry in jobs:\n        entry[\"baseline-analysis\"] = f\"{entry['mode']}-{baseline_name}.json\"\n        entry[\"baseline-setup-cmd\"] = baseline_cmd\n        entry[\"target-analysis\"] = f\"{entry['mode']}-{target_name}.json\"\n        entry[\"target-setup-cmd\"] = target_cmd\n        entry[\"baseline-cache-key\"] = f\"{env}-{baseline_name}-{entry['mode']}\"\n        if event == \"pull_request\":\n            # These are only needed for the PR comment.\n            entry[\"baseline-sha\"] = baseline_rev\n            entry[\"target-sha\"] = pr_rev\n\n    set_output(\"matrix\", json.dumps(jobs, indent=None))\n    pprint.pprint(jobs)"
+    },
+    {
+      "path": "scripts/diff_shades_gha_helper.py",
+      "version": "new",
+      "line": 167,
+      "kind": "function",
+      "qualname": "scripts.diff_shades_gha_helper.comment_body",
+      "span": [
+        167,
+        195
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def comment_body(baseline: Path, target: Path, style: str, mode: str) -> None:\n    cmd = (\n        f\"{sys.executable} -m diff_shades --no-color \"\n        f\"compare {baseline} {target} --quiet --check\"\n    ).split(\" \")\n    proc = subprocess.run(cmd, stdout=subprocess.PIPE, encoding=\"utf-8\")\n    if proc.returncode:\n        run_id = os.getenv(\"GITHUB_RUN_ID\")\n        jobs = http_get(\n            f\"https://api.github.com/repos/{REPO}/actions/runs/{run_id}/jobs\",\n        )[\"jobs\"]\n        job = next(j for j in jobs if j[\"name\"] == f\"compare / {mode}\")\n        diff_step = next(s for s in job[\"steps\"] if s[\"name\"] == DIFF_STEP_NAME)\n        diff_url = f\"{job['html_url']}#step:{diff_step['number']}:1\"\n\n        body = (\n            \"<details>\"\n            f\"<summary><b><code>--{style}</code> style</b> \"\n            f'(<a href=\"{diff_url}\">View full diff</a>):</summary>'\n            f\"<pre>{proc.stdout.strip()}</pre>\"\n            \"</details>\"\n        )\n    else:\n        body = f\"<code>--{style}</code> style: no changes\"\n\n    filename = f\".{style}{COMMENT_FILE}\"\n    print(f\"[INFO]: writing comment details to {filename}\")\n    with open(filename, \"w\", encoding=\"utf-8\") as f:\n        f.write(body)",
+      "old_code": "def comment_body(\n    baseline: Path, target: Path, baseline_sha: str, target_sha: str, pr_num: int\n) -> None:\n    # fmt: off\n    cmd = [\n        sys.executable, \"-m\", \"diff_shades\", \"--no-color\",\n        \"compare\", str(baseline), str(target), \"--quiet\", \"--check\"\n    ]\n    # fmt: on\n    proc = subprocess.run(cmd, stdout=subprocess.PIPE, encoding=\"utf-8\")\n    if not proc.returncode:\n        body = (\n            f\"**diff-shades** reports zero changes comparing this PR ({target_sha}) to\"\n            f\" main ({baseline_sha}).\\n\\n---\\n\\n\"\n        )\n    else:\n        body = (\n            f\"**diff-shades** results comparing this PR ({target_sha}) to main\"\n            f\" ({baseline_sha}). The full diff is [available in the logs]\"\n            f'($job-diff-url) under the \"{DIFF_STEP_NAME}\" step.'\n        )\n        body += \"\\n```text\\n\" + proc.stdout.strip() + \"\\n```\\n\"\n    body += (\n        f\"[**What is this?**]({DOCS_URL}) | [Workflow run]($workflow-run-url) |\"\n        \" [diff-shades documentation](https://github.com/ichard26/diff-shades#readme)\"\n    )\n    print(f\"[INFO]: writing comment details to {COMMENT_FILE}\")\n    with open(COMMENT_FILE, \"w\", encoding=\"utf-8\") as f:\n        json.dump({\"body\": body, \"pr-number\": pr_num}, f)"
+    },
+    {
+      "path": "scripts/diff_shades_gha_helper.py",
+      "version": "new",
+      "line": 202,
+      "kind": "function",
+      "qualname": "scripts.diff_shades_gha_helper.comment_details",
+      "span": [
+        202,
+        227
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def comment_details(pr: int, run_id: str, styles: tuple[str, ...]) -> None:\n    base, head, _ = get_pr_branches(pr)\n\n    lines = [\n        f\"**diff-shades** results comparing this PR ({head['sha']}) to {base['ref']}\"\n        f\" ({base['sha']}):\"\n    ]\n    for style_file in styles:\n        with open(\n            join(dirname(__file__), \"..\", style_file),\n            \"r\",\n            encoding=\"utf-8\",\n        ) as f:\n            content = f.read()\n            lines.append(content)\n\n    lines.append(\"---\")\n\n    lines.append(\n        f\"[**What is this?**]({DOCS_URL}) | \"\n        f\"[Workflow run](https://github.com/psf/black/actions/runs/{run_id}) | \"\n        \"[diff-shades documentation](https://github.com/ichard26/diff-shades#readme)\"\n    )\n\n    body = \"\\n\\n\".join(lines)\n    set_output(\"comment-body\", body)",
+      "old_code": "def comment_details(run_id: str) -> None:\n    data = http_get(f\"https://api.github.com/repos/{REPO}/actions/runs/{run_id}\")\n    if data[\"event\"] != \"pull_request\" or data[\"conclusion\"] == \"cancelled\":\n        set_output(\"needs-comment\", \"false\")\n        return\n\n    set_output(\"needs-comment\", \"true\")\n    jobs = http_get(data[\"jobs_url\"])[\"jobs\"]\n    job = next(j for j in jobs if j[\"name\"] == \"compare / preview-new-changes\")\n    diff_step = next(s for s in job[\"steps\"] if s[\"name\"] == DIFF_STEP_NAME)\n    diff_url = job[\"html_url\"] + f\"#step:{diff_step['number']}:1\"\n\n    artifacts = http_get(data[\"artifacts_url\"])[\"artifacts\"]\n    comment_artifact = next(a for a in artifacts if a[\"name\"] == COMMENT_FILE)\n    comment_url = comment_artifact[\"archive_download_url\"]\n    comment_zip = BytesIO(http_get(comment_url, is_json=False))\n    with zipfile.ZipFile(comment_zip) as zfile:\n        with zfile.open(COMMENT_FILE) as rf:\n            comment_data = json.loads(rf.read().decode(\"utf-8\"))\n\n    set_output(\"pr-number\", str(comment_data[\"pr-number\"]))\n    body = comment_data[\"body\"]\n    # It's more convenient to fill in these fields after the first workflow is done\n    # since this command can access the workflows API (doing it in the main workflow\n    # while it's still in progress seems impossible).\n    body = body.replace(\"$workflow-run-url\", data[\"html_url\"])\n    body = body.replace(\"$job-diff-url\", diff_url)\n    set_output(\"comment-body\", body)"
+    },
+    {
+      "path": "scripts/make_width_table.py",
+      "version": "new",
+      "line": 15,
+      "kind": "module",
+      "qualname": "scripts.make_width_table",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": null,
+      "old_code": null
+    }
+  ],
+  "generated_at": "2026-02-09T15:52:04"
+}

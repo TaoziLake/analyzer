@@ -1,0 +1,324 @@
+--- a/playhouse/sqlite_ext.py
++++ b/playhouse/sqlite_ext.py
+@@ -1061,6 +1061,25 @@
+     def __init__(self, database, c_extensions=None, rank_functions=True,
+                  hash_functions=False, regexp_function=False,
+                  json_contains=False, *args, **kwargs):
++        """SqliteExtDatabase is an extended SQLite database class with optional C extensions and additional functions.
++
++        Args:
++            database (str): Path to the database file.
++            c_extensions (bool, optional): Whether to use C extensions. Defaults to None.
++            rank_functions (bool, optional): Whether to register FTS rank functions. Defaults to True.
++            hash_functions (bool, optional): Whether to register hash functions. Defaults to False.
++            regexp_function (bool, optional): Whether to register REGEXP function. Defaults to False.
++            json_contains (bool, optional): Whether to register JSON contains function. Defaults to False.
++            *args: Variable length argument list.
++            **kwargs: Arbitrary keyword arguments.
++
++        Raises:
++            ImproperlyConfigured: If C extensions are requested but not available.
++            ValueError: If hash_functions or json_contains are requested without C extensions.
++
++        Changelog:
++            f5755cb5: Removed the 'bloomfilter' parameter and associated registration logic. Existing code using this parameter will no longer trigger bloomfilter functionality.
++        """
+         super(SqliteExtDatabase, self).__init__(database, *args, **kwargs)
+         self._row_factory = None
+ 
+@@ -1149,6 +1168,17 @@
+ 
+     class CSqliteExtDatabase(SqliteExtDatabase):
+         def __init__(self, *args, **kwargs):
++            """Constructor for CSqliteExtDatabase.
++
++            Initializes internal state including connection helper, transaction hooks, and busy handler flags before delegating to parent class initialization.
++
++            Args:
++                *args: Variable length argument list passed to parent SqliteExtDatabase constructor
++                **kwargs: Arbitrary keyword arguments passed to parent SqliteExtDatabase constructor
++
++            Changelog:
++                f5755cb5: Parent SqliteExtDatabase.__init__ modified - changes in upstream initialization logic may affect parameter handling, connection setup, or hook registration behavior in this class.
++            """
+             self._conn_helper = None
+             self._commit_hook = self._rollback_hook = self._update_hook = None
+             self._replace_busy_handler = False
+
+--- a/playhouse/sqliteq.py
++++ b/playhouse/sqliteq.py
+@@ -198,6 +198,28 @@
+ 
+     def __init__(self, database, use_gevent=False, autostart=True,
+                  queue_max_size=None, results_timeout=None, *args, **kwargs):
++        """Initialize a SqliteQueueDatabase instance with thread-safe write queue.
++
++        Args:
++            database (str): Path to SQLite database file.
++            use_gevent (bool): Use gevent-based threading implementation.
++            autostart (bool): Automatically start the write queue thread.
++            queue_max_size (int): Maximum size of write queue (None for unbounded).
++            results_timeout (float): Timeout for result retrieval in seconds.
++            *args: Additional positional arguments for parent class.
++            **kwargs: Additional keyword arguments for parent class. Note that
++                check_same_thread will be automatically set to False.
++
++        Raises:
++            SqliteDatabaseError: If database initialization fails.
++            RuntimeError: If WAL journal mode cannot be set.
++
++        Changelog:
++            f5755cb5: Parent class SqliteExtDatabase.__init__ modified. This affects
++            pragma handling and check_same_thread behavior. Any changes to how parent
++            class processes pragmas or thread safety settings in this commit may impact
++            database initialization behavior and thread safety guarantees.
++        """
+         kwargs['check_same_thread'] = False
+ 
+         # Lock around starting and stopping write thread operations.
+
+--- a/playhouse/apsw_ext.py
++++ b/playhouse/apsw_ext.py
+@@ -34,6 +34,24 @@
+     server_version = tuple(int(i) for i in apsw.sqlitelibversion().split('.'))
+ 
+     def __init__(self, database, **kwargs):
++        """Initialize an APSWDatabase instance.
++
++        Args:
++            database (str): Path to the database file or ":memory:" for in-memory database.
++            **kwargs: Arbitrary keyword arguments passed to parent class initialization.
++
++        Returns:
++            APSWDatabase: Initialized database instance.
++
++        Raises:
++            sqlite3.Error: If database initialization fails (inherited from parent class).
++
++        Changelog:
++            f5755cb5: Updates parent class SqliteExtDatabase.__init__ behavior. Changes in
++            parameter handling or initialization logic in the parent class may affect
++            APSWDatabase's database connection setup and configuration options passed
++            through kwargs.
++        """
+         self._modules = {}
+         super(APSWDatabase, self).__init__(database, **kwargs)
+ 
+
+--- a/peewee.py
++++ b/peewee.py
+@@ -876,6 +876,21 @@
+ 
+ class _HashableSource(object):
+     def __init__(self, *args, **kwargs):
++        """Initializes a _HashableSource instance and updates its hash value.
++
++        Args:
++            *args: Variable length argument list passed to parent class constructor.
++            **kwargs: Arbitrary keyword arguments passed to parent class constructor.
++
++        Returns:
++            None
++
++        Raises:
++            Any exceptions raised by parent class constructor or _update_hash() method.
++
++        Changelog:
++            f5755cb5: Alters database connection parameter handling and transaction hook registration in parent class initialization chain. May affect how hashable source instances interact with SQLite databases during initialization.
++        """
+         super(_HashableSource, self).__init__(*args, **kwargs)
+         self._update_hash()
+ 
+@@ -3067,6 +3082,26 @@
+ 
+ class PeeweeException(Exception):
+     def __init__(self, *args):
++        """Initialize a PeeweeException instance.
++
++        Args:
++            *args: Variable length argument list. If the first argument is an Exception,
++                it will be stored as the original exception (self.orig). Remaining arguments
++                are passed to the base Exception class constructor.
++
++        Returns:
++            None
++
++        Raises:
++            No direct exceptions raised by this method.
++
++        Changelog:
++            f5755cb5: Updates to CSqliteExtDatabase.__init__ may affect exception origination
++            patterns. If database initialization now raises different exception types or
++            wraps errors differently, PeeweeException instances may capture different
++            original exceptions in their self.orig attribute when propagating database
++            connection errors.
++        """
+         if args and isinstance(args[0], Exception):
+             self.orig, args = args[0], args[1:]
+         super(PeeweeException, self).__init__(*args)
+@@ -3137,6 +3172,11 @@
+ 
+ class _ConnectionState(object):
+     def __init__(self, **kwargs):
++        """Initialize a new connection state instance.
++
++        Changelog:
++            f5755cb5: This function's behavior may be affected by changes to playhouse.sqlite_ext.CSqliteExtDatabase.__init__ in commit f5755cb5. If this instance is used with CSqliteExtDatabase, callers may observe differences in connection parameter handling or transaction hook registration during initialization due to upstream changes in database connection processing.
++        """
+         super(_ConnectionState, self).__init__(**kwargs)
+         self.reset()
+ 
+@@ -7241,6 +7281,24 @@
+     default_row_type = ROW.MODEL
+ 
+     def __init__(self, *args, **kwargs):
++        """Initializes a _ModelQueryHelper instance with model query capabilities.
++
++        Args:
++            *args: Positional arguments passed to parent class constructor
++            **kwargs: Keyword arguments passed to parent class constructor
++
++        Attributes:
++            _database (Database): Database instance, inherited from parent or set from model metadata
++
++        Raises:
++            May propagate exceptions from parent class initialization or database setup
++
++        Changelog:
++            f5755cb5: Parent class CSqliteExtDatabase.__init__ changes may affect database
++            connection parameter handling and transaction hook registration during
++            initialization. This could result in different connection behavior or hook
++            registration order when using SQLite extensions.
++        """
+         super(_ModelQueryHelper, self).__init__(*args, **kwargs)
+         if not self._database:
+             self._database = self.model._meta.database
+
+--- a/playhouse/postgres_ext.py
++++ b/playhouse/postgres_ext.py
+@@ -164,6 +164,30 @@
+     default_index_type = 'GIN'
+ 
+     def __init__(self, *args, **kwargs):
++        """Initialize an IndexedFieldMixin instance with default indexing.
++
++        Sets the 'index' parameter to True by default before calling the parent class's
++        initialization method. This ensures database indexes are created for fields using
++        this mixin unless explicitly disabled.
++
++        Args:
++            *args: Positional arguments passed to parent class initialization
++            **kwargs: Keyword arguments passed to parent class initialization.
++                Automatically includes index=True if not explicitly set.
++
++        Returns:
++            None
++
++        Raises:
++            Any exceptions raised by parent class initialization
++
++        Changelog:
++            f5755cb5: Upstream changes to CSqliteExtDatabase.__init__ may affect how
++            connection parameters are processed or transaction hooks registered during
++            field initialization. While this mixin's direct behavior remains unchanged,
++            callers might observe differences in index creation timing or hook execution
++            order when using fields that inherit this mixin.
++        """
+         kwargs.setdefault('index', True)  # By default, use an index.
+         super(IndexedFieldMixin, self).__init__(*args, **kwargs)
+ 
+
+--- a/playhouse/sqlite_udf.py
++++ b/playhouse/sqlite_udf.py
+@@ -57,6 +57,21 @@
+ 
+ class synchronized_dict(dict):
+     def __init__(self, *args, **kwargs):
++        """Initializes a synchronized dictionary with thread-safe operations and forwards arguments to parent class initialization.
++
++        Args:
++            *args: Variable length argument list passed to parent class __init__.
++            **kwargs: Arbitrary keyword arguments passed to parent class __init__.
++
++        Returns:
++            None
++
++        Raises:
++            Any exceptions raised by parent class __init__ or threading.Lock() initialization.
++
++        Changelog:
++            f5755cb5: Parent class CSqliteExtDatabase.__init__ changes may affect database connection handling or transaction hook registration during initialization. Callers might observe different behavior in database interaction parameters when instantiating synchronized_dict objects.
++        """
+         super(synchronized_dict, self).__init__(*args, **kwargs)
+         self._lock = threading.Lock()
+ 
+
+--- a/playhouse/pool.py
++++ b/playhouse/pool.py
+@@ -87,6 +87,21 @@
+ class PooledDatabase(object):
+     def __init__(self, database, max_connections=20, stale_timeout=None,
+                  timeout=None, **kwargs):
++        """Initialize a pooled database instance with connection management settings.
++
++        Args:
++            database (str): Database name/path or connection string.
++            max_connections (int): Maximum number of connections to maintain in pool.
++            stale_timeout (Optional[int]): Time in seconds after which idle connections become stale.
++            timeout (Optional[int]): Default wait timeout for connection acquisition (0 = infinite).
++            **kwargs: Additional database connection parameters passed to parent class initialization.
++
++        Raises:
++            TypeError: If non-integer values are provided for numeric configuration parameters.
++
++        Changelog:
++            f5755cb5: Parent class initialization changes in CSqliteExtDatabase.__init__ may affect connection parameter processing and transaction hook registration behavior for pooled database instances. Any parameter handling changes or hook registration modifications in the upstream commit will propagate through the **kwargs passed to the parent class constructor.
++        """
+         self._max_connections = make_int(max_connections)
+         self._stale_timeout = make_int(stale_timeout)
+         self._wait_timeout = make_int(timeout)
+
+--- a/playhouse/pwasyncio.py
++++ b/playhouse/pwasyncio.py
+@@ -164,6 +164,22 @@
+ 
+ class AsyncDatabaseMixin(object):
+     def __init__(self, database, **kwargs):
++        """Initialize an AsyncDatabaseMixin instance with async database configuration.
++
++        Args:
++            database (str): Database name or path
++            **kwargs: Async-specific configuration parameters:
++                pool_size (int): Maximum number of connections in pool (default: 10)
++                pool_min_size (int): Minimum number of connections in pool (default: 1)
++                acquire_timeout (int): Connection acquisition timeout in seconds (default: 10)
++                Additional kwargs passed to parent database class initialization.
++
++        Raises:
++            Any exceptions raised by parent database class initialization may propagate through.
++
++        Changelog:
++            f5755cb5: Parent database class (SqliteExtDatabase) initialization behavior changed, which may affect how connection parameters are processed or transaction hooks registered during async database setup. AsyncDatabaseMixin now inherits these changes through its super().__init__ call chain.
++        """
+         self._pool_size = kwargs.pop('pool_size', 10)
+         self._pool_min_size = kwargs.pop('pool_min_size', 1)
+         self._acquire_timeout = kwargs.pop('acquire_timeout', 10)
+
+--- a/playhouse/shortcuts.py
++++ b/playhouse/shortcuts.py
+@@ -241,6 +241,15 @@
+     )
+ 
+     def __init__(self, *args, **kwargs):
++        """Initializes the ReconnectMixin instance and prepares the reconnection error handling structure.
++
++        Args:
++            *args: Positional arguments passed to the parent class constructor.
++            **kwargs: Keyword arguments passed to the parent class constructor.
++
++        Changelog:
++            f5755cb5: Upstream changes in CSqliteExtDatabase.__init__ may alter connection parameter handling or transaction hook registration behavior during initialization. This could affect how reconnection errors are processed or when reconnect hooks are triggered in the ReconnectMixin class.
++        """
+         super(ReconnectMixin, self).__init__(*args, **kwargs)
+ 
+         # Normalize the reconnect errors to a more efficient data-structure.

@@ -1,0 +1,1724 @@
+{
+  "commit": "c0556ac3",
+  "parent": "1fcec88ad2df4541b6a81c4786c4d039dc745e1e",
+  "repo": "D:\\locbench\\fastapi",
+  "num_seeds": 13,
+  "num_seeds_used": 3,
+  "seed_scope": "code_only",
+  "num_impacted": 95,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 7764,
+    "total_call_relations": 12690
+  },
+  "impacted": [
+    {
+      "qualname": "fastapi._compat.v2",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi._compat.v2.asdict",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "fastapi._compat.v2.ModelField.__post_init__"
+      ],
+      "callees": [
+        "getattr"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi._compat.v2.ModelField.__post_init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "warnings.catch_warnings",
+        "fastapi._compat.v2.asdict",
+        "pydantic.Field",
+        "pydantic.TypeAdapter",
+        "warnings.simplefilter"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "getattr",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "fastapi._compat.v2.asdict",
+      "callers": [
+        "fastapi.routing.APIRouter.include_router",
+        "fastapi._compat.v2.asdict",
+        "fastapi.dependencies.utils.solve_dependencies",
+        "fastapi.dependencies.models.Dependant.is_gen_callable",
+        "fastapi.types",
+        "fastapi.openapi.utils.get_fields_from_routes",
+        "fastapi.dependencies.utils.get_typed_signature",
+        "fastapi.dependencies.utils.request_params_to_args",
+        "fastapi.dependencies.utils._should_embed_body_fields",
+        "tests.test_operations_signatures.test_signatures_consistency",
+        "fastapi.dependencies.utils.analyze_param",
+        "fastapi.openapi.utils._get_openapi_operation_parameters",
+        "fastapi.dependencies.utils.get_typed_return_annotation",
+        "fastapi.dependencies.utils.add_param_to_fields",
+        "fastapi.exception_handlers.http_exception_handler",
+        "tests.test_custom_route_class.test_route_classes",
+        "fastapi.dependencies.models.Dependant.is_coroutine_callable",
+        "tests.test_dependency_wrapped.noop_wrap_async.wrapper",
+        "fastapi.dependencies.utils.get_validation_alias",
+        "fastapi.dependencies.models.Dependant.is_async_gen_callable",
+        "fastapi.routing._extract_endpoint_context",
+        "fastapi.openapi.utils.get_openapi_operation_metadata"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "warnings.catch_warnings",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "fastapi._compat.v2.ModelField.__post_init__",
+      "callers": [
+        "tests.test_multipart_installation.test_no_multipart_installed_file_bytes",
+        "tests.test_multipart_installation.test_incorrect_multipart_installed_multi_form",
+        "tests.test_multipart_installation.test_incorrect_multipart_installed_form",
+        "tests.test_multipart_installation.test_no_multipart_installed_multi_form",
+        "tests.test_multipart_installation.test_no_multipart_installed_form_file",
+        "tests.test_include_router_defaults_overrides.test_openapi",
+        "tests.test_tutorial.test_sql_databases.test_tutorial001.get_client",
+        "tests.test_tutorial.test_sql_databases.test_tutorial002.test_crud_app",
+        "tests.test_multipart_installation.test_incorrect_multipart_installed_file_bytes",
+        "tests.test_multipart_installation.test_incorrect_multipart_installed_file_upload",
+        "tests.test_multipart_installation.test_incorrect_multipart_installed_form_file",
+        "tests.test_multipart_installation.test_no_multipart_installed",
+        "fastapi._compat.shared.is_pydantic_v1_model_class",
+        "tests.test_jsonable_encoder.test_json_encoder_error_with_pydanticv1",
+        "tests.test_multipart_installation.test_old_multipart_installed",
+        "tests.test_tutorial.test_sql_databases.test_tutorial002.get_client",
+        "tests.test_pydantic_v1_error",
+        "fastapi._compat.v2.ModelField.__post_init__",
+        "tests.test_multipart_installation.test_no_multipart_installed_file",
+        "tests.test_generate_unique_id_function.test_warn_duplicate_operation_id",
+        "tests.test_tutorial.test_sql_databases.test_tutorial001.test_crud_app",
+        "fastapi._compat.shared.is_pydantic_v1_model_instance"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "pydantic.Field",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "fastapi._compat.v2.ModelField.__post_init__",
+      "callers": [
+        "tests.test_request_params.test_form.test_list",
+        "tests.test_request_params.test_header.test_optional_str",
+        "docs_src.query_param_models.tutorial001_py310",
+        "tests.test_request_params.test_body.test_list",
+        "tests.test_request_params.test_header.test_optional_list",
+        "tests.test_request_params.test_header.test_required_str",
+        "docs_src.query_param_models.tutorial002_an_py39",
+        "tests.test_request_params.test_cookie.test_optional_str",
+        "docs_src.schema_extra_example.tutorial002_py39",
+        "tests.test_request_params.test_query.test_required_str",
+        "docs_src.query_param_models.tutorial001_an_py39",
+        "tests.test_jsonable_encoder",
+        "tests.test_union_body_discriminator.test_discriminator_pydantic_v2",
+        "tests.test_request_params.test_body.test_required_str",
+        "tests.test_schema_ref_pydantic_v2.get_client",
+        "docs_src.body_fields.tutorial001_py39",
+        "docs_src.query_param_models.tutorial002_py39",
+        "tests.test_response_model_default_factory",
+        "docs_src.schema_extra_example.tutorial002_py310",
+        "tests.test_request_params.test_body.test_optional_list",
+        "fastapi.openapi.models",
+        "tests.test_serialize_response_model",
+        "tests.test_forms_single_model",
+        "tests.test_request_params.test_body.test_optional_str",
+        "docs_src.body_fields.tutorial001_py310",
+        "tests.test_request_params.test_form.test_required_str",
+        "tests.test_request_params.test_query.test_list",
+        "tests.test_request_params.test_header.test_list",
+        "docs_src.body_fields.tutorial001_an_py39",
+        "tests.test_response_by_alias",
+        "tests.test_request_params.test_cookie.test_required_str",
+        "docs_src.query_param_models.tutorial002_py310",
+        "tests.test_union_body_discriminator.test_discriminator_pydantic_v2.save_union_body_discriminator",
+        "docs_src.body_fields.tutorial001_an_py310",
+        "tests.test_request_params.test_form.test_optional_list",
+        "fastapi._compat.v2.ModelField.__post_init__",
+        "tests.test_request_params.test_query.test_optional_list",
+        "docs_src.query_param_models.tutorial001_py39",
+        "docs_src.query_param_models.tutorial001_an_py310",
+        "tests.test_request_params.test_form.test_optional_str",
+        "tests.test_request_param_model_by_alias",
+        "tests.test_request_params.test_query.test_optional_str",
+        "docs_src.query_param_models.tutorial002_an_py310",
+        "tests.test_no_schema_split"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "pydantic.TypeAdapter",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "fastapi._compat.v2.ModelField.__post_init__",
+      "callers": [
+        "tests.test_arbitrary_types.get_client",
+        "fastapi._compat.v2.ModelField.__post_init__",
+        "tests.test_arbitrary_types.test_typeadapter"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "warnings.simplefilter",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "fastapi._compat.v2.ModelField.__post_init__",
+      "callers": [
+        "tests.test_multipart_installation.test_no_multipart_installed_file_bytes",
+        "tests.test_multipart_installation.test_incorrect_multipart_installed_multi_form",
+        "tests.test_multipart_installation.test_incorrect_multipart_installed_form",
+        "tests.test_multipart_installation.test_no_multipart_installed_multi_form",
+        "tests.test_multipart_installation.test_no_multipart_installed_form_file",
+        "tests.test_include_router_defaults_overrides.test_openapi",
+        "tests.test_tutorial.test_sql_databases.test_tutorial001.get_client",
+        "tests.test_tutorial.test_sql_databases.test_tutorial002.test_crud_app",
+        "tests.test_multipart_installation.test_incorrect_multipart_installed_file_bytes",
+        "tests.test_multipart_installation.test_incorrect_multipart_installed_file_upload",
+        "tests.test_multipart_installation.test_incorrect_multipart_installed_form_file",
+        "tests.test_multipart_installation.test_no_multipart_installed",
+        "fastapi._compat.shared.is_pydantic_v1_model_class",
+        "tests.test_jsonable_encoder.test_json_encoder_error_with_pydanticv1",
+        "tests.test_multipart_installation.test_old_multipart_installed",
+        "tests.test_tutorial.test_sql_databases.test_tutorial002.get_client",
+        "tests.test_pydantic_v1_error",
+        "fastapi._compat.v2.ModelField.__post_init__",
+        "tests.test_multipart_installation.test_no_multipart_installed_file",
+        "tests.test_generate_unique_id_function.test_warn_duplicate_operation_id",
+        "tests.test_tutorial.test_sql_databases.test_tutorial001.test_crud_app",
+        "fastapi._compat.shared.is_pydantic_v1_model_instance"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "fastapi.routing.APIRouter.include_router",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [],
+      "callees": [
+        "current_tags.extend",
+        "list",
+        "prefix.endswith",
+        "fastapi.exceptions.FastAPIError",
+        "fastapi.routing.APIRouter.add_route",
+        "fastapi.datastructures.Default",
+        "fastapi.routing._merge_lifespan_context",
+        "prefix.startswith",
+        "current_callbacks.extend",
+        "fastapi.utils.get_value_or_default",
+        "fastapi.routing.APIRouter.add_event_handler",
+        "fastapi.routing.APIRouter.add_api_route",
+        "fastapi.routing.APIRouter.add_websocket_route",
+        "getattr",
+        "isinstance",
+        "fastapi.routing.APIRouter.add_api_websocket_route",
+        "type",
+        "current_dependencies.extend",
+        "annotated_doc.Doc"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.dependencies.utils.solve_dependencies",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [
+        "fastapi.routing.get_request_handler.app",
+        "fastapi.dependencies.utils.solve_dependencies",
+        "fastapi.routing.get_websocket_app.app"
+      ],
+      "callees": [
+        "starlette.concurrency.run_in_threadpool",
+        "fastapi.background.BackgroundTasks",
+        "call",
+        "request.scope.get",
+        "fastapi.security.oauth2.SecurityScopes",
+        "fastapi.dependencies.utils.get_dependant",
+        "starlette.responses.Response",
+        "typing.cast",
+        "getattr",
+        "values.update",
+        "fastapi.dependencies.utils.SolvedDependency",
+        "errors.extend",
+        "isinstance",
+        "fastapi.dependencies.utils._solve_generator",
+        "fastapi.dependencies.utils.solve_dependencies",
+        "fastapi.dependencies.utils.request_params_to_args",
+        "fastapi.dependencies.utils.request_body_to_args"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.dependencies.models.Dependant.is_gen_callable",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [],
+      "callees": [
+        "inspect.isgeneratorfunction",
+        "fastapi.dependencies.models._impartial",
+        "getattr",
+        "fastapi.dependencies.models._unwrapped_call",
+        "inspect.isclass"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.types",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [],
+      "callees": [
+        "getattr",
+        "typing.TypeVar"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.openapi.utils.get_fields_from_routes",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [
+        "fastapi.openapi.utils.get_openapi",
+        "fastapi.openapi.utils.get_fields_from_routes"
+      ],
+      "callees": [
+        "request_fields_from_routes.extend",
+        "responses_from_routes.extend",
+        "list",
+        "responses_from_routes.append",
+        "body_fields_from_routes.append",
+        "getattr",
+        "callback_flat_models.extend",
+        "fastapi.dependencies.utils.get_flat_params",
+        "isinstance",
+        "route.response_fields.values",
+        "fastapi.openapi.utils.get_fields_from_routes"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.dependencies.utils.get_typed_signature",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [
+        "fastapi.dependencies.utils.get_dependant"
+      ],
+      "callees": [
+        "inspect.unwrap",
+        "fastapi.dependencies.utils.get_typed_annotation",
+        "fastapi.dependencies.utils._get_signature",
+        "inspect.Signature",
+        "getattr",
+        "inspect.Parameter",
+        "signature.parameters.values"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.dependencies.utils.request_params_to_args",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [
+        "fastapi.dependencies.utils.solve_dependencies"
+      ],
+      "callees": [
+        "received_params.keys",
+        "fastapi.dependencies.utils.get_validation_alias",
+        "fastapi.dependencies.utils._get_multidict_value",
+        "fastapi._compat.lenient_issubclass",
+        "received_params.get",
+        "getattr",
+        "len",
+        "processed_keys.add",
+        "isinstance",
+        "set",
+        "fastapi.dependencies.utils._validate_value_with_model_field",
+        "errors.extend",
+        "received_params.getlist",
+        "alias.replace",
+        "fastapi._compat.get_cached_model_fields",
+        "hasattr"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.dependencies.utils._should_embed_body_fields",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [
+        "fastapi.routing.APIRoute.__init__",
+        "fastapi.routing.APIWebSocketRoute.__init__"
+      ],
+      "callees": [
+        "fastapi.dependencies.utils.is_union_of_base_models",
+        "fastapi._compat.lenient_issubclass",
+        "getattr",
+        "len",
+        "isinstance"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_operations_signatures.test_signatures_consistency",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [],
+      "callees": [
+        "base_sig.parameters.items",
+        "getattr",
+        "inspect.signature"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.dependencies.utils.analyze_param",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [
+        "fastapi.dependencies.utils.get_dependant"
+      ],
+      "callees": [
+        "fastapi.dependencies.utils.ensure_multipart_is_installed",
+        "fastapi.params.Path",
+        "fastapi._compat.is_uploadfile_sequence_annotation",
+        "fastapi.dependencies.utils.ParamDetails",
+        "fastapi.params.Body",
+        "fastapi._compat.is_scalar_field",
+        "dataclasses.replace",
+        "fastapi._compat.lenient_issubclass",
+        "fastapi._compat.is_scalar_sequence_field",
+        "copy.copy.copy",
+        "param_name.replace",
+        "fastapi.params.File",
+        "fastapi._compat.field_annotation_is_scalar",
+        "fastapi._compat.is_uploadfile_or_nonable_uploadfile_annotation",
+        "fastapi.utils.create_model_field",
+        "typing_extensions.get_args",
+        "getattr",
+        "fastapi._compat.copy_field_info",
+        "isinstance",
+        "fastapi.params.Query",
+        "typing_extensions.get_origin"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.openapi.utils._get_openapi_operation_parameters",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [
+        "fastapi.openapi.utils.get_openapi_path"
+      ],
+      "callees": [
+        "parameters.append",
+        "fastapi.dependencies.utils.get_validation_alias",
+        "fastapi._compat.lenient_issubclass",
+        "fastapi.dependencies.utils._get_flat_fields_from_params",
+        "getattr",
+        "len",
+        "param.name.replace",
+        "fastapi._compat.get_schema_from_model_field",
+        "fastapi.encoders.jsonable_encoder",
+        "fastapi.dependencies.utils.get_flat_dependant"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.dependencies.utils.get_typed_return_annotation",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [
+        "fastapi.routing.APIRoute.__init__"
+      ],
+      "callees": [
+        "inspect.unwrap",
+        "fastapi.dependencies.utils._get_signature",
+        "getattr",
+        "fastapi.dependencies.utils.get_typed_annotation"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.dependencies.utils.add_param_to_fields",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [
+        "fastapi.dependencies.utils.get_dependant"
+      ],
+      "callees": [
+        "dependant.header_params.append",
+        "dependant.query_params.append",
+        "getattr",
+        "dependant.path_params.append",
+        "dependant.cookie_params.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.exception_handlers.http_exception_handler",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [
+        "docs_src.handling_errors.tutorial006_py39.custom_http_exception_handler"
+      ],
+      "callees": [
+        "fastapi.utils.is_body_allowed_for_status_code",
+        "starlette.responses.Response",
+        "getattr",
+        "starlette.responses.JSONResponse"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_custom_route_class.test_route_classes",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [],
+      "callees": [
+        "isinstance",
+        "getattr"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.dependencies.models.Dependant.is_coroutine_callable",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [],
+      "callees": [
+        "fastapi.dependencies.models._impartial",
+        "inspect.isroutine",
+        "getattr",
+        "fastapi.dependencies.models._unwrapped_call",
+        "asyncio.iscoroutinefunction",
+        "inspect.isclass"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_dependency_wrapped.noop_wrap_async.wrapper",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [],
+      "callees": [
+        "inspect.isroutine",
+        "getattr",
+        "asyncio.iscoroutinefunction",
+        "fastapi.concurrency.run_in_threadpool",
+        "func",
+        "inspect.isclass",
+        "functools.wraps",
+        "dunder_call"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.dependencies.utils.get_validation_alias",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [
+        "fastapi.dependencies.utils._get_multidict_value",
+        "fastapi.openapi.utils._get_openapi_operation_parameters",
+        "fastapi.dependencies.utils._extract_form_body",
+        "fastapi.dependencies.utils.request_params_to_args",
+        "fastapi.dependencies.utils.request_body_to_args"
+      ],
+      "callees": [
+        "getattr"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.dependencies.models.Dependant.is_async_gen_callable",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [],
+      "callees": [
+        "fastapi.dependencies.models._impartial",
+        "getattr",
+        "fastapi.dependencies.models._unwrapped_call",
+        "inspect.isclass",
+        "inspect.isasyncgenfunction"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.routing._extract_endpoint_context",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [
+        "fastapi.routing.get_request_handler.app",
+        "fastapi.routing.get_websocket_app.app"
+      ],
+      "callees": [
+        "fastapi.exceptions.EndpointContext",
+        "getattr",
+        "inspect.getsourcefile",
+        "inspect.getsourcelines",
+        "id"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.openapi.utils.get_openapi_operation_metadata",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "getattr",
+      "callers": [
+        "fastapi.openapi.utils.get_openapi_path"
+      ],
+      "callees": [
+        "fastapi.openapi.utils.generate_operation_summary",
+        "operation_ids.add",
+        "warnings.warn",
+        "getattr"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_multipart_installation.test_no_multipart_installed_file_bytes",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "pytest.raises",
+        "monkeypatch.delattr",
+        "monkeypatch.setattr",
+        "warnings.catch_warnings",
+        "fastapi.FastAPI",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_multipart_installation.test_incorrect_multipart_installed_multi_form",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "pytest.raises",
+        "monkeypatch.delattr",
+        "monkeypatch.setattr",
+        "warnings.catch_warnings",
+        "fastapi.FastAPI",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_multipart_installation.test_incorrect_multipart_installed_form",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "pytest.raises",
+        "monkeypatch.delattr",
+        "monkeypatch.setattr",
+        "warnings.catch_warnings",
+        "fastapi.FastAPI",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_multipart_installation.test_no_multipart_installed_multi_form",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "pytest.raises",
+        "monkeypatch.delattr",
+        "monkeypatch.setattr",
+        "warnings.catch_warnings",
+        "fastapi.FastAPI",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_multipart_installation.test_no_multipart_installed_form_file",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "pytest.raises",
+        "monkeypatch.delattr",
+        "monkeypatch.setattr",
+        "warnings.catch_warnings",
+        "fastapi.FastAPI",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_include_router_defaults_overrides.test_openapi",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "issubclass",
+        "warnings.catch_warnings",
+        "client.get",
+        "str",
+        "fastapi.testclient.TestClient",
+        "response.json",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_sql_databases.test_tutorial001.get_client",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "mod.engine.dispose",
+        "pytest.fixture",
+        "tests.test_tutorial.test_sql_databases.test_tutorial001.clear_sqlmodel",
+        "warnings.catch_warnings",
+        "importlib.import_module",
+        "fastapi.testclient.TestClient",
+        "pytest.param",
+        "importlib.reload",
+        "sqlmodel.create_engine",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_sql_databases.test_tutorial002.test_crud_app",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "dirty_equals.IsInt",
+        "inline_snapshot.snapshot",
+        "client.delete",
+        "warnings.catch_warnings",
+        "client.get",
+        "client.patch",
+        "response.json",
+        "client.post",
+        "inline_snapshot.Is",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_multipart_installation.test_incorrect_multipart_installed_file_bytes",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "pytest.raises",
+        "monkeypatch.delattr",
+        "monkeypatch.setattr",
+        "warnings.catch_warnings",
+        "fastapi.FastAPI",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_multipart_installation.test_incorrect_multipart_installed_file_upload",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "pytest.raises",
+        "monkeypatch.delattr",
+        "monkeypatch.setattr",
+        "warnings.catch_warnings",
+        "fastapi.FastAPI",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_multipart_installation.test_incorrect_multipart_installed_form_file",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "pytest.raises",
+        "monkeypatch.delattr",
+        "monkeypatch.setattr",
+        "warnings.catch_warnings",
+        "fastapi.FastAPI",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_multipart_installation.test_no_multipart_installed",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "pytest.raises",
+        "monkeypatch.delattr",
+        "monkeypatch.setattr",
+        "warnings.catch_warnings",
+        "fastapi.FastAPI",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi._compat.shared.is_pydantic_v1_model_class",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [
+        "fastapi._compat.shared.annotation_is_pydantic_v1"
+      ],
+      "callees": [
+        "fastapi._compat.shared.lenient_issubclass",
+        "warnings.simplefilter",
+        "warnings.catch_warnings"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_jsonable_encoder.test_json_encoder_error_with_pydanticv1",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "pytest.raises",
+        "ModelV1",
+        "warnings.catch_warnings",
+        "fastapi.encoders.jsonable_encoder",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_multipart_installation.test_old_multipart_installed",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "fastapi.FastAPI",
+        "monkeypatch.setattr",
+        "warnings.simplefilter",
+        "warnings.catch_warnings"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_sql_databases.test_tutorial002.get_client",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "mod.engine.dispose",
+        "pytest.fixture",
+        "warnings.catch_warnings",
+        "importlib.import_module",
+        "fastapi.testclient.TestClient",
+        "pytest.param",
+        "tests.test_tutorial.test_sql_databases.test_tutorial002.clear_sqlmodel",
+        "importlib.reload",
+        "sqlmodel.create_engine",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_pydantic_v1_error",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "warnings.catch_warnings",
+        "warnings.simplefilter",
+        "tests.utils.skip_module_if_py_gte_314"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_multipart_installation.test_no_multipart_installed_file",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "pytest.raises",
+        "monkeypatch.delattr",
+        "monkeypatch.setattr",
+        "warnings.catch_warnings",
+        "fastapi.FastAPI",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_generate_unique_id_function.test_warn_duplicate_operation_id",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "issubclass",
+        "warnings.catch_warnings",
+        "client.get",
+        "fastapi.FastAPI",
+        "len",
+        "fastapi.testclient.TestClient",
+        "str",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_sql_databases.test_tutorial001.test_crud_app",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "dirty_equals.IsInt",
+        "inline_snapshot.snapshot",
+        "client.delete",
+        "warnings.catch_warnings",
+        "client.get",
+        "response.json",
+        "client.post",
+        "warnings.simplefilter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi._compat.shared.is_pydantic_v1_model_instance",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "warnings.catch_warnings",
+      "callers": [],
+      "callees": [
+        "isinstance",
+        "warnings.simplefilter",
+        "warnings.catch_warnings"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_form.test_list",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_header.test_optional_str",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.query_param_models.tutorial001_py310",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_body.test_list",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_header.test_optional_list",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_header.test_required_str",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.query_param_models.tutorial002_an_py39",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_cookie.test_optional_str",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.schema_extra_example.tutorial002_py39",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_query.test_required_str",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.query_param_models.tutorial001_an_py39",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_jsonable_encoder",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_union_body_discriminator.test_discriminator_pydantic_v2",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "inline_snapshot.snapshot",
+        "pydantic.Tag",
+        "client.get",
+        "fastapi.FastAPI",
+        "fastapi.testclient.TestClient",
+        "response.json",
+        "client.post",
+        "pydantic.Field"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_body.test_required_str",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_schema_ref_pydantic_v2.get_client",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pytest.fixture",
+        "pydantic.ConfigDict",
+        "fastapi.FastAPI",
+        "fastapi.testclient.TestClient",
+        "pydantic.Field"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.body_fields.tutorial001_py39",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.query_param_models.tutorial002_py39",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_response_model_default_factory",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI",
+        "fastapi.testclient.TestClient"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.schema_extra_example.tutorial002_py310",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_body.test_optional_list",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.openapi.models",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "Operation.model_rebuild",
+        "Schema.model_rebuild",
+        "pydantic.Field",
+        "typing_extensions.deprecated",
+        "Encoding.model_rebuild"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_serialize_response_model",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI",
+        "starlette.testclient.TestClient"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_forms_single_model",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI",
+        "fastapi.testclient.TestClient"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_body.test_optional_str",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.body_fields.tutorial001_py310",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_form.test_required_str",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_query.test_list",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_header.test_list",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.body_fields.tutorial001_an_py39",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_response_by_alias",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI",
+        "fastapi.testclient.TestClient",
+        "pydantic.ConfigDict"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_cookie.test_required_str",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.query_param_models.tutorial002_py310",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_union_body_discriminator.test_discriminator_pydantic_v2.save_union_body_discriminator",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "app.post"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.body_fields.tutorial001_an_py310",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_form.test_optional_list",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_query.test_optional_list",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.query_param_models.tutorial001_py39",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.query_param_models.tutorial001_an_py310",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_form.test_optional_str",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_param_model_by_alias",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_request_params.test_query.test_optional_str",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.query_param_models.tutorial002_an_py310",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_no_schema_split",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.Field",
+      "callers": [],
+      "callees": [
+        "pydantic.Field",
+        "fastapi.FastAPI",
+        "fastapi.testclient.TestClient"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_arbitrary_types.get_client",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.TypeAdapter",
+      "callers": [],
+      "callees": [
+        "pytest.fixture",
+        "pydantic.ConfigDict",
+        "pydantic.WithJsonSchema",
+        "fastapi.FastAPI",
+        "fastapi.testclient.TestClient",
+        "pydantic.PlainSerializer",
+        "pydantic.TypeAdapter"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_arbitrary_types.test_typeadapter",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pydantic.TypeAdapter",
+      "callers": [],
+      "callees": [
+        "inline_snapshot.snapshot",
+        "MyModel",
+        "FakeNumpyArray",
+        "ta.json_schema",
+        "pydantic.ConfigDict",
+        "pydantic.WithJsonSchema",
+        "pydantic.PlainSerializer",
+        "pydantic.TypeAdapter",
+        "ta.dump_python"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-26T21:01:32"
+}

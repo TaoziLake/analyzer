@@ -1,0 +1,204 @@
+{
+  "commit": "1d233bb",
+  "parent": "f4b006f61d4009135b744941f02df384f7604bc8",
+  "repo": "D:\\locbench\\black",
+  "num_files_in_diff": 9,
+  "num_py_files_in_diff": 6,
+  "num_seeds": 13,
+  "seeds": [
+    {
+      "path": "src/black/linegen.py",
+      "version": "new",
+      "line": 682,
+      "kind": "module",
+      "qualname": "src.black.linegen",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "src/black/linegen.py",
+      "version": "new",
+      "line": 709,
+      "kind": "function",
+      "qualname": "src.black.linegen.transform_line",
+      "span": [
+        694,
+        821
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def transform_line(\n    line: Line, mode: Mode, features: Collection[Feature] = ()\n) -> Iterator[Line]:\n    \"\"\"Transform a `line`, potentially splitting it into many lines.\n\n    They should fit in the allotted `line_length` but might not be able to.\n\n    `features` are syntactical features that may be used in the output.\n    \"\"\"\n    if line.is_comment:\n        yield line\n        return\n\n    line_str = line_to_string(line)\n\n    if Preview.simplify_power_operator_hugging in mode:\n        line_str_hugging_power_ops = line_str\n    else:\n        # We need the line string when power operators are hugging to determine if we\n        # should split the line. Default to line_str, if no power operator are present\n        # on the line.\n        line_str_hugging_power_ops = (\n            _hugging_power_ops_line_to_string(line, features, mode) or line_str\n        )\n\n    ll = mode.line_length\n    sn = mode.string_normalization\n    string_merge = StringMerger(ll, sn)\n    string_paren_strip = StringParenStripper(ll, sn)\n    string_split = StringSplitter(ll, sn)\n    string_paren_wrap = StringParenWrapper(ll, sn)\n\n    transformers: list[Transformer]\n    if (\n        not line.contains_uncollapsable_type_comments()\n        and not line.should_split_rhs\n        and not line.magic_trailing_comma\n        and (\n            is_line_short_enough(line, mode=mode, line_str=line_str_hugging_power_ops)\n            or line.contains_unsplittable_type_ignore()\n        )\n        and not (line.inside_brackets and line.contains_standalone_comments())\n        and not line.contains_implicit_multiline_string_with_comments()\n    ):\n        # Only apply basic string preprocessing, since lines shouldn't be split here.\n        if Preview.string_processing in mode:\n            transformers = [string_merge, string_paren_strip]\n        else:\n            transformers = []\n    elif line.is_def and not should_split_funcdef_with_rhs(line, mode):\n        transformers = [left_hand_split]\n    else:\n\n        def _rhs(\n            self: object, line: Line, features: Collection[Feature], mode: Mode\n        ) -> Iterator[Line]:\n            \"\"\"Wraps calls to `right_hand_split`.\n\n            The calls increasingly `omit` right-hand trailers (bracket pairs with\n            content), meaning the trailers get glued together to split on another\n            bracket pair instead.\n            \"\"\"\n            for omit in generate_trailers_to_omit(line, mode.line_length):\n                lines = list(right_hand_split(line, mode, features, omit=omit))\n                # Note: this check is only able to figure out if the first line of the\n                # *current* transformation fits in the line length.  This is true only\n                # for simple cases.  All others require running more transforms via\n                # `transform_line()`.  This check doesn't know if those would succeed.\n                if is_line_short_enough(lines[0], mode=mode):\n                    yield from lines\n                    return\n\n            # All splits failed, best effort split with no omits.\n            # This mostly happens to multiline strings that are by definition\n            # reported as not fitting a single line, as well as lines that contain\n            # trailing commas (those have to be exploded).\n            yield from right_hand_split(line, mode, features=features)\n\n        # HACK: nested functions (like _rhs) compiled by mypyc don't retain their\n        # __name__ attribute which is needed in `run_transformer` further down.\n        # Unfortunately a nested class breaks mypyc too. So a class must be created\n        # via type ... https://github.com/mypyc/mypyc/issues/884\n        rhs = type(\"rhs\", (), {\"__call__\": _rhs})()\n\n        if Preview.string_processing in mode:\n            if line.inside_brackets:\n                transformers = [\n                    string_merge,\n                    string_paren_strip,\n                    string_split,\n                    delimiter_split,\n                    standalone_comment_split,\n                    string_paren_wrap,\n                    rhs,\n                ]\n            else:\n                transformers = [\n                    string_merge,\n                    string_paren_strip,\n                    string_split,\n                    string_paren_wrap,\n                    rhs,\n                ]\n        else:\n            if line.inside_brackets:\n                transformers = [delimiter_split, standalone_comment_split, rhs]\n            else:\n                transformers = [rhs]\n\n    if Preview.simplify_power_operator_hugging not in mode:\n        # It's always safe to attempt hugging of power operations and pretty much every\n        # line could match.\n        transformers.append(hug_power_op)\n\n    for transform in transformers:\n        # We are accumulating lines in `result` because we might want to abort\n        # mission and return the original line in the end, or attempt a different\n        # split altogether.\n        try:\n            result = run_transformer(line, transform, mode, features, line_str=line_str)\n        except CannotTransform:\n            continue\n        else:\n            yield from result\n            break\n\n    else:\n        yield line",
+      "old_code": "def transform_line(\n    line: Line, mode: Mode, features: Collection[Feature] = ()\n) -> Iterator[Line]:\n    \"\"\"Transform a `line`, potentially splitting it into many lines.\n\n    They should fit in the allotted `line_length` but might not be able to.\n\n    `features` are syntactical features that may be used in the output.\n    \"\"\"\n    if line.is_comment:\n        yield line\n        return\n\n    line_str = line_to_string(line)\n\n    # We need the line string when power operators are hugging to determine if we should\n    # split the line. Default to line_str, if no power operator are present on the line.\n    line_str_hugging_power_ops = (\n        _hugging_power_ops_line_to_string(line, features, mode) or line_str\n    )\n\n    ll = mode.line_length\n    sn = mode.string_normalization\n    string_merge = StringMerger(ll, sn)\n    string_paren_strip = StringParenStripper(ll, sn)\n    string_split = StringSplitter(ll, sn)\n    string_paren_wrap = StringParenWrapper(ll, sn)\n\n    transformers: list[Transformer]\n    if (\n        not line.contains_uncollapsable_type_comments()\n        and not line.should_split_rhs\n        and not line.magic_trailing_comma\n        and (\n            is_line_short_enough(line, mode=mode, line_str=line_str_hugging_power_ops)\n            or line.contains_unsplittable_type_ignore()\n        )\n        and not (line.inside_brackets and line.contains_standalone_comments())\n        and not line.contains_implicit_multiline_string_with_comments()\n    ):\n        # Only apply basic string preprocessing, since lines shouldn't be split here.\n        if Preview.string_processing in mode:\n            transformers = [string_merge, string_paren_strip]\n        else:\n            transformers = []\n    elif line.is_def and not should_split_funcdef_with_rhs(line, mode):\n        transformers = [left_hand_split]\n    else:\n\n        def _rhs(\n            self: object, line: Line, features: Collection[Feature], mode: Mode\n        ) -> Iterator[Line]:\n            \"\"\"Wraps calls to `right_hand_split`.\n\n            The calls increasingly `omit` right-hand trailers (bracket pairs with\n            content), meaning the trailers get glued together to split on another\n            bracket pair instead.\n            \"\"\"\n            for omit in generate_trailers_to_omit(line, mode.line_length):\n                lines = list(right_hand_split(line, mode, features, omit=omit))\n                # Note: this check is only able to figure out if the first line of the\n                # *current* transformation fits in the line length.  This is true only\n                # for simple cases.  All others require running more transforms via\n                # `transform_line()`.  This check doesn't know if those would succeed.\n                if is_line_short_enough(lines[0], mode=mode):\n                    yield from lines\n                    return\n\n            # All splits failed, best effort split with no omits.\n            # This mostly happens to multiline strings that are by definition\n            # reported as not fitting a single line, as well as lines that contain\n            # trailing commas (those have to be exploded).\n            yield from right_hand_split(line, mode, features=features)\n\n        # HACK: nested functions (like _rhs) compiled by mypyc don't retain their\n        # __name__ attribute which is needed in `run_transformer` further down.\n        # Unfortunately a nested class breaks mypyc too. So a class must be created\n        # via type ... https://github.com/mypyc/mypyc/issues/884\n        rhs = type(\"rhs\", (), {\"__call__\": _rhs})()\n\n        if Preview.string_processing in mode:\n            if line.inside_brackets:\n                transformers = [\n                    string_merge,\n                    string_paren_strip,\n                    string_split,\n                    delimiter_split,\n                    standalone_comment_split,\n                    string_paren_wrap,\n                    rhs,\n                ]\n            else:\n                transformers = [\n                    string_merge,\n                    string_paren_strip,\n                    string_split,\n                    string_paren_wrap,\n                    rhs,\n                ]\n        else:\n            if line.inside_brackets:\n                transformers = [delimiter_split, standalone_comment_split, rhs]\n            else:\n                transformers = [rhs]\n    # It's always safe to attempt hugging of power operations and pretty much every line\n    # could match.\n    transformers.append(hug_power_op)\n\n    for transform in transformers:\n        # We are accumulating lines in `result` because we might want to abort\n        # mission and return the original line in the end, or attempt a different\n        # split altogether.\n        try:\n            result = run_transformer(line, transform, mode, features, line_str=line_str)\n        except CannotTransform:\n            continue\n        else:\n            yield from result\n            break\n\n    else:\n        yield line"
+    },
+    {
+      "path": "src/black/mode.py",
+      "version": "new",
+      "line": 230,
+      "kind": "class",
+      "qualname": "src.black.mode.Preview",
+      "span": [
+        222,
+        231
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "class Preview(Enum):\n    \"\"\"Individual preview style features.\"\"\"\n\n    # NOTE: string_processing requires wrap_long_dict_values_in_parens\n    # for https://github.com/psf/black/issues/3117 to be fixed.\n    string_processing = auto()\n    hug_parens_with_braces_and_square_brackets = auto()\n    wrap_comprehension_in = auto()\n    simplify_power_operator_hugging = auto()\n    wrap_long_dict_values_in_parens = auto()",
+      "old_code": "class Preview(Enum):\n    \"\"\"Individual preview style features.\"\"\"\n\n    # NOTE: string_processing requires wrap_long_dict_values_in_parens\n    # for https://github.com/psf/black/issues/3117 to be fixed.\n    string_processing = auto()\n    hug_parens_with_braces_and_square_brackets = auto()\n    wrap_comprehension_in = auto()\n    wrap_long_dict_values_in_parens = auto()"
+    },
+    {
+      "path": "src/black/nodes.py",
+      "version": "new",
+      "line": 11,
+      "kind": "module",
+      "qualname": "src.black.nodes",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "src/black/nodes.py",
+      "version": "new",
+      "line": 419,
+      "kind": "function",
+      "qualname": "src.black.nodes.whitespace",
+      "span": [
+        180,
+        428
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def whitespace(leaf: Leaf, *, complex_subscript: bool, mode: Mode) -> str:\n    \"\"\"Return whitespace prefix if needed for the given `leaf`.\n\n    `complex_subscript` signals whether the given leaf is part of a subscription\n    which has non-trivial arguments, like arithmetic expressions or function calls.\n    \"\"\"\n    NO: Final[str] = \"\"\n    SPACE: Final[str] = \" \"\n    DOUBLESPACE: Final[str] = \"  \"\n    t = leaf.type\n    p = leaf.parent\n    v = leaf.value\n    if t in ALWAYS_NO_SPACE:\n        return NO\n\n    if t == token.COMMENT:\n        return DOUBLESPACE\n\n    assert p is not None, f\"INTERNAL ERROR: hand-made leaf without parent: {leaf!r}\"\n    if t == token.COLON and p.type not in {\n        syms.subscript,\n        syms.subscriptlist,\n        syms.sliceop,\n    }:\n        return NO\n\n    if t == token.LBRACE and p.type in (\n        syms.fstring_replacement_field,\n        syms.tstring_replacement_field,\n    ):\n        return NO\n\n    prev = leaf.prev_sibling\n    if not prev:\n        prevp = preceding_leaf(p)\n        if not prevp or prevp.type in OPENING_BRACKETS:\n            return NO\n\n        if t == token.COLON:\n            if prevp.type == token.COLON:\n                return NO\n\n            elif prevp.type != token.COMMA and not complex_subscript:\n                return NO\n\n            return SPACE\n\n        if prevp.type == token.EQUAL:\n            if prevp.parent:\n                if prevp.parent.type in {\n                    syms.arglist,\n                    syms.argument,\n                    syms.parameters,\n                    syms.varargslist,\n                }:\n                    return NO\n\n                elif prevp.parent.type == syms.typedargslist:\n                    # A bit hacky: if the equal sign has whitespace, it means we\n                    # previously found it's a typed argument.  So, we're using\n                    # that, too.\n                    return prevp.prefix\n\n        elif (\n            prevp.type == token.STAR\n            and parent_type(prevp) == syms.star_expr\n            and parent_type(prevp.parent) in (syms.subscriptlist, syms.tname_star)\n        ):\n            # No space between typevar tuples or unpacking them.\n            return NO\n\n        elif prevp.type in VARARGS_SPECIALS:\n            if is_vararg(prevp, within=VARARGS_PARENTS | UNPACKING_PARENTS):\n                return NO\n\n        elif prevp.type == token.COLON:\n            if prevp.parent and prevp.parent.type in {syms.subscript, syms.sliceop}:\n                return SPACE if complex_subscript else NO\n\n        elif (\n            prevp.parent\n            and prevp.parent.type == syms.factor\n            and prevp.type in MATH_OPERATORS\n        ):\n            return NO\n\n        elif prevp.type == token.AT and p.parent and p.parent.type == syms.decorator:\n            # no space in decorators\n            return NO\n\n    elif prev.type in OPENING_BRACKETS:\n        return NO\n\n    elif prev.type == token.BANG:\n        return NO\n\n    if p.type in {syms.parameters, syms.arglist}:\n        # untyped function signatures or calls\n        if not prev or prev.type != token.COMMA:\n            return NO\n\n    elif p.type == syms.varargslist:\n        # lambdas\n        if prev and prev.type != token.COMMA:\n            return NO\n\n    elif p.type == syms.typedargslist:\n        # typed function signatures\n        if not prev:\n            return NO\n\n        if t == token.EQUAL:\n            if prev.type not in TYPED_NAMES:\n                return NO\n\n        elif prev.type == token.EQUAL:\n            # A bit hacky: if the equal sign has whitespace, it means we\n            # previously found it's a typed argument.  So, we're using that, too.\n            return prev.prefix\n\n        elif prev.type != token.COMMA:\n            return NO\n\n    elif p.type in TYPED_NAMES:\n        # type names\n        if not prev:\n            prevp = preceding_leaf(p)\n            if not prevp or prevp.type != token.COMMA:\n                return NO\n\n    elif p.type == syms.trailer:\n        # attributes and calls\n        if t == token.LPAR or t == token.RPAR:\n            return NO\n\n        if not prev:\n            if t == token.DOT or t == token.LSQB:\n                return NO\n\n        elif prev.type != token.COMMA:\n            return NO\n\n    elif p.type == syms.argument:\n        # single argument\n        if t == token.EQUAL:\n            return NO\n\n        if not prev:\n            prevp = preceding_leaf(p)\n            if not prevp or prevp.type == token.LPAR:\n                return NO\n\n        elif prev.type in {token.EQUAL} | VARARGS_SPECIALS:\n            return NO\n\n    elif p.type == syms.decorator:\n        # decorators\n        return NO\n\n    elif p.type == syms.dotted_name:\n        if prev:\n            return NO\n\n        prevp = preceding_leaf(p)\n        if not prevp or prevp.type == token.AT or prevp.type == token.DOT:\n            return NO\n\n    elif p.type == syms.classdef:\n        if t == token.LPAR:\n            return NO\n\n        if prev and prev.type == token.LPAR:\n            return NO\n\n    elif p.type in {syms.subscript, syms.sliceop}:\n        # indexing\n        if not prev:\n            assert p.parent is not None, \"subscripts are always parented\"\n            if p.parent.type == syms.subscriptlist:\n                return SPACE\n\n            return NO\n\n        elif t == token.COLONEQUAL or prev.type == token.COLONEQUAL:\n            return SPACE\n\n        elif not complex_subscript:\n            return NO\n\n    elif p.type == syms.atom:\n        if prev and t == token.DOT:\n            # dots, but not the first one.\n            return NO\n\n    elif p.type == syms.dictsetmaker:\n        # dict unpacking\n        if prev and prev.type == token.DOUBLESTAR:\n            return NO\n\n    elif p.type in {syms.factor, syms.star_expr}:\n        # unary ops\n        if not prev:\n            prevp = preceding_leaf(p)\n            if not prevp or prevp.type in OPENING_BRACKETS:\n                return NO\n\n            prevp_parent = prevp.parent\n            assert prevp_parent is not None\n            if prevp.type == token.COLON and prevp_parent.type in {\n                syms.subscript,\n                syms.sliceop,\n            }:\n                return NO\n\n            elif prevp.type == token.EQUAL and prevp_parent.type == syms.argument:\n                return NO\n\n        elif t in {token.NAME, token.NUMBER, token.STRING}:\n            return NO\n\n    elif p.type == syms.import_from:\n        if t == token.DOT:\n            if prev and prev.type == token.DOT:\n                return NO\n\n        elif t == token.NAME:\n            if v == \"import\":\n                return SPACE\n\n            if prev and prev.type == token.DOT:\n                return NO\n\n    elif p.type == syms.sliceop:\n        return NO\n\n    elif p.type == syms.except_clause:\n        if t == token.STAR:\n            return NO\n\n    if Preview.simplify_power_operator_hugging in mode:\n        # Power operator hugging\n        if t == token.DOUBLESTAR and is_simple_exponentiation(p):\n            return NO\n        prevp = preceding_leaf(leaf)\n        if prevp and prevp.type == token.DOUBLESTAR:\n            if prevp.parent and is_simple_exponentiation(prevp.parent):\n                return NO\n\n    return SPACE",
+      "old_code": "def whitespace(leaf: Leaf, *, complex_subscript: bool, mode: Mode) -> str:\n    \"\"\"Return whitespace prefix if needed for the given `leaf`.\n\n    `complex_subscript` signals whether the given leaf is part of a subscription\n    which has non-trivial arguments, like arithmetic expressions or function calls.\n    \"\"\"\n    NO: Final[str] = \"\"\n    SPACE: Final[str] = \" \"\n    DOUBLESPACE: Final[str] = \"  \"\n    t = leaf.type\n    p = leaf.parent\n    v = leaf.value\n    if t in ALWAYS_NO_SPACE:\n        return NO\n\n    if t == token.COMMENT:\n        return DOUBLESPACE\n\n    assert p is not None, f\"INTERNAL ERROR: hand-made leaf without parent: {leaf!r}\"\n    if t == token.COLON and p.type not in {\n        syms.subscript,\n        syms.subscriptlist,\n        syms.sliceop,\n    }:\n        return NO\n\n    if t == token.LBRACE and p.type in (\n        syms.fstring_replacement_field,\n        syms.tstring_replacement_field,\n    ):\n        return NO\n\n    prev = leaf.prev_sibling\n    if not prev:\n        prevp = preceding_leaf(p)\n        if not prevp or prevp.type in OPENING_BRACKETS:\n            return NO\n\n        if t == token.COLON:\n            if prevp.type == token.COLON:\n                return NO\n\n            elif prevp.type != token.COMMA and not complex_subscript:\n                return NO\n\n            return SPACE\n\n        if prevp.type == token.EQUAL:\n            if prevp.parent:\n                if prevp.parent.type in {\n                    syms.arglist,\n                    syms.argument,\n                    syms.parameters,\n                    syms.varargslist,\n                }:\n                    return NO\n\n                elif prevp.parent.type == syms.typedargslist:\n                    # A bit hacky: if the equal sign has whitespace, it means we\n                    # previously found it's a typed argument.  So, we're using\n                    # that, too.\n                    return prevp.prefix\n\n        elif (\n            prevp.type == token.STAR\n            and parent_type(prevp) == syms.star_expr\n            and parent_type(prevp.parent) in (syms.subscriptlist, syms.tname_star)\n        ):\n            # No space between typevar tuples or unpacking them.\n            return NO\n\n        elif prevp.type in VARARGS_SPECIALS:\n            if is_vararg(prevp, within=VARARGS_PARENTS | UNPACKING_PARENTS):\n                return NO\n\n        elif prevp.type == token.COLON:\n            if prevp.parent and prevp.parent.type in {syms.subscript, syms.sliceop}:\n                return SPACE if complex_subscript else NO\n\n        elif (\n            prevp.parent\n            and prevp.parent.type == syms.factor\n            and prevp.type in MATH_OPERATORS\n        ):\n            return NO\n\n        elif prevp.type == token.AT and p.parent and p.parent.type == syms.decorator:\n            # no space in decorators\n            return NO\n\n    elif prev.type in OPENING_BRACKETS:\n        return NO\n\n    elif prev.type == token.BANG:\n        return NO\n\n    if p.type in {syms.parameters, syms.arglist}:\n        # untyped function signatures or calls\n        if not prev or prev.type != token.COMMA:\n            return NO\n\n    elif p.type == syms.varargslist:\n        # lambdas\n        if prev and prev.type != token.COMMA:\n            return NO\n\n    elif p.type == syms.typedargslist:\n        # typed function signatures\n        if not prev:\n            return NO\n\n        if t == token.EQUAL:\n            if prev.type not in TYPED_NAMES:\n                return NO\n\n        elif prev.type == token.EQUAL:\n            # A bit hacky: if the equal sign has whitespace, it means we\n            # previously found it's a typed argument.  So, we're using that, too.\n            return prev.prefix\n\n        elif prev.type != token.COMMA:\n            return NO\n\n    elif p.type in TYPED_NAMES:\n        # type names\n        if not prev:\n            prevp = preceding_leaf(p)\n            if not prevp or prevp.type != token.COMMA:\n                return NO\n\n    elif p.type == syms.trailer:\n        # attributes and calls\n        if t == token.LPAR or t == token.RPAR:\n            return NO\n\n        if not prev:\n            if t == token.DOT or t == token.LSQB:\n                return NO\n\n        elif prev.type != token.COMMA:\n            return NO\n\n    elif p.type == syms.argument:\n        # single argument\n        if t == token.EQUAL:\n            return NO\n\n        if not prev:\n            prevp = preceding_leaf(p)\n            if not prevp or prevp.type == token.LPAR:\n                return NO\n\n        elif prev.type in {token.EQUAL} | VARARGS_SPECIALS:\n            return NO\n\n    elif p.type == syms.decorator:\n        # decorators\n        return NO\n\n    elif p.type == syms.dotted_name:\n        if prev:\n            return NO\n\n        prevp = preceding_leaf(p)\n        if not prevp or prevp.type == token.AT or prevp.type == token.DOT:\n            return NO\n\n    elif p.type == syms.classdef:\n        if t == token.LPAR:\n            return NO\n\n        if prev and prev.type == token.LPAR:\n            return NO\n\n    elif p.type in {syms.subscript, syms.sliceop}:\n        # indexing\n        if not prev:\n            assert p.parent is not None, \"subscripts are always parented\"\n            if p.parent.type == syms.subscriptlist:\n                return SPACE\n\n            return NO\n\n        elif t == token.COLONEQUAL or prev.type == token.COLONEQUAL:\n            return SPACE\n\n        elif not complex_subscript:\n            return NO\n\n    elif p.type == syms.atom:\n        if prev and t == token.DOT:\n            # dots, but not the first one.\n            return NO\n\n    elif p.type == syms.dictsetmaker:\n        # dict unpacking\n        if prev and prev.type == token.DOUBLESTAR:\n            return NO\n\n    elif p.type in {syms.factor, syms.star_expr}:\n        # unary ops\n        if not prev:\n            prevp = preceding_leaf(p)\n            if not prevp or prevp.type in OPENING_BRACKETS:\n                return NO\n\n            prevp_parent = prevp.parent\n            assert prevp_parent is not None\n            if prevp.type == token.COLON and prevp_parent.type in {\n                syms.subscript,\n                syms.sliceop,\n            }:\n                return NO\n\n            elif prevp.type == token.EQUAL and prevp_parent.type == syms.argument:\n                return NO\n\n        elif t in {token.NAME, token.NUMBER, token.STRING}:\n            return NO\n\n    elif p.type == syms.import_from:\n        if t == token.DOT:\n            if prev and prev.type == token.DOT:\n                return NO\n\n        elif t == token.NAME:\n            if v == \"import\":\n                return SPACE\n\n            if prev and prev.type == token.DOT:\n                return NO\n\n    elif p.type == syms.sliceop:\n        return NO\n\n    elif p.type == syms.except_clause:\n        if t == token.STAR:\n            return NO\n\n    return SPACE"
+    },
+    {
+      "path": "src/black/nodes.py",
+      "version": "new",
+      "line": 555,
+      "kind": "function",
+      "qualname": "src.black.nodes.is_simple_exponentiation",
+      "span": [
+        555,
+        571
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def is_simple_exponentiation(node: LN) -> bool:\n    \"\"\"Whether whitespace around `**` should be removed.\"\"\"\n\n    def is_simple(node: LN) -> bool:\n        if isinstance(node, Leaf):\n            return node.type in (token.NAME, token.NUMBER, token.DOT, token.DOUBLESTAR)\n        elif node.type == syms.factor:  # unary operators\n            return is_simple(node.children[1])\n        else:\n            return all(is_simple(child) for child in node.children)\n\n    return (\n        node.type == syms.power\n        and len(node.children) >= 3\n        and node.children[-2].type == token.DOUBLESTAR\n        and is_simple(node)\n    )",
+      "old_code": null
+    },
+    {
+      "path": "src/black/nodes.py",
+      "version": "new",
+      "line": 558,
+      "kind": "function",
+      "qualname": "src.black.nodes.is_simple_exponentiation.is_simple",
+      "span": [
+        558,
+        564
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def is_simple(node: LN) -> bool:\n        if isinstance(node, Leaf):\n            return node.type in (token.NAME, token.NUMBER, token.DOT, token.DOUBLESTAR)\n        elif node.type == syms.factor:  # unary operators\n            return is_simple(node.children[1])\n        else:\n            return all(is_simple(child) for child in node.children)",
+      "old_code": null
+    },
+    {
+      "path": "src/black/trans.py",
+      "version": "new",
+      "line": 69,
+      "kind": "module",
+      "qualname": "src.black.trans",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "tests/data/cases/preview_simplify_power_operator_hugging.py",
+      "version": "new",
+      "line": 1,
+      "kind": "module",
+      "qualname": "tests.data.cases.preview_simplify_power_operator_hugging",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "tests/data/cases/preview_simplify_power_operator_hugging.py",
+      "version": "new",
+      "line": 4,
+      "kind": "function",
+      "qualname": "tests.data.cases.preview_simplify_power_operator_hugging.function",
+      "span": [
+        4,
+        6
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "def function(**kwargs):\n    t = a**2 + b**3\n    return t ** 2",
+      "old_code": null
+    },
+    {
+      "path": "tests/data/cases/preview_simplify_power_operator_hugging.py",
+      "version": "new",
+      "line": 9,
+      "kind": "function",
+      "qualname": "tests.data.cases.preview_simplify_power_operator_hugging.function_replace_spaces",
+      "span": [
+        9,
+        10
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "def function_replace_spaces(**kwargs):\n    t = a **2 + b** 3 + c ** 4",
+      "old_code": null
+    },
+    {
+      "path": "tests/data/cases/preview_simplify_power_operator_hugging.py",
+      "version": "new",
+      "line": 13,
+      "kind": "function",
+      "qualname": "tests.data.cases.preview_simplify_power_operator_hugging.function_dont_replace_spaces",
+      "span": [
+        13,
+        14
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "def function_dont_replace_spaces():\n    {**a, **b, **c}",
+      "old_code": null
+    },
+    {
+      "path": "tests/data/cases/preview_simplify_power_operator_hugging_long.py",
+      "version": "new",
+      "line": 1,
+      "kind": "module",
+      "qualname": "tests.data.cases.preview_simplify_power_operator_hugging_long",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": null
+    }
+  ],
+  "generated_at": "2026-02-09T15:49:44"
+}

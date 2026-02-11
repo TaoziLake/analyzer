@@ -1,0 +1,108 @@
+{
+  "commit": "ddf228ee",
+  "parent": "4a1d00e502b3cff05d1f7b1fcc1dff85c62a8130",
+  "repo": "D:\\locbench\\peewee",
+  "num_seeds": 4,
+  "num_seeds_used": 4,
+  "seed_scope": "code_only",
+  "num_impacted": 6,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "playhouse.apsw_ext.APSWDatabase.last_insert_id",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "cursor.connection.last_insert_rowid"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.apsw_ext.APSWDatabase.rows_affected",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "cursor.connection.changes",
+        "cursor.cursor.connection.changes"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.apsw_ext.APSWDatabase.commit",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "playhouse.cysqlite_ext.CySqliteDatabase.commit"
+      ],
+      "callees": [
+        "curs.connection.getautocommit",
+        "curs.execute",
+        "playhouse.apsw_ext.APSWDatabase.cursor"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.apsw_ext.APSWDatabase.rollback",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "playhouse.cysqlite_ext.CySqliteDatabase.rollback"
+      ],
+      "callees": [
+        "curs.connection.getautocommit",
+        "curs.execute",
+        "playhouse.apsw_ext.APSWDatabase.cursor"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase.commit",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.apsw_ext.APSWDatabase.commit",
+      "callers": [
+        "playhouse.cysqlite_ext.CySqliteDatabase.commit"
+      ],
+      "callees": [
+        "commit",
+        "peewee.SqliteDatabase.commit",
+        "playhouse.cysqlite_ext.CySqliteDatabase.connection"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase.rollback",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.apsw_ext.APSWDatabase.rollback",
+      "callers": [
+        "playhouse.cysqlite_ext.CySqliteDatabase.rollback"
+      ],
+      "callees": [
+        "rollback",
+        "playhouse.cysqlite_ext.CySqliteDatabase.connection",
+        "peewee.SqliteDatabase.rollback"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-10T14:43:16"
+}

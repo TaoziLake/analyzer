@@ -1,0 +1,27 @@
+{
+  "commit": "cd1ad91",
+  "parent": "e8d0a030ce2dd8e7a034fcf61c5f6a29ff677fdf",
+  "repo": "D:\\locbench\\mistune",
+  "num_files_in_diff": 2,
+  "num_py_files_in_diff": 1,
+  "num_seeds": 1,
+  "seeds": [
+    {
+      "path": "benchmark/bench.py",
+      "version": "new",
+      "line": 51,
+      "kind": "function",
+      "qualname": "benchmark.bench.get_markdown_parsers",
+      "span": [
+        39,
+        117
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def get_markdown_parsers():\n    parsers = {}\n\n    import mistune\n    from mistune.directives import (\n        RSTDirective,\n        Admonition,\n        TableOfContents,\n        Include,\n    )\n\n    parsers[f\"mistune ({mistune.__version__})\"] = mistune.html\n    parsers[\"mistune (slow)\"] = mistune.create_markdown(escape=False)\n    parsers[\"mistune (fast)\"] = mistune.create_markdown(escape=False, plugins=[\"speedup\"])\n    parsers[\"mistune (full)\"] = mistune.create_markdown(\n        escape=False,\n        plugins=[\n            \"url\",\n            \"abbr\",\n            \"ruby\",\n            \"strikethrough\",\n            \"mark\",\n            \"insert\",\n            \"subscript\",\n            \"superscript\",\n            \"footnotes\",\n            \"def_list\",\n            \"math\",\n            \"table\",\n            \"task_lists\",\n            RSTDirective(\n                [\n                    Admonition(),\n                    TableOfContents(),\n                    Include(),\n                ]\n            ),\n            \"speedup\",\n        ],\n    )\n\n    try:\n        import mistune_v1\n\n        parsers[f\"mistune ({mistune_v1.__version__})\"] = mistune_v1.markdown\n    except ImportError:\n        pass\n\n    try:\n        import markdown\n\n        parsers[f\"markdown ({markdown.__version__})\"] = markdown.markdown\n    except ImportError:\n        pass\n\n    try:\n        from markdown2 import Markdown, __version__ as m2v\n\n        markdowner = Markdown()\n        parsers[f\"markdown2 ({m2v})\"] = markdowner.convert\n    except ImportError:\n        pass\n\n    try:\n        import mistletoe\n\n        parsers[f\"mistletoe ({mistletoe.__version__})\"] = mistletoe.markdown\n    except ImportError:\n        pass\n\n    try:\n        from markdown_it import MarkdownIt, __version__ as mitv\n\n        md = MarkdownIt()\n        parsers[f\"markdown_it ({mitv})\"] = md.render\n    except ImportError:\n        pass\n\n    return parsers",
+      "old_code": "def get_markdown_parsers():\n    parsers = {}\n\n    import mistune\n    from mistune.directives import (\n        RSTDirective,\n        Admonition,\n        TableOfContents,\n        Include,\n    )\n\n    parsers[f\"mistune ({mistune.__version__})\"] = mistune.html\n    parsers[f\"mistune (slow)\"] = mistune.create_markdown(escape=False)\n    parsers[f\"mistune (fast)\"] = mistune.create_markdown(escape=False, plugins=[\"speedup\"])\n    parsers[\"mistune (full)\"] = mistune.create_markdown(\n        escape=False,\n        plugins=[\n            \"url\",\n            \"abbr\",\n            \"ruby\",\n            \"strikethrough\",\n            \"mark\",\n            \"insert\",\n            \"subscript\",\n            \"superscript\",\n            \"footnotes\",\n            \"def_list\",\n            \"math\",\n            \"table\",\n            \"task_lists\",\n            RSTDirective(\n                [\n                    Admonition(),\n                    TableOfContents(),\n                    Include(),\n                ]\n            ),\n            \"speedup\",\n        ],\n    )\n\n    try:\n        import mistune_v1\n\n        parsers[f\"mistune ({mistune_v1.__version__})\"] = mistune_v1.markdown\n    except ImportError:\n        pass\n\n    try:\n        import markdown\n\n        parsers[f\"markdown ({markdown.__version__})\"] = markdown.markdown\n    except ImportError:\n        pass\n\n    try:\n        from markdown2 import Markdown, __version__ as m2v\n\n        markdowner = Markdown()\n        parsers[f\"markdown2 ({m2v})\"] = markdowner.convert\n    except ImportError:\n        pass\n\n    try:\n        import mistletoe\n\n        parsers[f\"mistletoe ({mistletoe.__version__})\"] = mistletoe.markdown\n    except ImportError:\n        pass\n\n    try:\n        from markdown_it import MarkdownIt, __version__ as mitv\n\n        md = MarkdownIt()\n        parsers[f\"markdown_it ({mitv})\"] = md.render\n    except ImportError:\n        pass\n\n    return parsers"
+    }
+  ],
+  "generated_at": "2026-02-10T14:57:23"
+}

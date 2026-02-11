@@ -1,0 +1,80 @@
+{
+  "commit": "a728952",
+  "parent": "9058e0ddb4d34dab43e18d71db3af8038f74b65f",
+  "repo": "D:\\locbench\\mistune",
+  "num_seeds": 2,
+  "num_seeds_used": 2,
+  "seed_scope": "code_only",
+  "num_impacted": 4,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "src.mistune.markdown.Markdown.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.block_parser.BlockParser.__init__",
+        "src.mistune.inline_parser.InlineParser.__init__"
+      ],
+      "callees": [
+        "src.mistune.inline_parser.InlineParser",
+        "src.mistune.block_parser.BlockParser",
+        "plugin"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.footnotes.md_footnotes_hook",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "state.env.get",
+        "src.mistune.plugins.footnotes.parse_footnote_item",
+        "md.render_state",
+        "src.mistune.core.BlockState"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.markdown.Markdown.__init__",
+      "callers": [
+        "src.mistune.block_parser.BlockParser.__init__",
+        "src.mistune.inline_parser.InlineParser.__init__"
+      ],
+      "callees": [
+        "__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.markdown.Markdown.__init__",
+      "callers": [
+        "src.mistune.block_parser.BlockParser.__init__",
+        "src.mistune.inline_parser.InlineParser.__init__"
+      ],
+      "callees": [
+        "__init__",
+        "src.mistune.inline_parser.InlineParser.rules.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-11T10:41:50"
+}

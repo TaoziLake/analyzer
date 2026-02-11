@@ -1,0 +1,2301 @@
+{
+  "commit": "40fc3c90e",
+  "parent": "b7a8ea19f47bcfb41ead46303fa16a184106965c",
+  "repo": "D:\\locbench\\sqlalchemy",
+  "num_seeds": 4,
+  "num_seeds_used": 2,
+  "seed_scope": "code_only",
+  "num_impacted": 124,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 53612,
+    "total_call_relations": 107959
+  },
+  "impacted": [
+    {
+      "qualname": "lib.sqlalchemy.dialects.mssql.base",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.LRUCache",
+        "datetime.date",
+        "lib.sqlalchemy.engine.default.DefaultDialect.engine_config_types.union",
+        "re.compile",
+        "lib.sqlalchemy.util.update_copy"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.visit_drop_index",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler._prepared_index_name",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.format_table"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.util.LRUCache",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "lib.sqlalchemy.dialects.mssql.base",
+      "callers": [
+        "lib.sqlalchemy.dialects.mssql.base",
+        "lib.sqlalchemy.orm.mapper.Mapper._compiled_cache",
+        "lib.sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_connection.__init__",
+        "lib.sqlalchemy.engine.base.Engine.__init__",
+        "lib.sqlalchemy.sql.lambdas",
+        "lib.sqlalchemy.ext.baked.BakedQuery.bakery"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "datetime.date",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "lib.sqlalchemy.dialects.mssql.base",
+      "callers": [
+        "test.dialect.sqlite.test_types.TestTypes.test_custom_date",
+        "test.sql.test_types.ExpressionTest.test_bind_adapt",
+        "test.dialect.sqlite.test_types.DateTest.test_default",
+        "test.dialect.postgresql.test_compiler.CompileTest.test_multirange_custom_object_hook",
+        "test.dialect.postgresql.test_types.ArrayRoundTripTest._type_combinations",
+        "test.sql.test_types.ExpressionTest.insert_data",
+        "test.dialect.mssql.test_types.TypeRoundTripTest.date_fixture",
+        "lib.sqlalchemy.testing.suite.test_select.WindowFunctionTest.test_window_range_dates",
+        "test.sql.test_functions.ExecuteTest.test_extract_bind",
+        "lib.sqlalchemy.dialects.mssql.base._MSDate.result_processor.process",
+        "lib.sqlalchemy.dialects.mssql.base",
+        "test.sql.test_functions.CompileTest.test_return_type_detection",
+        "lib.sqlalchemy.testing.suite.test_types",
+        "test.sql.test_functions.CompileTest.test_non_functions",
+        "test.engine.test_processors._DateProcessorTest.test_iso_datetime",
+        "test.sql.test_compiler.SelectTest.test_date_between",
+        "test.sql.test_functions.ExecuteTest.test_extract_expression",
+        "test.orm.test_lazy_relations.CorrelatedTest.insert_data",
+        "test.orm.test_eager_relations.CorrelatedSubqueryTest.insert_data",
+        "test.dialect.sqlite.test_types.TestTypes.test_string_dates_passed_raise",
+        "test.dialect.sqlite.test_types.TimeTest.test_custom_format",
+        "test.sql.test_types.ExpressionTest.test_actual_literal_adapters",
+        "test.dialect.postgresql.test_query.ExtractTest.insert_data",
+        "test.typing.plain_files.ext.indexable",
+        "test.sql.test_types.ExpressionTest.test_bind_typing",
+        "test.dialect.sqlite.test_types.TestTypes.test_native_datetime",
+        "test.dialect.sqlite.test_types.TimeTest.test_default",
+        "test.dialect.postgresql.test_types._DateRangeTests._data_obj",
+        "test.orm.test_lazy_relations.CorrelatedTest.test_correlated_lazyload",
+        "test.dialect.sqlite.test_types.TestTypes.test_custom_date_text_affinity",
+        "test.sql.test_types.ExpressionTest.test_control",
+        "test.dialect.sqlite.test_types.DateTest.test_custom_format",
+        "test.dialect.mssql.test_types.MSDateTypeTest.test_result_processor",
+        "test.dialect.postgresql.test_types._DateMultiRangeTests._data_obj",
+        "test.dialect.postgresql.test_compiler.CompileTest.test_range_custom_object_hook"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "lib.sqlalchemy.engine.default.DefaultDialect.engine_config_types.union",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "lib.sqlalchemy.dialects.mssql.base",
+      "callers": [
+        "lib.sqlalchemy.dialects.mssql.base"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "re.compile",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "lib.sqlalchemy.dialects.mssql.base",
+      "callers": [
+        "lib.sqlalchemy.ext.serializer",
+        "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.test_filter_by_two_tables_secondary",
+        "test.sql.test_update._FilterByDMLSuite.test_filter_by_two_tables_secondary",
+        "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.test_filter_by_three_tables_secondary",
+        "tools.format_docs_code",
+        "lib.sqlalchemy.dialects.postgresql.hstore",
+        "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.test_filter_by_basic",
+        "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.test_filter_by_three_tables_user_id",
+        "lib.sqlalchemy.dialects.postgresql.array.ARRAY.result_processor",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect.get_multi_check_constraints",
+        "lib.sqlalchemy.dialects.mysql.pyodbc.MySQLDialect_pyodbc._extract_error_code",
+        "lib.sqlalchemy.sql.elements",
+        "lib.sqlalchemy.dialects.sqlite.base.SQLiteDialect.get_check_constraints",
+        "lib.sqlalchemy.dialects.mssql.base",
+        "lib.sqlalchemy.sql.compiler.SQLCompiler._init_bind_translate",
+        "lib.sqlalchemy.sql.compiler.IdentifierPreparer._r_identifiers",
+        "lib.sqlalchemy.dialects.postgresql.base",
+        "lib.sqlalchemy.connectors.pyodbc.PyODBCConnector._get_server_version_info",
+        "lib.sqlalchemy.dialects.mysql.base.MySQLDialect._parse_server_version",
+        "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.test_filter_by_three_tables_tertiary",
+        "tools.toxnox.tox_parameters",
+        "tools.cython_imports",
+        "test.dialect.mysql.test_reflection.ReflectionTest.test_default_reflection",
+        "lib.sqlalchemy.dialects.postgresql.base.PGDDLCompiler._fk_ondelete_pattern",
+        "lib.sqlalchemy.dialects.mysql.base",
+        "lib.sqlalchemy.dialects.sqlite.base._DateTimeMixin.__init__",
+        "lib.sqlalchemy.orm.decl_base",
+        "lib.sqlalchemy.sql.coercions",
+        "lib.sqlalchemy.dialects.mysql.reflection",
+        "lib.sqlalchemy.testing.suite.test_results.ServerSideCursorsTest.stringify",
+        "tools.normalize_file_headers",
+        "lib.sqlalchemy.dialects.postgresql.base.PGDialect._fk_regex_pattern",
+        "test.engine.test_execute.EngineEventsTest._assert_stmts",
+        "test.sql.test_update._FilterByDMLSuite.test_filter_by_three_tables_tertiary",
+        "lib.sqlalchemy.dialects.mssql.pyodbc.MSDialect_pyodbc._get_server_version_info",
+        "lib.sqlalchemy.dialects.sqlite.pysqlite",
+        "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.test_filter_by_three_tables_address_id",
+        "lib.sqlalchemy.testing.assertsql.RegexSQL.__init__",
+        "lib.sqlalchemy.testing.fixtures.mypy.MypyTest._collect_messages",
+        "lib.sqlalchemy.util.langhelpers",
+        "lib.sqlalchemy.engine.url._parse_url",
+        "lib.sqlalchemy.dialects.mysql.reflection._re_compile",
+        "lib.sqlalchemy.testing.assertions._expect_warnings",
+        "lib.sqlalchemy.engine.default",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect.get_multi_columns",
+        "test.engine.test_processors._DateProcessorTest.test_time_no_string_custom_reg",
+        "test.sql.test_update._FilterByDMLSuite.test_filter_by_three_tables_address_id",
+        "test.sql.test_update._FilterByDMLSuite.test_filter_by_three_tables_user_id",
+        "test.engine.test_processors._DateProcessorTest.test_datetime_no_string_custom_reg",
+        "lib.sqlalchemy.dialects.postgresql.base.PGDialect.get_multi_check_constraints",
+        "lib.sqlalchemy.sql.compiler",
+        "test.sql.test_compare.TestCacheKeyUtil.test_str",
+        "test.sql.test_update._FilterByDMLSuite.test_filter_by_basic",
+        "lib.sqlalchemy.dialects.sqlite.base.SQLiteDialect.get_indexes",
+        "test.engine.test_deprecations.EngineEventsTest._assert_stmts",
+        "test.sql.test_update._FilterByDMLSuite.test_filter_by_three_tables_secondary",
+        "lib.sqlalchemy.testing.fixtures.sql"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "lib.sqlalchemy.util.update_copy",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "lib.sqlalchemy.dialects.mssql.base",
+      "callers": [
+        "lib.sqlalchemy.dialects.mssql.base",
+        "lib.sqlalchemy.dialects.postgresql.pg8000",
+        "lib.sqlalchemy.dialects.oracle.base",
+        "lib.sqlalchemy.dialects.mssql.pymssql",
+        "lib.sqlalchemy.dialects.oracle.cx_oracle",
+        "lib.sqlalchemy.dialects.mysql.pyodbc",
+        "lib.sqlalchemy.dialects.mysql._mariadb_shim.MariaDBShim._set_mariadb",
+        "lib.sqlalchemy.dialects.postgresql._psycopg_common",
+        "lib.sqlalchemy.dialects.postgresql.psycopg2",
+        "lib.sqlalchemy.dialects.postgresql.asyncpg",
+        "lib.sqlalchemy.dialects.sqlite.pysqlite",
+        "lib.sqlalchemy.dialects.mysql.cymysql",
+        "lib.sqlalchemy.dialects.mysql.mariadbconnector",
+        "lib.sqlalchemy.dialects.mssql.pyodbc",
+        "lib.sqlalchemy.dialects.postgresql.psycopg",
+        "lib.sqlalchemy.dialects.sqlite.base",
+        "lib.sqlalchemy.dialects.mysql.mysqlconnector"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler._prepared_index_name",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.visit_drop_index",
+      "callers": [
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.visit_create_index",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.visit_drop_index"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.format_table",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.visit_drop_index",
+      "callers": [
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.visit_set_table_comment",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.visit_drop_column_comment",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.visit_drop_index",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.visit_set_column_comment",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.visit_drop_table_comment"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.orm.mapper.Mapper._compiled_cache",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.LRUCache",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.LRUCache"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_connection.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.LRUCache",
+      "callers": [],
+      "callees": [
+        "time.time",
+        "lib.sqlalchemy.util.LRUCache",
+        "super"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.engine.base.Engine.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.LRUCache",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.LRUCache",
+        "lib.sqlalchemy.log.instance_logger",
+        "lib.sqlalchemy.engine.base.Engine.update_execution_options"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.sql.lambdas",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.LRUCache",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.LRUCache",
+        "typing.TypeVar",
+        "threading.RLock",
+        "weakref.WeakKeyDictionary"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.ext.baked.BakedQuery.bakery",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.LRUCache",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.LRUCache",
+        "lib.sqlalchemy.ext.baked.Bakery"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.sqlite.test_types.TestTypes.test_custom_date",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "connection.execute",
+        "connection.exec_driver_sql",
+        "sqlalchemy.Table",
+        "t.insert",
+        "datetime.date",
+        "sqlalchemy.dialects.sqlite.base.DATE",
+        "sqlalchemy.testing.eq_",
+        "sqlalchemy.select",
+        "test.dialect.sqlite.test_types.TestTypes.metadata.create_all",
+        "sqlalchemy.Column"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_types.ExpressionTest.test_bind_adapt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "connection.execute",
+        "sqlalchemy.bindparam",
+        "test_table.select",
+        "datetime.date",
+        "sqlalchemy.select",
+        "sqlalchemy.testing.eq_"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.sqlite.test_types.DateTest.test_default",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "rp",
+        "bp",
+        "datetime.date",
+        "sldt.bind_processor",
+        "sqlalchemy.dialects.sqlite.base.DATE",
+        "str",
+        "sldt.result_processor",
+        "sqlalchemy.testing.eq_"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.postgresql.test_compiler.CompileTest.test_multirange_custom_object_hook",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.func.sum",
+        "datetime.date",
+        "sqlalchemy.dialects.postgresql.Range",
+        "sqlalchemy.sql.table",
+        "sqlalchemy.dialects.postgresql.ranges.MultiRange",
+        "sqlalchemy.select",
+        "usages.c.date.op",
+        "test.dialect.postgresql.test_compiler.CompileTest.assert_compile",
+        "sqlalchemy.sql.column"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.postgresql.test_types.ArrayRoundTripTest._type_combinations",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "money_str",
+        "sqlalchemy.testing.combinations_list",
+        "make_enum",
+        "decimal.Decimal",
+        "sqlalchemy.dialects.postgresql.ENUM",
+        "functools.partial",
+        "datetime.date",
+        "range",
+        "len",
+        "inet_str",
+        "datetime.datetime",
+        "type",
+        "elements.extend",
+        "sqlalchemy.sql.sqltypes.Enum",
+        "sqlalchemy.testing.skip_if"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_types.ExpressionTest.insert_data",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "connection.execute",
+        "datetime.date",
+        "test_table.insert"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.mssql.test_types.TypeRoundTripTest.date_fixture",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.Table",
+        "datetime.date",
+        "datetime.timezone",
+        "datetime.datetime",
+        "datetime.timedelta",
+        "sqlalchemy.DateTime",
+        "datetime.time",
+        "sqlalchemy.Column",
+        "sqlalchemy.testing.metadata_fixture"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.testing.suite.test_select.WindowFunctionTest.test_window_range_dates",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "connection.execute",
+        "lib.sqlalchemy.testing.schema.Column",
+        "t.insert",
+        "datetime.date",
+        "lib.sqlalchemy.func.sum",
+        "datetime.timedelta",
+        "lib.sqlalchemy.testing.schema.Table",
+        "lib.sqlalchemy.select",
+        "t.create",
+        "lib.sqlalchemy.FrameClause",
+        "lib.sqlalchemy.testing.assertions.eq_"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_functions.ExecuteTest.test_extract_bind",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "datetime.date",
+        "datetime.datetime",
+        "execute"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mssql.base._MSDate.result_processor.process",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "int",
+        "lib.sqlalchemy.dialects.mssql.base._MSDate._reg.match",
+        "datetime.date",
+        "m.groups",
+        "ValueError",
+        "isinstance",
+        "value.date"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_functions.CompileTest.test_return_type_detection",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "decimal.Decimal",
+        "datetime.date",
+        "datetime.datetime",
+        "fn",
+        "sqlalchemy.func.concat",
+        "isinstance"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.testing.suite.test_types",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.UnicodeText",
+        "lib.sqlalchemy.Interval",
+        "datetime.date",
+        "lib.sqlalchemy.Time",
+        "datetime.datetime",
+        "datetime.timedelta",
+        "lib.sqlalchemy.Unicode",
+        "datetime.time",
+        "lib.sqlalchemy.Enum",
+        "lib.sqlalchemy.DateTime"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_functions.CompileTest.test_non_functions",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "datetime.date",
+        "sqlalchemy.func.extract",
+        "sqlalchemy.func.cast",
+        "test.sql.test_functions.CompileTest.assert_compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.engine.test_processors._DateProcessorTest.test_iso_datetime",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "test.engine.test_processors._DateProcessorTest.module.str_to_date",
+        "test.engine.test_processors._DateProcessorTest.module.str_to_datetime",
+        "datetime.date",
+        "datetime.datetime",
+        "test.engine.test_processors._DateProcessorTest.module.str_to_time",
+        "datetime.time",
+        "sqlalchemy.testing.eq_"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_compiler.SelectTest.test_date_between",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.Table",
+        "sqlalchemy.sql.table.select",
+        "datetime.date",
+        "test.sql.test_compiler.SelectTest.assert_compile",
+        "sqlalchemy.sql.table.c.date.between",
+        "sqlalchemy.Column",
+        "sqlalchemy.sql.between"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_functions.ExecuteTest.test_extract_expression",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "connection.execute",
+        "sqlalchemy.Table",
+        "rs.close",
+        "datetime.date",
+        "meta.create_all",
+        "sqlalchemy.sql.table.insert",
+        "datetime.datetime",
+        "rs.first",
+        "sqlalchemy.select",
+        "sqlalchemy.extract",
+        "sqlalchemy.Column"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.test_lazy_relations.CorrelatedTest.insert_data",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "connection.execute",
+        "datetime.date",
+        "user_t.insert",
+        "stuff.insert"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.test_eager_relations.CorrelatedSubqueryTest.insert_data",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "connection.execute",
+        "users.insert",
+        "datetime.date",
+        "stuff.insert"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.sqlite.test_types.TestTypes.test_string_dates_passed_raise",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.bindparam",
+        "dict",
+        "datetime.date",
+        "str",
+        "sqlalchemy.select",
+        "sqlalchemy.testing.assert_raises"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.sqlite.test_types.TimeTest.test_custom_format",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "rp",
+        "bp",
+        "datetime.date",
+        "sldt.bind_processor",
+        "sqlalchemy.dialects.sqlite.base.DATE",
+        "str",
+        "sldt.result_processor",
+        "sqlalchemy.testing.eq_"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_types.ExpressionTest.test_actual_literal_adapters",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.testing.is_",
+        "decimal.Decimal",
+        "datetime.date",
+        "datetime.datetime",
+        "sqlalchemy.testing.combinations",
+        "sqlalchemy.literal",
+        "datetime.timedelta",
+        "datetime.time"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.postgresql.test_query.ExtractTest.insert_data",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "connection.execute",
+        "test.dialect.postgresql.test_query.ExtractTest.TZ",
+        "datetime.date",
+        "datetime.datetime",
+        "datetime.timedelta",
+        "datetime.time",
+        "test.dialect.postgresql.test_query.ExtractTest.tables.t.insert"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.typing.plain_files.ext.indexable",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "test.typing.plain_files.ext.indexable.Article",
+        "datetime.date",
+        "sqlalchemy.select",
+        "typing.assert_type",
+        "sqlalchemy.ext.indexable.index_property",
+        "datetime.date.today",
+        "sqlalchemy.orm.mapped_column"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_types.ExpressionTest.test_bind_typing",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "Foo",
+        "sqlalchemy.sql.column",
+        "datetime.date",
+        "sqlalchemy.bindparam"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.sqlite.test_types.TestTypes.test_native_datetime",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "engine.begin",
+        "sqlalchemy.Table",
+        "t.insert",
+        "datetime.date",
+        "datetime.datetime",
+        "sqlalchemy.func.current_date",
+        "sqlalchemy.testing.eq_",
+        "sqlalchemy.testing.engines.testing_engine",
+        "t.create",
+        "t.select",
+        "sqlalchemy.Column",
+        "isinstance",
+        "conn.execute"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.sqlite.test_types.TimeTest.test_default",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "rp",
+        "bp",
+        "datetime.date",
+        "sldt.bind_processor",
+        "sqlalchemy.dialects.sqlite.base.DATE",
+        "str",
+        "sldt.result_processor",
+        "sqlalchemy.testing.eq_"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.postgresql.test_types._DateRangeTests._data_obj",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "datetime.date",
+        "sqlalchemy.dialects.postgresql.Range"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.test_lazy_relations.CorrelatedTest.test_correlated_lazyload",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "User",
+        "sess.query",
+        "Stuff",
+        "sqlalchemy.orm.relationship",
+        "sqlalchemy.and_",
+        "datetime.date",
+        "sqlalchemy.testing.fixtures.fixture_session",
+        "sqlalchemy.desc",
+        "stuff_view.scalar_subquery",
+        "test.orm.test_lazy_relations.CorrelatedTest.mapper_registry.map_imperatively",
+        "sqlalchemy.select",
+        "sqlalchemy.testing.eq_"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.sqlite.test_types.TestTypes.test_custom_date_text_affinity",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "connection.execute",
+        "connection.exec_driver_sql",
+        "sqlalchemy.Table",
+        "t.insert",
+        "datetime.date",
+        "sqlalchemy.dialects.sqlite.base.DATE",
+        "sqlalchemy.testing.eq_",
+        "sqlalchemy.select",
+        "test.dialect.sqlite.test_types.TestTypes.metadata.create_all",
+        "sqlalchemy.Column"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_types.ExpressionTest.test_control",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "connection.execute",
+        "test_table.select",
+        "datetime.date",
+        "sqlalchemy.testing.eq_",
+        "connection.exec_driver_sql"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.sqlite.test_types.DateTest.test_custom_format",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "rp",
+        "bp",
+        "datetime.date",
+        "sldt.bind_processor",
+        "sqlalchemy.dialects.sqlite.base.DATE",
+        "str",
+        "sldt.result_processor",
+        "sqlalchemy.testing.eq_"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.mssql.test_types.MSDateTypeTest.test_result_processor",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "datetime.date",
+        "test.dialect.mssql.test_types.MSDateTypeTest._assert_result_processor"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.postgresql.test_types._DateMultiRangeTests._data_obj",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "datetime.date",
+        "sqlalchemy.dialects.postgresql.Range"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.postgresql.test_compiler.CompileTest.test_range_custom_object_hook",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "datetime.date",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.func.sum",
+        "datetime.date",
+        "sqlalchemy.dialects.postgresql.Range",
+        "sqlalchemy.sql.table",
+        "sqlalchemy.select",
+        "usages.c.date.op",
+        "test.dialect.postgresql.test_compiler.CompileTest.assert_compile",
+        "sqlalchemy.sql.column"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.ext.serializer",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.test_filter_by_two_tables_secondary",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.assert_compile",
+        "stmt.filter_by",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_update._FilterByDMLSuite.test_filter_by_two_tables_secondary",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "stmt.filter_by",
+        "test.sql.test_update._FilterByDMLSuite.assert_compile",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.test_filter_by_three_tables_secondary",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.assert_compile",
+        "stmt.filter_by",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tools.format_docs_code",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "black.mode.Mode",
+        "pathlib.Path",
+        "parser.add_argument",
+        "config.get",
+        "parser.parse_args",
+        "re.compile",
+        "black.files.parse_pyproject_toml",
+        "tools.format_docs_code.main",
+        "val.upper",
+        "argparse.ArgumentParser"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.postgresql.hstore",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.dialects.postgresql.array.ARRAY",
+        "lib.sqlalchemy.types.Text",
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.test_filter_by_basic",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.assert_compile",
+        "stmt.filter_by",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.test_filter_by_three_tables_user_id",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.assert_compile",
+        "stmt.filter_by",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.postgresql.array.ARRAY.result_processor",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.dialects.postgresql.array.ARRAY.item_type.dialect_impl",
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.oracle.base.OracleDialect.get_multi_check_constraints",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect.get_check_constraints"
+      ],
+      "callees": [
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect._get_all_constraint_rows",
+        "not_null.match",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect.normalize_name",
+        "collections.defaultdict",
+        "re.compile",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect._get_all_objects",
+        "lib.sqlalchemy.engine.default",
+        "table_checks.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mysql.pyodbc.MySQLDialect_pyodbc._extract_error_code",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "m.group",
+        "int",
+        "str",
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.sql.elements",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "False_._create_singleton",
+        "typing.TypeVar",
+        "frozenset",
+        "re.compile",
+        "Null._create_singleton",
+        "typing.ParamSpec",
+        "True_._create_singleton"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.sqlite.base.SQLiteDialect.get_check_constraints",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.dialects.sqlite.base.SQLiteDialect._get_table_sql",
+        "cks.append",
+        "cks.sort",
+        "match.end",
+        "enumerate",
+        "re.sub",
+        "match.group",
+        "re.compile",
+        "lib.sqlalchemy.engine.reflection.ReflectionDefaults.check_constraints",
+        "re.finditer",
+        "m.group"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.sql.compiler.SQLCompiler._init_bind_translate",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [
+        "lib.sqlalchemy.sql.compiler.SQLCompiler._init_compiler_cls"
+      ],
+      "callees": [
+        "re.escape",
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.sql.compiler.IdentifierPreparer._r_identifiers",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.sql.compiler.IdentifierPreparer._escape_identifier",
+        "re.escape",
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.postgresql.base",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.dialects.postgresql.base.PGReadOnlyConnectionCharacteristic",
+        "connection_characteristics.union",
+        "lib.sqlalchemy.dialects.postgresql.base.PGDeferrableConnectionCharacteristic",
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.connectors.pyodbc.PyODBCConnector._get_server_version_info",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "int",
+        "re.compile",
+        "tuple",
+        "dbapi_con.getinfo",
+        "r.split"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mysql.base.MySQLDialect._parse_server_version",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [
+        "lib.sqlalchemy.dialects.mysql.base.MySQLDialect._get_server_version_info"
+      ],
+      "callees": [
+        "bool",
+        "int",
+        "lib.sqlalchemy.dialects.mysql.base.MySQLDialect._set_mariadb",
+        "version.append",
+        "re.match",
+        "re.compile",
+        "NotImplementedError",
+        "tuple",
+        "parsed_token.group",
+        "r.split"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.test_filter_by_three_tables_tertiary",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.assert_compile",
+        "stmt.filter_by",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tools.toxnox.tox_parameters",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [
+        "noxfile.tests",
+        "noxfile.coverage"
+      ],
+      "callees": [
+        "zip",
+        "_recur_param",
+        "dict",
+        "filter_",
+        "nox.param",
+        "re.compile",
+        "nox.parametrize"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tools.cython_imports",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "tools.cython_imports.run",
+        "pathlib.Path",
+        "sqlalchemy.util.tool_support.code_writer_cmd",
+        "re.compile",
+        "cmd.run_program"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.dialect.mysql.test_reflection.ReflectionTest.test_default_reflection",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.dialects.mysql.base.VARCHAR",
+        "hasattr",
+        "sqlalchemy.Table",
+        "sqlalchemy.types.to_instance",
+        "pattern.match",
+        "sqlalchemy.dialects.mysql.base.DOUBLE",
+        "sqlalchemy.sql.text",
+        "sqlalchemy.testing.combinations",
+        "expected.match",
+        "re.compile",
+        "sqlalchemy.String",
+        "t1.create",
+        "sqlalchemy.testing.eq_",
+        "sqlalchemy.DefaultClause",
+        "sqlalchemy.Column",
+        "isinstance",
+        "insp.get_columns",
+        "sqlalchemy.inspect"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.postgresql.base.PGDDLCompiler._fk_ondelete_pattern",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mysql.base",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "typing.TypeVar",
+        "frozenset",
+        "re.compile",
+        "lib.sqlalchemy.sql.compiler.SQLCompiler.extract_map.copy",
+        "lib.sqlalchemy.sql.table",
+        "lib.sqlalchemy.sql.column",
+        "extract_map.update",
+        "lib.sqlalchemy.dialects.mysql.types.VARCHAR"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.sqlite.base._DateTimeMixin.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "super",
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.orm.decl_base",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "typing.TypeVar",
+        "lib.sqlalchemy.util.OrderedDict",
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.sql.coercions",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "getattr",
+        "typing.TypeVar",
+        "re.compile",
+        "globals",
+        "name.endswith",
+        "dir",
+        "name.replace"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mysql.reflection",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "re.escape",
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.testing.suite.test_results.ServerSideCursorsTest.stringify",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [
+        "lib.sqlalchemy.testing.suite.test_results.ServerSideCursorsTest.test_conn_option"
+      ],
+      "callees": [
+        "int",
+        "str",
+        "re.compile",
+        "lib.sqlalchemy.select",
+        "m.group"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tools.normalize_file_headers",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "tools.normalize_file_headers.run",
+        "pathlib.Path",
+        "sqlalchemy.util.tool_support.code_writer_cmd",
+        "parser.add_argument",
+        "re.compile",
+        "cmd.run_program",
+        "datetime.date.today",
+        "cmd.add_arguments"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.postgresql.base.PGDialect._fk_regex_pattern",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.engine.test_execute.EngineEventsTest._assert_stmts",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [
+        "test.engine.test_execute.EngineEventsTest.test_execute_events"
+      ],
+      "callees": [
+        "teststmt.startswith",
+        "list",
+        "received.pop",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_update._FilterByDMLSuite.test_filter_by_three_tables_tertiary",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "stmt.filter_by",
+        "test.sql.test_update._FilterByDMLSuite.assert_compile",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mssql.pyodbc.MSDialect_pyodbc._get_server_version_info",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "int",
+        "version.append",
+        "re.compile",
+        "tuple",
+        "super",
+        "connection.exec_driver_sql",
+        "r.split"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.sqlite.pysqlite",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.update_copy",
+        "lib.sqlalchemy.dialects.sqlite.base.SQLiteDialect._isolation_lookup.union",
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.test_filter_by_three_tables_address_id",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "test.orm.dml.test_orm_upd_del_assorted._FilterByDMLSuite.assert_compile",
+        "stmt.filter_by",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.testing.assertsql.RegexSQL.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "SQLMatchRule.__init__",
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.testing.fixtures.mypy.MypyTest._collect_messages",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [
+        "lib.sqlalchemy.testing.fixtures.mypy.MypyTest.mypy_typecheck_file.run"
+      ],
+      "callees": [
+        "expected_messages.extend",
+        "int",
+        "enumerate",
+        "re.sub",
+        "py_ver_re.match",
+        "re.compile",
+        "current_assert_messages.append",
+        "lib.sqlalchemy.testing.config.skip_test",
+        "expected_re.match",
+        "open",
+        "expected_msg.strip",
+        "bool",
+        "m.group"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.util.langhelpers",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "threading.Lock",
+        "typing.TypeVar",
+        "enum.auto",
+        "frozenset",
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.engine.url._parse_url",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [
+        "lib.sqlalchemy.engine.url.make_url"
+      ],
+      "callees": [
+        "typing.cast",
+        "urllib.parse.unquote",
+        "int",
+        "pattern.match",
+        "m.groupdict",
+        "lib.sqlalchemy.exc.ArgumentError",
+        "lib.sqlalchemy.util.to_list",
+        "re.compile",
+        "urllib.parse.parse_qsl",
+        "components.pop",
+        "URL.create"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mysql.reflection._re_compile",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [
+        "lib.sqlalchemy.dialects.mysql.reflection._pr_compile",
+        "lib.sqlalchemy.dialects.mysql.reflection.MySQLTableDefinitionParser._prep_regexes"
+      ],
+      "callees": [
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.testing.assertions._expect_warnings",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [
+        "lib.sqlalchemy.testing.warnings.assert_warnings",
+        "lib.sqlalchemy.testing.assertions._expect_warnings_sqla_only"
+      ],
+      "callees": [
+        "list",
+        "set",
+        "lib.sqlalchemy.testing.mock.patch",
+        "_SEEN.update",
+        "re.compile",
+        "_FILTERS.extend"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.engine.default",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect.get_multi_unique_constraints",
+        "lib.sqlalchemy.dialects.postgresql.base.PGDialect.get_multi_indexes",
+        "lib.sqlalchemy.dialects.postgresql.base.PGDialect.get_multi_check_constraints",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect.get_multi_table_comment",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect.get_multi_table_options",
+        "lib.sqlalchemy.dialects.postgresql.base.PGDialect.get_multi_unique_constraints",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect.get_multi_pk_constraint",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect.get_multi_indexes",
+        "lib.sqlalchemy.dialects.postgresql.base.PGDialect.get_multi_table_comment",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect.get_multi_check_constraints",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect.get_multi_foreign_keys",
+        "lib.sqlalchemy.dialects.postgresql.base.PGDialect.get_multi_foreign_keys",
+        "lib.sqlalchemy.dialects.postgresql.base.PGDialect.get_multi_pk_constraint"
+      ],
+      "callees": [
+        "typing.cast",
+        "list",
+        "re.compile",
+        "lib.sqlalchemy.util.bool_or_str",
+        "lib.sqlalchemy.engine.characteristics.IsolationLevelCharacteristic",
+        "lib.sqlalchemy.engine.characteristics.LoggingTokenCharacteristic",
+        "lib.sqlalchemy.util.immutabledict"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.oracle.base.OracleDialect.get_multi_columns",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect.get_columns"
+      ],
+      "callees": [
+        "dict",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect.normalize_name",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect._parse_identity_options",
+        "lib.sqlalchemy.dialects.oracle.types.TIMESTAMP",
+        "re.compile",
+        "columns.items",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect.ischema_names.get",
+        "lib.sqlalchemy.util.warn",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect._column_query",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect.denormalize_schema_name",
+        "re.sub",
+        "lib.sqlalchemy.types.REAL",
+        "lib.sqlalchemy.dialects.oracle.types.FLOAT",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect.denormalize_name",
+        "lib.sqlalchemy.types.INTEGER",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect._run_batches",
+        "lib.sqlalchemy.dialects.oracle.types.NUMBER",
+        "collections.defaultdict",
+        "lib.sqlalchemy.dialects.oracle.base.OracleDialect._get_all_objects",
+        "maybe_int",
+        "lib.sqlalchemy.types.DOUBLE_PRECISION",
+        "orig_colname.lower"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.engine.test_processors._DateProcessorTest.test_time_no_string_custom_reg",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.testing.assert_raises_message",
+        "sqlalchemy.engine.processors.str_to_datetime_processor_factory",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_update._FilterByDMLSuite.test_filter_by_three_tables_address_id",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "stmt.filter_by",
+        "test.sql.test_update._FilterByDMLSuite.assert_compile",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_update._FilterByDMLSuite.test_filter_by_three_tables_user_id",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "stmt.filter_by",
+        "test.sql.test_update._FilterByDMLSuite.assert_compile",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.engine.test_processors._DateProcessorTest.test_datetime_no_string_custom_reg",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.testing.assert_raises_message",
+        "sqlalchemy.engine.processors.str_to_datetime_processor_factory",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.postgresql.base.PGDialect.get_multi_check_constraints",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [
+        "lib.sqlalchemy.dialects.postgresql.base.PGDialect.get_check_constraints"
+      ],
+      "callees": [
+        "connection.execute",
+        "lib.sqlalchemy.util.warn",
+        "m.groups",
+        "lib.sqlalchemy.dialects.postgresql.base.PGDialect._prepare_filter_names",
+        "collections.defaultdict",
+        "re.match",
+        "re.compile",
+        "lib.sqlalchemy.dialects.postgresql.base.PGDialect._check_constraint_query",
+        "check_constraints.items",
+        "lib.sqlalchemy.engine.default",
+        "m.group"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.sql.compiler",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "_sentinel_col_non_autoinc_lookup.union",
+        "range",
+        "operator.attrgetter",
+        "str",
+        "frozenset",
+        "re.compile",
+        "tuple",
+        "lib.sqlalchemy.util.immutabledict",
+        "collections.namedtuple"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_compare.TestCacheKeyUtil.test_str",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "sqlalchemy.sql.cache_key.CacheKey",
+        "sqlalchemy.testing.eq_",
+        "str",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_update._FilterByDMLSuite.test_filter_by_basic",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "stmt.filter_by",
+        "test.sql.test_update._FilterByDMLSuite.assert_compile",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.sqlite.base.SQLiteDialect.get_indexes",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [
+        "lib.sqlalchemy.dialects.sqlite.base.SQLiteDialect.get_unique_constraints"
+      ],
+      "callees": [
+        "dict",
+        "len",
+        "lib.sqlalchemy.dialects.sqlite.base.SQLiteDialect._get_table_pragma",
+        "predicate_match.group",
+        "list",
+        "kw.pop",
+        "lib.sqlalchemy.engine.reflection.ReflectionDefaults.indexes",
+        "indexes.sort",
+        "re.compile",
+        "lib.sqlalchemy.text",
+        "lib.sqlalchemy.util.warn",
+        "lib.sqlalchemy.dialects.sqlite.base.SQLiteDialect.has_table",
+        "partial_pred_re.search",
+        "indexes.remove",
+        "lib.sqlalchemy.dialects.sqlite.base.SQLiteDialect.identifier_preparer.quote_identifier",
+        "connection.exec_driver_sql",
+        "rs.scalar",
+        "lib.sqlalchemy.exc.NoSuchTableError",
+        "indexes.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "test.engine.test_deprecations.EngineEventsTest._assert_stmts",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "teststmt.startswith",
+        "list",
+        "received.pop",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "test.sql.test_update._FilterByDMLSuite.test_filter_by_three_tables_secondary",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "stmt.filter_by",
+        "test.sql.test_update._FilterByDMLSuite.assert_compile",
+        "re.compile"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.testing.fixtures.sql",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "re.compile",
+      "callers": [],
+      "callees": [
+        "re.compile"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.postgresql.pg8000",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.update_copy",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.update_copy",
+        "lib.sqlalchemy.util.counter"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.oracle.base",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.update_copy",
+      "callers": [],
+      "callees": [
+        "x.lower",
+        "set",
+        "range",
+        "str",
+        "lib.sqlalchemy.util.update_copy"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mssql.pymssql",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.update_copy",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.update_copy"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.oracle.cx_oracle",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.update_copy",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.immutabledict",
+        "lib.sqlalchemy.util.update_copy"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mysql.pyodbc",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.update_copy",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.update_copy"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mysql._mariadb_shim.MariaDBShim._set_mariadb",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.update_copy",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.exc.InvalidRequestError",
+        "lib.sqlalchemy.dialects.mysql._mariadb_shim.MariaDBShim.preparer",
+        "isinstance",
+        "map",
+        "lib.sqlalchemy.util.update_copy",
+        "lib.sqlalchemy.dialects.mysql._mariadb_shim.MariaDBShim.identifier_preparer._set_mariadb"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.postgresql._psycopg_common",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.update_copy",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.update_copy",
+        "lib.sqlalchemy.util.counter"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.postgresql.psycopg2",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.update_copy",
+      "callers": [],
+      "callees": [
+        "ExecutemanyMode.__members__.values",
+        "lib.sqlalchemy.util.update_copy",
+        "logging.getLogger"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.postgresql.asyncpg",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.update_copy",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.update_copy",
+        "lib.sqlalchemy.util.symbol"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mysql.cymysql",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.update_copy",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.update_copy"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mysql.mariadbconnector",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.update_copy",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.update_copy"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mssql.pyodbc",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.update_copy",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.update_copy"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.postgresql.psycopg",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.update_copy",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.update_copy",
+        "logging.getLogger"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.sqlite.base",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.update_copy",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.immutabledict",
+        "lib.sqlalchemy.util.update_copy"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mysql.mysqlconnector",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.util.update_copy",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.util.update_copy"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.visit_create_index",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler._prepared_index_name",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.sql.coercions.expect",
+        "len",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler._verify_index_table",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.sql_compiler.process",
+        "preparer.format_table",
+        "preparer.quote",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler._prepared_index_name",
+        "isinstance"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.visit_set_table_comment",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.format_table",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.schema_for_object",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.quote_schema",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.format_table",
+        "lib.sqlalchemy.sql.sqltypes.NVARCHAR",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.sql_compiler.render_literal_value"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.visit_drop_column_comment",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.format_table",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.quote_schema",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.schema_for_object",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.format_table",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.format_column"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.visit_set_column_comment",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.format_table",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.schema_for_object",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.quote_schema",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.format_table",
+        "lib.sqlalchemy.sql.sqltypes.NVARCHAR",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.sql_compiler.render_literal_value",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.format_column"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.visit_drop_table_comment",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.format_table",
+      "callers": [],
+      "callees": [
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.quote_schema",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.schema_for_object",
+        "lib.sqlalchemy.dialects.mssql.base.MSDDLCompiler.preparer.format_table"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-26T22:22:17"
+}

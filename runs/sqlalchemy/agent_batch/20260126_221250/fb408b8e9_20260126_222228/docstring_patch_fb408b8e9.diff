@@ -1,0 +1,605 @@
+--- a/lib/sqlalchemy/connectors/asyncio.py
++++ b/lib/sqlalchemy/connectors/asyncio.py
+@@ -300,6 +300,11 @@
+         # see https://github.com/aio-libs/aioodbc/issues/451
+         # right now
+ 
++        """TODO: docstring
++
++        Args:
++            *inputsizes:
++        """
+         return await_(self._cursor.setinputsizes(*inputsizes))
+ 
+     def __enter__(self) -> Self:
+
+--- a/lib/sqlalchemy/dialects/oracle/types.py
++++ b/lib/sqlalchemy/dialects/oracle/types.py
+@@ -322,6 +322,11 @@
+         # this can probably be dbapi.BOOLEAN (including for older versions),
+         # however sticking with NUMBER to avoid any surprises with older
+         # versions or non-bool values
++        """TODO: docstring
++
++        Args:
++            dbapi:
++        """
+         return dbapi.NUMBER
+ 
+     def result_processor(self, dialect, coltype):
+
+--- a/lib/sqlalchemy/dialects/postgresql/asyncpg.py
++++ b/lib/sqlalchemy/dialects/postgresql/asyncpg.py
+@@ -868,12 +868,14 @@
+             self.isolation_level = self._isolation_setting
+ 
+     def ping(self):
++        """TODO: docstring"""
+         try:
+             _ = await_(self._async_ping())
+         except Exception as error:
+             self._handle_exception(error)
+ 
+     async def _async_ping(self):
++        """TODO: docstring"""
+         if self._transaction is None and self.isolation_level != "autocommit":
+             # create a transaction explicitly to support pgbouncer
+             # transaction mode.   See #10226
+
+--- a/lib/sqlalchemy/dialects/postgresql/base.py
++++ b/lib/sqlalchemy/dialects/postgresql/base.py
+@@ -4541,6 +4541,7 @@
+ 
+     @util.memoized_property
+     def _constraint_query(self):
++        """TODO: docstring"""
+         if self.server_version_info >= (11, 0):
+             indnkeyatts = pg_catalog.pg_index.c.indnkeyatts
+         else:
+@@ -4638,6 +4639,17 @@
+         self, connection, contype, schema, filter_names, scope, kind, **kw
+     ):
+         # used to reflect primary and unique constraint
++        """TODO: docstring
++
++        Args:
++            connection:
++            contype:
++            schema:
++            filter_names:
++            scope:
++            kind:
++            **kw:
++        """
+         table_oids = self._get_table_oids(
+             connection, schema, filter_names, scope, kind, **kw
+         )
+@@ -5257,6 +5269,14 @@
+     def get_unique_constraints(
+         self, connection, table_name, schema=None, **kw
+     ):
++        """TODO: docstring
++
++        Args:
++            connection:
++            table_name:
++            schema:
++            **kw:
++        """
+         data = self.get_multi_unique_constraints(
+             connection,
+             schema=schema,
+@@ -5276,6 +5296,16 @@
+         kind,
+         **kw,
+     ):
++        """TODO: docstring
++
++        Args:
++            connection:
++            schema:
++            filter_names:
++            scope:
++            kind:
++            **kw:
++        """
+         result = self._reflect_constraint(
+             connection, "u", schema, filter_names, scope, kind, **kw
+         )
+
+--- a/lib/sqlalchemy/ext/associationproxy.py
++++ b/lib/sqlalchemy/ext/associationproxy.py
+@@ -633,6 +633,13 @@
+         owning_class: Type[Any],
+         parent_instance: Any,
+     ) -> AssociationProxyInstance[_T]:
++        """TODO: docstring
++
++        Args:
++            parent:
++            owning_class:
++            parent_instance:
++        """
+         target_collection = parent.target_collection
+         value_attr = parent.value_attr
+         prop = cast(
+@@ -682,6 +689,15 @@
+         target_class: Type[Any],
+         value_attr: str,
+     ) -> AssociationProxyInstance[_T]:
++        """TODO: docstring
++
++        Args:
++            target_assoc:
++            parent:
++            owning_class:
++            target_class:
++            value_attr:
++        """
+         if target_assoc is not None:
+             return ObjectAssociationProxyInstance(
+                 parent, owning_class, target_class, value_attr
+@@ -723,6 +739,12 @@
+     def _cls_unwrap_target_assoc_proxy(
+         cls, target_class: Any, value_attr: str
+     ) -> Optional[AssociationProxyInstance[_T]]:
++        """TODO: docstring
++
++        Args:
++            target_class:
++            value_attr:
++        """
+         attr = getattr(target_class, value_attr)
+         assert not isinstance(attr, AssociationProxy)
+         if isinstance(attr, AssociationProxyInstance):
+
+--- a/lib/sqlalchemy/ext/asyncio/base.py
++++ b/lib/sqlalchemy/ext/asyncio/base.py
+@@ -165,6 +165,13 @@
+         self, typ: Any, value: Any, traceback: Any
+     ) -> Optional[bool]:
+         # vendored from contextlib.py
++        """TODO: docstring
++
++        Args:
++            typ:
++            value:
++            traceback:
++        """
+         if typ is None:
+             try:
+                 await anext(self.gen)
+
+--- a/lib/sqlalchemy/orm/bulk_persistence.py
++++ b/lib/sqlalchemy/orm/bulk_persistence.py
+@@ -700,6 +700,16 @@
+         bind_arguments,
+         is_pre_event,
+     ):
++        """TODO: docstring
++
++        Args:
++            session:
++            statement:
++            params:
++            execution_options:
++            bind_arguments:
++            is_pre_event:
++        """
+         (
+             update_options,
+             execution_options,
+@@ -1107,6 +1117,16 @@
+         bind_arguments,
+         update_options,
+     ):
++        """TODO: docstring
++
++        Args:
++            session:
++            statement:
++            params:
++            execution_options:
++            bind_arguments:
++            update_options:
++        """
+         mapper = update_options._subject_mapper
+ 
+         select_stmt = (
+
+--- a/lib/sqlalchemy/orm/decl_api.py
++++ b/lib/sqlalchemy/orm/decl_api.py
+@@ -253,6 +253,13 @@
+         #    ...
+         # which seems to help typing tools interpret the fn as a classmethod
+         # for situations where needed
++        """TODO: docstring
++
++        Args:
++            fn:
++            cascading:
++            quiet:
++        """
+         if isinstance(fn, classmethod):
+             fn = fn.__func__
+ 
+
+--- a/lib/sqlalchemy/orm/descriptor_props.py
++++ b/lib/sqlalchemy/orm/descriptor_props.py
+@@ -1048,6 +1048,7 @@
+     def _proxied_object(
+         self,
+     ) -> Union[MapperProperty[_T], SQLORMOperations[_T]]:
++        """TODO: docstring"""
+         attr = getattr(self.parent.class_, self.name)
+         if not hasattr(attr, "property") or not isinstance(
+             attr.property, MapperProperty
+
+--- a/lib/sqlalchemy/sql/compiler.py
++++ b/lib/sqlalchemy/sql/compiler.py
+@@ -2289,6 +2289,7 @@
+ 
+     @util.memoized_property
+     def _within_exec_param_key_getter(self) -> Callable[[Any], str]:
++        """TODO: docstring"""
+         getter = self._get_bind_name_for_col
+         return getter
+ 
+@@ -3998,6 +3999,13 @@
+         return ret
+ 
+     def render_bind_cast(self, type_, dbapi_type, sqltext):
++        """TODO: docstring
++
++        Args:
++            type_:
++            dbapi_type:
++            sqltext:
++        """
+         raise NotImplementedError()
+ 
+     def render_literal_bindparam(
+@@ -4177,6 +4185,12 @@
+         return ret
+ 
+     def _dispatch_independent_ctes(self, stmt, kw):
++        """TODO: docstring
++
++        Args:
++            stmt:
++            kw:
++        """
+         local_kw = kw.copy()
+         local_kw.pop("cte_opts", None)
+         for cte, opt in zip(
+@@ -4933,6 +4947,19 @@
+         from_linter=None,
+         **kwargs,
+     ):
++        """TODO: docstring
++
++        Args:
++            select_stmt:
++            asfrom:
++            insert_into:
++            fromhints:
++            compound_index:
++            select_wraps_for:
++            lateral:
++            from_linter:
++            **kwargs:
++        """
+         assert select_wraps_for is None, (
+             "SQLAlchemy 1.4 requires use of "
+             "the translate_select_structure hook for structural "
+@@ -5309,6 +5336,13 @@
+         return text
+ 
+     def _generate_prefixes(self, stmt, prefixes, **kw):
++        """TODO: docstring
++
++        Args:
++            stmt:
++            prefixes:
++            **kw:
++        """
+         clause = " ".join(
+             prefix._compiler_dispatch(self, **kw)
+             for prefix, dialect_name in prefixes
+@@ -5427,6 +5461,14 @@
+         populate_result_map: bool,
+         **kw: Any,
+     ) -> str:
++        """TODO: docstring
++
++        Args:
++            stmt:
++            returning_cols:
++            populate_result_map:
++            **kw:
++        """
+         columns = [
+             self._label_returning_column(
+                 stmt,
+@@ -5587,6 +5629,12 @@
+         )
+ 
+     def _setup_crud_hints(self, stmt, table_text):
++        """TODO: docstring
++
++        Args:
++            stmt:
++            table_text:
++        """
+         dialect_hints = {
+             table: hint_text
+             for (table, dialect), hint_text in stmt._hints.items()
+@@ -6045,6 +6093,14 @@
+     def visit_insert(
+         self, insert_stmt, visited_bindparam=None, visiting_cte=None, **kw
+     ):
++        """TODO: docstring
++
++        Args:
++            insert_stmt:
++            visited_bindparam:
++            visiting_cte:
++            **kw:
++        """
+         compile_state = insert_stmt._compile_state_factory(
+             insert_stmt, self, **kw
+         )
+
+--- a/lib/sqlalchemy/sql/sqltypes.py
++++ b/lib/sqlalchemy/sql/sqltypes.py
+@@ -1827,6 +1827,11 @@
+     comparator_factory = Comparator
+ 
+     def _object_value_for_elem(self, elem: str) -> Union[str, enum.Enum]:
++        """TODO: docstring
++
++        Args:
++            elem:
++        """
+         try:
+             # Value will not be None because key is not None
+             return self._object_lookup[elem]  # type: ignore[return-value]
+@@ -1947,6 +1952,11 @@
+         parent_processor = super().result_processor(dialect, coltype)
+ 
+         def process(value):
++            """TODO: docstring
++
++            Args:
++                value:
++            """
+             if parent_processor:
+                 value = parent_processor(value)
+ 
+
+--- a/lib/sqlalchemy/testing/plugin/plugin_base.py
++++ b/lib/sqlalchemy/testing/plugin/plugin_base.py
+@@ -57,6 +57,11 @@
+ 
+ 
+ def setup_options(make_option):
++    """TODO: docstring
++
++    Args:
++        make_option:
++    """
+     make_option(
+         "--log-info",
+         action="callback",
+@@ -336,6 +341,11 @@
+ 
+ 
+ def _set_tag_include(tag):
++    """TODO: docstring
++
++    Args:
++        tag:
++    """
+     def _do_include_tag(opt_str, value, parser):
+         _include_tag(opt_str, tag, parser)
+ 
+@@ -343,6 +353,11 @@
+ 
+ 
+ def _set_tag_exclude(tag):
++    """TODO: docstring
++
++    Args:
++        tag:
++    """
+     def _do_exclude_tag(opt_str, value, parser):
+         _exclude_tag(opt_str, tag, parser)
+ 
+
+--- a/lib/sqlalchemy/dialects/oracle/base.py
++++ b/lib/sqlalchemy/dialects/oracle/base.py
+@@ -1858,6 +1858,12 @@
+         )
+ 
+     def visit_create_index(self, create, **kw):
++        """TODO: docstring
++
++        Args:
++            create:
++            **kw:
++        """
+         index = create.element
+         self._verify_index_table(index)
+         preparer = self.preparer
+
+--- a/lib/sqlalchemy/engine/cursor.py
++++ b/lib/sqlalchemy/engine/cursor.py
+@@ -202,6 +202,18 @@
+         safe_for_cache: bool,
+         keymap_by_result_column_idx: Any,
+     ) -> Self:
++        """TODO: docstring
++
++        Args:
++            unpickled:
++            processors:
++            keys:
++            keymap:
++            tuplefilter:
++            translated_indexes:
++            safe_for_cache:
++            keymap_by_result_column_idx:
++        """
+         new_obj = self.__class__.__new__(self.__class__)
+         new_obj._unpickled = unpickled
+         new_obj._processors = processors
+
+--- a/lib/sqlalchemy/orm/session.py
++++ b/lib/sqlalchemy/orm/session.py
+@@ -1034,6 +1034,13 @@
+         execution_options: Optional[_ExecuteOptions] = None,
+         **kwargs: Any,
+     ) -> Connection:
++        """TODO: docstring
++
++        Args:
++            bindkey:
++            execution_options:
++            **kwargs:
++        """
+         bind = self.session.get_bind(bindkey, **kwargs)
+         return self._connection_for_bind(bind, execution_options)
+ 
+@@ -1041,6 +1048,11 @@
+         (SessionTransactionState.ACTIVE,), _StateChangeStates.NO_CHANGE
+     )
+     def _begin(self, nested: bool = False) -> SessionTransaction:
++        """TODO: docstring
++
++        Args:
++            nested:
++        """
+         return SessionTransaction(
+             self.session,
+             (
+@@ -1156,6 +1168,12 @@
+         bind: _SessionBind,
+         execution_options: Optional[CoreExecuteOptionsParameter],
+     ) -> Connection:
++        """TODO: docstring
++
++        Args:
++            bind:
++            execution_options:
++        """
+         if bind in self._connections:
+             if execution_options:
+                 util.warn(
+@@ -1268,6 +1286,7 @@
+         (SessionTransactionState.ACTIVE,), SessionTransactionState.PREPARED
+     )
+     def _prepare_impl(self) -> None:
++        """TODO: docstring"""
+         if self._parent is None or self.nested:
+             self.session.dispatch.before_commit(self.session)
+ 
+@@ -1304,6 +1323,11 @@
+         SessionTransactionState.CLOSED,
+     )
+     def commit(self, _to_root: bool = False) -> None:
++        """TODO: docstring
++
++        Args:
++            _to_root:
++        """
+         if self._state is not SessionTransactionState.PREPARED:
+             with self._expect_state(SessionTransactionState.PREPARED):
+                 self._prepare_impl()
+@@ -1337,6 +1361,12 @@
+     def rollback(
+         self, _capture_exception: bool = False, _to_root: bool = False
+     ) -> None:
++        """TODO: docstring
++
++        Args:
++            _capture_exception:
++            _to_root:
++        """
+         stx = self.session._transaction
+         assert stx is not None
+         if stx is not self:
+@@ -1399,6 +1429,11 @@
+         _StateChangeStates.ANY, SessionTransactionState.CLOSED
+     )
+     def close(self, invalidate: bool = False) -> None:
++        """TODO: docstring
++
++        Args:
++            invalidate:
++        """
+         if self.nested:
+             self.session._nested_transaction = (
+                 self._previous_nested_transaction
+
+--- a/lib/sqlalchemy/sql/coercions.py
++++ b/lib/sqlalchemy/sql/coercions.py
+@@ -330,6 +330,17 @@
+     disable_inspection: bool = False,
+     **kw: Any,
+ ) -> Any:
++    """TODO: docstring
++
++    Args:
++        role:
++        element:
++        apply_propagate_attrs:
++        argname:
++        post_inspect:
++        disable_inspection:
++        **kw:
++    """
+     if (
+         role.allows_lambda
+         # note callable() will not invoke a __getattr__() method, whereas
+
+--- a/lib/sqlalchemy/sql/schema.py
++++ b/lib/sqlalchemy/sql/schema.py
+@@ -2355,6 +2355,11 @@
+     identity: Optional[Identity]
+ 
+     def _set_type(self, type_: TypeEngine[Any]) -> None:
++        """TODO: docstring
++
++        Args:
++            type_:
++        """
+         assert self.type._isnull or type_ is self.type
+ 
+         self.type = type_
+@@ -2387,6 +2392,11 @@
+         return self.table is not None and self.table._is_table
+ 
+     def _extra_kwargs(self, **kwargs: Any) -> None:
++        """TODO: docstring
++
++        Args:
++            **kwargs:
++        """
+         self._validate_dialect_kwargs(kwargs)
+ 
+     def __str__(self) -> str:
+
+--- a/lib/sqlalchemy/testing/plugin/pytestplugin.py
++++ b/lib/sqlalchemy/testing/plugin/pytestplugin.py
+@@ -32,6 +32,11 @@
+ 
+ 
+ def pytest_addoption(parser):
++    """TODO: docstring
++
++    Args:
++        parser:
++    """
+     group = parser.getgroup("sqlalchemy")
+ 
+     def make_option(name, **kw):

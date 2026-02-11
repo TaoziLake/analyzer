@@ -1,0 +1,40 @@
+{
+  "commit": "8f771e4d",
+  "parent": "e96e67164527edab6f3eb1ad86c37d6debf1b83b",
+  "repo": "D:\\locbench\\peewee",
+  "num_files_in_diff": 1,
+  "num_py_files_in_diff": 1,
+  "num_seeds": 2,
+  "seeds": [
+    {
+      "path": "playhouse/cysqlite_ext.py",
+      "version": "new",
+      "line": 8,
+      "kind": "module",
+      "qualname": "playhouse.cysqlite_ext",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "playhouse/cysqlite_ext.py",
+      "version": "new",
+      "line": 70,
+      "kind": "function",
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase.__init__",
+      "span": [
+        56,
+        73
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def __init__(self, database, rank_functions=True, regexp_function=False,\n                 *args, **kwargs):\n        super(CySqliteDatabase, self).__init__(database, *args, **kwargs)\n\n        self._commit_hook = None\n        self._rollback_hook = None\n        self._update_hook = None\n        self._authorizer = None\n        self._trace = None\n        self._progress = None\n\n        if rank_functions:\n            self.register_function(cysqlite.rank_bm25, 'fts_bm25')\n            self.register_function(cysqlite.rank_lucene, 'fts_lucene')\n            self.register_function(rank, 'fts_rank')\n\n        if regexp_function:\n            self.register_function(_sqlite_regexp, 'regexp', 2)",
+      "old_code": "    def __init__(self, database, rank_functions=True, regexp_function=False,\n                 *args, **kwargs):\n        super(CySqliteDatabase, self).__init__(database, *args, **kwargs)\n\n        self._commit_hook = None\n        self._rollback_hook = None\n        self._update_hook = None\n        self._authorizer = None\n        self._trace = None\n        self._progress = None\n\n        if rank_functions:\n            self.register_function(cysqlite.rank_bm25, 'fts_bm25')\n            self.register_function(cysqlite.rank_lucene, 'fts_lucene')\n\n        if regexp_function:\n            self.register_function(_sqlite_regexp, 'regexp', 2)"
+    }
+  ],
+  "generated_at": "2026-02-11T11:05:06"
+}

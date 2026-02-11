@@ -1,0 +1,174 @@
+{
+  "commit": "8d49cba",
+  "parent": "7e0eb658e70e27e409cbf61f49a0907731e17acf",
+  "repo": "D:\\locbench\\mistune",
+  "num_seeds": 7,
+  "num_seeds_used": 7,
+  "seed_scope": "code_only",
+  "num_impacted": 9,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "src.mistune.list_parser",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.list_parser.parse_list",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.block_parser.BlockParser.parse_list"
+      ],
+      "callees": [
+        "text.strip",
+        "_transform_tight_list",
+        "m.end",
+        "rules.remove",
+        "state.append_token",
+        "state.depth",
+        "state.append_paragraph",
+        "_parse_list_item",
+        "state.tokens.insert",
+        "m.group",
+        "_get_list_bullet"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.list_parser._transform_tight_list",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.list_parser._transform_tight_list"
+      ],
+      "callees": [
+        "src.mistune.list_parser._transform_tight_list"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.list_parser._parse_list_item",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.list_parser.parse_list"
+      ],
+      "callees": [
+        "_compile_list_item_pattern",
+        "block.BLANK_LINE.match",
+        "block.parse",
+        "src.mistune.util.strip_end",
+        "m.end",
+        "src.strip",
+        "_is_loose_list",
+        "state.get_text",
+        "src.mistune.util.expand_leading_tab",
+        "append",
+        "line.startswith",
+        "sc.match",
+        "block.parse_method",
+        "list_item_breaks.insert",
+        "_clean_list_item_text",
+        "state.find_line_end",
+        "_compile_continue_width",
+        "join",
+        "pairs.insert",
+        "state.child_state",
+        "m.group",
+        "p.replace"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.list_parser._compile_continue_width",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.list_parser._parse_list_item"
+      ],
+      "callees": [
+        "src.mistune.util.expand_tab",
+        "m2.group",
+        "_LINE_HAS_TEXT.match",
+        "src.mistune.util.expand_leading_tab",
+        "text.startswith"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.list_parser._is_loose_list",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.list_parser._parse_list_item"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.link",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.renderers.markdown.MarkdownRenderer.image"
+      ],
+      "callees": [
+        "attrs.get",
+        "src.mistune.renderers.markdown.MarkdownRenderer.render_children"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.parse_list",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.list_parser.parse_list",
+      "callers": [],
+      "callees": [
+        "src.mistune.list_parser.parse_list"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.image",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.renderers.markdown.MarkdownRenderer.link",
+      "callers": [],
+      "callees": [
+        "src.mistune.renderers.markdown.MarkdownRenderer.link"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-10T14:46:35"
+}

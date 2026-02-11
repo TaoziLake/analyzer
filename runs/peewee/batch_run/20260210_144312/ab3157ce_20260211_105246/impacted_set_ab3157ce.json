@@ -1,0 +1,87 @@
+{
+  "commit": "ab3157ce",
+  "parent": "f5755cb50e817a401ea5f577d8639e7024401a9e",
+  "repo": "D:\\locbench\\peewee",
+  "num_seeds": 2,
+  "num_seeds_used": 2,
+  "seed_scope": "code_only",
+  "num_impacted": 3,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "playhouse.cysqlite_ext",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "playhouse.cysqlite_ext.__status__",
+        "playhouse.cysqlite_ext.__dbstatus__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "tests.sqlite"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.sqlite",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase",
+      "callers": [],
+      "callees": [
+        "BareField",
+        "RowIDField",
+        "tests.base.requires_models",
+        "IntegerField",
+        "DateTimeField",
+        "SqliteExtDatabase.collation",
+        "JSONField",
+        "SqliteExtDatabase",
+        "tests.sqlite_helpers.json_patch_installed",
+        "playhouse.cysqlite_ext.CySqliteDatabase.register_function",
+        "SqliteExtDatabase.register_aggregate",
+        "SqliteExtDatabase.register_function",
+        "playhouse.cysqlite_ext.CySqliteDatabase.func",
+        "FTS5Model.fts5_installed",
+        "playhouse.cysqlite_ext.CySqliteDatabase",
+        "playhouse.cysqlite_ext.CySqliteDatabase.collation",
+        "SqliteExtDatabase.func",
+        "TextField",
+        "tests.base.db_loader",
+        "tests.base.skip_if",
+        "playhouse.cysqlite_ext.CySqliteDatabase.register_aggregate",
+        "tests.base.skip_unless",
+        "tests.sqlite_helpers.jsonb_installed",
+        "playhouse.cysqlite_ext.CySqliteDatabase.register_collation",
+        "FloatField",
+        "tests.sqlite_helpers.json_installed",
+        "tests.sqlite_helpers.json_text_installed",
+        "JSONBField",
+        "SqliteExtDatabase.register_collation",
+        "TDecimalField",
+        "SearchField",
+        "ISODateTimeField",
+        "tests.base.get_in_memory_db",
+        "ForeignKeyField",
+        "tests.sqlite_helpers.compile_option"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-11T10:52:48"
+}

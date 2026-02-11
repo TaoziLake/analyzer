@@ -1,0 +1,3153 @@
+{
+  "commit": "2e7aaea5",
+  "parent": "4414cd849d6537bae5a99f112c35d2e779a7dfbc",
+  "repo": "D:\\locbench\\fastapi",
+  "num_seeds": 6,
+  "num_seeds_used": 6,
+  "seed_scope": "code_only",
+  "num_impacted": 164,
+  "max_hops": 2,
+  "call_graph_stats": {
+    "total_functions": 7764,
+    "total_call_relations": 12690
+  },
+  "impacted": [
+    {
+      "qualname": "scripts.translate",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "app",
+        "typer.Typer",
+        "general_prompt_path.read_text",
+        "pathlib.Path"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.get_llm_translatable",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "scripts.translate.list_llm_translatable",
+        "scripts.translate.llm_translatable_json"
+      ],
+      "callees": [
+        "translatable_langs.append",
+        "lang_prompt_path.exists",
+        "scripts.translate.get_langs",
+        "pathlib.Path"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.list_llm_translatable",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "scripts.translate.get_llm_translatable",
+        "app.command",
+        "rich.print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.llm_translatable_json",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "typer.Option",
+        "scripts.translate.get_llm_translatable",
+        "app.command",
+        "rich.print",
+        "typer.Exit",
+        "json.dumps"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.commands_json",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "typer.Option",
+        "app.command",
+        "rich.print",
+        "typer.Exit",
+        "json.dumps"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.make_pr",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "secrets.token_hex",
+        "gh_repo.create_pull",
+        "g.get_repo",
+        "git.Repo",
+        "pathlib.Path",
+        "typer.Option",
+        "str",
+        "app.command",
+        "subprocess.run",
+        "rich.print",
+        "typer.Exit",
+        "repo.is_dirty",
+        "github.Github"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "app",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate",
+      "callers": [
+        "tests.test_ws_router.websocket_middleware.middleware_constructor.wrapped_app",
+        "tests.test_ws_router.websocket_middleware.middleware_constructor.wrapped_app.call_next",
+        "scripts.docs",
+        "scripts.translate"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "typer.Typer",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate",
+      "callers": [
+        "scripts.translation_fixer",
+        "scripts.docs",
+        "scripts.translate"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "general_prompt_path.read_text",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate",
+      "callers": [
+        "scripts.translate"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "pathlib.Path",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate",
+      "callers": [
+        "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_wrong_lang_code.test_wrong_lang_code_2",
+        "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_number_mismatch.test_lt",
+        "scripts.mkdocs_hooks.get_missing_translation_content",
+        "scripts.docs.build_lang",
+        "scripts.tests.test_translation_fixer.test_code_includes.test_number_mismatch",
+        "scripts.tests.test_translation_fixer.test_html_links.test_html_links_number_mismatch.test_gt",
+        "scripts.translate.make_pr",
+        "scripts.docs.generate_readme",
+        "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_mermaid",
+        "scripts.tests.test_translation_fixer.test_html_links.test_html_links_number_mismatch.test_lt",
+        "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_lines_number_mismatch",
+        "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_lines_number_mismatch.test_lt",
+        "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_lines_number_mismatch.test_gt",
+        "scripts.contributors.main",
+        "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_number_mismatch",
+        "scripts.tests.test_translation_fixer.test_header_permalinks.test_header_number_mismatch",
+        "scripts.translate.generate_en_path",
+        "scripts.translate.list_removable",
+        "tests.test_tutorial.test_background_tasks.test_tutorial002.test",
+        "scripts.tests.test_translation_fixer.test_html_links.test_html_links_number_mismatch",
+        "scripts.docs.new_lang",
+        "tests.test_tutorial.test_custom_docs_ui.test_tutorial002.client",
+        "scripts.mkdocs_hooks.get_mkdocs_material_langs",
+        "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_mermaid.test_translated",
+        "tests.test_tutorial.test_background_tasks.test_tutorial001.test",
+        "scripts.translate.get_llm_translatable",
+        "scripts.translate.iter_en_paths_to_translate",
+        "scripts.translate.generate_lang_path",
+        "scripts.topic_repos.main",
+        "scripts.people.main",
+        "scripts.tests.test_translation_fixer.test_header_permalinks.test_header_level_mismatch",
+        "scripts.translate.get_langs",
+        "scripts.tests.test_translation_fixer.test_header_permalinks.test_header_level_mismatch.test_level_mismatch_1",
+        "scripts.tests.test_translation_fixer.test_code_includes.test_number_mismatch.test_gt",
+        "scripts.translate.list_outdated",
+        "docs_src.generate_clients.tutorial004_py39",
+        "scripts.translation_fixer.process_one_page",
+        "scripts.tests.test_translation_fixer.conftest.copy_test_files",
+        "scripts.tests.test_translation_fixer.conftest.prepare_paths",
+        "scripts.mkdocs_hooks.on_config",
+        "scripts.translation_fixer.get_all_paths",
+        "scripts.tests.test_translation_fixer.test_complex_doc.test_compex_doc",
+        "scripts.docs.get_updated_config_content",
+        "scripts.tests.test_translation_fixer.test_markdown_links.test_mkd_links_number_mismatch.test_gt",
+        "scripts.tests.test_translation_fixer.test_header_permalinks.test_header_number_mismatch.test_gt",
+        "scripts.tests.test_translation_fixer.test_markdown_links.test_mkd_links_number_mismatch",
+        "tests.test_tutorial.test_static_files.test_tutorial001.client",
+        "scripts.tests.test_translation_fixer.test_header_permalinks.test_header_number_mismatch.test_lt",
+        "scripts.translate",
+        "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_number_mismatch.test_gt",
+        "scripts.tests.test_translation_fixer.test_code_includes.test_number_mismatch.test_lt",
+        "tests.test_tutorial.test_custom_docs_ui.test_tutorial001.client",
+        "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_mermaid.test_not_translated",
+        "scripts.translation_fixer.fix_all",
+        "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_wrong_lang_code.test_wrong_lang_code_1",
+        "scripts.sponsors.main",
+        "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_wrong_lang_code",
+        "scripts.translate.translate_page",
+        "scripts.mkdocs_hooks.resolve_file",
+        "scripts.translate.iter_all_en_paths",
+        "scripts.docs",
+        "scripts.tests.test_translation_fixer.test_markdown_links.test_mkd_links_number_mismatch.test_lt",
+        "scripts.tests.test_translation_fixer.test_header_permalinks.test_header_level_mismatch.test_level_mismatch_2"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "translatable_langs.append",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.get_llm_translatable",
+      "callers": [
+        "scripts.translate.get_llm_translatable"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "lang_prompt_path.exists",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.get_llm_translatable",
+      "callers": [
+        "scripts.translate.translate_page",
+        "scripts.translate.get_llm_translatable"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "scripts.translate.get_langs",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.get_llm_translatable",
+      "callers": [
+        "scripts.translate.translate_page",
+        "scripts.translate.get_llm_translatable",
+        "scripts.translate.list_all_removable"
+      ],
+      "callees": [
+        "yaml.safe_load",
+        "pathlib.Path"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "app.command",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.list_llm_translatable",
+      "callers": [
+        "scripts.translate.remove_all_removable",
+        "scripts.translate.commands_json",
+        "scripts.docs.build_lang",
+        "scripts.translate.translate_lang",
+        "scripts.translate.make_pr",
+        "scripts.translate.list_llm_translatable",
+        "scripts.docs.generate_readme",
+        "scripts.docs.add_permalinks_page",
+        "scripts.translate.update_and_add",
+        "scripts.docs.build_all",
+        "scripts.translate.list_removable",
+        "scripts.docs.new_lang",
+        "scripts.docs.add_permalinks",
+        "scripts.translate.add_missing",
+        "scripts.docs.langs_json",
+        "scripts.docs.serve",
+        "scripts.translate.llm_translatable_json",
+        "scripts.translate.remove_removable",
+        "scripts.translate.list_outdated",
+        "scripts.docs.live",
+        "scripts.docs.generate_docs_src_versions_for_file",
+        "scripts.docs.add_permalinks_pages",
+        "scripts.docs.ensure_non_translated",
+        "scripts.translate.list_missing",
+        "scripts.translate.update_outdated",
+        "scripts.translate.list_all_removable",
+        "scripts.docs.update_languages",
+        "scripts.translate.translate_page"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "rich.print",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.list_llm_translatable",
+      "callers": [
+        "scripts.translate.remove_removable",
+        "scripts.translate.list_outdated",
+        "scripts.translate.list_missing",
+        "scripts.translate.list_removable",
+        "scripts.translate.remove_all_removable",
+        "scripts.translate.commands_json",
+        "scripts.translate.update_and_add",
+        "scripts.translate.update_outdated",
+        "scripts.translate.translate_lang",
+        "scripts.translate.list_all_removable",
+        "scripts.translate.add_missing",
+        "scripts.translate.make_pr",
+        "scripts.translate.list_llm_translatable",
+        "scripts.translate.translate_page",
+        "scripts.translate.llm_translatable_json"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "typer.Option",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.llm_translatable_json",
+      "callers": [
+        "scripts.translate.remove_removable",
+        "scripts.translate.commands_json",
+        "scripts.translate.update_and_add",
+        "scripts.translate.update_outdated",
+        "scripts.translate.translate_lang",
+        "scripts.translate.add_missing",
+        "scripts.translate.make_pr",
+        "scripts.translate.translate_page",
+        "scripts.translate.llm_translatable_json"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "typer.Exit",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.llm_translatable_json",
+      "callers": [
+        "scripts.translate.commands_json",
+        "scripts.translation_fixer.fix_pages",
+        "scripts.docs.update_languages",
+        "scripts.translate.make_pr",
+        "scripts.translation_fixer.fix_all",
+        "scripts.docs.generate_readme",
+        "scripts.translate.llm_translatable_json",
+        "scripts.docs.ensure_non_translated"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "json.dumps",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.llm_translatable_json",
+      "callers": [
+        "tests.benchmarks.test_general_performance._expected_large_payload_json_bytes",
+        "fastapi.openapi.docs.get_swagger_ui_html",
+        "tests.test_ws_dependencies.routerindex",
+        "tests.test_dependency_contextmanager.middleware",
+        "tests.test_tutorial.test_custom_request_and_route.test_tutorial001.test_gzip_request",
+        "docs_src.generate_clients.tutorial004_py39",
+        "scripts.translate.commands_json",
+        "tests.test_ws_dependencies.index",
+        "tests.test_ws_dependencies.routerprefixindex",
+        "tests.test_dependency_yield_scope.function_scope.iter_data",
+        "tests.test_dependency_yield_scope.get_named_function_scope.iter_data",
+        "tests.test_dependency_yield_scope.get_stream_session.iter_data",
+        "tests.test_dependency_yield_scope.request_scope.iter_data",
+        "tests.test_dependency_yield_scope.get_sub.iter_data",
+        "scripts.docs.langs_json",
+        "tests.test_tutorial.test_generate_clients.test_tutorial004.test_remove_tags",
+        "scripts.translate.llm_translatable_json",
+        "tests.test_dependency_yield_scope.get_regular_function_scope.iter_data"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "secrets.token_hex",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.make_pr",
+      "callers": [
+        "scripts.contributors.main",
+        "scripts.translate.make_pr",
+        "scripts.sponsors.main",
+        "scripts.topic_repos.main",
+        "scripts.people.main"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "gh_repo.create_pull",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.make_pr",
+      "callers": [
+        "scripts.translate.make_pr"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "g.get_repo",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.make_pr",
+      "callers": [
+        "scripts.contributors.main",
+        "scripts.label_approved",
+        "scripts.translate.make_pr",
+        "scripts.notify_translations.main",
+        "scripts.deploy_docs_status.main",
+        "scripts.sponsors.main",
+        "scripts.topic_repos.main",
+        "scripts.people.main"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "git.Repo",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.make_pr",
+      "callers": [
+        "scripts.translate.list_outdated",
+        "scripts.translate.make_pr"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "str",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.make_pr",
+      "callers": [
+        "tests.test_validation_error_context.test_subapp_request_validation_error_includes_endpoint_context",
+        "tests.test_response_model_as_return_annotation.test_response_model_model1_annotation_model2_return_invalid_model",
+        "tests.test_validation_error_context.test_subapp_websocket_validation_error_includes_endpoint_context",
+        "tests.test_tutorial.test_custom_response.test_tutorial009b.test_get",
+        "scripts.translate.make_pr",
+        "docs_src.custom_request_and_route.tutorial003_py39.TimedRoute.get_route_handler.custom_route_handler",
+        "tests.test_tutorial.test_dependencies.test_tutorial008.test_get_db",
+        "tests.test_response_model_as_return_annotation.test_no_response_model_annotation_return_invalid_dict",
+        "scripts.docs.add_permalinks_page",
+        "tests.test_include_router_defaults_overrides.test_openapi",
+        "tests.test_validation_error_context.test_validation_error_with_only_path",
+        "fastapi.openapi.utils.get_openapi_path",
+        "tests.test_validation_error_context.test_response_validation_error_includes_endpoint_context",
+        "scripts.contributors.main",
+        "tests.test_response_model_as_return_annotation.test_response_model_model1_annotation_model2_return_invalid_dict",
+        "tests.test_tutorial.test_dependencies.test_tutorial010.test_get_db.read_root",
+        "scripts.translate.generate_en_path",
+        "tests.test_tutorial.test_dependencies.test_tutorial008.test_get_db.read_root",
+        "scripts.translation_fixer.iter_all_lang_paths",
+        "scripts.translate.iter_en_paths_to_translate",
+        "scripts.translate.generate_lang_path",
+        "tests.test_generate_unique_id_function.test_warn_duplicate_operation_id",
+        "tests.test_validation_error_context.test_request_validation_error_includes_endpoint_context",
+        "scripts.topic_repos.main",
+        "docs_src.python_types.tutorial004_py39.get_name_with_age",
+        "scripts.people.main",
+        "tests.test_inherited_custom_class.test_pydanticv2.SomeCustomClass.serialize_a_uuid",
+        "tests.test_validation_error_context.test_validation_error_with_no_context",
+        "tests.test_tutorial.test_custom_response.test_tutorial009.test_get",
+        "docs_src.middleware.tutorial001_py39.add_process_time_header",
+        "scripts.translation_fixer.process_one_page",
+        "tests.test_response_model_as_return_annotation.test_response_model_no_annotation_return_invalid_model",
+        "scripts.tests.test_translation_fixer.conftest.copy_test_files",
+        "tests.test_exception_handlers.test_traceback_for_dependency_with_yield",
+        "tests.test_validation_error_context.test_websocket_validation_error_includes_endpoint_context",
+        "fastapi.openapi.models.EmailStr._validate",
+        "tests.test_tutorial.test_custom_response.test_tutorial008.test_get",
+        "tests.test_tutorial.test_dependencies.test_tutorial010.test_get_db",
+        "tests.test_tutorial.test_python_types.test_tutorial011.test_run_module",
+        "scripts.translation_fixer.get_all_paths",
+        "tests.test_fastapi_cli.test_fastapi_cli_not_installed",
+        "tests.test_jsonable_encoder.test_encode_pure_path",
+        "tests.test_response_model_as_return_annotation.test_response_model_no_annotation_return_invalid_dict",
+        "docs_src.handling_errors.tutorial004_py39.http_exception_handler",
+        "fastapi.encoders.jsonable_encoder",
+        "fastapi.openapi.models.EmailStr.validate",
+        "docs_src.custom_request_and_route.tutorial003_py310.TimedRoute.get_route_handler.custom_route_handler",
+        "scripts.sponsors.main",
+        "tests.test_response_model_as_return_annotation.test_no_response_model_annotation_return_invalid_model",
+        "scripts.translate.translate_page",
+        "scripts.mkdocs_hooks.resolve_file",
+        "scripts.translate.iter_all_en_paths",
+        "tests.test_jsonable_encoder.test_encode_model_with_pure_path"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "subprocess.run",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.make_pr",
+      "callers": [
+        "scripts.contributors.main",
+        "scripts.docs.build_lang",
+        "scripts.docs.live",
+        "scripts.docs.generate_docs_src_versions_for_file",
+        "scripts.translate.make_pr",
+        "scripts.sponsors.main",
+        "scripts.topic_repos.main",
+        "scripts.people.main",
+        "tests.test_fastapi_cli.test_fastapi_cli"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "repo.is_dirty",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.make_pr",
+      "callers": [
+        "scripts.translate.make_pr"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "github.Github",
+      "hop": 1,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.make_pr",
+      "callers": [
+        "scripts.contributors.main",
+        "scripts.label_approved",
+        "scripts.translate.make_pr",
+        "scripts.notify_translations.main",
+        "scripts.deploy_docs_status.main",
+        "scripts.sponsors.main",
+        "scripts.topic_repos.main",
+        "scripts.people.main"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "tests.test_ws_router.websocket_middleware.middleware_constructor.wrapped_app",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app",
+      "callers": [],
+      "callees": [
+        "app",
+        "functools.wraps",
+        "fastapi.WebSocket",
+        "middleware_func"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_ws_router.websocket_middleware.middleware_constructor.wrapped_app.call_next",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app",
+      "callers": [],
+      "callees": [
+        "app"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.docs",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app",
+      "callers": [],
+      "callees": [
+        "typer.Typer",
+        "pathlib.Path",
+        "re.compile",
+        "app",
+        "logging.basicConfig"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translation_fixer",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "typer.Typer",
+      "callers": [],
+      "callees": [
+        "typer.Typer",
+        "cli"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_wrong_lang_code.test_wrong_lang_code_2",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_number_mismatch.test_lt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.mkdocs_hooks.get_missing_translation_content",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.mkdocs_hooks.on_page_markdown"
+      ],
+      "callees": [
+        "missing_translation_path.read_text",
+        "pathlib.Path"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.docs.build_lang",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "shutil.copytree",
+        "shutil.rmtree",
+        "typer.secho",
+        "typer.echo",
+        "typer.Argument",
+        "pathlib.Path",
+        "typer.Abort",
+        "app.command",
+        "subprocess.run",
+        "os.chdir",
+        "lang_path.is_dir",
+        "os.getcwd"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_code_includes.test_number_mismatch",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pathlib.Path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_html_links.test_html_links_number_mismatch.test_gt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.docs.generate_readme",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "print",
+        "pathlib.Path",
+        "scripts.docs.generate_readme_content",
+        "readme_path.read_text",
+        "app.command",
+        "readme_path.write_text",
+        "typer.Exit"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_mermaid",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pathlib.Path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_html_links.test_html_links_number_mismatch.test_lt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_lines_number_mismatch",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pathlib.Path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_lines_number_mismatch.test_lt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_lines_number_mismatch.test_gt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.contributors.main",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.contributors"
+      ],
+      "callees": [
+        "scripts.contributors.get_users_to_write",
+        "settings.github_token.get_secret_value",
+        "secrets.token_hex",
+        "scripts.contributors.Settings",
+        "settings.model_dump_json",
+        "scripts.contributors.get_contributors",
+        "repo.create_pull",
+        "scripts.contributors.get_pr_nodes",
+        "g.get_repo",
+        "scripts.contributors.update_content",
+        "pathlib.Path",
+        "str",
+        "subprocess.run",
+        "any",
+        "logging.basicConfig",
+        "logging.info",
+        "github.Github"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_number_mismatch",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pathlib.Path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_header_permalinks.test_header_number_mismatch",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pathlib.Path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.generate_en_path",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.translate.list_removable"
+      ],
+      "callees": [
+        "str",
+        "pathlib.Path"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.list_removable",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.translate.remove_removable",
+        "scripts.translate.list_all_removable"
+      ],
+      "callees": [
+        "scripts.translate.generate_en_path",
+        "en_path.exists",
+        "pathlib.Path",
+        "app.command",
+        "removable_paths.append",
+        "rich.print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_background_tasks.test_tutorial002.test",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "f.read",
+        "os.remove",
+        "open",
+        "pathlib.Path",
+        "log.is_file",
+        "client.post",
+        "response.json"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_html_links.test_html_links_number_mismatch",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pathlib.Path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.docs.new_lang",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "print",
+        "new_path.mkdir",
+        "new_config_path.write_text",
+        "new_llm_prompt_path.write_text",
+        "typer.echo",
+        "typer.Argument",
+        "new_path.exists",
+        "pathlib.Path",
+        "typer.Abort",
+        "scripts.docs.update_languages",
+        "app.command"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_custom_docs_ui.test_tutorial002.client",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "print",
+        "pytest.fixture",
+        "static_dir.rmdir",
+        "pathlib.Path",
+        "fastapi.testclient.TestClient",
+        "static_dir.mkdir",
+        "os.getcwd"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.mkdocs_hooks.get_mkdocs_material_langs",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.mkdocs_hooks.on_config"
+      ],
+      "callees": [
+        "material_langs_path.glob",
+        "pathlib.Path"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_mermaid.test_translated",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_background_tasks.test_tutorial001.test",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "f.read",
+        "os.remove",
+        "open",
+        "pathlib.Path",
+        "log.is_file",
+        "client.post",
+        "response.json"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.iter_en_paths_to_translate",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.translate.list_outdated",
+        "scripts.translate.list_missing",
+        "scripts.translate.translate_lang"
+      ],
+      "callees": [
+        "path.relative_to",
+        "str",
+        "scripts.translate.iter_all_en_paths",
+        "pathlib.Path"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.generate_lang_path",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.translate.list_outdated",
+        "scripts.translate.translate_page",
+        "scripts.translate.list_missing",
+        "scripts.translate.translate_lang"
+      ],
+      "callees": [
+        "str",
+        "pathlib.Path"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.topic_repos.main",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.topic_repos"
+      ],
+      "callees": [
+        "secrets.token_hex",
+        "pathlib.Path",
+        "r.create_pull",
+        "scripts.topic_repos.Settings",
+        "g.search_repositories",
+        "str",
+        "subprocess.run",
+        "list",
+        "repos_path.read_text",
+        "g.get_repo",
+        "scripts.topic_repos.Repo",
+        "logging.basicConfig",
+        "settings.model_dump_json",
+        "repos_path.write_text",
+        "logging.info",
+        "settings.github_token.get_secret_value",
+        "yaml.dump",
+        "repo.model_dump",
+        "final_repos.append",
+        "github.Github"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.people.main",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.people"
+      ],
+      "callees": [
+        "settings.github_token.get_secret_value",
+        "secrets.token_hex",
+        "settings.model_dump_json",
+        "repo.create_pull",
+        "scripts.people.Settings",
+        "g.get_repo",
+        "scripts.people.get_discussion_nodes",
+        "pathlib.Path",
+        "scripts.people.update_content",
+        "maintainers.append",
+        "scripts.people.get_users_to_write",
+        "str",
+        "subprocess.run",
+        "scripts.people.get_discussions_experts",
+        "logging.basicConfig",
+        "logging.info",
+        "github.Github"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_header_permalinks.test_header_level_mismatch",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pathlib.Path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_header_permalinks.test_header_level_mismatch.test_level_mismatch_1",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_code_includes.test_number_mismatch.test_gt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.list_outdated",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.translate.update_outdated"
+      ],
+      "callees": [
+        "outdated_paths.append",
+        "git.Repo",
+        "lang_path.exists",
+        "pathlib.Path",
+        "scripts.translate.iter_en_paths_to_translate",
+        "scripts.translate.generate_lang_path",
+        "app.command",
+        "repo.iter_commits",
+        "list",
+        "rich.print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.generate_clients.tutorial004_py39",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "path_data.values",
+        "file_path.read_text",
+        "len",
+        "pathlib.Path",
+        "json.dumps",
+        "json.loads",
+        "file_path.write_text"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translation_fixer.process_one_page",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.translation_fixer.fix_pages",
+        "scripts.translation_fixer.fix_all"
+      ],
+      "callees": [
+        "print",
+        "en_doc_path.read_text",
+        "scripts.doc_parsing_utils.check_translation",
+        "pathlib.Path",
+        "str",
+        "path.write_text",
+        "doc_lines.append",
+        "path.read_text"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.conftest.copy_test_files",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "shutil.copy",
+        "str",
+        "pathlib.Path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.conftest.prepare_paths",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.fixture",
+        "pathlib.Path.cwd",
+        "pathlib.Path",
+        "en_docs_dir.mkdir",
+        "lang_docs_dir.mkdir"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.mkdocs_hooks.on_config",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "scripts.mkdocs_hooks.get_mkdocs_material_langs",
+        "pathlib.Path"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translation_fixer.get_all_paths",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.translation_fixer.fix_all"
+      ],
+      "callees": [
+        "path.relative_to",
+        "res.append",
+        "scripts.translation_fixer.iter_all_lang_paths",
+        "pathlib.Path",
+        "str"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_complex_doc.test_compex_doc",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pathlib.Path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.docs.get_updated_config_content",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.docs.update_languages"
+      ],
+      "callees": [
+        "print",
+        "scripts.docs.get_lang_paths",
+        "language_names_path.read_text",
+        "lang_dict.keys",
+        "scripts.docs.get_en_config",
+        "new_alternate.append",
+        "pathlib.Path",
+        "typer.Abort",
+        "mkdocs.utils.yaml_load",
+        "languages.append",
+        "list",
+        "lang_path.is_dir"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_markdown_links.test_mkd_links_number_mismatch.test_gt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_header_permalinks.test_header_number_mismatch.test_gt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_markdown_links.test_mkd_links_number_mismatch",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pathlib.Path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_static_files.test_tutorial001.client",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.fixture",
+        "static_dir.rmdir",
+        "pathlib.Path",
+        "sample_file.unlink",
+        "fastapi.testclient.TestClient",
+        "static_dir.mkdir",
+        "sample_file.write_text",
+        "os.getcwd"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_header_permalinks.test_header_number_mismatch.test_lt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_number_mismatch.test_gt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_code_includes.test_number_mismatch.test_lt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_custom_docs_ui.test_tutorial001.client",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "print",
+        "pytest.fixture",
+        "static_dir.rmdir",
+        "pathlib.Path",
+        "fastapi.testclient.TestClient",
+        "static_dir.mkdir",
+        "os.getcwd"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_mermaid.test_not_translated",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translation_fixer.fix_all",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "scripts.translation_fixer.process_one_page",
+        "pathlib.Path",
+        "cli.command",
+        "scripts.translation_fixer.get_all_paths",
+        "typer.Exit"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_wrong_lang_code.test_wrong_lang_code_1",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.sponsors.main",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.sponsors"
+      ],
+      "callees": [
+        "keys.sort",
+        "secrets.token_hex",
+        "pathlib.Path",
+        "str",
+        "subprocess.run",
+        "scripts.sponsors.Settings",
+        "scripts.sponsors.get_individual_sponsors",
+        "list",
+        "g.get_repo",
+        "sponsors.append",
+        "logging.basicConfig",
+        "settings.model_dump_json",
+        "tiers.keys",
+        "logging.info",
+        "settings.pr_token.get_secret_value",
+        "repo.create_pull",
+        "sponsor_group.append",
+        "scripts.sponsors.update_content",
+        "github.Github"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_code_blocks.test_code_blocks_wrong_lang_code",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pathlib.Path"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.translate_page",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.translate.add_missing",
+        "scripts.translate.update_outdated",
+        "scripts.translate.translate_lang"
+      ],
+      "callees": [
+        "out_path.parent.mkdir",
+        "pathlib.Path",
+        "typer.Option",
+        "str",
+        "app.command",
+        "out_path.exists",
+        "pydantic_ai.Agent",
+        "en_path.read_text",
+        "result.output.strip",
+        "scripts.translate.generate_lang_path",
+        "lang_prompt_path.read_text",
+        "rich.print",
+        "scripts.translate.get_langs",
+        "lang_path.mkdir",
+        "prompt_segments.extend",
+        "agent.run_sync",
+        "out_path.write_text",
+        "out_path.read_text",
+        "lang_prompt_path.exists"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.mkdocs_hooks.resolve_file",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.mkdocs_hooks.resolve_files",
+        "scripts.mkdocs_hooks.on_files"
+      ],
+      "callees": [
+        "scripts.mkdocs_hooks.EnFile",
+        "item_path.is_file",
+        "pathlib.Path",
+        "str",
+        "potential_path.is_file",
+        "files.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.iter_all_en_paths",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [
+        "scripts.translate.iter_en_paths_to_translate"
+      ],
+      "callees": [
+        "first_parent.glob",
+        "dir_path.rglob",
+        "pathlib.Path",
+        "str",
+        "tuple"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_markdown_links.test_mkd_links_number_mismatch.test_lt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.tests.test_translation_fixer.test_header_permalinks.test_header_level_mismatch.test_level_mismatch_2",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "pathlib.Path",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pathlib.Path",
+        "runner.invoke"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.list_all_removable",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "scripts.translate.get_langs",
+      "callers": [
+        "scripts.translate.remove_all_removable"
+      ],
+      "callees": [
+        "scripts.translate.list_removable",
+        "all_removable_paths.extend",
+        "app.command",
+        "scripts.translate.get_langs",
+        "rich.print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "yaml.safe_load",
+      "hop": 2,
+      "reason": "called_by_changed_function",
+      "source": "scripts.translate.get_langs",
+      "callers": [
+        "docs_src.path_operation_advanced_configuration.tutorial007_pv1_py39.create_item",
+        "docs_src.path_operation_advanced_configuration.tutorial007_py39.create_item",
+        "scripts.translate.get_langs"
+      ],
+      "callees": [],
+      "is_internal": false,
+      "is_test": false,
+      "is_external": true
+    },
+    {
+      "qualname": "scripts.translate.remove_all_removable",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [],
+      "callees": [
+        "removable_path.unlink",
+        "app.command",
+        "scripts.translate.list_all_removable",
+        "rich.print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.translate_lang",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [],
+      "callees": [
+        "missing_paths.append",
+        "lang_path.exists",
+        "len",
+        "typer.Option",
+        "scripts.translate.iter_en_paths_to_translate",
+        "scripts.translate.generate_lang_path",
+        "skipped_paths.append",
+        "app.command",
+        "scripts.translate.translate_page",
+        "list",
+        "rich.print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.docs.add_permalinks_page",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [
+        "scripts.docs.add_permalinks",
+        "scripts.docs.add_permalinks_pages"
+      ],
+      "callees": [
+        "path.relative_to",
+        "set",
+        "updated_lines.append",
+        "path.open",
+        "scripts.docs.slugify",
+        "code_block3_pattern.match",
+        "permalinks.add",
+        "str",
+        "header_pattern.match",
+        "path.is_relative_to",
+        "match.groups",
+        "visible_text_extractor.extract_visible_text",
+        "app.command",
+        "RuntimeError",
+        "code_block4_pattern.match",
+        "scripts.docs.VisibleTextExtractor",
+        "f.readlines",
+        "f.writelines"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.update_and_add",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [],
+      "callees": [
+        "scripts.translate.update_outdated",
+        "typer.Option",
+        "scripts.translate.add_missing",
+        "app.command",
+        "rich.print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.docs.build_all",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [],
+      "callees": [
+        "scripts.docs.get_lang_paths",
+        "shutil.rmtree",
+        "typer.echo",
+        "scripts.docs.update_languages",
+        "app.command",
+        "lang.is_dir",
+        "p.map",
+        "multiprocessing.Pool",
+        "os.cpu_count"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.docs.add_permalinks",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [],
+      "callees": [
+        "en_docs_path.rglob",
+        "app.command",
+        "scripts.docs.add_permalinks_page"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.add_missing",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [
+        "scripts.translate.update_and_add"
+      ],
+      "callees": [
+        "scripts.translate.list_missing",
+        "typer.Option",
+        "app.command",
+        "scripts.translate.translate_page",
+        "rich.print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.docs.langs_json",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [],
+      "callees": [
+        "print",
+        "scripts.docs.get_lang_paths",
+        "langs.append",
+        "app.command",
+        "lang_path.is_dir",
+        "json.dumps"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.docs.serve",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [],
+      "callees": [
+        "typer.echo",
+        "server.serve_forever",
+        "app.command",
+        "http.server.HTTPServer",
+        "os.chdir"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.remove_removable",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [],
+      "callees": [
+        "scripts.translate.list_removable",
+        "typer.Option",
+        "app.command",
+        "path.unlink",
+        "rich.print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.docs.live",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [],
+      "callees": [
+        "typer.Argument",
+        "app.command",
+        "args.append",
+        "subprocess.run"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.docs.generate_docs_src_versions_for_file",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [],
+      "callees": [
+        "file_path.name.replace",
+        "ruff.__main__.find_ruff_bin",
+        "format_result.stdout.decode",
+        "file_path.read_text",
+        "version_file.write_text",
+        "base_content.encode",
+        "previous_content.add",
+        "app.command",
+        "version_result.stdout.decode",
+        "subprocess.run",
+        "content_target.encode",
+        "file_path.with_name",
+        "logging.info"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.docs.add_permalinks_pages",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [],
+      "callees": [
+        "app.command",
+        "scripts.docs.add_permalinks_page"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.docs.ensure_non_translated",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [],
+      "callees": [
+        "print",
+        "scripts.docs.get_lang_paths",
+        "shutil.rmtree",
+        "error_path.is_file",
+        "error_paths.append",
+        "non_translatable_path.exists",
+        "error_path.unlink",
+        "app.command",
+        "typer.Exit"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.list_missing",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [
+        "scripts.translate.add_missing"
+      ],
+      "callees": [
+        "missing_paths.append",
+        "lang_path.exists",
+        "scripts.translate.iter_en_paths_to_translate",
+        "scripts.translate.generate_lang_path",
+        "app.command",
+        "list",
+        "rich.print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translate.update_outdated",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [
+        "scripts.translate.update_and_add"
+      ],
+      "callees": [
+        "scripts.translate.list_outdated",
+        "typer.Option",
+        "app.command",
+        "scripts.translate.translate_page",
+        "rich.print"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.docs.update_languages",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "app.command",
+      "callers": [
+        "scripts.docs.new_lang",
+        "scripts.docs.build_all"
+      ],
+      "callees": [
+        "print",
+        "en_config_path.write_text",
+        "yaml.dump",
+        "scripts.docs.get_en_config",
+        "app.command",
+        "scripts.docs.get_updated_config_content",
+        "typer.Exit"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translation_fixer.fix_pages",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "typer.Exit",
+      "callers": [],
+      "callees": [
+        "cli.command",
+        "typer.Argument",
+        "typer.Exit",
+        "scripts.translation_fixer.process_one_page"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.benchmarks.test_general_performance._expected_large_payload_json_bytes",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "json.dumps",
+      "callers": [
+        "tests.benchmarks.test_general_performance.test_sync_return_large_dict_with_response_model",
+        "tests.benchmarks.test_general_performance.test_async_return_large_model_without_response_model",
+        "tests.benchmarks.test_general_performance.test_async_return_large_model_with_response_model",
+        "tests.benchmarks.test_general_performance.test_sync_return_large_model_with_response_model",
+        "tests.benchmarks.test_general_performance.test_sync_return_large_model_without_response_model",
+        "tests.benchmarks.test_general_performance.test_async_return_large_dict_with_response_model",
+        "tests.benchmarks.test_general_performance.test_async_return_large_dict_without_response_model",
+        "tests.benchmarks.test_general_performance.test_sync_return_large_dict_without_response_model"
+      ],
+      "callees": [
+        "json.dumps"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.openapi.docs.get_swagger_ui_html",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "json.dumps",
+      "callers": [
+        "docs_src.custom_docs_ui.tutorial001_py39.custom_swagger_ui_html",
+        "fastapi.applications.FastAPI.setup.swagger_ui_html",
+        "tests.test_local_docs.test_strings_in_generated_swagger",
+        "tests.test_local_docs.test_strings_in_custom_swagger",
+        "docs_src.custom_docs_ui.tutorial002_py39.custom_swagger_ui_html"
+      ],
+      "callees": [
+        "annotated_doc.Doc",
+        "fastapi.encoders.jsonable_encoder",
+        "starlette.responses.HTMLResponse",
+        "current_swagger_ui_parameters.update",
+        "current_swagger_ui_parameters.items",
+        "swagger_ui_default_parameters.copy",
+        "json.dumps"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_ws_dependencies.routerindex",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "json.dumps",
+      "callers": [],
+      "callees": [
+        "websocket.close",
+        "tests.test_ws_dependencies.create_dependency",
+        "json.dumps",
+        "websocket.send_text",
+        "router.websocket",
+        "websocket.accept"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_dependency_contextmanager.middleware",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "json.dumps",
+      "callers": [],
+      "callees": [
+        "app.middleware",
+        "call_next",
+        "state.copy",
+        "json.dumps"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_custom_request_and_route.test_tutorial001.test_gzip_request",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "json.dumps",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "response.json",
+        "client.post",
+        "gzip.compress",
+        "json.dumps"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_ws_dependencies.index",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "json.dumps",
+      "callers": [],
+      "callees": [
+        "websocket.close",
+        "app.websocket",
+        "tests.test_ws_dependencies.create_dependency",
+        "json.dumps",
+        "websocket.send_text",
+        "websocket.accept"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_ws_dependencies.routerprefixindex",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "json.dumps",
+      "callers": [],
+      "callees": [
+        "prefix_router.websocket",
+        "websocket.close",
+        "tests.test_ws_dependencies.create_dependency",
+        "json.dumps",
+        "websocket.send_text",
+        "websocket.accept"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_dependency_yield_scope.function_scope.iter_data",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "json.dumps",
+      "callers": [],
+      "callees": [
+        "json.dumps"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_dependency_yield_scope.get_named_function_scope.iter_data",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "json.dumps",
+      "callers": [],
+      "callees": [
+        "json.dumps"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_dependency_yield_scope.get_stream_session.iter_data",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "json.dumps",
+      "callers": [],
+      "callees": [
+        "json.dumps"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_dependency_yield_scope.request_scope.iter_data",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "json.dumps",
+      "callers": [],
+      "callees": [
+        "json.dumps"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_dependency_yield_scope.get_sub.iter_data",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "json.dumps",
+      "callers": [],
+      "callees": [
+        "json.dumps"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_generate_clients.test_tutorial004.test_remove_tags",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "json.dumps",
+      "callers": [],
+      "callees": [
+        "tmp_file.read_text",
+        "docs_src.generate_clients.tutorial003_py39.app.openapi",
+        "tmp_file.write_text",
+        "json.loads",
+        "unittest.mock.patch",
+        "importlib.import_module",
+        "json.dumps"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_dependency_yield_scope.get_regular_function_scope.iter_data",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "json.dumps",
+      "callers": [],
+      "callees": [
+        "json.dumps"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.label_approved",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "g.get_repo",
+      "callers": [],
+      "callees": [
+        "pr.add_to_labels",
+        "conf.model_dump_json",
+        "pr.get_reviews",
+        "list",
+        "g.get_repo",
+        "settings.token.get_secret_value",
+        "scripts.label_approved.Settings",
+        "logging.basicConfig",
+        "pr.remove_from_labels",
+        "logging.debug",
+        "settings.model_dump_json",
+        "scripts.label_approved.LabelSettings",
+        "len",
+        "review_by_user.values",
+        "logging.info",
+        "config.items",
+        "repo.get_pulls",
+        "pr.get_labels",
+        "github.Github"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.notify_translations.main",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "g.get_repo",
+      "callers": [
+        "scripts.notify_translations"
+      ],
+      "callees": [
+        "sys.exit",
+        "scripts.notify_translations.get_graphql_translation_discussion_comments",
+        "time.sleep",
+        "scripts.notify_translations.get_graphql_translation_discussions",
+        "scripts.notify_translations.Settings",
+        "g.get_repo",
+        "repo.get_pull",
+        "label.startswith",
+        "logging.basicConfig",
+        "logging.debug",
+        "settings.model_dump_json",
+        "scripts.notify_translations.update_comment",
+        "random.random",
+        "scripts.notify_translations.create_comment",
+        "RuntimeError",
+        "logging.info",
+        "PartialGitHubEvent.model_validate_json",
+        "settings.github_event_path.is_file",
+        "settings.github_token.get_secret_value",
+        "settings.github_event_path.read_text",
+        "langs.append",
+        "logging.error",
+        "pr.get_labels",
+        "github.Github"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.deploy_docs_status.main",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "g.get_repo",
+      "callers": [
+        "scripts.deploy_docs_status"
+      ],
+      "callees": [
+        "print",
+        "github.Auth.Token",
+        "use_pr.get_files",
+        "match.group",
+        "comment.edit",
+        "use_pr.as_issue",
+        "comment.body.startswith",
+        "list",
+        "issue.get_comments",
+        "re.match",
+        "g.get_repo",
+        "path.endswith",
+        "path.replace",
+        "current_commit.create_status",
+        "logging.basicConfig",
+        "settings.model_dump_json",
+        "current_lang_links.sort",
+        "settings.deploy_url.rstrip",
+        "next",
+        "langs.sort",
+        "logging.info",
+        "lang_links.keys",
+        "settings.github_token.get_secret_value",
+        "issue.create_comment",
+        "en_links.sort",
+        "f.filename.startswith",
+        "use_pr.get_commits",
+        "scripts.deploy_docs_status.LinkData",
+        "lang_links.setdefault",
+        "logging.error",
+        "scripts.deploy_docs_status.Settings",
+        "repo.get_pulls",
+        "lang_links.get",
+        "links.extend",
+        "github.Github"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_validation_error_context.test_subapp_request_validation_error_includes_endpoint_context",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "client.get"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_response_model_as_return_annotation.test_response_model_model1_annotation_model2_return_invalid_model",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "pytest.raises",
+        "client.get"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_validation_error_context.test_subapp_websocket_validation_error_includes_endpoint_context",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "client.websocket_connect"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_custom_response.test_tutorial009b.test_get",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "file_path.write_bytes",
+        "client.get"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.custom_request_and_route.tutorial003_py39.TimedRoute.get_route_handler.custom_route_handler",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "print",
+        "str",
+        "original_route_handler",
+        "time.time"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_dependencies.test_tutorial008.test_get_db",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "unittest.mock.Mock",
+        "fastapi.testclient.TestClient",
+        "str",
+        "client.get",
+        "response.json",
+        "unittest.mock.patch",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_response_model_as_return_annotation.test_no_response_model_annotation_return_invalid_dict",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "pytest.raises",
+        "client.get"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_include_router_defaults_overrides.test_openapi",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "warnings.catch_warnings",
+        "warnings.simplefilter",
+        "issubclass",
+        "fastapi.testclient.TestClient",
+        "str",
+        "client.get",
+        "response.json"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_validation_error_context.test_validation_error_with_only_path",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "fastapi.exceptions.RequestValidationError",
+        "str"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.openapi.utils.get_openapi_path",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [
+        "fastapi.openapi.utils.get_openapi_path",
+        "fastapi.openapi.utils.get_openapi"
+      ],
+      "callees": [
+        "fastapi.openapi.utils.get_openapi_security_definitions",
+        "fastapi.openapi.utils._get_openapi_operation_parameters",
+        "param.get",
+        "process_response.pop",
+        "str",
+        "fastapi.openapi.utils.get_openapi_path",
+        "all_parameters.values",
+        "list",
+        "fastapi.utils.deep_dict_update",
+        "method.lower",
+        "fastapi._compat.get_schema_from_model_field",
+        "fastapi._compat.lenient_issubclass",
+        "additional_response.copy",
+        "route.responses.items",
+        "process_response.setdefault",
+        "route.response_fields.get",
+        "any",
+        "fastapi.utils.is_body_allowed_for_status_code",
+        "fastapi.dependencies.utils.get_flat_params",
+        "http.client.responses.get",
+        "operation_responses.setdefault",
+        "openapi_response.get",
+        "response_signature.parameters.get",
+        "all_parameters.update",
+        "fastapi.openapi.utils.get_openapi_operation_request_body",
+        "process_response.get",
+        "isinstance",
+        "fastapi.openapi.utils.get_openapi_operation_metadata",
+        "status_code_ranges.get",
+        "int",
+        "definitions.update",
+        "inspect.signature",
+        "security_schemes.update",
+        "fastapi.dependencies.utils.get_flat_dependant",
+        "parameters.extend",
+        "operation.setdefault"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_validation_error_context.test_response_validation_error_includes_endpoint_context",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "client.get"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_response_model_as_return_annotation.test_response_model_model1_annotation_model2_return_invalid_dict",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "pytest.raises",
+        "client.get"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_dependencies.test_tutorial010.test_get_db.read_root",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "app.get",
+        "fastapi.Depends"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_dependencies.test_tutorial008.test_get_db.read_root",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "app.get",
+        "fastapi.Depends"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "scripts.translation_fixer.iter_all_lang_paths",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [
+        "scripts.translation_fixer.get_all_paths"
+      ],
+      "callees": [
+        "first_parent.glob",
+        "dir_path.rglob",
+        "lang_path_root.rglob",
+        "str",
+        "tuple"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_generate_unique_id_function.test_warn_duplicate_operation_id",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "warnings.catch_warnings",
+        "warnings.simplefilter",
+        "issubclass",
+        "len",
+        "fastapi.testclient.TestClient",
+        "str",
+        "client.get",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_validation_error_context.test_request_validation_error_includes_endpoint_context",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "client.get"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.python_types.tutorial004_py39.get_name_with_age",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [
+        "tests.test_tutorial.test_python_types.test_tutorial004.test_get_name_with_age_pass_int"
+      ],
+      "callees": [
+        "str"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_inherited_custom_class.test_pydanticv2.SomeCustomClass.serialize_a_uuid",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "pydantic.field_serializer"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_validation_error_context.test_validation_error_with_no_context",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "fastapi.exceptions.RequestValidationError",
+        "str"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_custom_response.test_tutorial009.test_get",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "file_path.write_bytes",
+        "client.get"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.middleware.tutorial001_py39.add_process_time_header",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "app.middleware",
+        "time.perf_counter",
+        "call_next",
+        "str"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_response_model_as_return_annotation.test_response_model_no_annotation_return_invalid_model",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "pytest.raises",
+        "client.get"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_exception_handlers.test_traceback_for_dependency_with_yield",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "fastapi.testclient.TestClient",
+        "pytest.raises",
+        "client.get",
+        "str"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_validation_error_context.test_websocket_validation_error_includes_endpoint_context",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "client.websocket_connect"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.openapi.models.EmailStr._validate",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "fastapi.logger.logger.warning"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_custom_response.test_tutorial008.test_get",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "file_path.write_bytes",
+        "client.get"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_dependencies.test_tutorial010.test_get_db",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "unittest.mock.Mock",
+        "fastapi.testclient.TestClient",
+        "str",
+        "client.get",
+        "response.json",
+        "unittest.mock.patch",
+        "fastapi.FastAPI"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_tutorial.test_python_types.test_tutorial011.test_run_module",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "pytest.mark.parametrize",
+        "pytest.param",
+        "str",
+        "runpy.run_module",
+        "unittest.mock.patch"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_fastapi_cli.test_fastapi_cli_not_installed",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "unittest.mock.patch.object",
+        "str",
+        "fastapi.cli.main",
+        "pytest.raises"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_jsonable_encoder.test_encode_pure_path",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "pathlib.PurePath",
+        "fastapi.encoders.jsonable_encoder"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_response_model_as_return_annotation.test_response_model_no_annotation_return_invalid_dict",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "pytest.raises",
+        "client.get"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.handling_errors.tutorial004_py39.http_exception_handler",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "app.exception_handler",
+        "str",
+        "fastapi.responses.PlainTextResponse"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.encoders.jsonable_encoder",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [
+        "fastapi.openapi.utils.get_openapi_security_definitions",
+        "fastapi.openapi.utils._get_openapi_operation_parameters",
+        "tests.test_jsonable_encoder.test_encode_dict_include_exclude_list",
+        "tests.test_jsonable_encoder.test_encode_model_with_alias",
+        "tests.test_jsonable_encoder.test_decimal_encoder_float",
+        "fastapi.exception_handlers.websocket_request_validation_exception_handler",
+        "tests.test_jsonable_encoder.test_encode_class",
+        "docs_src.body_updates.tutorial002_py39.update_item",
+        "tests.test_jsonable_encoder.test_decimal_encoder_infinity",
+        "docs_src.encoder.tutorial001_py310.update_item",
+        "fastapi.exception_handlers.request_validation_exception_handler",
+        "docs_src.body_updates.tutorial001_py39.update_item",
+        "tests.test_jsonable_encoder.test_encode_dictable",
+        "docs_src.response_directly.tutorial001_py39.update_item",
+        "docs_src.encoder.tutorial001_py39.update_item",
+        "tests.test_jsonable_encoder.test_encode_dict",
+        "tests.test_jsonable_encoder.test_encode_dataclass",
+        "fastapi.routing.serialize_response",
+        "tests.test_jsonable_encoder.test_encode_model_with_config",
+        "docs_src.body_updates.tutorial002_py310.update_item",
+        "tests.test_jsonable_encoder.test_encode_model_with_pure_path",
+        "fastapi.openapi.docs.get_swagger_ui_html",
+        "tests.test_jsonable_encoder.test_encode_unsupported",
+        "tests.test_jsonable_encoder.test_json_encoder_error_with_pydanticv1",
+        "tests.test_jsonable_encoder.test_custom_enum_encoders",
+        "docs_src.response_directly.tutorial001_py310.update_item",
+        "tests.test_jsonable_encoder.test_encode_model_with_pure_posix_path",
+        "fastapi.openapi.utils.get_openapi_operation_request_body",
+        "tests.test_jsonable_encoder.test_encode_pydantic_undefined",
+        "tests.test_jsonable_encoder.test_custom_encoders",
+        "tests.test_jsonable_encoder.test_encode_pure_path",
+        "docs_src.body_updates.tutorial001_py310.update_item",
+        "tests.test_jsonable_encoder.test_encode_model_with_default",
+        "tests.test_jsonable_encoder.test_encode_deque_encodes_child_models",
+        "tests.test_jsonable_encoder.test_decimal_encoder_nan",
+        "fastapi.encoders.jsonable_encoder",
+        "tests.test_jsonable_encoder.test_encode_model_with_pure_windows_path",
+        "fastapi.openapi.utils.get_openapi",
+        "tests.test_jsonable_encoder.test_decimal_encoder_int",
+        "tests.test_jsonable_encoder.test_encode_custom_json_encoders_model_pydanticv2",
+        "docs_src.handling_errors.tutorial005_py39.validation_exception_handler"
+      ],
+      "callees": [
+        "dict",
+        "vars",
+        "encoder_instance",
+        "encoded_list.append",
+        "obj.items",
+        "errors.append",
+        "str",
+        "fastapi.exceptions.PydanticV1NotSupportedError",
+        "obj.model_dump",
+        "annotated_doc.Doc",
+        "custom_encoder.items",
+        "fastapi._compat.is_pydantic_v1_model_instance",
+        "key.startswith",
+        "obj.keys",
+        "isinstance",
+        "type",
+        "set",
+        "fastapi.encoders.jsonable_encoder",
+        "dataclasses.asdict",
+        "dataclasses.is_dataclass",
+        "encoder",
+        "ValueError",
+        "encoders_by_class_tuples.items"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "fastapi.openapi.models.EmailStr.validate",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "fastapi.logger.logger.warning"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "docs_src.custom_request_and_route.tutorial003_py310.TimedRoute.get_route_handler.custom_route_handler",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "print",
+        "str",
+        "original_route_handler",
+        "time.time"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_response_model_as_return_annotation.test_no_response_model_annotation_return_invalid_model",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "str",
+        "pytest.raises",
+        "client.get"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_jsonable_encoder.test_encode_model_with_pure_path",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "str",
+      "callers": [],
+      "callees": [
+        "ModelWithPath",
+        "str",
+        "pathlib.PurePath",
+        "fastapi.encoders.jsonable_encoder"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_fastapi_cli.test_fastapi_cli",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "subprocess.run",
+      "callers": [],
+      "callees": [
+        "subprocess.run"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-01-26T21:00:58"
+}
