@@ -1,0 +1,755 @@
+{
+  "commit": "1aeef460",
+  "parent": "e666910ded88c5e978c4d95fbb95a1f7c89bf0e5",
+  "repo": "D:\\locbench\\peewee",
+  "num_files_in_diff": 20,
+  "num_py_files_in_diff": 8,
+  "num_seeds": 48,
+  "seeds": [
+    {
+      "path": "playhouse/cysqlite_ext.py",
+      "version": "new",
+      "line": 21,
+      "kind": "module",
+      "qualname": "playhouse.cysqlite_ext",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "playhouse/cysqlite_ext.py",
+      "version": "new",
+      "line": 48,
+      "kind": "function",
+      "qualname": "playhouse.cysqlite_ext.__dbstatus__.getter",
+      "span": [
+        45,
+        51
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def getter(self):\n        if self._state.conn is None:\n            raise ImproperlyConfigured('database connection not opened.')\n        result = self._state.conn.status(flag)\n        if return_current:\n            return result[0]\n        return result[1] if return_highwater else result",
+      "old_code": "    def getter(self):\n        if self._state.conn is None:\n            raise ImproperlyConfigured('database connection not opened.')\n        result = sqlite_get_db_status(self._state.conn, flag)\n        if return_current:\n            return result[0]\n        return result[1] if return_highwater else result"
+    },
+    {
+      "path": "playhouse/cysqlite_ext.py",
+      "version": "new",
+      "line": 129,
+      "kind": "function",
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase.on_commit",
+      "span": [
+        126,
+        130
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def on_commit(self, fn):\n        self._commit_hook = fn\n        if not self.is_closed():\n            self.connection().commit_hook(fn)\n        return fn",
+      "old_code": "    def on_commit(self, fn):\n        self._commit_hook = fn\n        if not self.is_closed():\n            conn.commit_hook(fn)\n        return fn"
+    },
+    {
+      "path": "playhouse/cysqlite_ext.py",
+      "version": "new",
+      "line": 135,
+      "kind": "function",
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase.on_rollback",
+      "span": [
+        132,
+        136
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def on_rollback(self, fn):\n        self._rollback_hook = fn\n        if not self.is_closed():\n            self.connection().rollback_hook(fn)\n        return fn",
+      "old_code": "    def on_rollback(self, fn):\n        self._rollback_hook = fn\n        if not self.is_closed():\n            conn.rollback_hook(fn)\n        return fn"
+    },
+    {
+      "path": "playhouse/cysqlite_ext.py",
+      "version": "new",
+      "line": 141,
+      "kind": "function",
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase.on_update",
+      "span": [
+        138,
+        142
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def on_update(self, fn):\n        self._update_hook = fn\n        if not self.is_closed():\n            self.connection().update_hook(fn)\n        return fn",
+      "old_code": "    def on_update(self, fn):\n        self._update_hook = fn\n        if not self.is_closed():\n            conn.update_hook(fn)\n        return fn"
+    },
+    {
+      "path": "playhouse/cysqlite_ext.py",
+      "version": "new",
+      "line": 147,
+      "kind": "function",
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase.authorizer",
+      "span": [
+        144,
+        148
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def authorizer(self, fn):\n        self._authorizer = fn\n        if not self.is_closed():\n            self.connection().authorizer(fn)\n        return fn",
+      "old_code": "    def authorizer(self, fn):\n        self._authorizer = fn\n        if not self.is_closed():\n            conn.authorizer(fn)\n        return fn"
+    },
+    {
+      "path": "playhouse/cysqlite_ext.py",
+      "version": "new",
+      "line": 157,
+      "kind": "function",
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase.trace",
+      "span": [
+        150,
+        158
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def trace(self, fn, mask=2):\n        if fn is None:\n            self._trace = None\n        else:\n            self._trace = (fn, mask)\n        if not self.is_closed():\n            args = (None,) if fn is None else self._trace\n            self.connection().authorizer(*args)\n        return fn",
+      "old_code": "    def trace(self, fn, mask=2):\n        if fn is None:\n            self._trace = None\n        else:\n            self._trace = (fn, mask)\n        if not self.is_closed():\n            args = (None,) if fn is None else self._trace\n            conn.authorizer(*args)\n        return fn"
+    },
+    {
+      "path": "playhouse/cysqlite_ext.py",
+      "version": "new",
+      "line": 167,
+      "kind": "function",
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase.progress",
+      "span": [
+        160,
+        168
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def progress(self, fn, n=1):\n        if fn is None:\n            self._progress = None\n        else:\n            self._progress = (fn, mask)\n        if not self.is_closed():\n            args = (None,) if fn is None else self._progress\n            self.connection().progress(*args)\n        return fn",
+      "old_code": "    def progress(self, fn, n=1):\n        if fn is None:\n            self._progress = None\n        else:\n            self._progress = (fn, mask)\n        if not self.is_closed():\n            args = (None,) if fn is None else self._progress\n            conn.progress(*args)\n        return fn"
+    },
+    {
+      "path": "playhouse/cysqlite_ext.py",
+      "version": "new",
+      "line": 186,
+      "kind": "function",
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase.blob_open",
+      "span": [
+        186,
+        188
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def blob_open(self, table, column, rowid, read_only=False, dbname=None):\n        return self.connection().blob_open(table, column, rowid, read_only,\n                                           db_name)",
+      "old_code": null
+    },
+    {
+      "path": "playhouse/cysqlite_ext.py",
+      "version": "new",
+      "line": 189,
+      "kind": "class",
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase",
+      "span": [
+        55,
+        240
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "class CySqliteDatabase(SqliteDatabase):\n    def __init__(self, database, rank_functions=True, regexp_function=False,\n                 *args, **kwargs):\n        super(CySqliteDatabase, self).__init__(database, *args, **kwargs)\n\n        self._commit_hook = None\n        self._rollback_hook = None\n        self._update_hook = None\n        self._authorizer = None\n        self._trace = None\n        self._progress = None\n\n        if rank_functions:\n            self.register_function(cysqlite.rank_bm25, 'fts_bm25')\n            self.register_function(cysqlite.rank_lucene, 'fts_lucene')\n            self.register_function(rank, 'fts_rank')\n\n        if regexp_function:\n            self.register_function(_sqlite_regexp, 'regexp', 2)\n\n    def _connect(self):\n        if cysqlite is None:\n            raise ImproperlyConfigured('cysqlite is not installed.')\n        conn = cysqlite.Connection(self.database, timeout=self._timeout,\n                                   extensions=True, **self.connect_params)\n        try:\n            self._add_conn_hooks(conn)\n        except Exception:\n            conn.close()\n            raise\n        return conn\n\n    def _add_conn_hooks(self, conn):\n        if self._commit_hook is not None:\n            conn.commit_hook(self._commit_hook)\n        if self._rollback_hook is not None:\n            conn.rollback_hook(self._rollback_hook)\n        if self._update_hook is not None:\n            conn.update_hook(self._update_hook)\n        if self._authorizer is not None:\n            conn.authorizer(self._authorizer)\n        if self._trace is not None:\n            conn.trace(*self._trace)\n        if self._progress is not None:\n            conn.progress(*self._progress)\n        super(CySqliteDatabase, self)._add_conn_hooks(conn)\n\n    def _set_pragmas(self, conn):\n        for pragma, value in self._pragmas:\n            conn.pragma(pragma, value)\n\n    def _attach_databases(self, conn):\n        for name, db in self._attached.items():\n            conn.attach(db, name)\n\n    def _load_aggregates(self, conn):\n        for name, (klass, num_params) in self._aggregates.items():\n            conn.create_aggregate(klass, name, num_params)\n\n    def _load_collations(self, conn):\n        for name, fn in self._collations.items():\n            conn.create_collation(fn, name)\n\n    def _load_functions(self, conn):\n        for name, (fn, num_params, deterministic) in self._functions.items():\n            conn.create_function(fn, name, num_params, deterministic)\n\n    def _load_window_functions(self, conn):\n        for name, (klass, num_params) in self._window_functions.items():\n            conn.create_window_function(klass, name, num_params)\n\n    def on_commit(self, fn):\n        self._commit_hook = fn\n        if not self.is_closed():\n            self.connection().commit_hook(fn)\n        return fn\n\n    def on_rollback(self, fn):\n        self._rollback_hook = fn\n        if not self.is_closed():\n            self.connection().rollback_hook(fn)\n        return fn\n\n    def on_update(self, fn):\n        self._update_hook = fn\n        if not self.is_closed():\n            self.connection().update_hook(fn)\n        return fn\n\n    def authorizer(self, fn):\n        self._authorizer = fn\n        if not self.is_closed():\n            self.connection().authorizer(fn)\n        return fn\n\n    def trace(self, fn, mask=2):\n        if fn is None:\n            self._trace = None\n        else:\n            self._trace = (fn, mask)\n        if not self.is_closed():\n            args = (None,) if fn is None else self._trace\n            self.connection().authorizer(*args)\n        return fn\n\n    def progress(self, fn, n=1):\n        if fn is None:\n            self._progress = None\n        else:\n            self._progress = (fn, mask)\n        if not self.is_closed():\n            args = (None,) if fn is None else self._progress\n            self.connection().progress(*args)\n        return fn\n\n    def begin(self, lock_type='deferred'):\n        with __exception_wrapper__:\n            self.connection().begin(lock_type)\n\n    def commit(self):\n        with __exception_wrapper__:\n            self.connection().commit()\n\n    def rollback(self):\n        with __exception_wrapper__:\n            self.connection().rollback()\n\n    @property\n    def autocommit(self):\n        return self.connection().autocommit()\n\n    def blob_open(self, table, column, rowid, read_only=False, dbname=None):\n        return self.connection().blob_open(table, column, rowid, read_only,\n                                           db_name)\n\n    def backup(self, destination, pages=None, name=None, progress=None,\n               src_name=None):\n\n        if isinstance(destination, CySqliteDatabase):\n            conn = destination.connection()\n        elif isinstance(destination, cysqlite.Connection):\n            conn = destination\n        elif isinstance(destination, (str, Path)):\n            return self.backup_to_file(str(destination), pages, name,\n                                       progress, src_name)\n\n        return self.connection().backup(conn, pages, name, progress, src_name)\n\n    def backup_to_file(self, filename, pages=None, name=None, progress=None,\n                       src_name=None):\n        return self.connection().backup_to_file(filename, pages, name,\n                                                progress, src_name)\n\n    # Status properties.\n    if cysqlite is not None:\n        memory_used = __status__(cysqlite.C_SQLITE_STATUS_MEMORY_USED)\n        malloc_size = __status__(cysqlite.C_SQLITE_STATUS_MALLOC_SIZE, True)\n        malloc_count = __status__(cysqlite.C_SQLITE_STATUS_MALLOC_COUNT)\n        pagecache_used = __status__(cysqlite.C_SQLITE_STATUS_PAGECACHE_USED)\n        pagecache_overflow = __status__(\n            cysqlite.C_SQLITE_STATUS_PAGECACHE_OVERFLOW)\n        pagecache_size = __status__(cysqlite.C_SQLITE_STATUS_PAGECACHE_SIZE, True)\n        scratch_used = __status__(cysqlite.C_SQLITE_STATUS_SCRATCH_USED)\n        scratch_overflow = __status__(cysqlite.C_SQLITE_STATUS_SCRATCH_OVERFLOW)\n        scratch_size = __status__(cysqlite.C_SQLITE_STATUS_SCRATCH_SIZE, True)\n\n        # Connection status properties.\n        lookaside_used = __dbstatus__(cysqlite.C_SQLITE_DBSTATUS_LOOKASIDE_USED)\n        lookaside_hit = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_LOOKASIDE_HIT, True)\n        lookaside_miss = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_LOOKASIDE_MISS_SIZE, True)\n        lookaside_miss_full = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_LOOKASIDE_MISS_FULL, True)\n        cache_used = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_CACHE_USED, False, True)\n        schema_used = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_SCHEMA_USED, False, True)\n        statement_used = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_STMT_USED, False, True)\n        cache_hit = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_CACHE_HIT, False, True)\n        cache_miss = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_CACHE_MISS, False, True)\n        cache_write = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_CACHE_WRITE, False, True)",
+      "old_code": "class CySqliteDatabase(SqliteDatabase):\n    def __init__(self, database, rank_functions=True, regexp_function=False,\n                 *args, **kwargs):\n        super(CySqliteDatabase, self).__init__(database, *args, **kwargs)\n\n        self._commit_hook = None\n        self._rollback_hook = None\n        self._update_hook = None\n        self._authorizer = None\n        self._trace = None\n        self._progress = None\n\n        if rank_functions:\n            self.register_function(cysqlite.rank_bm25, 'fts_bm25')\n            self.register_function(cysqlite.rank_lucene, 'fts_lucene')\n            self.register_function(rank, 'fts_rank')\n\n        if regexp_function:\n            self.register_function(_sqlite_regexp, 'regexp', 2)\n\n    def _connect(self):\n        if cysqlite is None:\n            raise ImproperlyConfigured('cysqlite is not installed.')\n        conn = cysqlite.Connection(self.database, timeout=self._timeout,\n                                   extensions=True, **self.connect_params)\n        try:\n            self._add_conn_hooks(conn)\n        except Exception:\n            conn.close()\n            raise\n        return conn\n\n    def _add_conn_hooks(self, conn):\n        if self._commit_hook is not None:\n            conn.commit_hook(self._commit_hook)\n        if self._rollback_hook is not None:\n            conn.rollback_hook(self._rollback_hook)\n        if self._update_hook is not None:\n            conn.update_hook(self._update_hook)\n        if self._authorizer is not None:\n            conn.authorizer(self._authorizer)\n        if self._trace is not None:\n            conn.trace(*self._trace)\n        if self._progress is not None:\n            conn.progress(*self._progress)\n        super(CySqliteDatabase, self)._add_conn_hooks(conn)\n\n    def _set_pragmas(self, conn):\n        for pragma, value in self._pragmas:\n            conn.pragma(pragma, value)\n\n    def _attach_databases(self, conn):\n        for name, db in self._attached.items():\n            conn.attach(db, name)\n\n    def _load_aggregates(self, conn):\n        for name, (klass, num_params) in self._aggregates.items():\n            conn.create_aggregate(klass, name, num_params)\n\n    def _load_collations(self, conn):\n        for name, fn in self._collations.items():\n            conn.create_collation(fn, name)\n\n    def _load_functions(self, conn):\n        for name, (fn, num_params, deterministic) in self._functions.items():\n            conn.create_function(fn, name, num_params, deterministic)\n\n    def _load_window_functions(self, conn):\n        for name, (klass, num_params) in self._window_functions.items():\n            conn.create_window_function(klass, name, num_params)\n\n    def on_commit(self, fn):\n        self._commit_hook = fn\n        if not self.is_closed():\n            conn.commit_hook(fn)\n        return fn\n\n    def on_rollback(self, fn):\n        self._rollback_hook = fn\n        if not self.is_closed():\n            conn.rollback_hook(fn)\n        return fn\n\n    def on_update(self, fn):\n        self._update_hook = fn\n        if not self.is_closed():\n            conn.update_hook(fn)\n        return fn\n\n    def authorizer(self, fn):\n        self._authorizer = fn\n        if not self.is_closed():\n            conn.authorizer(fn)\n        return fn\n\n    def trace(self, fn, mask=2):\n        if fn is None:\n            self._trace = None\n        else:\n            self._trace = (fn, mask)\n        if not self.is_closed():\n            args = (None,) if fn is None else self._trace\n            conn.authorizer(*args)\n        return fn\n\n    def progress(self, fn, n=1):\n        if fn is None:\n            self._progress = None\n        else:\n            self._progress = (fn, mask)\n        if not self.is_closed():\n            args = (None,) if fn is None else self._progress\n            conn.progress(*args)\n        return fn\n\n    def begin(self, lock_type='deferred'):\n        with __exception_wrapper__:\n            self.connection().begin(lock_type)\n\n    def commit(self):\n        with __exception_wrapper__:\n            self.connection().commit()\n\n    def rollback(self):\n        with __exception_wrapper__:\n            self.connection().rollback()\n\n    @property\n    def autocommit(self):\n        return self.connection().autocommit()\n\n    def backup(self, destination, pages=None, name=None, progress=None,\n               src_name=None):\n\n        if isinstance(destination, CySqliteDatabase):\n            conn = destination.connection()\n        elif isinstance(destination, cysqlite.Connection):\n            conn = destination\n        elif isinstance(destination, (str, Path)):\n            return self.backup_to_file(str(destination), pages, name,\n                                       progress, src_name)\n\n        return self.connection().backup(conn, pages, name, progress, src_name)\n\n    def backup_to_file(self, filename, pages=None, name=None, progress=None,\n                       src_name=None):\n        return self.connection().backup_to_file(filename, pages, name,\n                                                progress, src_name)\n\n    # Status properties.\n    if cysqlite is not None:\n        memory_used = __status__(cysqlite.C_SQLITE_STATUS_MEMORY_USED)\n        malloc_size = __status__(cysqlite.C_SQLITE_STATUS_MALLOC_SIZE, True)\n        malloc_count = __status__(cysqlite.C_SQLITE_STATUS_MALLOC_COUNT)\n        pagecache_used = __status__(cysqlite.C_SQLITE_STATUS_PAGECACHE_USED)\n        pagecache_overflow = __status__(\n            cysqlite.C_SQLITE_STATUS_PAGECACHE_OVERFLOW)\n        pagecache_size = __status__(cysqlite.C_SQLITE_STATUS_PAGECACHE_SIZE, True)\n        scratch_used = __status__(cysqlite.C_SQLITE_STATUS_SCRATCH_USED)\n        scratch_overflow = __status__(cysqlite.C_SQLITE_STATUS_SCRATCH_OVERFLOW)\n        scratch_size = __status__(cysqlite.C_SQLITE_STATUS_SCRATCH_SIZE, True)\n\n        # Connection status properties.\n        lookaside_used = __dbstatus__(cysqlite.C_SQLITE_DBSTATUS_LOOKASIDE_USED)\n        lookaside_hit = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_LOOKASIDE_HIT, True)\n        lookaside_miss = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_LOOKASIDE_MISS_SIZE, True)\n        lookaside_miss_full = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_LOOKASIDE_MISS_FULL, True)\n        cache_used = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_CACHE_USED, False, True)\n        schema_used = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_SCHEMA_USED, False, True)\n        statement_used = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_STMT_USED, False, True)\n        cache_hit = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_CACHE_HIT, False, True)\n        cache_miss = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_CACHE_MISS, False, True)\n        cache_write = __dbstatus__(\n            cysqlite.C_SQLITE_DBSTATUS_CACHE_WRITE, False, True)"
+    },
+    {
+      "path": "playhouse/sqlite_ext.py",
+      "version": "new",
+      "line": 17,
+      "kind": "module",
+      "qualname": "playhouse.sqlite_ext",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "playhouse/sqlite_ext.py",
+      "version": "new",
+      "line": 943,
+      "kind": "function",
+      "qualname": "playhouse.sqlite_ext.SqliteExtDatabase.__init__",
+      "span": [
+        943,
+        953
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def __init__(self, database, rank_functions=True, regexp_function=False,\n                 json_contains=False, *args, **kwargs):\n        super(SqliteExtDatabase, self).__init__(database, *args, **kwargs)\n        self._row_factory = None\n\n        if rank_functions:\n            register_udf_groups(self, RANK)\n        if regexp_function:\n            self.register_function(_sqlite_regexp, 'regexp', 2)\n        if json_contains:\n            register_udf_groups(self, JSON)",
+      "old_code": "    def __init__(self, database, c_extensions=None, rank_functions=True,\n                 hash_functions=False, regexp_function=False,\n                 json_contains=False, *args, **kwargs):\n        super(SqliteExtDatabase, self).__init__(database, *args, **kwargs)\n        self._row_factory = None\n\n        if c_extensions and not CYTHON_SQLITE_EXTENSIONS:\n            raise ImproperlyConfigured('SqliteExtDatabase initialized with '\n                                       'C extensions, but shared library was '\n                                       'not found!')\n        prefer_c = CYTHON_SQLITE_EXTENSIONS and (c_extensions is not False)\n        if rank_functions:\n            if prefer_c:\n                register_rank_functions(self)\n            else:\n                self.register_function(bm25, 'fts_bm25')\n                self.register_function(rank, 'fts_rank')\n                self.register_function(bm25, 'fts_bm25f')  # Fall back to bm25.\n                self.register_function(bm25, 'fts_lucene')\n        if hash_functions:\n            if not prefer_c:\n                raise ValueError('C extension required to register hash '\n                                 'functions.')\n            register_hash_functions(self)\n        if regexp_function:\n            self.register_function(_sqlite_regexp, 'regexp', 2)\n        if json_contains:\n            self.register_function(_json_contains, 'json_contains')\n\n        self._c_extensions = prefer_c"
+    },
+    {
+      "path": "playhouse/sqlite_ext.py",
+      "version": "new",
+      "line": 964,
+      "kind": "class",
+      "qualname": "playhouse.sqlite_ext.CSqliteExtDatabase",
+      "span": [
+        964,
+        970
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "class CSqliteExtDatabase(SqliteExtDatabase):\n    # XXX: here today, gone tomorrow.\n    def __init__(self, *args, **kwargs):\n        warnings.warn('CSqliteExtDatabase is deprecated. For equivalent '\n                      'functionality use cysqlite_ext.CySqliteDatabase.',\n                      DeprecationWarning)\n        super(CSqliteExtDatabase, self).__init__(*args, **kwargs)",
+      "old_code": "    class CSqliteExtDatabase(SqliteExtDatabase):\n        def __init__(self, *args, **kwargs):\n            self._conn_helper = None\n            self._commit_hook = self._rollback_hook = self._update_hook = None\n            self._replace_busy_handler = False\n            super(CSqliteExtDatabase, self).__init__(*args, **kwargs)\n\n        def init(self, database, replace_busy_handler=False, **kwargs):\n            super(CSqliteExtDatabase, self).init(database, **kwargs)\n            self._replace_busy_handler = replace_busy_handler\n\n        def _close(self, conn):\n            if self._commit_hook:\n                self._conn_helper.set_commit_hook(None)\n            if self._rollback_hook:\n                self._conn_helper.set_rollback_hook(None)\n            if self._update_hook:\n                self._conn_helper.set_update_hook(None)\n            return super(CSqliteExtDatabase, self)._close(conn)\n\n        def _add_conn_hooks(self, conn):\n            super(CSqliteExtDatabase, self)._add_conn_hooks(conn)\n            self._conn_helper = ConnectionHelper(conn)\n            if self._commit_hook is not None:\n                self._conn_helper.set_commit_hook(self._commit_hook)\n            if self._rollback_hook is not None:\n                self._conn_helper.set_rollback_hook(self._rollback_hook)\n            if self._update_hook is not None:\n                self._conn_helper.set_update_hook(self._update_hook)\n            if self._replace_busy_handler:\n                timeout = self._timeout or 5\n                self._conn_helper.set_busy_handler(timeout * 1000)\n\n        def on_commit(self, fn):\n            self._commit_hook = fn\n            if not self.is_closed():\n                self._conn_helper.set_commit_hook(fn)\n            return fn\n\n        def on_rollback(self, fn):\n            self._rollback_hook = fn\n            if not self.is_closed():\n                self._conn_helper.set_rollback_hook(fn)\n            return fn\n\n        def on_update(self, fn):\n            self._update_hook = fn\n            if not self.is_closed():\n                self._conn_helper.set_update_hook(fn)\n            return fn\n\n        def changes(self):\n            return self._conn_helper.changes()\n\n        @property\n        def last_insert_rowid(self):\n            return self._conn_helper.last_insert_rowid()\n\n        @property\n        def autocommit(self):\n            return self._conn_helper.autocommit()\n\n        def backup(self, destination, pages=None, name=None, progress=None):\n            return backup(self.connection(), destination.connection(),\n                          pages=pages, name=name, progress=progress)\n\n        def backup_to_file(self, filename, pages=None, name=None,\n                           progress=None):\n            return backup_to_file(self.connection(), filename, pages=pages,\n                                  name=name, progress=progress)\n\n        def blob_open(self, table, column, rowid, read_only=False):\n            return Blob(self, table, column, rowid, read_only)\n\n        # Status properties.\n        memory_used = __status__(SQLITE_STATUS_MEMORY_USED)\n        malloc_size = __status__(SQLITE_STATUS_MALLOC_SIZE, True)\n        malloc_count = __status__(SQLITE_STATUS_MALLOC_COUNT)\n        pagecache_used = __status__(SQLITE_STATUS_PAGECACHE_USED)\n        pagecache_overflow = __status__(SQLITE_STATUS_PAGECACHE_OVERFLOW)\n        pagecache_size = __status__(SQLITE_STATUS_PAGECACHE_SIZE, True)\n        scratch_used = __status__(SQLITE_STATUS_SCRATCH_USED)\n        scratch_overflow = __status__(SQLITE_STATUS_SCRATCH_OVERFLOW)\n        scratch_size = __status__(SQLITE_STATUS_SCRATCH_SIZE, True)\n\n        # Connection status properties.\n        lookaside_used = __dbstatus__(SQLITE_DBSTATUS_LOOKASIDE_USED)\n        lookaside_hit = __dbstatus__(SQLITE_DBSTATUS_LOOKASIDE_HIT, True)\n        lookaside_miss = __dbstatus__(SQLITE_DBSTATUS_LOOKASIDE_MISS_SIZE,\n                                      True)\n        lookaside_miss_full = __dbstatus__(SQLITE_DBSTATUS_LOOKASIDE_MISS_FULL,\n                                           True)\n        cache_used = __dbstatus__(SQLITE_DBSTATUS_CACHE_USED, False, True)\n        #cache_used_shared = __dbstatus__(SQLITE_DBSTATUS_CACHE_USED_SHARED,\n        #                                 False, True)\n        schema_used = __dbstatus__(SQLITE_DBSTATUS_SCHEMA_USED, False, True)\n        statement_used = __dbstatus__(SQLITE_DBSTATUS_STMT_USED, False, True)\n        cache_hit = __dbstatus__(SQLITE_DBSTATUS_CACHE_HIT, False, True)\n        cache_miss = __dbstatus__(SQLITE_DBSTATUS_CACHE_MISS, False, True)\n        cache_write = __dbstatus__(SQLITE_DBSTATUS_CACHE_WRITE, False, True)"
+    },
+    {
+      "path": "playhouse/sqlite_ext.py",
+      "version": "new",
+      "line": 966,
+      "kind": "function",
+      "qualname": "playhouse.sqlite_ext.CSqliteExtDatabase.__init__",
+      "span": [
+        966,
+        970
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def __init__(self, *args, **kwargs):\n        warnings.warn('CSqliteExtDatabase is deprecated. For equivalent '\n                      'functionality use cysqlite_ext.CySqliteDatabase.',\n                      DeprecationWarning)\n        super(CSqliteExtDatabase, self).__init__(*args, **kwargs)",
+      "old_code": "        def __init__(self, *args, **kwargs):\n            self._conn_helper = None\n            self._commit_hook = self._rollback_hook = self._update_hook = None\n            self._replace_busy_handler = False\n            super(CSqliteExtDatabase, self).__init__(*args, **kwargs)"
+    },
+    {
+      "path": "playhouse/sqlite_udf.py",
+      "version": "new",
+      "line": 1,
+      "kind": "module",
+      "qualname": "playhouse.sqlite_udf",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "playhouse/sqlite_udf.py",
+      "version": "new",
+      "line": 84,
+      "kind": "function",
+      "qualname": "playhouse.sqlite_udf.udf",
+      "span": [
+        84,
+        89
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def udf(group, name=None):\n    def decorator(fn):\n        UDF_COLLECTION.setdefault(group, [])\n        UDF_COLLECTION[group].append((fn, name or fn.__name__))\n        return fn\n    return decorator",
+      "old_code": "def udf(*groups):\n    def decorator(fn):\n        for group in groups:\n            UDF_COLLECTION.setdefault(group, [])\n            UDF_COLLECTION[group].append(fn)\n        return fn\n    return decorator"
+    },
+    {
+      "path": "playhouse/sqlite_udf.py",
+      "version": "new",
+      "line": 86,
+      "kind": "function",
+      "qualname": "playhouse.sqlite_udf.udf.decorator",
+      "span": [
+        85,
+        88
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def decorator(fn):\n        UDF_COLLECTION.setdefault(group, [])\n        UDF_COLLECTION[group].append((fn, name or fn.__name__))\n        return fn",
+      "old_code": "    def decorator(fn):\n        for group in groups:\n            UDF_COLLECTION.setdefault(group, [])\n            UDF_COLLECTION[group].append(fn)\n        return fn"
+    },
+    {
+      "path": "playhouse/sqlite_udf.py",
+      "version": "new",
+      "line": 106,
+      "kind": "function",
+      "qualname": "playhouse.sqlite_udf.register_udf_groups",
+      "span": [
+        102,
+        109
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def register_udf_groups(db, *groups):\n    seen = set()\n    for group in groups:\n        functions = UDF_COLLECTION.get(group, ())\n        for function, name in functions:\n            if name not in seen:\n                seen.add(name)\n                db.register_function(function, name)",
+      "old_code": "def register_udf_groups(db, *groups):\n    seen = set()\n    for group in groups:\n        functions = UDF_COLLECTION.get(group, ())\n        for function in functions:\n            name = function.__name__\n            if name not in seen:\n                seen.add(name)\n                db.register_function(function, name)"
+    },
+    {
+      "path": "playhouse/sqlite_udf.py",
+      "version": "new",
+      "line": 267,
+      "kind": "function",
+      "qualname": "playhouse.sqlite_udf.json_contains",
+      "span": [
+        267,
+        302
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def json_contains(src_json, obj_json):\n    stack = []\n    try:\n        stack.append((json.loads(obj_json), json.loads(src_json)))\n    except:\n        # Invalid JSON!\n        return False\n\n    while stack:\n        obj, src = stack.pop()\n        if isinstance(src, dict):\n            if isinstance(obj, dict):\n                for key in obj:\n                    if key not in src:\n                        return False\n                    stack.append((obj[key], src[key]))\n            elif isinstance(obj, list):\n                for item in obj:\n                    if item not in src:\n                        return False\n            elif obj not in src:\n                return False\n        elif isinstance(src, list):\n            if isinstance(obj, dict):\n                return False\n            elif isinstance(obj, list):\n                try:\n                    for i in range(len(obj)):\n                        stack.append((obj[i], src[i]))\n                except IndexError:\n                    return False\n            elif obj not in src:\n                return False\n        elif obj != src:\n            return False\n    return True",
+      "old_code": null
+    },
+    {
+      "path": "playhouse/sqlite_udf.py",
+      "version": "new",
+      "line": 391,
+      "kind": "function",
+      "qualname": "playhouse.sqlite_udf.mode.__init__",
+      "span": [
+        391,
+        392
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def __init__(self):\n        self.items = collections.Counter()",
+      "old_code": "        def __init__(self):\n            self.items = []"
+    },
+    {
+      "path": "playhouse/sqlite_udf.py",
+      "version": "new",
+      "line": 394,
+      "kind": "function",
+      "qualname": "playhouse.sqlite_udf.mode.step",
+      "span": [
+        394,
+        395
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def step(self, *args):\n        self.items.update(args)",
+      "old_code": "        def step(self, item):\n            self.items.append(item)"
+    },
+    {
+      "path": "playhouse/sqlite_udf.py",
+      "version": "new",
+      "line": 397,
+      "kind": "function",
+      "qualname": "playhouse.sqlite_udf.mode.finalize",
+      "span": [
+        397,
+        399
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def finalize(self):\n        if self.items:\n            return self.items.most_common(1)[0][0]",
+      "old_code": "        def finalize(self):\n            if self.items:\n                return max(set(self.items), key=self.items.count)"
+    },
+    {
+      "path": "playhouse/sqlite_udf.py",
+      "version": "new",
+      "line": 480,
+      "kind": "function",
+      "qualname": "playhouse.sqlite_udf._parse_match_info",
+      "span": [
+        480,
+        483
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def _parse_match_info(buf):\n    # See http://sqlite.org/fts3.html#matchinfo\n    bufsize = len(buf)  # Length in bytes.\n    return [struct.unpack('@I', buf[i:i+4])[0] for i in range(0, bufsize, 4)]",
+      "old_code": null
+    },
+    {
+      "path": "playhouse/sqlite_udf.py",
+      "version": "new",
+      "line": 485,
+      "kind": "function",
+      "qualname": "playhouse.sqlite_udf.get_weights",
+      "span": [
+        485,
+        492
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def get_weights(ncol, raw_weights):\n    if not raw_weights:\n        return [1] * ncol\n    else:\n        weights = [0] * ncol\n        for i, weight in enumerate(raw_weights):\n            weights[i] = weight\n    return weights",
+      "old_code": null
+    },
+    {
+      "path": "playhouse/sqlite_udf.py",
+      "version": "new",
+      "line": 495,
+      "kind": "function",
+      "qualname": "playhouse.sqlite_udf.rank",
+      "span": [
+        495,
+        528
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def rank(raw_match_info, *raw_weights):\n    # Handle match_info called w/default args 'pcx' - based on the example rank\n    # function http://sqlite.org/fts3.html#appendix_a\n    match_info = _parse_match_info(raw_match_info)\n    score = 0.0\n\n    p, c = match_info[:2]\n    weights = get_weights(c, raw_weights)\n\n    # matchinfo X value corresponds to, for each phrase in the search query, a\n    # list of 3 values for each column in the search table.\n    # So if we have a two-phrase search query and three columns of data, the\n    # following would be the layout:\n    # p0 : c0=[0, 1, 2],   c1=[3, 4, 5],    c2=[6, 7, 8]\n    # p1 : c0=[9, 10, 11], c1=[12, 13, 14], c2=[15, 16, 17]\n    for phrase_num in range(p):\n        phrase_info_idx = 2 + (phrase_num * c * 3)\n        for col_num in range(c):\n            weight = weights[col_num]\n            if not weight:\n                continue\n\n            col_idx = phrase_info_idx + (col_num * 3)\n\n            # The idea is that we count the number of times the phrase appears\n            # in this column of the current row, compared to how many times it\n            # appears in this column across all rows. The ratio of these values\n            # provides a rough way to score based on \"high value\" terms.\n            row_hits = match_info[col_idx]\n            all_rows_hits = match_info[col_idx + 1]\n            if row_hits > 0:\n                score += weight * (float(row_hits) / all_rows_hits)\n\n    return -score",
+      "old_code": null
+    },
+    {
+      "path": "playhouse/sqlite_udf.py",
+      "version": "new",
+      "line": 531,
+      "kind": "function",
+      "qualname": "playhouse.sqlite_udf.bm25",
+      "span": [
+        531,
+        609
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def bm25(raw_match_info, *args):\n    \"\"\"\n    Usage:\n\n        # Format string *must* be pcnalx\n        # Second parameter to bm25 specifies the index of the column, on\n        # the table being queries.\n        bm25(matchinfo(document_tbl, 'pcnalx'), 1) AS rank\n    \"\"\"\n    match_info = _parse_match_info(raw_match_info)\n    K = 1.2\n    B = 0.75\n    score = 0.0\n\n    P_O, C_O, N_O, A_O = range(4)  # Offsets into the matchinfo buffer.\n    term_count = match_info[P_O]  # n\n    col_count = match_info[C_O]\n    total_docs = match_info[N_O]  # N\n    L_O = A_O + col_count\n    X_O = L_O + col_count\n\n    # Worked example of pcnalx for two columns and two phrases, 100 docs total.\n    # {\n    #   p  = 2\n    #   c  = 2\n    #   n  = 100\n    #   a0 = 4   -- avg number of tokens for col0, e.g. title\n    #   a1 = 40  -- avg number of tokens for col1, e.g. body\n    #   l0 = 5   -- curr doc has 5 tokens in col0\n    #   l1 = 30  -- curr doc has 30 tokens in col1\n    #\n    #   x000     -- hits this row for phrase0, col0\n    #   x001     -- hits all rows for phrase0, col0\n    #   x002     -- rows with phrase0 in col0 at least once\n    #\n    #   x010     -- hits this row for phrase0, col1\n    #   x011     -- hits all rows for phrase0, col1\n    #   x012     -- rows with phrase0 in col1 at least once\n    #\n    #   x100     -- hits this row for phrase1, col0\n    #   x101     -- hits all rows for phrase1, col0\n    #   x102     -- rows with phrase1 in col0 at least once\n    #\n    #   x110     -- hits this row for phrase1, col1\n    #   x111     -- hits all rows for phrase1, col1\n    #   x112     -- rows with phrase1 in col1 at least once\n    # }\n\n    weights = get_weights(col_count, args)\n\n    for i in range(term_count):\n        for j in range(col_count):\n            weight = weights[j]\n            if weight == 0:\n                continue\n\n            x = X_O + (3 * (j + i * col_count))\n            term_frequency = float(match_info[x])  # f(qi, D)\n            docs_with_term = float(match_info[x + 2])  # n(qi)\n\n            # log( (N - n(qi) + 0.5) / (n(qi) + 0.5) )\n            idf = math.log(\n                    (total_docs - docs_with_term + 0.5) /\n                    (docs_with_term + 0.5))\n            if idf <= 0.0:\n                idf = 1e-6\n\n            doc_length = float(match_info[L_O + j])  # |D|\n            avg_length = float(match_info[A_O + j]) or 1.  # avgdl\n            ratio = doc_length / avg_length\n\n            num = term_frequency * (K + 1.0)\n            b_part = 1.0 - B + (B * ratio)\n            denom = term_frequency + (K * b_part)\n\n            pc_score = idf * (num / denom)\n            score += (pc_score * weight)\n\n    return -score",
+      "old_code": null
+    },
+    {
+      "path": "setup.py",
+      "version": "new",
+      "line": 2,
+      "kind": "module",
+      "qualname": "setup",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "tests/__init__.py",
+      "version": "new",
+      "line": 33,
+      "kind": "module",
+      "qualname": "tests.__init__",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "tests/cysqlite_ext.py",
+      "version": "new",
+      "line": 1,
+      "kind": "module",
+      "qualname": "tests.cysqlite_ext",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "tests/cysqlite_ext.py",
+      "version": "new",
+      "line": 19,
+      "kind": "class",
+      "qualname": "tests.cysqlite_ext.CyDatabaseTestCase",
+      "span": [
+        19,
+        28
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "class CyDatabaseTestCase(DatabaseTestCase):\n    database = database\n\n    def tearDown(self):\n        super(CyDatabaseTestCase, self).tearDown()\n        for filename in glob.glob(self.database.database + '*'):\n            os.unlink(filename)\n\n    def execute(self, sql, *params):\n        return self.database.execute_sql(sql, params)",
+      "old_code": null
+    },
+    {
+      "path": "tests/cysqlite_ext.py",
+      "version": "new",
+      "line": 23,
+      "kind": "function",
+      "qualname": "tests.cysqlite_ext.CyDatabaseTestCase.tearDown",
+      "span": [
+        22,
+        25
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "    def tearDown(self):\n        super(CyDatabaseTestCase, self).tearDown()\n        for filename in glob.glob(self.database.database + '*'):\n            os.unlink(filename)",
+      "old_code": null
+    },
+    {
+      "path": "tests/cysqlite_ext.py",
+      "version": "new",
+      "line": 31,
+      "kind": "class",
+      "qualname": "tests.cysqlite_ext.TestCSqliteHelpers",
+      "span": [
+        31,
+        120
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "class TestCSqliteHelpers(CyDatabaseTestCase):\n    def test_autocommit(self):\n        self.assertTrue(self.database.autocommit)\n        self.database.begin()\n        self.assertFalse(self.database.autocommit)\n        self.database.rollback()\n        self.assertTrue(self.database.autocommit)\n\n    def test_commit_hook(self):\n        state = {}\n\n        @self.database.on_commit\n        def on_commit():\n            state.setdefault('commits', 0)\n            state['commits'] += 1\n\n        self.execute('create table register (value text)')\n        self.assertEqual(state['commits'], 1)\n\n        # Check hook is preserved.\n        self.database.close()\n        self.database.connect()\n\n        self.execute('insert into register (value) values (?), (?)',\n                     'foo', 'bar')\n        self.assertEqual(state['commits'], 2)\n\n        curs = self.execute('select * from register order by value;')\n        results = curs.fetchall()\n        self.assertEqual([tuple(r) for r in results], [('bar',), ('foo',)])\n\n        self.assertEqual(state['commits'], 2)\n\n    def test_rollback_hook(self):\n        state = {}\n\n        @self.database.on_rollback\n        def on_rollback():\n            state.setdefault('rollbacks', 0)\n            state['rollbacks'] += 1\n\n        self.execute('create table register (value text);')\n        self.assertEqual(state, {})\n\n        # Check hook is preserved.\n        self.database.close()\n        self.database.connect()\n\n        self.database.begin()\n        self.execute('insert into register (value) values (?)', 'test')\n        self.database.rollback()\n        self.assertEqual(state, {'rollbacks': 1})\n\n        curs = self.execute('select * from register;')\n        self.assertEqual(curs.fetchall(), [])\n\n    def test_update_hook(self):\n        state = []\n\n        @self.database.on_update\n        def on_update(query, db, table, rowid):\n            state.append((query, db, table, rowid))\n\n        self.execute('create table register (value text)')\n        self.execute('insert into register (value) values (?), (?)',\n                     'foo', 'bar')\n\n        self.assertEqual(state, [\n            ('INSERT', 'main', 'register', 1),\n            ('INSERT', 'main', 'register', 2)])\n\n        # Check hook is preserved.\n        self.database.close()\n        self.database.connect()\n\n        self.execute('update register set value = ? where rowid = ?', 'baz', 1)\n        self.assertEqual(state, [\n            ('INSERT', 'main', 'register', 1),\n            ('INSERT', 'main', 'register', 2),\n            ('UPDATE', 'main', 'register', 1)])\n\n        self.execute('delete from register where rowid=?;', 2)\n        self.assertEqual(state, [\n            ('INSERT', 'main', 'register', 1),\n            ('INSERT', 'main', 'register', 2),\n            ('UPDATE', 'main', 'register', 1),\n            ('DELETE', 'main', 'register', 2)])\n\n    def test_properties(self):\n        self.assertTrue(self.database.cache_used is not None)",
+      "old_code": null
+    },
+    {
+      "path": "tests/cysqlite_ext.py",
+      "version": "new",
+      "line": 123,
+      "kind": "class",
+      "qualname": "tests.cysqlite_ext.TestBackup",
+      "span": [
+        123,
+        202
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "class TestBackup(CyDatabaseTestCase):\n    backup_filenames = set(('test_backup.db', 'test_backup1.db',\n                            'test_backup2.db'))\n\n    def tearDown(self):\n        super(TestBackup, self).tearDown()\n        for backup_filename in self.backup_filenames:\n            if os.path.exists(backup_filename):\n                os.unlink(backup_filename)\n\n    def _populate_test_data(self, nrows=100, db=None):\n        db = self.database if db is None else db\n        db.execute_sql('CREATE TABLE register (id INTEGER NOT NULL PRIMARY KEY'\n                       ', value INTEGER NOT NULL)')\n        with db.atomic():\n            for i in range(nrows):\n                db.execute_sql('INSERT INTO register (value) VALUES (?)', (i,))\n\n    def test_backup(self):\n        self._populate_test_data()\n\n        # Back-up to an in-memory database and verify contents.\n        other_db = CySqliteDatabase(':memory:')\n        self.database.backup(other_db)\n        cursor = other_db.execute_sql('SELECT value FROM register ORDER BY '\n                                      'value;')\n        self.assertEqual([val for val, in cursor.fetchall()], list(range(100)))\n        other_db.close()\n\n    def test_backup_preserve_pagesize(self):\n        db1 = CySqliteDatabase('test_backup1.db')\n        with db1.connection_context():\n            db1.page_size = 8192\n            self._populate_test_data(db=db1)\n\n        db1.connect()\n        self.assertEqual(db1.page_size, 8192)\n\n        db2 = CySqliteDatabase('test_backup2.db')\n        db1.backup(db2)\n        self.assertEqual(db2.page_size, 8192)\n        nrows, = db2.execute_sql('select count(*) from register;').fetchone()\n        self.assertEqual(nrows, 100)\n\n    def test_backup_to_file(self):\n        self._populate_test_data()\n\n        self.database.backup_to_file('test_backup.db')\n        backup_db = CySqliteDatabase('test_backup.db')\n        cursor = backup_db.execute_sql('SELECT value FROM register ORDER BY '\n                                       'value;')\n        self.assertEqual([val for val, in cursor.fetchall()], list(range(100)))\n        backup_db.close()\n\n    def test_backup_progress(self):\n        self._populate_test_data()\n\n        accum = []\n        def progress(remaining, total, is_done):\n            accum.append((remaining, total, is_done))\n\n        other_db = CySqliteDatabase(':memory:')\n        self.database.backup(other_db, pages=1, progress=progress)\n        self.assertTrue(len(accum) > 0)\n\n        sql = 'select value from register order by value;'\n        self.assertEqual([r for r, in other_db.execute_sql(sql)],\n                         list(range(100)))\n        other_db.close()\n\n    def test_backup_progress_error(self):\n        self._populate_test_data()\n\n        def broken_progress(remaining, total, is_done):\n            raise ValueError('broken')\n\n        other_db = CySqliteDatabase(':memory:')\n        self.assertRaises(ValueError, self.database.backup, other_db,\n                          progress=broken_progress)\n        other_db.close()",
+      "old_code": null
+    },
+    {
+      "path": "tests/cysqlite_ext.py",
+      "version": "new",
+      "line": 145,
+      "kind": "function",
+      "qualname": "tests.cysqlite_ext.TestBackup.test_backup",
+      "span": [
+        141,
+        150
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "    def test_backup(self):\n        self._populate_test_data()\n\n        # Back-up to an in-memory database and verify contents.\n        other_db = CySqliteDatabase(':memory:')\n        self.database.backup(other_db)\n        cursor = other_db.execute_sql('SELECT value FROM register ORDER BY '\n                                      'value;')\n        self.assertEqual([val for val, in cursor.fetchall()], list(range(100)))\n        other_db.close()",
+      "old_code": null
+    },
+    {
+      "path": "tests/cysqlite_ext.py",
+      "version": "new",
+      "line": 153,
+      "kind": "function",
+      "qualname": "tests.cysqlite_ext.TestBackup.test_backup_preserve_pagesize",
+      "span": [
+        152,
+        165
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "    def test_backup_preserve_pagesize(self):\n        db1 = CySqliteDatabase('test_backup1.db')\n        with db1.connection_context():\n            db1.page_size = 8192\n            self._populate_test_data(db=db1)\n\n        db1.connect()\n        self.assertEqual(db1.page_size, 8192)\n\n        db2 = CySqliteDatabase('test_backup2.db')\n        db1.backup(db2)\n        self.assertEqual(db2.page_size, 8192)\n        nrows, = db2.execute_sql('select count(*) from register;').fetchone()\n        self.assertEqual(nrows, 100)",
+      "old_code": null
+    },
+    {
+      "path": "tests/cysqlite_ext.py",
+      "version": "new",
+      "line": 171,
+      "kind": "function",
+      "qualname": "tests.cysqlite_ext.TestBackup.test_backup_to_file",
+      "span": [
+        167,
+        175
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "    def test_backup_to_file(self):\n        self._populate_test_data()\n\n        self.database.backup_to_file('test_backup.db')\n        backup_db = CySqliteDatabase('test_backup.db')\n        cursor = backup_db.execute_sql('SELECT value FROM register ORDER BY '\n                                       'value;')\n        self.assertEqual([val for val, in cursor.fetchall()], list(range(100)))\n        backup_db.close()",
+      "old_code": null
+    },
+    {
+      "path": "tests/cysqlite_ext.py",
+      "version": "new",
+      "line": 184,
+      "kind": "function",
+      "qualname": "tests.cysqlite_ext.TestBackup.test_backup_progress",
+      "span": [
+        177,
+        191
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "    def test_backup_progress(self):\n        self._populate_test_data()\n\n        accum = []\n        def progress(remaining, total, is_done):\n            accum.append((remaining, total, is_done))\n\n        other_db = CySqliteDatabase(':memory:')\n        self.database.backup(other_db, pages=1, progress=progress)\n        self.assertTrue(len(accum) > 0)\n\n        sql = 'select value from register order by value;'\n        self.assertEqual([r for r, in other_db.execute_sql(sql)],\n                         list(range(100)))\n        other_db.close()",
+      "old_code": null
+    },
+    {
+      "path": "tests/cysqlite_ext.py",
+      "version": "new",
+      "line": 199,
+      "kind": "function",
+      "qualname": "tests.cysqlite_ext.TestBackup.test_backup_progress_error",
+      "span": [
+        193,
+        202
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "    def test_backup_progress_error(self):\n        self._populate_test_data()\n\n        def broken_progress(remaining, total, is_done):\n            raise ValueError('broken')\n\n        other_db = CySqliteDatabase(':memory:')\n        self.assertRaises(ValueError, self.database.backup, other_db,\n                          progress=broken_progress)\n        other_db.close()",
+      "old_code": null
+    },
+    {
+      "path": "tests/cysqlite_ext.py",
+      "version": "new",
+      "line": 205,
+      "kind": "class",
+      "qualname": "tests.cysqlite_ext.DataTypes",
+      "span": [
+        205,
+        225
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "class DataTypes(cysqlite.TableFunction):\n    columns = ('key', 'value')\n    params = ()\n    name = 'data_types'\n\n    def initialize(self):\n        self.values = (\n            None,\n            1,\n            2.,\n            u'unicode str',\n            b'byte str',\n            False,\n            True)\n        self.idx = 0\n        self.n = len(self.values)\n\n    def iterate(self, idx):\n        if idx < self.n:\n            return ('k%s' % idx, self.values[idx])\n        raise StopIteration",
+      "old_code": null
+    },
+    {
+      "path": "tests/cysqlite_ext.py",
+      "version": "new",
+      "line": 229,
+      "kind": "class",
+      "qualname": "tests.cysqlite_ext.TestDataTypesTableFunction",
+      "span": [
+        229,
+        249
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "class TestDataTypesTableFunction(CyDatabaseTestCase):\n    database = db_loader('cysqlite')\n\n    def test_data_types_table_function(self):\n        self.database.register_table_function(DataTypes)\n        for _ in range(2):\n            cursor = self.database.execute_sql('SELECT key, value FROM '\n                                               'data_types() ORDER BY key')\n            self.assertEqual(cursor.fetchall(), [\n                ('k0', None),\n                ('k1', 1),\n                ('k2', 2.),\n                ('k3', u'unicode str'),\n                ('k4', b'byte str'),\n                ('k5', 0),\n                ('k6', 1),\n            ])\n\n            # Ensure table re-registered after close.\n            self.database.close()\n            self.database.connect()",
+      "old_code": null
+    },
+    {
+      "path": "tests/cysqlite_ext.py",
+      "version": "new",
+      "line": 234,
+      "kind": "function",
+      "qualname": "tests.cysqlite_ext.TestDataTypesTableFunction.test_data_types_table_function",
+      "span": [
+        232,
+        249
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "    def test_data_types_table_function(self):\n        self.database.register_table_function(DataTypes)\n        for _ in range(2):\n            cursor = self.database.execute_sql('SELECT key, value FROM '\n                                               'data_types() ORDER BY key')\n            self.assertEqual(cursor.fetchall(), [\n                ('k0', None),\n                ('k1', 1),\n                ('k2', 2.),\n                ('k3', u'unicode str'),\n                ('k4', b'byte str'),\n                ('k5', 0),\n                ('k6', 1),\n            ])\n\n            # Ensure table re-registered after close.\n            self.database.close()\n            self.database.connect()",
+      "old_code": null
+    },
+    {
+      "path": "tests/sqlite.py",
+      "version": "new",
+      "line": 30,
+      "kind": "module",
+      "qualname": "tests.sqlite",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "tests/sqlite_udf.py",
+      "version": "old",
+      "line": 15,
+      "kind": "module",
+      "qualname": "tests.sqlite_udf",
+      "span": null,
+      "reason": "diff_old_line_outside_defs",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "tests/sqlite_udf.py",
+      "version": "old",
+      "line": 422,
+      "kind": "class",
+      "qualname": "tests.sqlite_udf.TestVirtualTableFunctions",
+      "span": [
+        422,
+        490
+      ],
+      "reason": "diff_old_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": "class TestVirtualTableFunctions(ModelTestCase):\n    database = database\n    requires = MODELS\n\n    def sqln(self, sql, *p):\n        cursor = self.database.execute_sql(sql, p)\n        return cursor.fetchall()\n\n    def test_regex_search(self):\n        usernames = [\n            'charlie',\n            'hu3y17',\n            'zaizee2012',\n            '1234.56789',\n            'hurr durr']\n        for username in usernames:\n            User.create(username=username)\n\n        rgx = '[0-9]+'\n        results = self.sqln(\n            ('SELECT user.username, regex_search.match '\n             'FROM user, regex_search(?, user.username) '\n             'ORDER BY regex_search.match'),\n            rgx)\n        self.assertEqual([row for row in results], [\n            ('1234.56789', '1234'),\n            ('hu3y17', '17'),\n            ('zaizee2012', '2012'),\n            ('hu3y17', '3'),\n            ('1234.56789', '56789'),\n        ])\n\n    def test_date_series(self):\n        ONE_DAY = 86400\n        def assertValues(start, stop, step_seconds, expected):\n            results = self.sqln('select * from date_series(?, ?, ?)',\n                                start, stop, step_seconds)\n            self.assertEqual(results, expected)\n\n        assertValues('2015-01-01', '2015-01-05', 86400, [\n            ('2015-01-01',),\n            ('2015-01-02',),\n            ('2015-01-03',),\n            ('2015-01-04',),\n            ('2015-01-05',),\n        ])\n\n        assertValues('2015-01-01', '2015-01-05', 86400 / 2, [\n            ('2015-01-01 00:00:00',),\n            ('2015-01-01 12:00:00',),\n            ('2015-01-02 00:00:00',),\n            ('2015-01-02 12:00:00',),\n            ('2015-01-03 00:00:00',),\n            ('2015-01-03 12:00:00',),\n            ('2015-01-04 00:00:00',),\n            ('2015-01-04 12:00:00',),\n            ('2015-01-05 00:00:00',),\n        ])\n\n        assertValues('14:20:15', '14:24', 30, [\n            ('14:20:15',),\n            ('14:20:45',),\n            ('14:21:15',),\n            ('14:21:45',),\n            ('14:22:15',),\n            ('14:22:45',),\n            ('14:23:15',),\n            ('14:23:45',),\n        ])"
+    },
+    {
+      "path": "tests/sqlite_udf.py",
+      "version": "old",
+      "line": 426,
+      "kind": "function",
+      "qualname": "tests.sqlite_udf.TestVirtualTableFunctions.sqln",
+      "span": [
+        426,
+        428
+      ],
+      "reason": "diff_old_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": "    def sqln(self, sql, *p):\n        cursor = self.database.execute_sql(sql, p)\n        return cursor.fetchall()"
+    },
+    {
+      "path": "tests/sqlite_udf.py",
+      "version": "old",
+      "line": 430,
+      "kind": "function",
+      "qualname": "tests.sqlite_udf.TestVirtualTableFunctions.test_regex_search",
+      "span": [
+        430,
+        452
+      ],
+      "reason": "diff_old_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": "    def test_regex_search(self):\n        usernames = [\n            'charlie',\n            'hu3y17',\n            'zaizee2012',\n            '1234.56789',\n            'hurr durr']\n        for username in usernames:\n            User.create(username=username)\n\n        rgx = '[0-9]+'\n        results = self.sqln(\n            ('SELECT user.username, regex_search.match '\n             'FROM user, regex_search(?, user.username) '\n             'ORDER BY regex_search.match'),\n            rgx)\n        self.assertEqual([row for row in results], [\n            ('1234.56789', '1234'),\n            ('hu3y17', '17'),\n            ('zaizee2012', '2012'),\n            ('hu3y17', '3'),\n            ('1234.56789', '56789'),\n        ])"
+    },
+    {
+      "path": "tests/sqlite_udf.py",
+      "version": "old",
+      "line": 454,
+      "kind": "function",
+      "qualname": "tests.sqlite_udf.TestVirtualTableFunctions.test_date_series",
+      "span": [
+        454,
+        490
+      ],
+      "reason": "diff_old_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": "    def test_date_series(self):\n        ONE_DAY = 86400\n        def assertValues(start, stop, step_seconds, expected):\n            results = self.sqln('select * from date_series(?, ?, ?)',\n                                start, stop, step_seconds)\n            self.assertEqual(results, expected)\n\n        assertValues('2015-01-01', '2015-01-05', 86400, [\n            ('2015-01-01',),\n            ('2015-01-02',),\n            ('2015-01-03',),\n            ('2015-01-04',),\n            ('2015-01-05',),\n        ])\n\n        assertValues('2015-01-01', '2015-01-05', 86400 / 2, [\n            ('2015-01-01 00:00:00',),\n            ('2015-01-01 12:00:00',),\n            ('2015-01-02 00:00:00',),\n            ('2015-01-02 12:00:00',),\n            ('2015-01-03 00:00:00',),\n            ('2015-01-03 12:00:00',),\n            ('2015-01-04 00:00:00',),\n            ('2015-01-04 12:00:00',),\n            ('2015-01-05 00:00:00',),\n        ])\n\n        assertValues('14:20:15', '14:24', 30, [\n            ('14:20:15',),\n            ('14:20:45',),\n            ('14:21:15',),\n            ('14:21:45',),\n            ('14:22:15',),\n            ('14:22:45',),\n            ('14:23:15',),\n            ('14:23:45',),\n        ])"
+    },
+    {
+      "path": "tests/sqlite_udf.py",
+      "version": "old",
+      "line": 456,
+      "kind": "function",
+      "qualname": "tests.sqlite_udf.TestVirtualTableFunctions.test_date_series.assertValues",
+      "span": [
+        456,
+        459
+      ],
+      "reason": "diff_old_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": "        def assertValues(start, stop, step_seconds, expected):\n            results = self.sqln('select * from date_series(?, ?, ?)',\n                                start, stop, step_seconds)\n            self.assertEqual(results, expected)"
+    }
+  ],
+  "generated_at": "2026-02-11T10:42:43"
+}

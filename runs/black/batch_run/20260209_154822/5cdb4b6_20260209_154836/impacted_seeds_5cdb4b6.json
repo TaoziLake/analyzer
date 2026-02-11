@@ -1,0 +1,27 @@
+{
+  "commit": "5cdb4b6",
+  "parent": "e35561c42f3e44a9419e6102cd0d303c28018214",
+  "repo": "D:\\locbench\\black",
+  "num_files_in_diff": 2,
+  "num_py_files_in_diff": 1,
+  "num_seeds": 1,
+  "seeds": [
+    {
+      "path": "src/black/concurrency.py",
+      "version": "new",
+      "line": 92,
+      "kind": "function",
+      "qualname": "src.black.concurrency.reformat_many",
+      "span": [
+        74,
+        134
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def reformat_many(\n    sources: set[Path],\n    fast: bool,\n    write_back: WriteBack,\n    mode: Mode,\n    report: Report,\n    workers: int | None,\n    no_cache: bool = False,\n) -> None:\n    \"\"\"Reformat multiple files using a ProcessPoolExecutor.\"\"\"\n    maybe_install_uvloop()\n\n    if workers is None:\n        workers = int(os.environ.get(\"BLACK_NUM_WORKERS\", 0))\n        workers = workers or os.cpu_count() or 1\n    if sys.platform == \"win32\":\n        # Work around https://bugs.python.org/issue26903\n        workers = min(workers, 60)\n    if getattr(sys, \"frozen\", False):\n        # In frozen builds (e.g. PyInstaller), avoid spawning worker processes (i.e.\n        # avoid using ProcessPoolExecutor) to prevent shutdown errors when workers\n        # try to import modules after cleanup begins.\n        # See https://github.com/psf/black/issues/4823\n        workers = 1\n\n    executor: Executor | None = None\n    if workers > 1:\n        try:\n            executor = ProcessPoolExecutor(max_workers=workers)\n        except (ImportError, NotImplementedError, OSError):\n            # we arrive here if the underlying system does not support multi-processing\n            # like in AWS Lambda or Termux, in which case we gracefully fallback to\n            # a ThreadPoolExecutor with just a single worker (more workers would not do\n            # us any good due to the Global Interpreter Lock)\n            pass\n\n    if executor is None:\n        executor = ThreadPoolExecutor(max_workers=1)\n\n    loop = asyncio.new_event_loop()\n    asyncio.set_event_loop(loop)\n    try:\n        loop.run_until_complete(\n            schedule_formatting(\n                sources=sources,\n                fast=fast,\n                write_back=write_back,\n                mode=mode,\n                report=report,\n                loop=loop,\n                executor=executor,\n                no_cache=no_cache,\n            )\n        )\n    finally:\n        try:\n            shutdown(loop)\n        finally:\n            asyncio.set_event_loop(None)\n        if executor is not None:\n            executor.shutdown()",
+      "old_code": "def reformat_many(\n    sources: set[Path],\n    fast: bool,\n    write_back: WriteBack,\n    mode: Mode,\n    report: Report,\n    workers: int | None,\n    no_cache: bool = False,\n) -> None:\n    \"\"\"Reformat multiple files using a ProcessPoolExecutor.\"\"\"\n    maybe_install_uvloop()\n\n    if workers is None:\n        workers = int(os.environ.get(\"BLACK_NUM_WORKERS\", 0))\n        workers = workers or os.cpu_count() or 1\n    if sys.platform == \"win32\":\n        # Work around https://bugs.python.org/issue26903\n        workers = min(workers, 60)\n\n    executor: Executor | None = None\n    if workers > 1:\n        try:\n            executor = ProcessPoolExecutor(max_workers=workers)\n        except (ImportError, NotImplementedError, OSError):\n            # we arrive here if the underlying system does not support multi-processing\n            # like in AWS Lambda or Termux, in which case we gracefully fallback to\n            # a ThreadPoolExecutor with just a single worker (more workers would not do\n            # us any good due to the Global Interpreter Lock)\n            pass\n\n    if executor is None:\n        executor = ThreadPoolExecutor(max_workers=1)\n\n    loop = asyncio.new_event_loop()\n    asyncio.set_event_loop(loop)\n    try:\n        loop.run_until_complete(\n            schedule_formatting(\n                sources=sources,\n                fast=fast,\n                write_back=write_back,\n                mode=mode,\n                report=report,\n                loop=loop,\n                executor=executor,\n                no_cache=no_cache,\n            )\n        )\n    finally:\n        try:\n            shutdown(loop)\n        finally:\n            asyncio.set_event_loop(None)\n        if executor is not None:\n            executor.shutdown()"
+    }
+  ],
+  "generated_at": "2026-02-09T15:48:37"
+}

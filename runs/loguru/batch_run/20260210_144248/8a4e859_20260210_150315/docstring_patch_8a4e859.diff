@@ -1,0 +1,26 @@
+--- a/loguru/_logger.py
++++ b/loguru/_logger.py
+@@ -2179,11 +2179,22 @@
+         __self._log("CRITICAL", False, __self._options, __message, args, kwargs)
+ 
+     def exception(__self, __message, *args, **kwargs):  # noqa: N805
+-        r"""Log an ``'ERROR'`` message while also capturing the currently handled exception.
++        """Log an ``'ERROR'`` message while also capturing the currently handled exception.
+ 
+         This method internally uses |sys.exc_info|, therefore it should only be called within
+         an ``except`` block. To log an exception that has already been caught, use the ``exception``
+         argument of |opt| along with a call to the |error| method (for example).
++
++        Parameters:
++            __message (str): The error message to log.
++            *args: Additional positional arguments to format the message.
++            **kwargs: Additional keyword arguments to format the message.
++
++        Returns:
++            None
++
++        Changelog:
++            8a4e859: Changed internal tuple construction from concatenation to unpacking in `options` variable initialization. Replaced `(True,) + __self._options[1:]` with `(True, *__self._options[1:])`. No functional behavior changes.
+         """
+         options = (True, *__self._options[1:])
+         __self._log("ERROR", False, options, __message, args, kwargs)

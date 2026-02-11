@@ -1,0 +1,33 @@
+--- a/playhouse/cysqlite_ext.py
++++ b/playhouse/cysqlite_ext.py
+@@ -55,9 +55,31 @@
+ class TDecimalField(DecimalField):
+     field_type = 'TEXT'
+ 
++    """Method to retrieve field modifiers, intended for subclass customization.
++
++    Args:
++        self: The instance of TDecimalField.
++
++    Returns:
++        None: This base implementation acts as a placeholder and returns nothing.
++
++    Changelog:
++        7fea50f8: Added get_modifiers() as an empty placeholder method in TDecimalField class. Provides a customization point for subclasses to define SQL modifier behavior for decimal fields.
++    """
+     def get_modifiers(self): pass
+ 
+     def db_value(self, value):
++        """Converts Python decimal value to string representation for database storage.
++
++        Args:
++            value: A decimal value to be converted, or None.
++
++        Returns:
++            Optional[str]: String representation of the decimal value if not None, otherwise None.
++
++        Changelog:
++            7fea50f8: Added db_value override that converts decimal values to strings using super().db_value() as base conversion. Changes storage type from numeric to string representation, preserving decimal precision.
++        """
+         if value is not None:
+             return str(super(DecimalField, self).db_value(value))

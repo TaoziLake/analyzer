@@ -1,0 +1,62 @@
+{
+  "commit": "df23edd",
+  "parent": "55fe3aff1e543faa0db281bbe60eb9e1a5f35933",
+  "repo": "D:\\locbench\\mistune",
+  "num_seeds": 1,
+  "num_seeds_used": 1,
+  "seed_scope": "code_only",
+  "num_impacted": 3,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "src.mistune.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.block_parser.BlockParser.__init__",
+        "src.mistune.inline_parser.InlineParser.__init__"
+      ],
+      "callees": [
+        "src.mistune.__init__.create_markdown"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.__init__",
+      "callers": [
+        "src.mistune.block_parser.BlockParser.__init__",
+        "src.mistune.inline_parser.InlineParser.__init__"
+      ],
+      "callees": [
+        "__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.__init__",
+      "callers": [
+        "src.mistune.block_parser.BlockParser.__init__",
+        "src.mistune.inline_parser.InlineParser.__init__"
+      ],
+      "callees": [
+        "__init__",
+        "src.mistune.inline_parser.InlineParser.rules.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-10T14:43:38"
+}

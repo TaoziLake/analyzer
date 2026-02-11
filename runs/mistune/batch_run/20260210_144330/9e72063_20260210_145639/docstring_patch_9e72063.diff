@@ -1,0 +1,23 @@
+--- a/src/mistune/block_parser.py
++++ b/src/mistune/block_parser.py
+@@ -183,8 +183,18 @@
+         return end_pos
+ 
+     def parse_atx_heading(self, m: Match[str], state: BlockState) -> int:
+-        """Parse token for ATX heading. An ATX heading is started with 1 to 6
+-        symbol of ``#``."""
++        """Parse token for ATX heading. An ATX heading is started with 1 to 6 symbol of ``#``.
++
++        Args:
++            m (Match[str]): Regular expression match object containing the heading components
++            state (BlockState): Current block parsing state
++
++        Returns:
++            int: End position of the parsed heading in the source text
++
++        Changelog:
++            9e72063: Modified text stripping logic to explicitly use string.whitespace instead of default strip() behavior. This maintains identical functionality while making whitespace handling more explicit in the code.
++        """
+         level = len(m.group("atx_1"))
+         text = m.group("atx_2").strip(string.whitespace)
+         # remove last #

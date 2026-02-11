@@ -1,0 +1,16 @@
+--- a/loguru/_simple_sinks.py
++++ b/loguru/_simple_sinks.py
+@@ -69,6 +69,13 @@
+         ----------
+         message
+             The message to write.
++
++        Returns
++        -------
++        None
++
++        Changelog:
++            ffe1617: Added early return condition to skip messages with level below self._handler.level. This filters log records at the sink level before processing, improving efficiency by avoiding unnecessary record creation and formatting for low-level messages.
+         """
+         if message.record["level"].no < self._handler.level:
+             return

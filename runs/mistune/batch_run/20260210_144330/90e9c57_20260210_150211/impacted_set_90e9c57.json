@@ -1,0 +1,4486 @@
+{
+  "commit": "90e9c57",
+  "parent": "ff8312943e0509b74662a1c4be12514d70a1845a",
+  "repo": "D:\\locbench\\mistune",
+  "num_seeds": 312,
+  "num_seeds_used": 268,
+  "seed_scope": "code_only",
+  "num_impacted": 293,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "benchmark.bench",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "benchmark.bench.benchmarks"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "benchmark.bench.load_case",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "benchmark.bench.benchmarks"
+      ],
+      "callees": [
+        "f.read",
+        "filename.replace"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "benchmark.bench.get_markdown_parsers",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "benchmark.bench.benchmarks"
+      ],
+      "callees": [
+        "markdown2.Markdown",
+        "mistune.create_markdown",
+        "mistune.directives.Admonition",
+        "mistune.directives.Include",
+        "markdown_it.MarkdownIt",
+        "mistune.directives.RSTDirective",
+        "mistune.directives.TableOfContents"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "benchmark.bench.benchmarks",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "benchmark.bench"
+      ],
+      "callees": [
+        "benchmark.bench.get_markdown_parsers",
+        "benchmark.bench.load_case",
+        "benchmark.bench.run_case"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "docs.conf",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.__init__",
+        "src.mistune.block_parser.BlockParser.__init__"
+      ],
+      "callees": [
+        "src.mistune.__init__.create_markdown"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.__init__.create_markdown",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.__init__",
+        "src.mistune.__init__.markdown"
+      ],
+      "callees": [
+        "src.mistune.plugins.import_plugin",
+        "src.mistune.inline_parser.InlineParser",
+        "src.mistune.renderers.html.HTMLRenderer",
+        "src.mistune.markdown.Markdown"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.__main__._md",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.__main__.cli"
+      ],
+      "callees": [
+        "src.mistune.create_markdown",
+        "src.mistune.renderers.markdown.MarkdownRenderer",
+        "src.mistune.renderers.rst.RSTRenderer"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.__main__._output",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.__main__.cli"
+      ],
+      "callees": [
+        "f.write"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.__main__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.__main__.cli"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.__main__.cli",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.__main__"
+      ],
+      "callees": [
+        "parser.add_argument",
+        "read_stdin",
+        "parser.parse_args",
+        "src.mistune.__main__._md",
+        "src.mistune.__main__._output",
+        "md",
+        "md.read"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "join"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.markdown.Markdown.__init__"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.__init__",
+        "src.mistune.block_parser.BlockParser.__init__"
+      ],
+      "callees": [
+        "__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.parse_blank_line",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m.end",
+        "state.append_token"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.parse_thematic_break",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m.end",
+        "state.append_token"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.parse_indent_code",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "state.append_token",
+        "m.end",
+        "state.append_paragraph",
+        "src.mistune.util.expand_leading_tab",
+        "code.strip",
+        "_INDENT_CODE_TRIM.sub",
+        "m.group"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.parse_fenced_code",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "info.strip",
+        "m2.start",
+        "m2.end",
+        "state.append_token",
+        "m.end",
+        "_end.search",
+        "m.group",
+        "src.mistune.helpers.unescape_char",
+        "_trim_pattern.sub",
+        "info.find"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.parse_atx_heading",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "_ATX_HEADING_TRIM.sub",
+        "state.append_token",
+        "m.end",
+        "strip",
+        "m.group"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.parse_setex_heading",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m.end",
+        "state.last_token",
+        "m.group",
+        "src.mistune.block_parser.BlockParser.compile_sc",
+        "src.mistune.block_parser.BlockParser.parse_method",
+        "sc.match"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.parse_ref_link",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "_blank.start",
+        "m2.end",
+        "src.mistune.block_parser.BlockParser.BLANK_LINE.search",
+        "src.mistune.util.escape_url",
+        "m.end",
+        "m3.end",
+        "src.mistune.helpers.parse_link_href",
+        "state.append_paragraph",
+        "src.mistune.util.unikey",
+        "src.mistune.helpers.parse_link_title",
+        "m.group",
+        "src.mistune.helpers.unescape_char",
+        "_BLANK_TO_LINE.match"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.extract_block_quote",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.block_parser.BlockParser.parse_block_quote"
+      ],
+      "callees": [
+        "m2.end",
+        "m.group",
+        "break_sc.match",
+        "state.find_line_end",
+        "src.mistune.util.expand_tab",
+        "m.end",
+        "m3.end",
+        "src.mistune.util.expand_leading_tab",
+        "sc.match",
+        "_STRICT_BLOCK_QUOTE.match",
+        "m2.group",
+        "_BLOCK_QUOTE_TRIM.sub",
+        "src.mistune.block_parser.BlockParser.parse_method",
+        "state.get_text",
+        "_BLOCK_QUOTE_LEADING.sub",
+        "_LINE_BLANK_END.search",
+        "quote.strip",
+        "m3.group",
+        "src.mistune.block_parser.BlockParser.compile_sc"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.parse_block_quote",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "state.append_token",
+        "src.mistune.block_parser.BlockParser.extract_block_quote",
+        "state.child_state",
+        "state.prepend_token",
+        "state.depth",
+        "rules.remove",
+        "src.mistune.block_parser.BlockParser.parse"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.parse_raw_html",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.block_parser.BlockParser.parse_block_html"
+      ],
+      "callees": [
+        "_parse_html_to_end",
+        "lower",
+        "state.find_line_end",
+        "_OPEN_TAG_END.match",
+        "m.end",
+        "_parse_html_to_newline",
+        "strip",
+        "state.append_paragraph",
+        "marker.startswith",
+        "_CLOSE_TAG_END.match",
+        "m.group"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.parse",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.block_parser.BlockParser.parse_block_quote"
+      ],
+      "callees": [
+        "state.find_line_end",
+        "m.start",
+        "sc.search",
+        "src.mistune.block_parser.BlockParser.compile_sc",
+        "state.add_paragraph",
+        "state.get_text",
+        "src.mistune.block_parser.BlockParser.parse_method"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser._parse_html_to_end",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.block_parser.BlockParser.parse_raw_html"
+      ],
+      "callees": [
+        "state.find_line_end",
+        "state.get_text",
+        "state.append_token",
+        "state.src.find"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser._parse_html_to_newline",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.block_parser.BlockParser.parse_raw_html"
+      ],
+      "callees": [
+        "m.start",
+        "newline.search",
+        "state.get_text",
+        "state.append_token"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.core",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.core.BlockState.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.__init__",
+        "src.mistune.block_parser.BlockParser.__init__"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.core.BlockState.child_state",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "child.process",
+        "src.mistune.core.BlockState.__class__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.core.BlockState.get_text",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.core.BlockState.append_paragraph"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.core.BlockState.add_paragraph",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.core.BlockState.last_token",
+        "src.mistune.core.BlockState.tokens.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.core.BlockState.append_paragraph",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.core.BlockState.find_line_end",
+        "src.mistune.core.BlockState.last_token",
+        "src.mistune.core.BlockState.get_text"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.core.InlineState.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.__init__",
+        "src.mistune.block_parser.BlockParser.__init__"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.core.Parser.compile_sc",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.core.Parser.__sc.get",
+        "join"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.core.Parser.register_rule",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "DeprecationWarning"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.core.BaseRenderer.register",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "method"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.core.BaseRenderer.render_token",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.core.BaseRenderer.iter_tokens",
+        "src.mistune.renderers.html.HTMLRenderer.render_token",
+        "src.mistune.renderers.rst.RSTRenderer.render_token"
+      ],
+      "callees": [
+        "func",
+        "src.mistune.core.BaseRenderer._get_method"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.core.BaseRenderer.iter_tokens",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.core.BaseRenderer.render_tokens",
+        "src.mistune.renderers.rst.RSTRenderer.iter_tokens"
+      ],
+      "callees": [
+        "src.mistune.core.BaseRenderer.render_token"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.core.BaseRenderer.render_tokens",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.renderers.rst.RSTRenderer.render_tokens",
+        "src.mistune.core.BaseRenderer.__call__",
+        "src.mistune.renderers.markdown.MarkdownRenderer.render_tokens",
+        "src.mistune.renderers.html.HTMLRenderer.render_tokens"
+      ],
+      "callees": [
+        "src.mistune.core.BaseRenderer.iter_tokens",
+        "join"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.__init__.RstDirective.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.__init__",
+        "src.mistune.block_parser.BlockParser.__init__"
+      ],
+      "callees": [
+        "src.mistune.directives._rst.RSTDirective.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.__init__",
+        "src.mistune.block_parser.BlockParser.__init__"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._base.DirectiveParser",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._base.DirectiveParser.parse_tokens",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "block.parse",
+        "state.child_state",
+        "state.depth",
+        "rules.remove"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._base.DirectiveParser.parse_options",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "options.append",
+        "strip",
+        "text.strip",
+        "m.group",
+        "line.strip",
+        "line.find"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._base.BaseDirective.parse_method",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.directives._rst.RSTDirective.parse_method",
+        "src.mistune.directives._fenced.FencedDirective.parse_method"
+      ],
+      "callees": [
+        "state.append_token",
+        "method",
+        "m.group",
+        "src.mistune.directives._base.BaseDirective.parser.parse_type",
+        "src.mistune.directives._base.BaseDirective._methods.get"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._base.BaseDirective.parse_directive",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.directives._fenced.FencedDirective.parse_directive",
+        "src.mistune.directives._rst.RSTDirective.parse_directive"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._base.BaseDirective.register_block_parser",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.directives._rst.RSTDirective.register_block_parser",
+        "src.mistune.directives._fenced.FencedDirective.register_block_parser"
+      ],
+      "callees": [
+        "md.block.register"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._base.DirectivePlugin.parse_tokens",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.directives.image.Figure.parse_tokens",
+        "src.mistune.directives.admonition.Admonition.parse_tokens"
+      ],
+      "callees": [
+        "src.mistune.directives._base.DirectivePlugin.parser.parse_tokens"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._fenced",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._fenced.FencedParser",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._fenced.FencedParser.parse_type",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m.group",
+        "src.mistune.directives._base.DirectiveParser.parse_type"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._fenced.FencedParser.parse_title",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.directives._base.DirectiveParser.parse_title",
+        "m.group"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._fenced.FencedParser.parse_content",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m.group",
+        "src.mistune.directives._base.DirectiveParser.parse_content"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._fenced.FencedDirective",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._fenced.FencedDirective.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.__init__",
+        "src.mistune.block_parser.BlockParser.__init__"
+      ],
+      "callees": [
+        "src.mistune.directives._base.BaseDirective.__init__",
+        "join"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._fenced.FencedDirective._process_directive",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.directives._fenced.FencedDirective.parse_fenced_code",
+        "src.mistune.directives._fenced.FencedDirective.parse_directive"
+      ],
+      "callees": [
+        "_end_m.end",
+        "src.mistune.directives._fenced.FencedDirective.parse_method",
+        "_end_m.start",
+        "_directive_re.match",
+        "_end_re.search"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._fenced.FencedDirective.parse_directive",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m.start",
+        "src.mistune.directives._fenced.FencedDirective._process_directive",
+        "m.group",
+        "src.mistune.directives._base.BaseDirective.parse_directive"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._fenced.FencedDirective.parse_fenced_code",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "_type_re.match",
+        "m.start",
+        "state.depth",
+        "src.mistune.directives._fenced.FencedDirective._process_directive",
+        "m.group",
+        "block.parse_fenced_code"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._fenced.FencedDirective.__call__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.block.register",
+        "src.mistune.directives._base.BaseDirective.__call__",
+        "src.mistune.directives._fenced.FencedDirective.register_block_parser"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._rst",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._rst.RSTParser",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._rst.RSTParser.parse_type",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m.group",
+        "src.mistune.directives._base.DirectiveParser.parse_type"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._rst.RSTParser.parse_title",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.directives._base.DirectiveParser.parse_title",
+        "m.group"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._rst.RSTParser.parse_content",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "join",
+        "m.group",
+        "src.mistune.directives._base.DirectiveParser.parse_content",
+        "text.splitlines"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._rst.RSTDirective",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._rst.RSTDirective.parse_directive",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m2.end",
+        "src.mistune.directives._rst.RSTDirective.parse_method",
+        "_directive_re.match",
+        "src.mistune.directives._base.BaseDirective.parse_directive"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.admonition.Admonition",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.admonition.Admonition.parse",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "name.capitalize",
+        "src.mistune.directives._base.DirectivePlugin.parse",
+        "src.mistune.directives.admonition.Admonition.parse_tokens",
+        "src.mistune.directives.admonition.Admonition.parse_title",
+        "src.mistune.directives.admonition.Admonition.parse_content",
+        "src.mistune.directives.admonition.Admonition.parse_type",
+        "src.mistune.directives.admonition.Admonition.parse_options"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.admonition.Admonition.__call__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.renderer.register",
+        "directive.register",
+        "src.mistune.directives._base.DirectivePlugin.__call__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.admonition.render_admonition",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "attrs.get"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.admonition.render_admonition_title",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.image",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.image._parse_attrs",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.directives.image.Figure.parse",
+        "src.mistune.directives.image.Image.parse"
+      ],
+      "callees": [
+        "options.get",
+        "_num_re.match",
+        "src.mistune.util.escape_url"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.image.Image",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.image.Image.parse",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.directives._base.DirectivePlugin.parse",
+        "src.mistune.directives.image._parse_attrs",
+        "src.mistune.directives.image.Image.parse_title",
+        "src.mistune.directives.image.Image.parse_options"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.image.Image.__call__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.renderer.register",
+        "directive.register",
+        "src.mistune.directives._base.DirectivePlugin.__call__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.image.render_block_image",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "attrs.get",
+        "src.mistune.directives.image.safe_url",
+        "src.mistune.util.escape",
+        "height.isdigit",
+        "width.isdigit"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.image.Figure",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.image.Figure.parse_directive_content",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.directives.image.Figure.parse"
+      ],
+      "callees": [
+        "children.append",
+        "src.mistune.directives.image.Figure.parse_content",
+        "src.mistune.directives.image.Figure.parse_tokens"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.image.Figure.parse",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.directives.image.Figure.parse_options",
+        "src.mistune.directives.image._parse_attrs",
+        "src.mistune.directives.image.Figure.parse_directive_content",
+        "children.extend",
+        "src.mistune.directives.image.Figure.parse_title",
+        "src.mistune.directives._base.DirectivePlugin.parse",
+        "image_attrs.pop"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.image.Figure.__call__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.renderer.register",
+        "directive.register",
+        "src.mistune.directives._base.DirectivePlugin.__call__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.image.render_figure",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.image.render_figcaption",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.image.render_legend",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.include",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.include.Include.parse",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.directives.include.Include.parse_options",
+        "decode",
+        "f.read",
+        "state.env.get",
+        "block.parse",
+        "src.mistune.directives._base.DirectivePlugin.parse",
+        "block.state_cls",
+        "new_state.process",
+        "src.mistune.directives.include.Include.parse_title"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.toc",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.toc.TableOfContents.generate_heading_id",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.directives.toc.TableOfContents.toc_hook"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.toc.TableOfContents.parse",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.directives._base.DirectivePlugin.parse",
+        "_normalize_level",
+        "src.mistune.directives.toc.TableOfContents.parse_options",
+        "src.mistune.directives.toc.TableOfContents.parse_title"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.toc.TableOfContents.toc_hook",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.toc.normalize_toc_item",
+        "src.mistune.directives.toc.TableOfContents.generate_heading_id",
+        "sections.append",
+        "toc_items.append",
+        "headings.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.toc.TableOfContents.__call__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.renderer.register",
+        "directive.register",
+        "src.mistune.directives._base.DirectivePlugin.__call__",
+        "md.before_render_hooks.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.toc.render_html_toc",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.toc.render_toc_ul"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.helpers",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.helpers.unescape_char",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.block_parser.BlockParser.parse_fenced_code",
+        "src.mistune.helpers.parse_link",
+        "src.mistune.helpers.parse_link_title",
+        "src.mistune.block_parser.BlockParser.parse_ref_link",
+        "src.mistune.inline_parser.InlineParser.parse_escape"
+      ],
+      "callees": [
+        "_ESCAPE_CHAR_RE.sub"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.helpers.parse_link_text",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.parse_link"
+      ],
+      "callees": [
+        "_INLINE_SQUARE_BRACKET_RE.search",
+        "m.end",
+        "m.group"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.helpers.parse_link_label",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.plugins.ruby._parse_ruby_link",
+        "src.mistune.inline_parser.InlineParser.parse_link"
+      ],
+      "callees": [
+        "m.end",
+        "m.group",
+        "_INLINE_LINK_LABEL_RE.match"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.helpers.parse_link_href",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.helpers.parse_link",
+        "src.mistune.block_parser.BlockParser.parse_ref_link"
+      ],
+      "callees": [
+        "LINK_BRACKET_RE.match",
+        "LINK_BRACKET_START.match",
+        "m.end",
+        "LINK_HREF_BLOCK_RE.match",
+        "LINK_HREF_INLINE_RE.match",
+        "m.group"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.helpers.parse_link_title",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.helpers.parse_link",
+        "src.mistune.block_parser.BlockParser.parse_ref_link"
+      ],
+      "callees": [
+        "LINK_TITLE_RE.match",
+        "m.end",
+        "src.mistune.helpers.unescape_char",
+        "m.group"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.helpers.parse_link",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.plugins.ruby._parse_ruby_link",
+        "src.mistune.inline_parser.InlineParser.parse_link"
+      ],
+      "callees": [
+        "PAREN_END_RE.match",
+        "src.mistune.util.escape_url",
+        "m.end",
+        "src.mistune.helpers.parse_link_href",
+        "src.mistune.helpers.parse_link_title",
+        "src.mistune.helpers.unescape_char"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.markdown.Markdown.__init__",
+        "src.mistune.__init__.create_markdown"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.__init__",
+        "src.mistune.block_parser.BlockParser.__init__"
+      ],
+      "callees": [
+        "src.mistune.inline_parser.InlineParser.rules.append",
+        "__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.parse_escape",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m.end",
+        "src.mistune.helpers.unescape_char",
+        "m.group",
+        "state.append_token"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.parse_link",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "state.append_token",
+        "m.end",
+        "src.mistune.helpers.parse_link_text",
+        "state.env.get",
+        "src.mistune.inline_parser.InlineParser.__parse_link_token",
+        "src.mistune.util.unikey",
+        "src.mistune.helpers.parse_link",
+        "ref_links.get",
+        "env.get",
+        "m.group",
+        "src.mistune.inline_parser.InlineParser.precedence_scan",
+        "src.mistune.helpers.parse_link_label"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.__parse_link_token",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.parse_link"
+      ],
+      "callees": [
+        "src.mistune.inline_parser.InlineParser.render",
+        "state.copy"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.parse_auto_email",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m.end",
+        "src.mistune.inline_parser.InlineParser._add_auto_link",
+        "m.group",
+        "src.mistune.inline_parser.InlineParser.process_text"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser._add_auto_link",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.parse_auto_email",
+        "src.mistune.inline_parser.InlineParser.parse_auto_link"
+      ],
+      "callees": [
+        "state.append_token",
+        "src.mistune.util.escape_url"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.parse_emphasis",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "state.append_token",
+        "m.end",
+        "src.mistune.inline_parser.InlineParser.render",
+        "state.copy",
+        "m.group",
+        "m1.end",
+        "_end_re.search",
+        "src.mistune.inline_parser.InlineParser.precedence_scan"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.parse_codespan",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m2.end",
+        "code.endswith",
+        "state.append_token",
+        "m2.group",
+        "m.end",
+        "code.startswith",
+        "code.strip",
+        "code.replace",
+        "m.group",
+        "pattern.match"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.parse_linebreak",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m.end",
+        "state.append_token"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.parse_softbreak",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m.end",
+        "state.append_token"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.parse_inline_html",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m.end",
+        "m.group",
+        "state.append_token"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.process_text",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.parse_auto_email",
+        "src.mistune.inline_parser.InlineParser.parse_auto_link",
+        "src.mistune.inline_parser.InlineParser.parse"
+      ],
+      "callees": [
+        "state.append_token"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.precedence_scan",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.parse_emphasis",
+        "src.mistune.inline_parser.InlineParser.parse_link"
+      ],
+      "callees": [
+        "m.start",
+        "sc.search",
+        "m2.start",
+        "state.append_token",
+        "m.end",
+        "lastgroup.replace",
+        "state.copy",
+        "func",
+        "m1.start",
+        "sc.match",
+        "src.mistune.inline_parser.InlineParser.compile_sc"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.list_parser",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.list_parser.parse_list",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.block_parser.BlockParser.parse_list"
+      ],
+      "callees": [
+        "state.append_token",
+        "_transform_tight_list",
+        "state.tokens.insert",
+        "m.end",
+        "state.append_paragraph",
+        "_parse_list_item",
+        "state.depth",
+        "text.strip",
+        "_get_list_bullet",
+        "m.group",
+        "rules.remove"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.list_parser._transform_tight_list",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.list_parser._transform_tight_list"
+      ],
+      "callees": [
+        "src.mistune.list_parser._transform_tight_list"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.list_parser._parse_list_item",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.list_parser.parse_list"
+      ],
+      "callees": [
+        "pairs.insert",
+        "src.strip",
+        "_compile_continue_width",
+        "block.BLANK_LINE.match",
+        "m.group",
+        "state.find_line_end",
+        "block.parse",
+        "m.end",
+        "src.mistune.util.expand_leading_tab",
+        "_compile_list_item_pattern",
+        "sc.match",
+        "list_item_breaks.insert",
+        "line.startswith",
+        "append",
+        "_clean_list_item_text",
+        "state.get_text",
+        "join",
+        "block.parse_method",
+        "p.replace",
+        "state.child_state",
+        "src.mistune.util.strip_end",
+        "_is_loose_list"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.list_parser._get_list_bullet",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.list_parser.parse_list"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.list_parser._compile_list_item_pattern",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.list_parser._parse_list_item"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.list_parser._compile_continue_width",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.list_parser._parse_list_item"
+      ],
+      "callees": [
+        "src.mistune.util.expand_tab",
+        "m2.group",
+        "src.mistune.util.expand_leading_tab",
+        "text.startswith",
+        "_LINE_HAS_TEXT.match"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.list_parser._clean_list_item_text",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.list_parser._parse_list_item"
+      ],
+      "callees": [
+        "src.mistune.util.expand_tab",
+        "line.startswith",
+        "line.replace",
+        "rv.append",
+        "join",
+        "src.split"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.list_parser._is_loose_list",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.list_parser._parse_list_item"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.markdown.Markdown._iter_render",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.markdown.Markdown._iter_render",
+        "src.mistune.markdown.Markdown.render_state"
+      ],
+      "callees": [
+        "text.strip",
+        "src.mistune.markdown.Markdown._iter_render",
+        "tok.pop",
+        "src.mistune.markdown.Markdown.inline"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.markdown.Markdown.parse",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.markdown.Markdown.__call__",
+        "src.mistune.markdown.Markdown.read"
+      ],
+      "callees": [
+        "state.process",
+        "src.mistune.markdown.Markdown.block.parse",
+        "hook2",
+        "src.mistune.markdown.Markdown.render_state",
+        "hook",
+        "src.mistune.markdown.Markdown.block.state_cls",
+        "hook3",
+        "s.replace",
+        "s.endswith"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.markdown.Markdown.read",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "f.read",
+        "src.mistune.markdown.Markdown.block.state_cls",
+        "s.decode",
+        "src.mistune.markdown.Markdown.parse"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.markdown.Markdown.__call__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.markdown.Markdown.parse"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.__init__",
+        "src.mistune.block_parser.BlockParser.__init__"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.abbr",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.abbr.parse_ref_abbr",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "state.append_token",
+        "state.env.get",
+        "m.end",
+        "text.strip",
+        "m.group"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.abbr.process_text",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m.start",
+        "state.append_token",
+        "state.env.get",
+        "m.end",
+        "ref.keys",
+        "abbrs_re.search",
+        "m.group",
+        "join",
+        "state.tokens.pop"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.abbr.render_abbr",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.util.escape"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.abbr.abbr",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.block.register",
+        "md.renderer.register",
+        "types.MethodType"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.def_list",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.def_list.parse_def_list",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "children.extend",
+        "m2.end",
+        "state.append_token",
+        "m.end",
+        "_parse_def_item",
+        "DEF_RE.match"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.def_list._parse_def_item",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.plugins.def_list.parse_def_list"
+      ],
+      "callees": [
+        "HAS_BLANK_LINE_RE.search",
+        "m2.start",
+        "head.splitlines",
+        "DD_START_RE.search",
+        "replace",
+        "m.group",
+        "_process_text"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.def_list._process_text",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.plugins.def_list._parse_def_item"
+      ],
+      "callees": [
+        "state.process",
+        "block.parse",
+        "src.mistune.util.strip_end",
+        "TRIM_RE.sub",
+        "block.state_cls"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.def_list.def_list",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.block.register",
+        "md.renderer.register"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.footnotes",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.footnotes.parse_inline_footnote",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "state.append_token",
+        "state.env.get",
+        "m.end",
+        "src.mistune.util.unikey",
+        "m.group",
+        "notes.append",
+        "notes.index"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.footnotes.parse_ref_footnote",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "state.env.get",
+        "m.end",
+        "m.group",
+        "src.mistune.util.unikey"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.footnotes.parse_footnote_item",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.plugins.footnotes.md_footnotes_hook"
+      ],
+      "callees": [
+        "second_line.lstrip",
+        "src.mistune.core.BlockState.process",
+        "block.parse",
+        "state.env.get",
+        "strip",
+        "src.mistune.core.BlockState",
+        "text.strip",
+        "pattern.sub",
+        "text.splitlines"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.footnotes.md_footnotes_hook",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "state.env.get",
+        "src.mistune.core.BlockState",
+        "md.render_state",
+        "src.mistune.plugins.footnotes.parse_footnote_item"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.footnotes.render_footnote_ref",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.footnotes.render_footnote_item",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "text.endswith",
+        "text.rstrip"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.footnotes.footnotes",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.block.register",
+        "md.inline.register",
+        "md.renderer.register",
+        "md.after_render_hooks.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.formatting",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.formatting.parse_strikethrough",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "_parse_to_end"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.formatting.parse_mark",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "_parse_to_end"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.formatting.parse_insert",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "_parse_to_end"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.formatting.parse_superscript",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "_parse_script"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.formatting._parse_to_end",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.plugins.formatting.parse_mark",
+        "src.mistune.plugins.formatting.parse_strikethrough",
+        "src.mistune.plugins.formatting.parse_insert"
+      ],
+      "callees": [
+        "end_pattern.search",
+        "state.append_token",
+        "m.end",
+        "state.copy",
+        "inline.render",
+        "m1.end"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.formatting._parse_script",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.plugins.formatting.parse_subscript",
+        "src.mistune.plugins.formatting.parse_superscript"
+      ],
+      "callees": [
+        "state.append_token",
+        "m.end",
+        "state.copy",
+        "m.group",
+        "inline.render",
+        "replace"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.formatting.strikethrough",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.inline.register",
+        "md.renderer.register"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.formatting.mark",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.inline.register",
+        "md.renderer.register"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.formatting.insert",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.inline.register",
+        "md.renderer.register"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.formatting.superscript",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.inline.register",
+        "md.renderer.register"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.formatting.subscript",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.inline.register",
+        "md.renderer.register"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.math",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.math.parse_inline_math",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m.end",
+        "m.group",
+        "state.append_token"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.math.math",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.block.register",
+        "md.inline.register",
+        "md.renderer.register"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.math.math_in_quote",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.block.insert_rule"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.math.math_in_list",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.block.insert_rule"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.ruby",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.ruby.parse_ruby",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.plugins.ruby.parse_ruby"
+      ],
+      "callees": [
+        "_ruby_re.match",
+        "item.split",
+        "state.append_token",
+        "src.mistune.plugins.ruby.parse_ruby",
+        "m.end",
+        "text.split",
+        "tokens.append",
+        "m.group",
+        "_parse_ruby_link"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.ruby._parse_ruby_link",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.plugins.ruby.parse_ruby"
+      ],
+      "callees": [
+        "state.append_token",
+        "src.mistune.util.unikey",
+        "src.mistune.helpers.parse_link",
+        "ref_links.get",
+        "env.get",
+        "src.mistune.helpers.parse_link_label"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.ruby.ruby",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.inline.register",
+        "md.renderer.register"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.speedup",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.speedup.parse_text",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "inline.process_text",
+        "m.end",
+        "m.group",
+        "HARD_LINEBREAK_RE.sub"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.speedup.speedup",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.block.register",
+        "md.inline.register"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.spoiler",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.spoiler.parse_block_spoiler",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "text.endswith",
+        "_BLOCK_SPOILER_MATCH.match",
+        "state.append_token",
+        "_BLOCK_SPOILER_START.sub",
+        "block.parse",
+        "state.child_state",
+        "state.prepend_token",
+        "state.depth",
+        "block.extract_block_quote",
+        "rules.remove"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.spoiler.parse_inline_spoiler",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "state.append_token",
+        "m.end",
+        "state.copy",
+        "m.group",
+        "inline.render"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.spoiler.spoiler",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.block.register",
+        "md.inline.register",
+        "md.renderer.register"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.table",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.table.parse_table",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "state.append_token",
+        "m2.group",
+        "m.end",
+        "_process_row",
+        "body.splitlines",
+        "m.group",
+        "rows.append",
+        "TABLE_CELL.match",
+        "_process_thead"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.table.parse_nptable",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "state.append_token",
+        "m.end",
+        "body.splitlines",
+        "rows.append",
+        "m.group",
+        "_process_row",
+        "_process_thead"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.table._process_thead",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.plugins.table.parse_table",
+        "src.mistune.plugins.table.parse_nptable"
+      ],
+      "callees": [
+        "text.strip",
+        "ALIGN_CENTER.match",
+        "ALIGN_RIGHT.match",
+        "CELL_SPLIT.split",
+        "ALIGN_LEFT.match"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.table._process_row",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.plugins.table.parse_table",
+        "src.mistune.plugins.table.parse_nptable"
+      ],
+      "callees": [
+        "CELL_SPLIT.split",
+        "text.strip"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.table.render_table_cell",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.table.table",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.block.register",
+        "md.renderer.register"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.table.table_in_quote",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.block.insert_rule"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.table.table_in_list",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.block.insert_rule"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.task_lists",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.task_lists.render_task_list_item",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "text.startswith",
+        "text.replace"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.task_lists.task_lists",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "md.renderer.register",
+        "md.before_render_hooks.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.task_lists._rewrite_all_list_items",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.plugins.task_lists._rewrite_all_list_items"
+      ],
+      "callees": [
+        "_rewrite_list_item",
+        "src.mistune.plugins.task_lists._rewrite_all_list_items"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.task_lists._rewrite_list_item",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.plugins.task_lists._rewrite_all_list_items"
+      ],
+      "callees": [
+        "TASK_LIST_ITEM.match",
+        "m.end",
+        "first_child.get",
+        "m.group"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.url",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.url.parse_url_link",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "state.append_token",
+        "src.mistune.util.escape_url",
+        "inline.process_text",
+        "m.end",
+        "m.group"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers._list.render_list",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.renderers.rst.RSTRenderer.list",
+        "src.mistune.renderers.markdown.MarkdownRenderer.list"
+      ],
+      "callees": [
+        "_render_ordered_list",
+        "src.mistune.util.strip_end",
+        "join",
+        "_render_unordered_list"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers._list._render_list_item",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.renderers._list._render_ordered_list",
+        "src.mistune.renderers._list._render_unordered_list"
+      ],
+      "callees": [
+        "renderer.render_token",
+        "text.splitlines"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers._list._render_ordered_list",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.renderers._list.render_list"
+      ],
+      "callees": [
+        "attrs.get",
+        "src.mistune.renderers._list._render_list_item"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers._list._render_unordered_list",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.renderers._list.render_list"
+      ],
+      "callees": [
+        "src.mistune.renderers._list._render_list_item"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.__init__.create_markdown"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.__init__",
+        "src.mistune.block_parser.BlockParser.__init__"
+      ],
+      "callees": [
+        "src.mistune.core.BaseRenderer.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.render_token",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.renderers.html.HTMLRenderer._get_method",
+        "func",
+        "src.mistune.core.BaseRenderer.render_token",
+        "src.mistune.renderers.html.HTMLRenderer.render_tokens"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.safe_url",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.renderers.html.HTMLRenderer.image",
+        "src.mistune.renderers.html.HTMLRenderer.link"
+      ],
+      "callees": [
+        "_url.startswith",
+        "src.mistune.util.escape",
+        "url.lower"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.emphasis",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.strong",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.link",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.util.safe_entity",
+        "src.mistune.renderers.html.HTMLRenderer.safe_url"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.image",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.util.escape",
+        "src.mistune.util.safe_entity",
+        "src.mistune.renderers.html.HTMLRenderer.safe_url",
+        "src.mistune.util.striptags"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.codespan",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.util.escape"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.linebreak",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.softbreak",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.paragraph",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.heading",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "attrs.get"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.blank_line",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.thematic_break",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.block_code",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "info.strip",
+        "src.mistune.util.escape",
+        "src.mistune.util.safe_entity",
+        "info.split"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.block_quote",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.block_html",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.util.escape"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.block_error",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.list",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "attrs.get"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.list_item",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.__main__._md"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.__call__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.core.BaseRenderer.__call__",
+        "src.mistune.util.strip_end",
+        "src.mistune.renderers.markdown.MarkdownRenderer.render_referrences",
+        "src.mistune.renderers.markdown.MarkdownRenderer.render_tokens",
+        "join"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.render_referrences",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.renderers.markdown.MarkdownRenderer.__call__"
+      ],
+      "callees": [
+        "attrs.get"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.render_children",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.renderers.markdown.MarkdownRenderer.emphasis",
+        "src.mistune.renderers.markdown.MarkdownRenderer.paragraph",
+        "src.mistune.renderers.markdown.MarkdownRenderer.block_text",
+        "src.mistune.renderers.markdown.MarkdownRenderer.block_quote",
+        "src.mistune.renderers.markdown.MarkdownRenderer.link",
+        "src.mistune.renderers.markdown.MarkdownRenderer.heading",
+        "src.mistune.renderers.markdown.MarkdownRenderer.strong"
+      ],
+      "callees": [
+        "src.mistune.renderers.markdown.MarkdownRenderer.render_tokens"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.emphasis",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.renderers.markdown.MarkdownRenderer.render_children"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.strong",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.renderers.markdown.MarkdownRenderer.render_children"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.link",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.renderers.markdown.MarkdownRenderer.image"
+      ],
+      "callees": [
+        "attrs.get",
+        "src.mistune.renderers.markdown.MarkdownRenderer.render_children"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.image",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.renderers.markdown.MarkdownRenderer.link"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.linebreak",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.softbreak",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.blank_line",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.paragraph",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.renderers.markdown.MarkdownRenderer.render_children"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.heading",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.renderers.markdown.MarkdownRenderer.render_children"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.thematic_break",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.block_text",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.renderers.markdown.MarkdownRenderer.render_children"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.block_code",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "_get_fenced_marker",
+        "attrs.get"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.block_quote",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "text.rstrip",
+        "src.mistune.renderers.markdown.MarkdownRenderer.render_children"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.block_error",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown._get_fenced_marker",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.renderers.markdown.MarkdownRenderer.block_code"
+      ],
+      "callees": [
+        "ticks.append",
+        "waves.append",
+        "fenced_re.findall"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.__main__._md"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.iter_tokens",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.core.BaseRenderer.iter_tokens",
+        "src.mistune.renderers.rst.RSTRenderer.render_token"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.__call__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.core.BaseRenderer.__call__",
+        "src.mistune.util.strip_end",
+        "src.mistune.renderers.rst.RSTRenderer.render_referrences",
+        "src.mistune.renderers.rst.RSTRenderer.render_tokens",
+        "join"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.render_referrences",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.renderers.rst.RSTRenderer.__call__"
+      ],
+      "callees": [
+        "src.mistune.renderers.rst.RSTRenderer.render_children"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.render_children",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.renderers.rst.RSTRenderer.paragraph",
+        "src.mistune.renderers.rst.RSTRenderer.block_quote",
+        "src.mistune.renderers.rst.RSTRenderer.link",
+        "src.mistune.renderers.rst.RSTRenderer.emphasis",
+        "src.mistune.renderers.rst.RSTRenderer.block_text",
+        "src.mistune.renderers.rst.RSTRenderer.render_referrences",
+        "src.mistune.renderers.rst.RSTRenderer.heading",
+        "src.mistune.renderers.rst.RSTRenderer.strong"
+      ],
+      "callees": [
+        "src.mistune.renderers.rst.RSTRenderer.render_tokens"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.emphasis",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.renderers.rst.RSTRenderer.render_children"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.strong",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.renderers.rst.RSTRenderer.render_children"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.link",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.renderers.rst.RSTRenderer.render_children"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.image",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "refs.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.linebreak",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.softbreak",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.inline_html",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.paragraph",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "attrs.get",
+        "text.split",
+        "src.mistune.renderers.rst.RSTRenderer.render_children",
+        "src.mistune.renderers.rst.RSTRenderer.render_tokens",
+        "join"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.heading",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.renderers.rst.RSTRenderer.render_children"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.thematic_break",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.block_text",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.renderers.rst.RSTRenderer.render_children"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.block_code",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "attrs.get",
+        "info.split"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.block_quote",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.renderers.rst.RSTRenderer.render_children"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.block_html",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.block_error",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.toc.add_toc_hook.heading_id",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.toc.add_toc_hook.toc_hook"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.toc.add_toc_hook.toc_hook",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "normalize_toc_item",
+        "toc_items.append",
+        "heading_id",
+        "headings.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.toc.normalize_toc_item",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.directives.toc.TableOfContents.toc_hook"
+      ],
+      "callees": [
+        "src.mistune.core.BlockState",
+        "src.mistune.util.striptags",
+        "md.renderer",
+        "md.inline"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.toc.render_toc_ul",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.directives.toc.render_html_toc"
+      ],
+      "callees": [
+        "levels.append",
+        "levels.pop"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.util",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.util.expand_leading_tab.repl",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "m.group"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.util.expand_leading_tab",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.list_parser._compile_continue_width",
+        "src.mistune.block_parser.BlockParser.parse_indent_code",
+        "src.mistune.list_parser._parse_list_item",
+        "src.mistune.block_parser.BlockParser.extract_block_quote"
+      ],
+      "callees": [
+        "_expand_tab_re.sub"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.util.escape_url",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.directives.image._parse_attrs",
+        "src.mistune.helpers.parse_link",
+        "src.mistune.block_parser.BlockParser.parse_ref_link",
+        "src.mistune.inline_parser.InlineParser._add_auto_link",
+        "src.mistune.plugins.url.parse_url_link"
+      ],
+      "callees": [
+        "unescape"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.util.unikey",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.plugins.ruby._parse_ruby_link",
+        "src.mistune.plugins.footnotes.parse_ref_footnote",
+        "src.mistune.block_parser.BlockParser.parse_ref_link",
+        "src.mistune.plugins.footnotes.parse_inline_footnote",
+        "src.mistune.inline_parser.InlineParser.parse_link"
+      ],
+      "callees": [
+        "upper",
+        "strip",
+        "key.lower",
+        "s.split",
+        "join"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.util.unescape",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.util.safe_entity",
+        "src.mistune.util.escape_url"
+      ],
+      "callees": [
+        "_charref_re.sub"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.util.striptags",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.renderers.html.HTMLRenderer.image",
+        "src.mistune.toc.normalize_toc_item"
+      ],
+      "callees": [
+        "_striptags_re.sub"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.util.strip_end",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.renderers.markdown.MarkdownRenderer.__call__",
+        "src.mistune.renderers.rst.RSTRenderer.__call__",
+        "src.mistune.list_parser._parse_list_item",
+        "src.mistune.plugins.def_list._process_text",
+        "src.mistune.renderers._list.render_list"
+      ],
+      "callees": [
+        "_strip_end_re.sub"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.__init__.markdown",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.__init__.create_markdown",
+      "callers": [],
+      "callees": [
+        "src.mistune.__init__.create_markdown",
+        "md"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.markdown.Markdown.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.block_parser.BlockParser",
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.__init__",
+        "src.mistune.block_parser.BlockParser.__init__"
+      ],
+      "callees": [
+        "src.mistune.block_parser.BlockParser",
+        "src.mistune.inline_parser.InlineParser",
+        "plugin"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.parse_block_html",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.block_parser.BlockParser.parse_raw_html",
+      "callers": [],
+      "callees": [
+        "src.mistune.block_parser.BlockParser.parse_raw_html"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.render_token",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.core.BaseRenderer.render_token",
+      "callers": [
+        "src.mistune.renderers.rst.RSTRenderer.iter_tokens"
+      ],
+      "callees": [
+        "src.mistune.core.BaseRenderer.render_token"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.render_tokens",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.core.BaseRenderer.render_tokens",
+      "callers": [
+        "src.mistune.renderers.rst.RSTRenderer.paragraph",
+        "src.mistune.renderers.rst.RSTRenderer.__call__",
+        "src.mistune.renderers.rst.RSTRenderer.render_children"
+      ],
+      "callees": [
+        "src.mistune.core.BaseRenderer.render_tokens"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.core.BaseRenderer.__call__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.core.BaseRenderer.render_tokens",
+      "callers": [
+        "src.mistune.renderers.rst.RSTRenderer.__call__",
+        "src.mistune.renderers.markdown.MarkdownRenderer.__call__"
+      ],
+      "callees": [
+        "src.mistune.core.BaseRenderer.render_tokens"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.render_tokens",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.core.BaseRenderer.render_tokens",
+      "callers": [
+        "src.mistune.renderers.markdown.MarkdownRenderer.render_children",
+        "src.mistune.renderers.markdown.MarkdownRenderer.__call__"
+      ],
+      "callees": [
+        "src.mistune.core.BaseRenderer.render_tokens"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.render_tokens",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.core.BaseRenderer.render_tokens",
+      "callers": [
+        "src.mistune.renderers.html.HTMLRenderer.render_token"
+      ],
+      "callees": [
+        "src.mistune.core.BaseRenderer.render_tokens"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._rst.RSTDirective.parse_method",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.directives._base.BaseDirective.parse_method",
+      "callers": [
+        "src.mistune.directives._rst.RSTDirective.parse_directive"
+      ],
+      "callees": [
+        "src.mistune.directives._base.BaseDirective.parse_method"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._fenced.FencedDirective.parse_method",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.directives._base.BaseDirective.parse_method",
+      "callers": [
+        "src.mistune.directives._fenced.FencedDirective._process_directive"
+      ],
+      "callees": [
+        "src.mistune.directives._base.BaseDirective.parse_method"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._rst.RSTDirective.register_block_parser",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.directives._base.BaseDirective.register_block_parser",
+      "callers": [
+        "src.mistune.directives._rst.RSTDirective.__call__"
+      ],
+      "callees": [
+        "src.mistune.directives._base.BaseDirective.register_block_parser"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._fenced.FencedDirective.register_block_parser",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.directives._base.BaseDirective.register_block_parser",
+      "callers": [
+        "src.mistune.directives._fenced.FencedDirective.__call__"
+      ],
+      "callees": [
+        "src.mistune.directives._base.BaseDirective.register_block_parser"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.image.Figure.parse_tokens",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.directives._base.DirectivePlugin.parse_tokens",
+      "callers": [
+        "src.mistune.directives.image.Figure.parse_directive_content"
+      ],
+      "callees": [
+        "src.mistune.directives._base.DirectivePlugin.parse_tokens"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives.admonition.Admonition.parse_tokens",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.directives._base.DirectivePlugin.parse_tokens",
+      "callers": [
+        "src.mistune.directives.admonition.Admonition.parse"
+      ],
+      "callees": [
+        "src.mistune.directives._base.DirectivePlugin.parse_tokens"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.parse_auto_link",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.inline_parser.InlineParser._add_auto_link",
+      "callers": [],
+      "callees": [
+        "m.end",
+        "src.mistune.inline_parser.InlineParser._add_auto_link",
+        "m.group",
+        "src.mistune.inline_parser.InlineParser.process_text"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.parse",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.inline_parser.InlineParser.process_text",
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.render"
+      ],
+      "callees": [
+        "m.start",
+        "sc.search",
+        "src.mistune.inline_parser.InlineParser.parse_method",
+        "src.mistune.inline_parser.InlineParser.process_text",
+        "src.mistune.inline_parser.InlineParser.compile_sc"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.block_parser.BlockParser.parse_list",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.list_parser.parse_list",
+      "callers": [],
+      "callees": [
+        "src.mistune.list_parser.parse_list"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.markdown.Markdown.render_state",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.markdown.Markdown._iter_render",
+      "callers": [
+        "src.mistune.markdown.Markdown.parse"
+      ],
+      "callees": [
+        "src.mistune.markdown.Markdown.renderer",
+        "src.mistune.markdown.Markdown._iter_render"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.plugins.formatting.parse_subscript",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.plugins.formatting._parse_script",
+      "callers": [],
+      "callees": [
+        "_parse_script"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.rst.RSTRenderer.list",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.renderers._list.render_list",
+      "callers": [],
+      "callees": [
+        "src.mistune.renderers._list.render_list"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.markdown.MarkdownRenderer.list",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.renderers._list.render_list",
+      "callers": [],
+      "callees": [
+        "src.mistune.renderers._list.render_list"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.util.safe_entity",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.util.unescape",
+      "callers": [
+        "src.mistune.renderers.html.HTMLRenderer.block_code",
+        "src.mistune.renderers.html.HTMLRenderer.text",
+        "src.mistune.renderers.html.HTMLRenderer.link",
+        "src.mistune.renderers.html.HTMLRenderer.image"
+      ],
+      "callees": [
+        "src.mistune.util.escape",
+        "unescape"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.directives._rst.RSTDirective.__call__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.directives._rst.RSTDirective.register_block_parser",
+      "callers": [],
+      "callees": [
+        "src.mistune.directives._base.BaseDirective.__call__",
+        "src.mistune.directives._rst.RSTDirective.register_block_parser"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.inline_parser.InlineParser.render",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.inline_parser.InlineParser.parse",
+      "callers": [
+        "src.mistune.inline_parser.InlineParser.parse_emphasis",
+        "src.mistune.inline_parser.InlineParser.__parse_link_token",
+        "src.mistune.inline_parser.InlineParser.__call__"
+      ],
+      "callees": [
+        "src.mistune.inline_parser.InlineParser.parse"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.renderers.html.HTMLRenderer.text",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "src.mistune.util.safe_entity",
+      "callers": [],
+      "callees": [
+        "src.mistune.util.escape",
+        "src.mistune.util.safe_entity"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-10T15:02:16"
+}

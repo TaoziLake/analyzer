@@ -1,0 +1,75 @@
+{
+  "commit": "ddf228ee",
+  "parent": "4a1d00e502b3cff05d1f7b1fcc1dff85c62a8130",
+  "repo": "D:\\locbench\\peewee",
+  "num_files_in_diff": 1,
+  "num_py_files_in_diff": 1,
+  "num_seeds": 4,
+  "seeds": [
+    {
+      "path": "playhouse/apsw_ext.py",
+      "version": "new",
+      "line": 97,
+      "kind": "function",
+      "qualname": "playhouse.apsw_ext.APSWDatabase.last_insert_id",
+      "span": [
+        95,
+        103
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def last_insert_id(self, cursor, query_type=None):\n        if not self.returning_clause:\n            return cursor.connection.last_insert_rowid()\n        elif query_type == Insert.SIMPLE:\n            try:\n                return cursor[0][0]\n            except (AttributeError, IndexError, TypeError):\n                pass\n        return cursor",
+      "old_code": "    def last_insert_id(self, cursor, query_type=None):\n        if not self.returning_clause:\n            return cursor.getconnection().last_insert_rowid()\n        elif query_type == Insert.SIMPLE:\n            try:\n                return cursor[0][0]\n            except (AttributeError, IndexError, TypeError):\n                pass\n        return cursor"
+    },
+    {
+      "path": "playhouse/apsw_ext.py",
+      "version": "new",
+      "line": 107,
+      "kind": "function",
+      "qualname": "playhouse.apsw_ext.APSWDatabase.rows_affected",
+      "span": [
+        105,
+        109
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def rows_affected(self, cursor):\n        try:\n            return cursor.connection.changes()\n        except AttributeError:\n            return cursor.cursor.connection.changes()  # RETURNING query.",
+      "old_code": "    def rows_affected(self, cursor):\n        try:\n            return cursor.getconnection().changes()\n        except AttributeError:\n            return cursor.cursor.getconnection().changes()  # RETURNING query."
+    },
+    {
+      "path": "playhouse/apsw_ext.py",
+      "version": "new",
+      "line": 117,
+      "kind": "function",
+      "qualname": "playhouse.apsw_ext.APSWDatabase.commit",
+      "span": [
+        114,
+        120
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def commit(self):\n        with __exception_wrapper__:\n            curs = self.cursor()\n            if curs.connection.getautocommit():\n                return False\n            curs.execute('commit;')\n        return True",
+      "old_code": "    def commit(self):\n        with __exception_wrapper__:\n            curs = self.cursor()\n            if curs.getconnection().getautocommit():\n                return False\n            curs.execute('commit;')\n        return True"
+    },
+    {
+      "path": "playhouse/apsw_ext.py",
+      "version": "new",
+      "line": 125,
+      "kind": "function",
+      "qualname": "playhouse.apsw_ext.APSWDatabase.rollback",
+      "span": [
+        122,
+        128
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def rollback(self):\n        with __exception_wrapper__:\n            curs = self.cursor()\n            if curs.connection.getautocommit():\n                return False\n            curs.execute('rollback;')\n        return True",
+      "old_code": "    def rollback(self):\n        with __exception_wrapper__:\n            curs = self.cursor()\n            if curs.getconnection().getautocommit():\n                return False\n            curs.execute('rollback;')\n        return True"
+    }
+  ],
+  "generated_at": "2026-02-10T14:43:13"
+}

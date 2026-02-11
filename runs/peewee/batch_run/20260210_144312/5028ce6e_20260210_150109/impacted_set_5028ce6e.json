@@ -1,0 +1,2719 @@
+{
+  "commit": "5028ce6e",
+  "parent": "4b715f3a72d055c56d667d5265c28d3bb9e14abd",
+  "repo": "D:\\locbench\\peewee",
+  "num_seeds": 17,
+  "num_seeds_used": 15,
+  "seed_scope": "code_only",
+  "num_impacted": 128,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "peewee.SqliteDatabase.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "playhouse.cysqlite_ext.CySqliteDatabase.__init__"
+      ],
+      "callees": [
+        "peewee.SqliteDatabase.register_function",
+        "peewee.Database.__init__",
+        "kwargs.pop"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.SqliteDatabase._add_conn_hooks",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "peewee.SqliteDatabase._connect",
+        "playhouse.cysqlite_ext.CySqliteDatabase._add_conn_hooks"
+      ],
+      "callees": [
+        "peewee.SqliteDatabase._attach_databases",
+        "peewee.SqliteDatabase._load_window_functions",
+        "peewee.SqliteDatabase._set_pragmas",
+        "peewee.SqliteDatabase._load_aggregates",
+        "peewee.SqliteDatabase._load_collations",
+        "peewee.SqliteDatabase._load_functions",
+        "peewee.SqliteDatabase._load_extensions"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.SqliteDatabase",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "tests.db_tests.TestDatabase.test_pragmas_as_dict",
+        "tests.db_tests.TestDeferredDatabase.test_deferred_database",
+        "tests.db_tests.TestDatabase.test_pragmas_deferred",
+        "tests.fields.TestBlobField.test_blob_db_hook",
+        "tests.model_sql",
+        "tests.sqlcipher_ext.SqlCipherExtTestCase.test_fts",
+        "tests.db_tests.TestDBProxy.test_proxy_decorator",
+        "tests.db_tests.TestDBProxy.test_proxy_context_manager",
+        "examples.graph",
+        "tests.db_tests.TestDBProxy.test_db_proxy",
+        "examples.reddit_ranking",
+        "examples.hexastore.Hexastore.__init__",
+        "tests.models.TestMetaInheritance.test_inheritance",
+        "examples.adjacency_list",
+        "examples.anomaly_detection",
+        "examples.twitter.app",
+        "tests.dataset.TestDataSet.test_pass_database",
+        "tests.db_tests.TestDatabase.test_pragmas_permanent",
+        "tests.sqlite.TestReadOnly.test_read_only",
+        "tests.models.TestModelGraph.test_bind_model_database",
+        "bench",
+        "tests.sql",
+        "tests.fields.TestBlobField.test_blob_on_proxy"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase.table_function.decorator",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "tests.libs.mock._patch_dict.decorate_class"
+      ],
+      "callees": [
+        "playhouse.cysqlite_ext.CySqliteDatabase.register_table_function"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase.unregister_table_function",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "playhouse.cysqlite_ext.CySqliteDatabase._table_functions.pop"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.cysqlite_ext",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "playhouse.cysqlite_ext.__dbstatus__",
+        "playhouse.cysqlite_ext.__status__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "peewee.SqliteDatabase.__init__",
+        "playhouse.cysqlite_ext.CySqliteDatabase.register_function"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase._add_conn_hooks",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "playhouse.cysqlite_ext.CySqliteDatabase._connect"
+      ],
+      "callees": [
+        "peewee.SqliteDatabase._add_conn_hooks",
+        "conn.commit_hook",
+        "conn.rollback_hook",
+        "table_function.register",
+        "conn.trace",
+        "conn.update_hook",
+        "conn.authorizer",
+        "conn.progress"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase.register_table_function",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "playhouse.cysqlite_ext.CySqliteDatabase.table_function.decorator"
+      ],
+      "callees": [
+        "playhouse.cysqlite_ext.CySqliteDatabase.connection",
+        "playhouse.cysqlite_ext.CySqliteDatabase.is_closed",
+        "playhouse.cysqlite_ext.CySqliteDatabase._table_functions.append",
+        "klass.register"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "tests.sqlite"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase.table_function",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.SqliteDatabase._connect",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase._add_conn_hooks",
+      "callers": [
+        "playhouse.cysqlite_ext.CySqliteDatabase._connect"
+      ],
+      "callees": [
+        "peewee.SqliteDatabase._add_conn_hooks",
+        "conn.close",
+        "peewee.Database._connect",
+        "peewee.ImproperlyConfigured"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.db_tests.TestDatabase.test_pragmas_as_dict",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "tests.base.db.init",
+        "tests.db_tests.TestDatabase.assertEqual",
+        "SqliteDatabase"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.db_tests.TestDeferredDatabase.test_deferred_database",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "tests.db_tests.TestDeferredDatabase.assertEqual",
+        "SqliteDatabase.is_closed",
+        "SqliteDatabase",
+        "tests.db_tests.TestDeferredDatabase.assertFalse",
+        "SqliteDatabase.connect",
+        "tests.db_tests.TestDeferredDatabase.assertTrue",
+        "DeferredModel._schema.create_all",
+        "DeferredModel.select",
+        "tests.db_tests.TestDeferredDatabase.assertRaises",
+        "SqliteDatabase.init"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.db_tests.TestDatabase.test_pragmas_deferred",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "tests.base.db.init",
+        "tests.db_tests.TestDatabase.assertEqual",
+        "SqliteDatabase"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.fields.TestBlobField.test_blob_db_hook",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "FakeDatabase",
+        "B._meta.set_database",
+        "SqliteDatabase",
+        "BlobField",
+        "tests.fields.TestBlobField.assertTrue",
+        "SqliteDatabase.bind_ctx"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.model_sql",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "SqliteDatabase",
+        "IntegerField",
+        "CharField",
+        "tests.base.get_in_memory_db",
+        "CompositeKey"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.sqlcipher_ext.SqlCipherExtTestCase.test_fts",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "tests.sqlcipher_ext.FTSNote.rank",
+        "tests.sqlcipher_ext.SqlCipherExtTestCase.assertEqual",
+        "tests.sqlcipher_ext.Note.create",
+        "alias",
+        "SqliteDatabase",
+        "tests.sqlcipher_ext.FTSNote.select",
+        "where",
+        "tests.sqlcipher_ext.FTSNote.match",
+        "tests.sqlcipher_ext.SqlCipherExtTestCase.assertRaises",
+        "tests.sqlcipher_ext.FTSNote.rebuild",
+        "order_by",
+        "desc",
+        "SQL"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.db_tests.TestDBProxy.test_proxy_decorator",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "tests.base.db.connection_context",
+        "with_connection",
+        "tests.base.db.initialize",
+        "SqliteDatabase",
+        "DatabaseProxy",
+        "tests.base.db.in_transaction",
+        "tests.base.db.is_closed",
+        "tests.db_tests.TestDBProxy.assertFalse",
+        "tests.base.db.manual_commit",
+        "tests.base.db.atomic",
+        "with_manual_commit",
+        "tests.db_tests.TestDBProxy.assertTrue",
+        "with_transaction"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.db_tests.TestDBProxy.test_proxy_context_manager",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "tests.base_models.User.create_table",
+        "tests.db_tests.TestDBProxy.assertRaises",
+        "SqliteDatabase",
+        "tests.base.db.initialize",
+        "tests.base.db.is_closed",
+        "tests.db_tests.TestDBProxy.assertFalse",
+        "TextField",
+        "Proxy",
+        "tests.db_tests.TestDBProxy.assertTrue"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "examples.graph",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "SqliteDatabase.create_tables",
+        "FloatField",
+        "examples.graph.print_path",
+        "examples.graph.Node.create",
+        "SqliteDatabase",
+        "ForeignKeyField",
+        "examples.graph.Edge.create",
+        "TextField"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.db_tests.TestDBProxy.test_db_proxy",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "tests.base_models.User._meta.database.is_closed",
+        "SqliteDatabase.close",
+        "tests.db_tests.TestDBProxy.assertEqual",
+        "SqliteDatabase",
+        "ForeignKeyField",
+        "tests.base.db.initialize",
+        "tests.base_models.Tweet._meta.database.is_closed",
+        "tests.db_tests.TestDBProxy.assertFalse",
+        "TextField",
+        "Proxy",
+        "tests.db_tests.TestDBProxy.assertTrue",
+        "SqliteDatabase.connect"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "examples.reddit_ranking",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "SqliteDatabase.create_tables",
+        "TimestampField",
+        "Case",
+        "fn.log",
+        "fn.max",
+        "order_by",
+        "execute",
+        "hot.alias",
+        "SqliteDatabase",
+        "IntegerField",
+        "examples.reddit_ranking.Post.select",
+        "desc",
+        "TextField",
+        "fn.abs",
+        "SqliteDatabase.func",
+        "examples.reddit_ranking.Post.insert_many",
+        "SQL"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "examples.hexastore.Hexastore.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "examples.hexastore.Hexastore.get_model",
+        "_VariableFactory",
+        "SqliteDatabase"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.models.TestMetaInheritance.test_inheritance",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "tests.models.TestMetaInheritance.assertFalse",
+        "tests.models.TestMetaInheritance.assertTrue",
+        "tests.models.TestMetaInheritance.assertEqual",
+        "SqliteDatabase"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "examples.adjacency_list",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "SqliteDatabase.create_tables",
+        "logger.setLevel",
+        "examples.adjacency_list.Node.create",
+        "stack.insert",
+        "SqliteDatabase",
+        "ForeignKeyField",
+        "examples.adjacency_list.Node.parent.is_null",
+        "where",
+        "examples.adjacency_list.Node.alias",
+        "prefetch",
+        "root.dump",
+        "stack.pop",
+        "TextField",
+        "logger.addHandler",
+        "examples.adjacency_list.Node.select"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "examples.anomaly_detection",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "from_",
+        "SqliteDatabase.create_tables",
+        "SqliteDatabase.aggregate",
+        "fn.avg",
+        "cte",
+        "execute",
+        "SqliteDatabase.close",
+        "zscore.alias",
+        "SqliteDatabase",
+        "examples.anomaly_detection.Reg.insert_many",
+        "where",
+        "IntegerField",
+        "with_cte",
+        "TextField",
+        "examples.anomaly_detection.Reg.create_table",
+        "fn.stddev",
+        "examples.anomaly_detection.Reg.select"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "examples.twitter.app",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "app.template_filter",
+        "app.config.from_object",
+        "ForeignKeyField",
+        "SqliteDatabase",
+        "CharField",
+        "DateTimeField",
+        "app.run",
+        "TextField",
+        "examples.twitter.app.create_tables",
+        "app.route"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.dataset.TestDataSet.test_pass_database",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "playhouse.dataset.DataSet",
+        "SqliteDatabase",
+        "users.insert",
+        "tests.dataset.TestDataSet.assertEqual"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.db_tests.TestDatabase.test_pragmas_permanent",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "tests.base.db.execute_sql",
+        "tests.base.db.close",
+        "tests.base.db.pragma",
+        "SqliteDatabase",
+        "tests.base.db.connect",
+        "tests.db_tests.TestDatabase.assertEqual"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.sqlite.TestReadOnly.test_read_only",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "tests.sqlite.TestReadOnly.assertEqual",
+        "cursor.fetchone",
+        "SqliteDatabase",
+        "SqliteDatabase.execute_sql",
+        "tests.base_models.User.create",
+        "tests.sqlite.TestReadOnly.assertRaises"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.models.TestModelGraph.test_bind_model_database",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "tests.models.TestModelGraph.assertTrue",
+        "SqliteDatabase",
+        "ForeignKeyField",
+        "User.bind_ctx",
+        "User.bind"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "bench",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "bench.select_related_left",
+        "SqliteDatabase",
+        "bench.bulk_create",
+        "SqliteDatabase.drop_tables",
+        "execute",
+        "bench.select_related_dicts",
+        "SqliteDatabase.create_tables",
+        "bench.insert_related",
+        "bench.select_prefetch",
+        "bench.Register.select",
+        "IntegerField",
+        "bench.select_related_objects",
+        "bench.select_related_dbapi_raw",
+        "TextField",
+        "bench.batch_insert",
+        "bench.select_related",
+        "bench.select",
+        "bench.Register.delete",
+        "count",
+        "bench.select_prefetch_join",
+        "ForeignKeyField",
+        "bench.bulk_insert",
+        "bench.insert"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.sql",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [
+        "playhouse.migrate.SchemaMigrator.add_column_default",
+        "peewee.Alias.__sql__",
+        "playhouse.migrate.MySQLMigrator.add_not_null",
+        "playhouse.migrate.SqliteMigrator.rename_column",
+        "playhouse.migrate.SchemaMigrator.drop_index",
+        "playhouse.migrate.SchemaMigrator.add_constraint",
+        "playhouse.migrate.SchemaMigrator._alter_table",
+        "peewee.SchemaManager._create_foreign_key",
+        "peewee.SchemaManager._create_sequence",
+        "peewee.Column.__sql__",
+        "peewee.Function.__sql__",
+        "peewee.Query.__sql__",
+        "peewee.Expression.__sql__",
+        "peewee.ModelAlias.__sql__",
+        "playhouse.migrate.CockroachDBMigrator.drop_index",
+        "peewee.SchemaManager._create_table_as",
+        "playhouse.postgres_ext.ObjectSlice.__sql__",
+        "peewee.CTE.__sql__",
+        "peewee.Join.__sql__",
+        "peewee.Query._apply_ordering",
+        "playhouse.migrate.SchemaMigrator.apply_default",
+        "peewee.Index.__sql__",
+        "playhouse.migrate.MySQLMigrator.drop_foreign_key_constraint",
+        "peewee.Update.__sql__",
+        "playhouse.migrate.MySQLMigrator.alter_column_type",
+        "peewee.SchemaManager._drop_sequence",
+        "peewee.Insert._query_insert",
+        "peewee.SchemaManager._drop_table",
+        "playhouse.migrate.MySQLMigrator.rename_column",
+        "playhouse.migrate.SchemaMigrator.drop_column_default",
+        "peewee.ValuesList.__sql__",
+        "peewee.NamespaceAttribute.__sql__",
+        "playhouse.migrate.MySQLMigrator.drop_not_null",
+        "playhouse.postgres_ext.JsonPath.__sql__",
+        "playhouse.migrate.SqliteMigrator.alter_column_type._alter_column_type",
+        "peewee.SchemaManager._drop_index",
+        "playhouse.postgres_ext.JsonLookup.__sql__",
+        "peewee.BitwiseNegated.__sql__",
+        "playhouse.migrate.SchemaMigrator._alter_column",
+        "peewee.Insert.__sql__",
+        "peewee.Select.__sql__",
+        "peewee.Delete.__sql__",
+        "playhouse.migrate.MySQLMigrator.drop_index",
+        "tests.sql.TestSelectQuery.test_select_in_list_of_values",
+        "playhouse.migrate.SchemaMigrator.rename_column",
+        "peewee.Cast.__sql__",
+        "peewee.SchemaManager._create_index",
+        "peewee.Source.apply_alias",
+        "playhouse.migrate.MySQLMigrator.rename_table",
+        "playhouse.migrate.MySQLMigrator._alter_column",
+        "playhouse.postgres_ext.ArrayValue.__sql__",
+        "playhouse.migrate.SchemaMigrator.alter_column_type",
+        "peewee._WriteQuery.apply_returning",
+        "playhouse.psycopg3_ext.JsonPath.__sql__",
+        "playhouse.migrate.SchemaMigrator.add_inline_fk_sql",
+        "playhouse.migrate.SchemaMigrator.drop_column",
+        "playhouse.psycopg3_ext.JsonLookup.__sql__",
+        "peewee.SchemaManager._truncate_table",
+        "playhouse.migrate.SchemaMigrator.add_foreign_key_constraint",
+        "tests.base.__sql__",
+        "playhouse.migrate.SchemaMigrator.rename_table",
+        "peewee.ForUpdate.__sql__",
+        "playhouse.migrate.SqliteMigrator.drop_column",
+        "peewee.Negated.__sql__",
+        "playhouse.migrate.SchemaMigrator.alter_add_column",
+        "playhouse.migrate.SchemaMigrator.drop_constraint"
+      ],
+      "callees": [
+        "Table",
+        "MySQLDatabase",
+        "SqliteDatabase",
+        "PostgresqlDatabase"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.fields.TestBlobField.test_blob_on_proxy",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "peewee.SqliteDatabase",
+      "callers": [],
+      "callees": [
+        "SqliteDatabase",
+        "tests.base.db.initialize",
+        "BlobField",
+        "tests.fields.TestBlobField.assertTrue",
+        "Proxy"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.libs.mock._patch_dict.decorate_class",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase.table_function.decorator",
+      "callers": [
+        "tests.libs.mock._patch_dict.__call__"
+      ],
+      "callees": [
+        "tests.libs.mock._patch_dict",
+        "decorator",
+        "attr.startswith"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.PeeweeException.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase.__init__",
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.shortcuts.ReconnectMixin.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase.__init__",
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "playhouse.shortcuts.ReconnectMixin._reconnect_errors.setdefault",
+        "__init__",
+        "err_fragment.lower",
+        "append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.pool.PooledDatabase.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase.__init__",
+      "callers": [
+        "tests.pool.FakePooledDatabase.__init__"
+      ],
+      "callees": [
+        "__init__",
+        "playhouse.pool.make_int"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.sqlite_udf.synchronized_dict.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase.__init__",
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.libs.mock.MagicMixin.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase.__init__",
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "_super",
+        "tests.libs.mock.MagicMixin._mock_set_magics",
+        "__init__"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee._ModelQueryHelper.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase.__init__",
+      "callers": [
+        "peewee._ModelWriteQueryHelper.__init__",
+        "peewee.ModelRaw.__init__",
+        "peewee.BaseModelSelect.__init__"
+      ],
+      "callees": [
+        "__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee._HashableSource.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase.__init__",
+      "callers": [
+        "peewee.Table.__init__",
+        "peewee.SelectBase.__init__",
+        "peewee.CTE.__init__",
+        "peewee.ValuesList.__init__"
+      ],
+      "callees": [
+        "peewee._HashableSource._update_hash",
+        "__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase.__init__",
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "playhouse.pwasyncio.TaskLocal",
+        "__init__",
+        "kwargs.pop"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.libs.mock.NonCallableMock.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase.__init__",
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "__init__",
+        "tests.libs.mock._CallList",
+        "_super",
+        "tests.libs.mock.NonCallableMock._mock_add_spec",
+        "tests.libs.mock.NonCallableMock.configure_mock",
+        "tests.libs.mock.Base.__init__"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase.__init__",
+      "callers": [
+        "playhouse.psycopg3_ext.BinaryJSONField.__init__",
+        "playhouse.postgres_ext.ArrayField.__init__"
+      ],
+      "callees": [
+        "__init__",
+        "kwargs.setdefault"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee._ConnectionState.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase.__init__",
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "__init__",
+        "peewee._ConnectionState.reset"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.libs.mock.CallableMixin.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase.__init__",
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "_super",
+        "__init__",
+        "tests.libs.mock.Base.__init__"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.cysqlite_ext.CySqliteDatabase._connect",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase._add_conn_hooks",
+      "callers": [
+        "playhouse.pool.PooledDatabase._connect"
+      ],
+      "callees": [
+        "cysqlite.Connection",
+        "peewee.ImproperlyConfigured",
+        "cysqlite.Connection.close",
+        "peewee.SqliteDatabase._connect",
+        "playhouse.cysqlite_ext.CySqliteDatabase._add_conn_hooks"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.sqlite",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase",
+      "callers": [],
+      "callees": [
+        "FloatField",
+        "playhouse.cysqlite_ext.CySqliteDatabase.register_function",
+        "tests.base.skip_unless",
+        "tests.base.requires_models",
+        "tests.base.skip_if",
+        "playhouse.cysqlite_ext.CySqliteDatabase.collation",
+        "SqliteExtDatabase.register_function",
+        "DateTimeField",
+        "TDecimalField",
+        "IntegerField",
+        "playhouse.cysqlite_ext.CySqliteDatabase.func",
+        "SqliteExtDatabase.collation",
+        "TextField",
+        "tests.base.get_in_memory_db",
+        "SqliteExtDatabase",
+        "tests.sqlite_helpers.jsonb_installed",
+        "BareField",
+        "tests.sqlite_helpers.json_patch_installed",
+        "playhouse.cysqlite_ext.CySqliteDatabase.register_collation",
+        "tests.base.db_loader",
+        "tests.sqlite_helpers.compile_option",
+        "SqliteExtDatabase.register_aggregate",
+        "JSONBField",
+        "RowIDField",
+        "SqliteExtDatabase.register_collation",
+        "SqliteExtDatabase.func",
+        "ForeignKeyField",
+        "tests.sqlite_helpers.json_installed",
+        "FTS5Model.fts5_installed",
+        "ISODateTimeField",
+        "tests.sqlite_helpers.json_text_installed",
+        "SearchField",
+        "playhouse.cysqlite_ext.CySqliteDatabase",
+        "JSONField",
+        "playhouse.cysqlite_ext.CySqliteDatabase.register_aggregate"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SchemaMigrator.add_column_default",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "playhouse.migrate.SqliteMigrator.add_column_default"
+      ],
+      "callees": [
+        "default",
+        "peewee.callable_",
+        "playhouse.migrate.SchemaMigrator._alter_table",
+        "sql",
+        "default.endswith",
+        "playhouse.migrate.SchemaMigrator.make_context",
+        "peewee.Entity",
+        "literal",
+        "SQL"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Alias.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "Entity",
+        "ctx.sql",
+        "sql",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.MySQLMigrator.add_not_null",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "playhouse.migrate.MySQLMigrator.add_foreign_key_constraint",
+        "playhouse.migrate.MySQLMigrator.drop_foreign_key_constraint",
+        "playhouse.migrate.MySQLMigrator._alter_table",
+        "playhouse.migrate.MySQLMigrator.make_context",
+        "column_def.sql",
+        "sql",
+        "playhouse.migrate.SchemaMigrator.add_not_null",
+        "playhouse.migrate.MySQLMigrator.database.get_foreign_keys",
+        "playhouse.migrate.MySQLMigrator._get_column_definition",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SqliteMigrator.rename_column",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "playhouse.migrate.SqliteMigrator._update_column",
+        "playhouse.migrate.SqliteMigrator.make_context",
+        "playhouse.migrate.SchemaMigrator.rename_column",
+        "playhouse.migrate.SqliteMigrator._alter_table",
+        "sql",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SchemaMigrator.drop_index",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "playhouse.migrate.MySQLMigrator.drop_index"
+      ],
+      "callees": [
+        "playhouse.migrate.SchemaMigrator.make_context",
+        "sql",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SchemaMigrator.add_constraint",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "playhouse.migrate.SchemaMigrator.add_unique",
+        "playhouse.migrate.SqliteMigrator.add_constraint"
+      ],
+      "callees": [
+        "playhouse.migrate.SchemaMigrator._alter_table",
+        "sql",
+        "playhouse.migrate.SchemaMigrator.make_context",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SchemaMigrator._alter_table",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "playhouse.migrate.SchemaMigrator.add_column_default",
+        "playhouse.migrate.SchemaMigrator._alter_column",
+        "playhouse.migrate.SchemaMigrator.drop_column",
+        "playhouse.migrate.MySQLMigrator._alter_table",
+        "playhouse.migrate.SchemaMigrator.add_constraint",
+        "playhouse.migrate.SchemaMigrator.rename_table",
+        "playhouse.migrate.SchemaMigrator.rename_column",
+        "playhouse.migrate.SqliteMigrator._alter_table",
+        "playhouse.migrate.SchemaMigrator.drop_column_default",
+        "playhouse.migrate.SchemaMigrator.alter_add_column",
+        "playhouse.migrate.SchemaMigrator.drop_constraint"
+      ],
+      "callees": [
+        "ctx.literal",
+        "sql",
+        "peewee.Entity"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.SchemaManager._create_foreign_key",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "peewee.SchemaManager.create_foreign_key"
+      ],
+      "callees": [
+        "field.foreign_key_constraint",
+        "peewee.SchemaManager._create_context",
+        "sql",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.SchemaManager._create_sequence",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "peewee.SchemaManager.create_sequence"
+      ],
+      "callees": [
+        "peewee.SchemaManager._check_sequences",
+        "peewee.SchemaManager._create_context",
+        "peewee.SchemaManager.database.sequence_exists",
+        "peewee.SchemaManager._sequence_for_field",
+        "sql",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Column.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.scope_column",
+        "sql",
+        "Entity",
+        "ctx.sql",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Function.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "EnclosedNodeList",
+        "NodeList",
+        "CommaNodeList",
+        "ctx.literal",
+        "peewee.SQL",
+        "sql",
+        "ctx",
+        "peewee.Value",
+        "ctx.sql",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Query.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "peewee._WriteQuery.__sql__"
+      ],
+      "callees": [
+        "peewee.CommaNodeList",
+        "ctx.scope_cte",
+        "peewee.BaseQuery.__sql__",
+        "ctx.literal",
+        "sql",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Expression.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.as_new",
+        "ctx.state.operations.get",
+        "ctx.literal",
+        "raw_node.unwrap",
+        "parse",
+        "sql",
+        "ctx",
+        "ctx.sql",
+        "literal",
+        "SQL"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.ModelAlias.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "peewee.Node.__sql__",
+        "sql",
+        "ctx.sql",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.CockroachDBMigrator.drop_index",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "playhouse.migrate.CockroachDBMigrator.make_context",
+        "sql",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.SchemaManager._create_table_as",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "peewee.SchemaManager.create_table_as"
+      ],
+      "callees": [
+        "meta.get",
+        "peewee.SchemaManager._create_context",
+        "peewee.ensure_tuple",
+        "ctx.literal",
+        "sql",
+        "ctx.sql",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.postgres_ext.ObjectSlice.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.literal",
+        "sql",
+        "join",
+        "ctx.sql",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.CTE.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.push_alias",
+        "EnclosedNodeList",
+        "ctx.scope_normal",
+        "ctx.literal",
+        "sql",
+        "Entity",
+        "ctx.sql"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Join.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.literal",
+        "ctx.sql",
+        "sql",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Query._apply_ordering",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.literal",
+        "sql",
+        "peewee.CommaNodeList"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SchemaMigrator.apply_default",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "playhouse.migrate.SchemaMigrator.add_column"
+      ],
+      "callees": [
+        "field.db_value",
+        "default",
+        "peewee.Expression",
+        "peewee.callable_",
+        "sql",
+        "playhouse.migrate.SchemaMigrator.make_context",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Index.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.scope_values",
+        "ctx.literal",
+        "peewee.SQL",
+        "sql",
+        "peewee.Node.__sql__",
+        "peewee.EnclosedNodeList",
+        "ctx.sql",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.MySQLMigrator.drop_foreign_key_constraint",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "playhouse.migrate.MySQLMigrator.rename_column",
+        "playhouse.migrate.MySQLMigrator.add_not_null"
+      ],
+      "callees": [
+        "playhouse.migrate.MySQLMigrator._alter_table",
+        "playhouse.migrate.MySQLMigrator.make_context",
+        "playhouse.migrate.MySQLMigrator.get_foreign_key_constraint",
+        "playhouse.migrate.SchemaMigrator.drop_foreign_key_constraint",
+        "sql",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Update.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "peewee.CommaNodeList",
+        "peewee.Update._apply_ordering",
+        "ctx.sql",
+        "peewee.Update.apply_returning",
+        "expressions.append",
+        "peewee.qualify_names",
+        "ctx.scope_normal",
+        "peewee._WriteQuery.__sql__",
+        "k.to_value",
+        "ctx.scope_values",
+        "peewee.Update._update.items",
+        "ctx.literal",
+        "peewee.NodeList",
+        "peewee.SQL",
+        "sql",
+        "ctx.scope_source",
+        "peewee.Value",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.MySQLMigrator.alter_column_type",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "playhouse.migrate.MySQLMigrator._alter_table",
+        "playhouse.migrate.MySQLMigrator.make_context",
+        "field.ddl",
+        "sql",
+        "playhouse.migrate.SchemaMigrator.alter_column_type",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.SchemaManager._drop_sequence",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "peewee.SchemaManager.drop_sequence"
+      ],
+      "callees": [
+        "peewee.SchemaManager._check_sequences",
+        "peewee.SchemaManager._create_context",
+        "peewee.SchemaManager.database.sequence_exists",
+        "peewee.SchemaManager._sequence_for_field",
+        "sql",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Insert._query_insert",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "peewee.Insert.__sql__"
+      ],
+      "callees": [
+        "peewee.EnclosedNodeList",
+        "ctx.sql",
+        "sql",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.SchemaManager._drop_table",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "peewee.SchemaManager.drop_table"
+      ],
+      "callees": [
+        "options.get",
+        "peewee.SchemaManager._create_context",
+        "ctx.literal",
+        "sql",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.MySQLMigrator.rename_column",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "playhouse.migrate.MySQLMigrator.add_foreign_key_constraint",
+        "playhouse.migrate.MySQLMigrator.drop_foreign_key_constraint",
+        "playhouse.migrate.MySQLMigrator._alter_table",
+        "playhouse.migrate.MySQLMigrator.make_context",
+        "column.sql",
+        "playhouse.migrate.SchemaMigrator.rename_column",
+        "sql",
+        "playhouse.migrate.MySQLMigrator.database.get_foreign_keys",
+        "playhouse.migrate.MySQLMigrator._get_column_definition",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SchemaMigrator.drop_column_default",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "playhouse.migrate.SqliteMigrator.drop_column_default"
+      ],
+      "callees": [
+        "playhouse.migrate.SchemaMigrator._alter_table",
+        "sql",
+        "playhouse.migrate.SchemaMigrator.make_context",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.ValuesList.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "EnclosedNodeList",
+        "CommaNodeList",
+        "ctx.literal",
+        "sql",
+        "ctx",
+        "Entity",
+        "ctx.sql"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.NamespaceAttribute.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.literal",
+        "sql",
+        "peewee.Entity"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.MySQLMigrator.drop_not_null",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "playhouse.migrate.SchemaMigrator.drop_not_null",
+        "playhouse.migrate.MySQLMigrator._alter_table",
+        "playhouse.migrate.MySQLMigrator.make_context",
+        "column.sql",
+        "sql",
+        "playhouse.migrate.MySQLMigrator._get_column_definition",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.postgres_ext.JsonPath.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.sql",
+        "sql",
+        "join",
+        "Value",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SqliteMigrator.alter_column_type._alter_column_type",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "field.ddl",
+        "sql",
+        "query",
+        "ctx.sql",
+        "peewee.Entity"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.SchemaManager._drop_index",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "peewee.SchemaManager._drop_indexes"
+      ],
+      "callees": [
+        "peewee.SchemaManager._create_context",
+        "sql",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.postgres_ext.JsonLookup.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.literal",
+        "sql",
+        "ctx.sql"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.BitwiseNegated.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.literal",
+        "sql",
+        "ctx.state.operations.get"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SchemaMigrator._alter_column",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "playhouse.migrate.SchemaMigrator.drop_not_null",
+        "playhouse.migrate.MySQLMigrator._alter_column",
+        "playhouse.migrate.SchemaMigrator.alter_column_type",
+        "playhouse.migrate.SchemaMigrator.add_not_null"
+      ],
+      "callees": [
+        "playhouse.migrate.SchemaMigrator._alter_table",
+        "sql",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Insert.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "peewee.Insert.apply_returning",
+        "peewee.Insert._default_values",
+        "peewee.Insert._on_conflict.get_conflict_update",
+        "peewee._WriteQuery.__sql__",
+        "ctx.scope_values",
+        "peewee.Insert._query_insert",
+        "peewee.SQL",
+        "sql",
+        "peewee.Insert._simple_insert",
+        "peewee.Insert._on_conflict.get_conflict_statement",
+        "peewee.Insert._generate_insert",
+        "ctx.literal",
+        "ctx.sql",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Select.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "peewee.CommaNodeList",
+        "peewee.Select.apply_alias",
+        "peewee.ForUpdate",
+        "ctx.scope_normal",
+        "peewee.Select.__sql_selection__",
+        "peewee.Select._apply_ordering",
+        "peewee.SelectBase.__sql__",
+        "ctx.literal",
+        "sql",
+        "peewee.EnclosedNodeList",
+        "ctx.scope_source",
+        "ctx.sql",
+        "peewee.Select.apply_column",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Delete.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.scope_normal",
+        "peewee._WriteQuery.__sql__",
+        "ctx.scope_values",
+        "ctx.literal",
+        "peewee.Delete._apply_ordering",
+        "sql",
+        "peewee.Delete.apply_returning"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.MySQLMigrator.drop_index",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "playhouse.migrate.MySQLMigrator.make_context",
+        "playhouse.migrate.SchemaMigrator.drop_index",
+        "sql",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.sql.TestSelectQuery.test_select_in_list_of_values",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "tests.sql.TestSelectQuery.assertSQL",
+        "Person.name.in_",
+        "tests.sql.TestSelectQuery.assertEqual",
+        "Context",
+        "Person.select",
+        "where",
+        "sql",
+        "query",
+        "Person.id.in_"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SchemaMigrator.rename_column",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "playhouse.migrate.MySQLMigrator.rename_column",
+        "playhouse.migrate.SqliteMigrator.rename_column"
+      ],
+      "callees": [
+        "playhouse.migrate.SchemaMigrator._alter_table",
+        "sql",
+        "playhouse.migrate.SchemaMigrator.make_context",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Cast.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.literal",
+        "sql",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.SchemaManager._create_index",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "peewee.SchemaManager._create_indexes"
+      ],
+      "callees": [
+        "peewee.SchemaManager._create_context",
+        "peewee.ValueLiterals",
+        "sql",
+        "index.safe"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Source.apply_alias",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.literal",
+        "Entity",
+        "sql"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.MySQLMigrator.rename_table",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "playhouse.migrate.MySQLMigrator.make_context",
+        "playhouse.migrate.SchemaMigrator.rename_table",
+        "sql",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.MySQLMigrator._alter_column",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "playhouse.migrate.SchemaMigrator._alter_column",
+        "playhouse.migrate.MySQLMigrator._alter_table",
+        "sql",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.postgres_ext.ArrayValue.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.sql",
+        "playhouse.postgres_ext.ArrayValue.field.ddl_datatype",
+        "sql",
+        "peewee.Node.__sql__",
+        "Value",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SchemaMigrator.alter_column_type",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "playhouse.migrate.SqliteMigrator.alter_column_type",
+        "playhouse.migrate.MySQLMigrator.alter_column_type"
+      ],
+      "callees": [
+        "playhouse.migrate.SchemaMigrator._alter_column",
+        "field.ddl_datatype",
+        "ctx.literal",
+        "sql",
+        "playhouse.migrate.SchemaMigrator.make_context",
+        "literal",
+        "SQL"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee._WriteQuery.apply_returning",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "peewee.Delete.apply_returning",
+        "peewee.Insert.apply_returning",
+        "peewee.Update.apply_returning"
+      ],
+      "callees": [
+        "ctx.literal",
+        "ctx.scope_source",
+        "sql",
+        "peewee.CommaNodeList"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.psycopg3_ext.JsonPath.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.sql",
+        "sql",
+        "join",
+        "Value",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SchemaMigrator.add_inline_fk_sql",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "playhouse.migrate.MySQLMigrator.add_inline_fk_sql",
+        "playhouse.migrate.SchemaMigrator.alter_add_column"
+      ],
+      "callees": [
+        "ctx.literal",
+        "sql",
+        "peewee.EnclosedNodeList",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SchemaMigrator.drop_column",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "playhouse.migrate.SqliteMigrator.drop_column"
+      ],
+      "callees": [
+        "playhouse.migrate.SchemaMigrator.database.get_foreign_keys",
+        "playhouse.migrate.SchemaMigrator._alter_table",
+        "ctx.literal",
+        "playhouse.migrate.SchemaMigrator.drop_foreign_key_constraint",
+        "sql",
+        "playhouse.migrate.SchemaMigrator.make_context",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.psycopg3_ext.JsonLookup.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.literal",
+        "sql",
+        "ctx.sql"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.SchemaManager._truncate_table",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "peewee.SchemaManager.truncate_table"
+      ],
+      "callees": [
+        "ctx.literal",
+        "peewee.SchemaManager._create_context",
+        "sql",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SchemaMigrator.add_foreign_key_constraint",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "playhouse.migrate.MySQLMigrator.add_foreign_key_constraint",
+        "playhouse.migrate.SchemaMigrator.add_column",
+        "playhouse.migrate.SqliteMigrator.add_foreign_key_constraint"
+      ],
+      "callees": [
+        "peewee._truncate_constraint_name",
+        "ctx.literal",
+        "sql",
+        "playhouse.migrate.SchemaMigrator.make_context",
+        "peewee.EnclosedNodeList",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.base.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "tests.sql.TestWindowFunctions.test_frame_types.assertFrame",
+        "tests.model_sql.TestModelSQL.test_delete_recursive",
+        "tests.sql.TestSelectQuery.test_like_escape.assertLike",
+        "tests.model_sql.TestModelSQL.test_value_flattening",
+        "tests.base.BaseTestCase.assertSQL"
+      ],
+      "callees": [
+        "Context",
+        "sql",
+        "query"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SchemaMigrator.rename_table",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "playhouse.migrate.SqliteMigrator.rename_table",
+        "playhouse.migrate.PostgresqlMigrator.rename_table",
+        "playhouse.migrate.MySQLMigrator.rename_table"
+      ],
+      "callees": [
+        "playhouse.migrate.SchemaMigrator._alter_table",
+        "sql",
+        "playhouse.migrate.SchemaMigrator.make_context",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.ForUpdate.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "CommaNodeList",
+        "ctx.literal",
+        "sql",
+        "peewee.Node.__sql__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SqliteMigrator.drop_column",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "playhouse.migrate.SchemaMigrator.drop_column",
+        "playhouse.migrate.SqliteMigrator._update_column",
+        "playhouse.migrate.SqliteMigrator.make_context",
+        "playhouse.migrate.SqliteMigrator._alter_table",
+        "sql",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Negated.__sql__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [],
+      "callees": [
+        "ctx.literal",
+        "sql"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SchemaMigrator.alter_add_column",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "playhouse.migrate.SchemaMigrator.add_column"
+      ],
+      "callees": [
+        "playhouse.migrate.SchemaMigrator.add_inline_fk_sql",
+        "field.ddl",
+        "playhouse.migrate.SchemaMigrator._alter_table",
+        "sql",
+        "playhouse.migrate.SchemaMigrator.make_context",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.migrate.SchemaMigrator.drop_constraint",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.sql",
+      "callers": [
+        "playhouse.migrate.SqliteMigrator.drop_constraint"
+      ],
+      "callees": [
+        "playhouse.migrate.SchemaMigrator._alter_table",
+        "sql",
+        "playhouse.migrate.SchemaMigrator.make_context",
+        "peewee.Entity",
+        "literal"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.libs.mock._patch_dict.__call__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.libs.mock._patch_dict.decorate_class",
+      "callers": [],
+      "callees": [
+        "tests.libs.mock.wraps",
+        "tests.libs.mock._patch_dict.decorate_class"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.pool.FakePooledDatabase.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "playhouse.pool.PooledDatabase.__init__",
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "playhouse.pool.PooledDatabase.__init__",
+        "tests.pool.FakeDatabase.__init__",
+        "PooledDatabase.__init__"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee._ModelWriteQueryHelper.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "peewee._ModelQueryHelper.__init__",
+      "callers": [
+        "peewee.ModelInsert.__init__"
+      ],
+      "callees": [
+        "peewee._ModelQueryHelper.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.ModelRaw.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "peewee._ModelQueryHelper.__init__",
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "peewee._ModelQueryHelper.__init__",
+        "peewee.RawQuery.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.BaseModelSelect.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "peewee._ModelQueryHelper.__init__",
+      "callers": [
+        "peewee.ModelSelect.__init__",
+        "peewee.ModelCompoundSelectQuery.__init__"
+      ],
+      "callees": [
+        "peewee._ModelQueryHelper.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.Table.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "peewee._HashableSource.__init__",
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "peewee.BaseTable.__init__",
+        "peewee._ExplicitColumn",
+        "Column",
+        "peewee._HashableSource.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.SelectBase.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "peewee._HashableSource.__init__",
+      "callers": [
+        "peewee.Select.__init__",
+        "peewee.CompoundSelectQuery.__init__"
+      ],
+      "callees": [
+        "peewee.Source.__init__",
+        "peewee._HashableSource.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.CTE.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "peewee._HashableSource.__init__",
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "Entity",
+        "peewee.Source.__init__",
+        "peewee._HashableSource.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "peewee.ValuesList.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "peewee._HashableSource.__init__",
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "peewee.BaseTable.__init__",
+        "peewee._HashableSource.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.psycopg3_ext.BinaryJSONField.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "Field.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.postgres_ext.ArrayField.__init__",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+      "callers": [
+        "peewee.PeeweeException.__init__",
+        "playhouse.shortcuts.ReconnectMixin.__init__",
+        "playhouse.pool.PooledDatabase.__init__",
+        "playhouse.sqlite_udf.synchronized_dict.__init__",
+        "tests.libs.mock.MagicMixin.__init__",
+        "peewee._ModelQueryHelper.__init__",
+        "peewee._HashableSource.__init__",
+        "playhouse.pwasyncio.AsyncDatabaseMixin.__init__",
+        "tests.libs.mock.NonCallableMock.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__",
+        "peewee._ConnectionState.__init__",
+        "tests.libs.mock.CallableMixin.__init__"
+      ],
+      "callees": [
+        "field_class",
+        "Field.__init__",
+        "playhouse.postgres_ext.IndexedFieldMixin.__init__"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "playhouse.pool.PooledDatabase._connect",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "playhouse.cysqlite_ext.CySqliteDatabase._connect",
+      "callers": [
+        "playhouse.pool.PooledDatabase._connect"
+      ],
+      "callees": [
+        "playhouse.pool.PooledDatabase._is_stale",
+        "playhouse.pool.PooledDatabase._is_closed",
+        "logger.debug",
+        "playhouse.pool.PooledDatabase._close",
+        "playhouse.pool.PooledDatabase.conn_key",
+        "playhouse.pool.MaxConnectionsExceeded",
+        "_connect",
+        "PoolConnection"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-10T15:01:12"
+}

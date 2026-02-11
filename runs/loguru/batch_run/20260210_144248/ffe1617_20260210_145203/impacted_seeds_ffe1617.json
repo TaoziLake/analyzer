@@ -1,0 +1,104 @@
+{
+  "commit": "ffe1617",
+  "parent": "62952bd97465db3b35999ac89b7acfde25f0a926",
+  "repo": "D:\\locbench\\loguru",
+  "num_files_in_diff": 4,
+  "num_py_files_in_diff": 2,
+  "num_seeds": 6,
+  "seeds": [
+    {
+      "path": "loguru/_simple_sinks.py",
+      "version": "new",
+      "line": 73,
+      "kind": "function",
+      "qualname": "loguru._simple_sinks.StandardSink.write",
+      "span": [
+        65,
+        99
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def write(self, message):\n        \"\"\"Write a message using the standard logging handler.\n\n        Parameters\n        ----------\n        message\n            The message to write.\n        \"\"\"\n        if message.record[\"level\"].no < self._handler.level:\n            return\n        raw_record = message.record\n        message = str(message)\n        exc = raw_record[\"exception\"]\n        record = logging.getLogger().makeRecord(\n            raw_record[\"name\"],\n            raw_record[\"level\"].no,\n            raw_record[\"file\"].path,\n            raw_record[\"line\"],\n            message,\n            (),\n            (exc.type, exc.value, exc.traceback) if exc else None,\n            raw_record[\"function\"],\n            {\"extra\": raw_record[\"extra\"]},\n        )\n\n        # By default, the standard logging module will format the exception and assign it to the\n        # \"exc_text\" attribute. Then, the formatted exception will be automatically appended to the\n        # message when the record is formatted. This is a problem, because that would cause the\n        # exception to be duplicated in the log message, since it's also formatted by Loguru. To\n        # avoid this, we set \"exc_text\" to a simple newline character, which will end the message.\n        if exc:\n            record.exc_text = \"\\n\"\n\n        record.levelname = raw_record[\"level\"].name\n        self._handler.handle(record)",
+      "old_code": "    def write(self, message):\n        \"\"\"Write a message using the standard logging handler.\n\n        Parameters\n        ----------\n        message\n            The message to write.\n        \"\"\"\n        raw_record = message.record\n        message = str(message)\n        exc = raw_record[\"exception\"]\n        record = logging.getLogger().makeRecord(\n            raw_record[\"name\"],\n            raw_record[\"level\"].no,\n            raw_record[\"file\"].path,\n            raw_record[\"line\"],\n            message,\n            (),\n            (exc.type, exc.value, exc.traceback) if exc else None,\n            raw_record[\"function\"],\n            {\"extra\": raw_record[\"extra\"]},\n        )\n\n        # By default, the standard logging module will format the exception and assign it to the\n        # \"exc_text\" attribute. Then, the formatted exception will be automatically appended to the\n        # message when the record is formatted. This is a problem, because that would cause the\n        # exception to be duplicated in the log message, since it's also formatted by Loguru. To\n        # avoid this, we set \"exc_text\" to a simple newline character, which will end the message.\n        if exc:\n            record.exc_text = \"\\n\"\n\n        record.levelname = raw_record[\"level\"].name\n        self._handler.handle(record)"
+    },
+    {
+      "path": "tests/test_standard_handler.py",
+      "version": "new",
+      "line": 2,
+      "kind": "module",
+      "qualname": "tests.test_standard_handler",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "tests/test_standard_handler.py",
+      "version": "new",
+      "line": 9,
+      "kind": "class",
+      "qualname": "tests.test_standard_handler.RejectAllFilter",
+      "span": [
+        9,
+        11
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "class RejectAllFilter(Filter):\n    def filter(self, record):\n        return False",
+      "old_code": null
+    },
+    {
+      "path": "tests/test_standard_handler.py",
+      "version": "new",
+      "line": 10,
+      "kind": "function",
+      "qualname": "tests.test_standard_handler.RejectAllFilter.filter",
+      "span": [
+        10,
+        11
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "    def filter(self, record):\n        return False",
+      "old_code": null
+    },
+    {
+      "path": "tests/test_standard_handler.py",
+      "version": "new",
+      "line": 226,
+      "kind": "function",
+      "qualname": "tests.test_standard_handler.test_standard_handler_with_configured_filter",
+      "span": [
+        226,
+        237
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "def test_standard_handler_with_configured_filter(capsys):\n    handler = StreamHandler(sys.stdout)\n    filter_ = RejectAllFilter()\n    logger.add(handler, format=\"{message}\")\n    logger.info(\"a\")\n    handler.addFilter(filter_)\n    logger.info(\"b\")\n    handler.removeFilter(filter_)\n    logger.info(\"c\")\n    out, err = capsys.readouterr()\n    assert out == \"a\\nc\\n\"\n    assert err == \"\"",
+      "old_code": null
+    },
+    {
+      "path": "tests/test_standard_handler.py",
+      "version": "new",
+      "line": 240,
+      "kind": "function",
+      "qualname": "tests.test_standard_handler.test_standard_handler_with_configured_level",
+      "span": [
+        240,
+        250
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "def test_standard_handler_with_configured_level(capsys):\n    handler = StreamHandler(sys.stdout)\n    logger.add(handler, format=\"{message}\")\n    logger.info(\"a\")\n    handler.setLevel(\"WARNING\")\n    logger.info(\"b\")\n    handler.setLevel(\"INFO\")\n    logger.info(\"c\")\n    out, err = capsys.readouterr()\n    assert out == \"a\\nc\\n\"\n    assert err == \"\"",
+      "old_code": null
+    }
+  ],
+  "generated_at": "2026-02-10T14:52:03"
+}

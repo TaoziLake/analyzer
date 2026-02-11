@@ -1,0 +1,40 @@
+{
+  "commit": "92952b9",
+  "parent": "78f86ffcfeef1f194cb3ab2a59beed1e83af8312",
+  "repo": "D:\\locbench\\loguru",
+  "num_files_in_diff": 2,
+  "num_py_files_in_diff": 2,
+  "num_seeds": 2,
+  "seeds": [
+    {
+      "path": "loguru/_colorama.py",
+      "version": "new",
+      "line": 10,
+      "kind": "function",
+      "qualname": "loguru._colorama.should_colorize",
+      "span": [
+        6,
+        54
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def should_colorize(stream):\n    if stream is None:\n        return False\n\n    is_standard_stream = stream is sys.stdout or stream is sys.stderr\n    is_original_standard_stream = stream is sys.__stdout__ or stream is sys.__stderr__\n\n    if is_standard_stream or is_original_standard_stream:\n        # Per the spec (https://no-color.org/), this needs to check for a\n        # non-empty string, not just presence of the variable:\n        if os.getenv(\"NO_COLOR\"):\n            return False\n\n        # Per the spec (https://force-color.org/), this needs to check for a\n        # non-empty string, not just presence of the variable:\n        if os.getenv(\"FORCE_COLOR\"):\n            return True\n\n    if getattr(builtins, \"__IPYTHON__\", False) and is_standard_stream:\n        try:\n            import ipykernel\n            import IPython\n\n            ipython = IPython.get_ipython()\n            is_jupyter_stream = isinstance(stream, ipykernel.iostream.OutStream)\n            is_jupyter_shell = isinstance(ipython, ipykernel.zmqshell.ZMQInteractiveShell)\n        except Exception:\n            pass\n        else:\n            if is_jupyter_stream and is_jupyter_shell:\n                return True\n\n    if is_original_standard_stream:\n        if \"CI\" in os.environ and any(\n            ci in os.environ\n            for ci in [\"TRAVIS\", \"CIRCLECI\", \"APPVEYOR\", \"GITLAB_CI\", \"GITHUB_ACTIONS\"]\n        ):\n            return True\n        if \"PYCHARM_HOSTED\" in os.environ:\n            return True\n        if os.environ.get(\"TERM\", \"\") in (\"dumb\",):\n            return False\n        if os.name == \"nt\" and \"TERM\" in os.environ:\n            return True\n\n    try:\n        return stream.isatty()\n    except Exception:\n        return False",
+      "old_code": "def should_colorize(stream):\n    if stream is None:\n        return False\n\n    # Per the spec (https://no-color.org/), this needs to check for a\n    # non-empty string, not just presence of the variable:\n    if os.getenv(\"NO_COLOR\"):\n        return False\n\n    # Per the spec (https://force-color.org/), this needs to check for a\n    # non-empty string, not just presence of the variable:\n    if os.getenv(\"FORCE_COLOR\"):\n        return True\n\n    if getattr(builtins, \"__IPYTHON__\", False) and (stream is sys.stdout or stream is sys.stderr):\n        try:\n            import ipykernel\n            import IPython\n\n            ipython = IPython.get_ipython()\n            is_jupyter_stream = isinstance(stream, ipykernel.iostream.OutStream)\n            is_jupyter_shell = isinstance(ipython, ipykernel.zmqshell.ZMQInteractiveShell)\n        except Exception:\n            pass\n        else:\n            if is_jupyter_stream and is_jupyter_shell:\n                return True\n\n    if stream is sys.__stdout__ or stream is sys.__stderr__:\n        if \"CI\" in os.environ and any(\n            ci in os.environ\n            for ci in [\"TRAVIS\", \"CIRCLECI\", \"APPVEYOR\", \"GITLAB_CI\", \"GITHUB_ACTIONS\"]\n        ):\n            return True\n        if \"PYCHARM_HOSTED\" in os.environ:\n            return True\n        if os.environ.get(\"TERM\", \"\") in (\"dumb\",):\n            return False\n        if os.name == \"nt\" and \"TERM\" in os.environ:\n            return True\n\n    try:\n        return stream.isatty()\n    except Exception:\n        return False"
+    },
+    {
+      "path": "tests/test_colorama.py",
+      "version": "new",
+      "line": 163,
+      "kind": "module",
+      "qualname": "tests.test_colorama",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": null
+    }
+  ],
+  "generated_at": "2026-02-10T14:55:43"
+}

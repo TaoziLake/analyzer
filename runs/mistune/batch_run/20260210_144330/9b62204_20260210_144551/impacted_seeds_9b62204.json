@@ -1,0 +1,27 @@
+{
+  "commit": "9b62204",
+  "parent": "7dda5f5d321608a7c906e167c1ee6f1110dd5802",
+  "repo": "D:\\locbench\\mistune",
+  "num_files_in_diff": 2,
+  "num_py_files_in_diff": 1,
+  "num_seeds": 1,
+  "seeds": [
+    {
+      "path": "src/mistune/plugins/footnotes.py",
+      "version": "new",
+      "line": 111,
+      "kind": "function",
+      "qualname": "src.mistune.plugins.footnotes.render_footnote_item",
+      "span": [
+        108,
+        116
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def render_footnote_item(renderer: \"BaseRenderer\", text: str, key: str, index: int) -> str:\n    i = str(index)\n    back = '<a href=\"#fnref-' + i + '\" class=\"footnote\">&#8617;</a>'\n    text = text.rstrip()\n    if text.endswith(\"</p>\"):\n        text = text[:-4] + back + \"</p>\"\n    else:\n        text = text + \"\\n\" + back\n    return '<li id=\"fn-' + i + '\">' + text + \"</li>\\n\"",
+      "old_code": "def render_footnote_item(renderer: \"BaseRenderer\", text: str, key: str, index: int) -> str:\n    i = str(index)\n    back = '<a href=\"#fnref-' + i + '\" class=\"footnote\">&#8617;</a>'\n    text = text.rstrip()[:-4] + back + \"</p>\"\n    return '<li id=\"fn-' + i + '\">' + text + \"</li>\\n\""
+    }
+  ],
+  "generated_at": "2026-02-10T14:45:51"
+}

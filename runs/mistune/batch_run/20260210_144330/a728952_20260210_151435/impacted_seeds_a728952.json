@@ -1,0 +1,43 @@
+{
+  "commit": "a728952",
+  "parent": "9058e0ddb4d34dab43e18d71db3af8038f74b65f",
+  "repo": "D:\\locbench\\mistune",
+  "num_files_in_diff": 2,
+  "num_py_files_in_diff": 2,
+  "num_seeds": 2,
+  "seeds": [
+    {
+      "path": "src/mistune/markdown.py",
+      "version": "new",
+      "line": 43,
+      "kind": "function",
+      "qualname": "src.mistune.markdown.Markdown.__init__",
+      "span": [
+        24,
+        48
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def __init__(\n        self,\n        renderer: Optional[BaseRenderer] = None,\n        block: Optional[BlockParser] = None,\n        inline: Optional[InlineParser] = None,\n        plugins: Optional[Iterable[Plugin]] = None,\n    ):\n        if block is None:\n            block = BlockParser()\n\n        if inline is None:\n            inline = InlineParser()\n\n        self.renderer = renderer\n        self.block: BlockParser = block\n        self.inline: InlineParser = inline\n        self.before_parse_hooks: List[Callable[[\"Markdown\", BlockState], None]] = []\n        self.before_render_hooks: List[Callable[[\"Markdown\", BlockState], Any]] = []\n        self.after_render_hooks: List[\n            Callable[[\"Markdown\", Union[str, List[Dict[str, Any]]], BlockState], Union[str, List[Dict[str, Any]]]]\n        ] = []\n\n        if plugins:\n            for plugin in plugins:\n                plugin(self)",
+      "old_code": "    def __init__(\n        self,\n        renderer: Optional[BaseRenderer] = None,\n        block: Optional[BlockParser] = None,\n        inline: Optional[InlineParser] = None,\n        plugins: Optional[Iterable[Plugin]] = None,\n    ):\n        if block is None:\n            block = BlockParser()\n\n        if inline is None:\n            inline = InlineParser()\n\n        self.renderer = renderer\n        self.block: BlockParser = block\n        self.inline: InlineParser = inline\n        self.before_parse_hooks: List[Callable[[\"Markdown\", BlockState], None]] = []\n        self.before_render_hooks: List[Callable[[\"Markdown\", BlockState], Any]] = []\n        self.after_render_hooks: List[\n            Callable[[\"Markdown\", Union[str, List[Dict[str, Any]]], BlockState], str]\n        ] = []\n\n        if plugins:\n            for plugin in plugins:\n                plugin(self)"
+    },
+    {
+      "path": "src/mistune/plugins/footnotes.py",
+      "version": "new",
+      "line": 97,
+      "kind": "function",
+      "qualname": "src.mistune.plugins.footnotes.md_footnotes_hook",
+      "span": [
+        95,
+        109
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def md_footnotes_hook(\n    md: \"Markdown\", result: Union[str, List[Dict[str, Any]]], state: BlockState\n) -> Union[str, List[Dict[str, Any]]]:\n    notes = state.env.get(\"footnotes\")\n    if not notes:\n        return result\n\n    children = [\n        parse_footnote_item(md.block, k, i + 1, state)\n        for i, k in enumerate(notes)\n    ]\n    state = BlockState()\n    state.tokens = [{'type': 'footnotes', 'children': children}]\n    output = md.render_state(state)\n    return result + output  # type: ignore[operator]",
+      "old_code": "def md_footnotes_hook(\n    md: \"Markdown\", result: Union[str, List[Dict[str, Any]]], state: BlockState\n) -> str:\n    assert isinstance(result, str)\n    notes = state.env.get(\"footnotes\")\n    if not notes:\n        return result\n\n    children = [\n        parse_footnote_item(md.block, k, i + 1, state)\n        for i, k in enumerate(notes)\n    ]\n    state = BlockState()\n    state.tokens = [{'type': 'footnotes', 'children': children}]\n    output = md.render_state(state)\n    assert isinstance(output, str)\n    return result + output"
+    }
+  ],
+  "generated_at": "2026-02-10T15:14:35"
+}

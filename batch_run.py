@@ -79,6 +79,43 @@ def _read_commits_from_file(path: str) -> List[str]:
     return commits
 
 
+def _load_done_commits(jsonl_path: str) -> Tuple[set, List[Dict]]:
+    """Load already-completed (commit, mode) pairs and rows from summary.jsonl.
+
+    Returns:
+        (done_set, rows)  where done_set is {(commit, mode), ...}
+    """
+    done: set = set()
+    rows: List[Dict] = []
+    if not os.path.isfile(jsonl_path):
+        return done, rows
+    with open(jsonl_path, "r", encoding="utf-8") as f:
+        for ln in f:
+            ln = ln.strip()
+            if not ln:
+                continue
+            try:
+                row = json.loads(ln)
+                done.add((row["commit"], row["mode"]))
+                rows.append(row)
+            except (json.JSONDecodeError, KeyError):
+                continue
+    return done, rows
+
+
+def _find_latest_batch_dir(repo: str) -> Optional[str]:
+    """Find the most recent batch_run directory for a given repo."""
+    batch_root = os.path.join(_analyzer_root(), "runs", _repo_name(repo), "batch_run")
+    if not os.path.isdir(batch_root):
+        return None
+    subdirs = sorted(
+        [d for d in os.listdir(batch_root)
+         if os.path.isdir(os.path.join(batch_root, d))],
+        reverse=True,
+    )
+    return os.path.join(batch_root, subdirs[0]) if subdirs else None
+
+
 def _read_commits_from_git(repo: str, n: int) -> List[str]:
     """Get latest N commit SHAs from git log."""
     code, out = _run_cmd(["git", "-C", repo, "log", "--oneline", "-n", str(n)])
@@ -241,6 +278,9 @@ Examples:
     ap.add_argument("--no-llm", action="store_true", help="Disable LLM (LLM mode only, for testing)")
     ap.add_argument("--timeout", type=int, default=600, help="Per-commit timeout in seconds (default 600)")
     ap.add_argument("--out", default=None, help="Output directory (default: analyzer/runs/<repo>/batch_run/<tag>/)")
+    ap.add_argument("--resume", action="store_true",
+                     help="Resume: skip commits already in summary.jsonl. "
+                          "When --out is not set, reuses the latest batch_run dir for the repo.")
     args = ap.parse_args()
 
     repo = os.path.abspath(args.repo)
@@ -248,6 +288,12 @@ Examples:
     # Determine output directory
     if args.out:
         out_dir = os.path.abspath(args.out)
+    elif args.resume:
+        latest = _find_latest_batch_dir(repo)
+        if latest:
+            out_dir = latest
+        else:
+            out_dir = os.path.join(_analyzer_root(), "runs", _repo_name(repo), "batch_run", _now_tag())
     else:
         out_dir = os.path.join(_analyzer_root(), "runs", _repo_name(repo), "batch_run", _now_tag())
     os.makedirs(out_dir, exist_ok=True)
@@ -283,13 +329,20 @@ Examples:
     print(f"  timeout: {args.timeout}s per commit")
     print(f"=" * 60)
 
-    rows: List[Dict] = []
-    total_runs = len(commits) * len(modes)
-    run_idx = 0
-
     jsonl_path = os.path.join(out_dir, "summary.jsonl")
     csv_path = os.path.join(out_dir, "summary.csv")
     agg_path = os.path.join(out_dir, "aggregate.json")
+
+    # Load already-done commits when resuming
+    done_set: set = set()
+    rows: List[Dict] = []
+    if args.resume:
+        done_set, rows = _load_done_commits(jsonl_path)
+        if done_set:
+            print(f"  resume:  {len(done_set)} (commit, mode) pairs already done, will skip")
+
+    total_runs = len(commits) * len(modes)
+    run_idx = 0
 
     # Save config
     config = {
@@ -307,14 +360,24 @@ Examples:
         "num_commits": len(commits),
         "commits": commits,
         "started_at": datetime.now().isoformat(timespec="seconds"),
+        "resume": args.resume,
+        "resumed_from": len(done_set),
     }
     with open(os.path.join(out_dir, "config.json"), "w", encoding="utf-8") as f:
         json.dump(config, f, ensure_ascii=False, indent=2)
 
-    with open(jsonl_path, "w", encoding="utf-8") as jf:
+    # Open jsonl in append mode when resuming, write mode otherwise
+    jsonl_mode = "a" if args.resume and done_set else "w"
+    with open(jsonl_path, jsonl_mode, encoding="utf-8") as jf:
         for commit in commits:
             for mode in modes:
                 run_idx += 1
+
+                # Skip already-tested (commit, mode) pairs
+                if (commit, mode) in done_set:
+                    print(f"\n[{run_idx}/{total_runs}] commit={commit} mode={mode}  ** SKIP (already done)")
+                    continue
+
                 print(f"\n[{run_idx}/{total_runs}] commit={commit} mode={mode}")
 
                 mode_extra = list(extra_args)

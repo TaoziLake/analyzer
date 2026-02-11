@@ -1,0 +1,133 @@
+{
+  "commit": "1b342ef",
+  "parent": "7b265f16634155dafcca65f6122ef7ed8d14a67f",
+  "repo": "D:\\locbench\\black",
+  "num_files_in_diff": 4,
+  "num_py_files_in_diff": 3,
+  "num_seeds": 8,
+  "seeds": [
+    {
+      "path": "src/black/comments.py",
+      "version": "new",
+      "line": 342,
+      "kind": "function",
+      "qualname": "src.black.comments.convert_one_fmt_off_pair",
+      "span": [
+        334,
+        390
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def convert_one_fmt_off_pair(\n    node: Node, mode: Mode, lines: Collection[tuple[int, int]]\n) -> bool:\n    \"\"\"Convert content of a single `# fmt: off`/`# fmt: on` into a standalone comment.\n\n    Returns True if a pair was converted.\n    \"\"\"\n    for leaf in node.leaves():\n        # Skip STANDALONE_COMMENT nodes that were created by fmt:off/on/skip processing\n        # to avoid reprocessing them in subsequent iterations\n        if leaf.type == STANDALONE_COMMENT and hasattr(\n            leaf, \"fmt_pass_converted_first_leaf\"\n        ):\n            continue\n\n        previous_consumed = 0\n        for comment in list_comments(leaf.prefix, is_endmarker=False, mode=mode):\n            should_process, is_fmt_off, is_fmt_skip = _should_process_fmt_comment(\n                comment, leaf\n            )\n            if not should_process:\n                previous_consumed = comment.consumed\n                continue\n\n            if not _is_valid_standalone_fmt_comment(\n                comment, leaf, is_fmt_off, is_fmt_skip\n            ):\n                previous_consumed = comment.consumed\n                continue\n\n            ignored_nodes = list(generate_ignored_nodes(leaf, comment, mode))\n\n            # Handle comment-only blocks\n            if not ignored_nodes and is_fmt_off:\n                if _handle_comment_only_fmt_block(\n                    leaf, comment, previous_consumed, mode\n                ):\n                    return True\n                continue\n\n            # Need actual nodes to process\n            if not ignored_nodes:\n                continue\n\n            # Handle regular fmt blocks\n\n            _handle_regular_fmt_block(\n                ignored_nodes,\n                comment,\n                previous_consumed,\n                is_fmt_skip,\n                lines,\n                leaf,\n            )\n            return True\n\n    return False",
+      "old_code": "def convert_one_fmt_off_pair(\n    node: Node, mode: Mode, lines: Collection[tuple[int, int]]\n) -> bool:\n    \"\"\"Convert content of a single `# fmt: off`/`# fmt: on` into a standalone comment.\n\n    Returns True if a pair was converted.\n    \"\"\"\n    for leaf in node.leaves():\n        # Skip STANDALONE_COMMENT nodes that were created by fmt:off/on processing\n        # to avoid reprocessing them in subsequent iterations\n        if (\n            leaf.type == STANDALONE_COMMENT\n            and hasattr(leaf, \"fmt_pass_converted_first_leaf\")\n            and leaf.fmt_pass_converted_first_leaf is None\n        ):\n            continue\n\n        previous_consumed = 0\n        for comment in list_comments(leaf.prefix, is_endmarker=False, mode=mode):\n            should_process, is_fmt_off, is_fmt_skip = _should_process_fmt_comment(\n                comment, leaf\n            )\n            if not should_process:\n                previous_consumed = comment.consumed\n                continue\n\n            if not _is_valid_standalone_fmt_comment(\n                comment, leaf, is_fmt_off, is_fmt_skip\n            ):\n                previous_consumed = comment.consumed\n                continue\n\n            ignored_nodes = list(generate_ignored_nodes(leaf, comment, mode))\n\n            # Handle comment-only blocks\n            if not ignored_nodes and is_fmt_off:\n                if _handle_comment_only_fmt_block(\n                    leaf, comment, previous_consumed, mode\n                ):\n                    return True\n                continue\n\n            # Need actual nodes to process\n            if not ignored_nodes:\n                continue\n\n            # Handle regular fmt blocks\n\n            _handle_regular_fmt_block(\n                ignored_nodes,\n                comment,\n                previous_consumed,\n                is_fmt_skip,\n                lines,\n                leaf,\n            )\n            return True\n\n    return False"
+    },
+    {
+      "path": "src/black/comments.py",
+      "version": "new",
+      "line": 414,
+      "kind": "function",
+      "qualname": "src.black.comments._handle_regular_fmt_block",
+      "span": [
+        393,
+        490
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def _handle_regular_fmt_block(\n    ignored_nodes: list[LN],\n    comment: ProtoComment,\n    previous_consumed: int,\n    is_fmt_skip: bool,\n    lines: Collection[tuple[int, int]],\n    leaf: Leaf,\n) -> None:\n    \"\"\"Handle fmt blocks with actual AST nodes.\"\"\"\n    first = ignored_nodes[0]  # Can be a container node with the `leaf`.\n    parent = first.parent\n    prefix = first.prefix\n\n    if contains_fmt_directive(comment.value, FMT_OFF):\n        first.prefix = prefix[comment.consumed :]\n    if is_fmt_skip:\n        first.prefix = \"\"\n        standalone_comment_prefix = prefix\n    else:\n        standalone_comment_prefix = prefix[:previous_consumed] + \"\\n\" * comment.newlines\n\n    # Ensure STANDALONE_COMMENT nodes have trailing newlines when stringified\n    # This prevents multiple fmt: skip comments from being concatenated on one line\n    parts = []\n    for node in ignored_nodes:\n        if isinstance(node, Leaf) and node.type == STANDALONE_COMMENT:\n            # Add newline after STANDALONE_COMMENT Leaf\n            node_str = str(node)\n            if not node_str.endswith(\"\\n\"):\n                node_str += \"\\n\"\n            parts.append(node_str)\n        elif isinstance(node, Node):\n            # For nodes that might contain STANDALONE_COMMENT leaves,\n            # we need custom stringify\n            has_standalone = any(\n                leaf.type == STANDALONE_COMMENT for leaf in node.leaves()\n            )\n            if has_standalone:\n                # Stringify node with STANDALONE_COMMENT leaves having trailing newlines\n                def stringify_node(n: LN) -> str:\n                    if isinstance(n, Leaf):\n                        if n.type == STANDALONE_COMMENT:\n                            result = n.prefix + n.value\n                            if not result.endswith(\"\\n\"):\n                                result += \"\\n\"\n                            return result\n                        return str(n)\n                    else:\n                        # For nested nodes, recursively process children\n                        return \"\".join(stringify_node(child) for child in n.children)\n\n                parts.append(stringify_node(node))\n            else:\n                parts.append(str(node))\n        else:\n            parts.append(str(node))\n\n    hidden_value = \"\".join(parts)\n    comment_lineno = leaf.lineno - comment.newlines\n\n    if contains_fmt_directive(comment.value, FMT_OFF):\n        fmt_off_prefix = \"\"\n        if len(lines) > 0 and not any(\n            line[0] <= comment_lineno <= line[1] for line in lines\n        ):\n            # keeping indentation of comment by preserving original whitespaces.\n            fmt_off_prefix = prefix.split(comment.value)[0]\n            if \"\\n\" in fmt_off_prefix:\n                fmt_off_prefix = fmt_off_prefix.split(\"\\n\")[-1]\n        standalone_comment_prefix += fmt_off_prefix\n        hidden_value = comment.value + \"\\n\" + hidden_value\n\n    if is_fmt_skip:\n        hidden_value += comment.leading_whitespace + comment.value\n\n    if hidden_value.endswith(\"\\n\"):\n        # That happens when one of the `ignored_nodes` ended with a NEWLINE\n        # leaf (possibly followed by a DEDENT).\n        hidden_value = hidden_value[:-1]\n\n    first_idx: int | None = None\n    for ignored in ignored_nodes:\n        index = ignored.remove()\n        if first_idx is None:\n            first_idx = index\n\n    assert parent is not None, \"INTERNAL ERROR: fmt: on/off handling (1)\"\n    assert first_idx is not None, \"INTERNAL ERROR: fmt: on/off handling (2)\"\n\n    parent.insert_child(\n        first_idx,\n        Leaf(\n            STANDALONE_COMMENT,\n            hidden_value,\n            prefix=standalone_comment_prefix,\n            fmt_pass_converted_first_leaf=first_leaf_of(first),\n        ),\n    )",
+      "old_code": "def _handle_regular_fmt_block(\n    ignored_nodes: list[LN],\n    comment: ProtoComment,\n    previous_consumed: int,\n    is_fmt_skip: bool,\n    lines: Collection[tuple[int, int]],\n    leaf: Leaf,\n) -> None:\n    \"\"\"Handle fmt blocks with actual AST nodes.\"\"\"\n    first = ignored_nodes[0]  # Can be a container node with the `leaf`.\n    parent = first.parent\n    prefix = first.prefix\n\n    if contains_fmt_directive(comment.value, FMT_OFF):\n        first.prefix = prefix[comment.consumed :]\n    if is_fmt_skip:\n        first.prefix = \"\"\n        standalone_comment_prefix = prefix\n    else:\n        standalone_comment_prefix = prefix[:previous_consumed] + \"\\n\" * comment.newlines\n\n    hidden_value = \"\".join(str(n) for n in ignored_nodes)\n    comment_lineno = leaf.lineno - comment.newlines\n\n    if contains_fmt_directive(comment.value, FMT_OFF):\n        fmt_off_prefix = \"\"\n        if len(lines) > 0 and not any(\n            line[0] <= comment_lineno <= line[1] for line in lines\n        ):\n            # keeping indentation of comment by preserving original whitespaces.\n            fmt_off_prefix = prefix.split(comment.value)[0]\n            if \"\\n\" in fmt_off_prefix:\n                fmt_off_prefix = fmt_off_prefix.split(\"\\n\")[-1]\n        standalone_comment_prefix += fmt_off_prefix\n        hidden_value = comment.value + \"\\n\" + hidden_value\n\n    if is_fmt_skip:\n        hidden_value += comment.leading_whitespace + comment.value\n\n    if hidden_value.endswith(\"\\n\"):\n        # That happens when one of the `ignored_nodes` ended with a NEWLINE\n        # leaf (possibly followed by a DEDENT).\n        hidden_value = hidden_value[:-1]\n\n    first_idx: int | None = None\n    for ignored in ignored_nodes:\n        index = ignored.remove()\n        if first_idx is None:\n            first_idx = index\n\n    assert parent is not None, \"INTERNAL ERROR: fmt: on/off handling (1)\"\n    assert first_idx is not None, \"INTERNAL ERROR: fmt: on/off handling (2)\"\n\n    parent.insert_child(\n        first_idx,\n        Leaf(\n            STANDALONE_COMMENT,\n            hidden_value,\n            prefix=standalone_comment_prefix,\n            fmt_pass_converted_first_leaf=first_leaf_of(first),\n        ),\n    )"
+    },
+    {
+      "path": "src/black/comments.py",
+      "version": "new",
+      "line": 432,
+      "kind": "function",
+      "qualname": "src.black.comments._handle_regular_fmt_block.stringify_node",
+      "span": [
+        432,
+        442
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "                def stringify_node(n: LN) -> str:\n                    if isinstance(n, Leaf):\n                        if n.type == STANDALONE_COMMENT:\n                            result = n.prefix + n.value\n                            if not result.endswith(\"\\n\"):\n                                result += \"\\n\"\n                            return result\n                        return str(n)\n                    else:\n                        # For nested nodes, recursively process children\n                        return \"\".join(stringify_node(child) for child in n.children)",
+      "old_code": null
+    },
+    {
+      "path": "src/black/comments.py",
+      "version": "new",
+      "line": 687,
+      "kind": "function",
+      "qualname": "src.black.comments._generate_ignored_nodes_from_fmt_skip",
+      "span": [
+        634,
+        770
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def _generate_ignored_nodes_from_fmt_skip(\n    leaf: Leaf, comment: ProtoComment, mode: Mode\n) -> Iterator[LN]:\n    \"\"\"Generate all leaves that should be ignored by the `# fmt: skip` from `leaf`.\"\"\"\n    prev_sibling = leaf.prev_sibling\n    parent = leaf.parent\n    ignored_nodes: list[LN] = []\n    # Need to properly format the leaf prefix to compare it to comment.value,\n    # which is also formatted\n    comments = list_comments(leaf.prefix, is_endmarker=False, mode=mode)\n    if not comments or comment.value != comments[0].value:\n        return\n\n    if Preview.fix_fmt_skip_in_one_liners in mode and not prev_sibling and parent:\n        prev_sibling = parent.prev_sibling\n\n    if prev_sibling is not None:\n        leaf.prefix = leaf.prefix[comment.consumed :]\n\n        if Preview.fix_fmt_skip_in_one_liners not in mode:\n            siblings = [prev_sibling]\n            while (\n                \"\\n\" not in prev_sibling.prefix\n                and prev_sibling.prev_sibling is not None\n            ):\n                prev_sibling = prev_sibling.prev_sibling\n                siblings.insert(0, prev_sibling)\n            yield from siblings\n            return\n\n        # Generates the nodes to be ignored by `fmt: skip`.\n\n        # Nodes to ignore are the ones on the same line as the\n        # `# fmt: skip` comment, excluding the `# fmt: skip`\n        # node itself.\n\n        # Traversal process (starting at the `# fmt: skip` node):\n        # 1. Move to the `prev_sibling` of the current node.\n        # 2. If `prev_sibling` has children, go to its rightmost leaf.\n        # 3. If there's no `prev_sibling`, move up to the parent\n        # node and repeat.\n        # 4. Continue until:\n        #    a. You encounter an `INDENT` or `NEWLINE` node (indicates\n        #       start of the line).\n        #    b. You reach the root node.\n\n        # Include all visited LEAVES in the ignored list, except INDENT\n        # or NEWLINE leaves.\n\n        current_node = prev_sibling\n        ignored_nodes = [current_node]\n        if current_node.prev_sibling is None and current_node.parent is not None:\n            current_node = current_node.parent\n\n        # Track seen nodes to detect cycles that can occur after tree modifications\n        seen_nodes = {id(current_node)}\n\n        while \"\\n\" not in current_node.prefix and current_node.prev_sibling is not None:\n            leaf_nodes = list(current_node.prev_sibling.leaves())\n            next_node = leaf_nodes[-1] if leaf_nodes else current_node\n\n            # Detect infinite loop - if we've seen this node before, stop\n            # This can happen when STANDALONE_COMMENT nodes are inserted\n            # during processing\n            if id(next_node) in seen_nodes:\n                break\n\n            current_node = next_node\n            seen_nodes.add(id(current_node))\n\n            # Stop if we encounter a STANDALONE_COMMENT created by fmt processing\n            if (\n                isinstance(current_node, Leaf)\n                and current_node.type == STANDALONE_COMMENT\n                and hasattr(current_node, \"fmt_pass_converted_first_leaf\")\n            ):\n                break\n\n            if (\n                current_node.type in CLOSING_BRACKETS\n                and current_node.parent\n                and current_node.parent.type == syms.atom\n            ):\n                current_node = current_node.parent\n\n            if current_node.type in (token.NEWLINE, token.INDENT):\n                current_node.prefix = \"\"\n                break\n\n            if current_node.type == token.DEDENT:\n                break\n\n            # Special case for with expressions\n            # Without this, we can stuck inside the asexpr_test's children's children\n            if (\n                current_node.parent\n                and current_node.parent.type == syms.asexpr_test\n                and current_node.parent.parent\n                and current_node.parent.parent.type == syms.with_stmt\n            ):\n                current_node = current_node.parent\n\n            ignored_nodes.insert(0, current_node)\n\n            if current_node.prev_sibling is None and current_node.parent is not None:\n                current_node = current_node.parent\n\n        # Special handling for compound statements with semicolon-separated bodies\n        if Preview.fix_fmt_skip_in_one_liners in mode and isinstance(parent, Node):\n            body_node = _find_compound_statement_context(parent)\n            if body_node is not None:\n                header_nodes = _get_compound_statement_header(body_node, parent)\n                if header_nodes:\n                    ignored_nodes = header_nodes + ignored_nodes\n\n        yield from ignored_nodes\n    elif (\n        parent is not None and parent.type == syms.suite and leaf.type == token.NEWLINE\n    ):\n        # The `# fmt: skip` is on the colon line of the if/while/def/class/...\n        # statements. The ignored nodes should be previous siblings of the\n        # parent suite node.\n        leaf.prefix = \"\"\n        parent_sibling = parent.prev_sibling\n        while parent_sibling is not None and parent_sibling.type != syms.suite:\n            ignored_nodes.insert(0, parent_sibling)\n            parent_sibling = parent_sibling.prev_sibling\n        # Special case for `async_stmt` where the ASYNC token is on the\n        # grandparent node.\n        grandparent = parent.parent\n        if (\n            grandparent is not None\n            and grandparent.prev_sibling is not None\n            and grandparent.prev_sibling.type == token.ASYNC\n        ):\n            ignored_nodes.insert(0, grandparent.prev_sibling)\n        yield from iter(ignored_nodes)",
+      "old_code": "def _generate_ignored_nodes_from_fmt_skip(\n    leaf: Leaf, comment: ProtoComment, mode: Mode\n) -> Iterator[LN]:\n    \"\"\"Generate all leaves that should be ignored by the `# fmt: skip` from `leaf`.\"\"\"\n    prev_sibling = leaf.prev_sibling\n    parent = leaf.parent\n    ignored_nodes: list[LN] = []\n    # Need to properly format the leaf prefix to compare it to comment.value,\n    # which is also formatted\n    comments = list_comments(leaf.prefix, is_endmarker=False, mode=mode)\n    if not comments or comment.value != comments[0].value:\n        return\n\n    if Preview.fix_fmt_skip_in_one_liners in mode and not prev_sibling and parent:\n        prev_sibling = parent.prev_sibling\n\n    if prev_sibling is not None:\n        leaf.prefix = leaf.prefix[comment.consumed :]\n\n        if Preview.fix_fmt_skip_in_one_liners not in mode:\n            siblings = [prev_sibling]\n            while (\n                \"\\n\" not in prev_sibling.prefix\n                and prev_sibling.prev_sibling is not None\n            ):\n                prev_sibling = prev_sibling.prev_sibling\n                siblings.insert(0, prev_sibling)\n            yield from siblings\n            return\n\n        # Generates the nodes to be ignored by `fmt: skip`.\n\n        # Nodes to ignore are the ones on the same line as the\n        # `# fmt: skip` comment, excluding the `# fmt: skip`\n        # node itself.\n\n        # Traversal process (starting at the `# fmt: skip` node):\n        # 1. Move to the `prev_sibling` of the current node.\n        # 2. If `prev_sibling` has children, go to its rightmost leaf.\n        # 3. If there's no `prev_sibling`, move up to the parent\n        # node and repeat.\n        # 4. Continue until:\n        #    a. You encounter an `INDENT` or `NEWLINE` node (indicates\n        #       start of the line).\n        #    b. You reach the root node.\n\n        # Include all visited LEAVES in the ignored list, except INDENT\n        # or NEWLINE leaves.\n\n        current_node = prev_sibling\n        ignored_nodes = [current_node]\n        if current_node.prev_sibling is None and current_node.parent is not None:\n            current_node = current_node.parent\n        while \"\\n\" not in current_node.prefix and current_node.prev_sibling is not None:\n            leaf_nodes = list(current_node.prev_sibling.leaves())\n            current_node = leaf_nodes[-1] if leaf_nodes else current_node\n\n            if (\n                current_node.type in CLOSING_BRACKETS\n                and current_node.parent\n                and current_node.parent.type == syms.atom\n            ):\n                current_node = current_node.parent\n\n            if current_node.type in (token.NEWLINE, token.INDENT):\n                current_node.prefix = \"\"\n                break\n\n            if current_node.type == token.DEDENT:\n                break\n\n            # Special case for with expressions\n            # Without this, we can stuck inside the asexpr_test's children's children\n            if (\n                current_node.parent\n                and current_node.parent.type == syms.asexpr_test\n                and current_node.parent.parent\n                and current_node.parent.parent.type == syms.with_stmt\n            ):\n                current_node = current_node.parent\n\n            ignored_nodes.insert(0, current_node)\n\n            if current_node.prev_sibling is None and current_node.parent is not None:\n                current_node = current_node.parent\n\n        # Special handling for compound statements with semicolon-separated bodies\n        if Preview.fix_fmt_skip_in_one_liners in mode and isinstance(parent, Node):\n            body_node = _find_compound_statement_context(parent)\n            if body_node is not None:\n                header_nodes = _get_compound_statement_header(body_node, parent)\n                if header_nodes:\n                    ignored_nodes = header_nodes + ignored_nodes\n\n        yield from ignored_nodes\n    elif (\n        parent is not None and parent.type == syms.suite and leaf.type == token.NEWLINE\n    ):\n        # The `# fmt: skip` is on the colon line of the if/while/def/class/...\n        # statements. The ignored nodes should be previous siblings of the\n        # parent suite node.\n        leaf.prefix = \"\"\n        parent_sibling = parent.prev_sibling\n        while parent_sibling is not None and parent_sibling.type != syms.suite:\n            ignored_nodes.insert(0, parent_sibling)\n            parent_sibling = parent_sibling.prev_sibling\n        # Special case for `async_stmt` where the ASYNC token is on the\n        # grandparent node.\n        grandparent = parent.parent\n        if (\n            grandparent is not None\n            and grandparent.prev_sibling is not None\n            and grandparent.prev_sibling.type == token.ASYNC\n        ):\n            ignored_nodes.insert(0, grandparent.prev_sibling)\n        yield from iter(ignored_nodes)"
+    },
+    {
+      "path": "tests/data/cases/fmtskip_multiple_in_clause.py",
+      "version": "new",
+      "line": 1,
+      "kind": "module",
+      "qualname": "tests.data.cases.fmtskip_multiple_in_clause",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "tests/data/cases/fmtskip_multiple_in_clause.py",
+      "version": "new",
+      "line": 2,
+      "kind": "class",
+      "qualname": "tests.data.cases.fmtskip_multiple_in_clause.ClassWithALongName",
+      "span": [
+        2,
+        5
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "class ClassWithALongName:\n    Constant1 = 1\n    Constant2 = 2\n    Constant3 = 3",
+      "old_code": null
+    },
+    {
+      "path": "tests/data/cases/fmtskip_multiple_in_clause.py",
+      "version": "new",
+      "line": 8,
+      "kind": "function",
+      "qualname": "tests.data.cases.fmtskip_multiple_in_clause.test",
+      "span": [
+        8,
+        19
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "def test():\n    if (\n        \"cond1\" == \"cond1\"\n        and \"cond2\" == \"cond2\"\n        and 1 in (\n            ClassWithALongName.Constant1,\n            ClassWithALongName.Constant2,\n            ClassWithALongName.Constant3, # fmt: skip\n        ) # fmt: skip\n    ):\n        return True\n    return False",
+      "old_code": null
+    },
+    {
+      "path": "tests/data/cases/fmtskip_multiple_strings.py",
+      "version": "new",
+      "line": 1,
+      "kind": "module",
+      "qualname": "tests.data.cases.fmtskip_multiple_strings",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": null
+    }
+  ],
+  "generated_at": "2026-02-09T15:56:45"
+}

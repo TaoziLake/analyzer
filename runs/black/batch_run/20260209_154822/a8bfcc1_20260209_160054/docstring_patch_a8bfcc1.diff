@@ -1,0 +1,20 @@
+--- a/src/black/comments.py
++++ b/src/black/comments.py
+@@ -596,7 +596,16 @@
+ def _generate_ignored_nodes_from_fmt_skip(
+     leaf: Leaf, comment: ProtoComment, mode: Mode
+ ) -> Iterator[LN]:
+-    """Generate all leaves that should be ignored by the `# fmt: skip` from `leaf`."""
++    """Generate all leaves that should be ignored by the `# fmt: skip` from `leaf`.
++
++    Args:
++        leaf: The leaf node containing the `# fmt: skip` comment
++        comment: The ProtoComment object representing the `# fmt: skip` comment
++        mode: Black's Mode object controlling formatting behavior
++
++    Returns:
++        Iterator of Leaf/Node objects that should be ignored by the formatter
++    """
+     prev_sibling = leaf.prev_sibling
+     parent = leaf.parent
+     ignored_nodes: list[LN] = []

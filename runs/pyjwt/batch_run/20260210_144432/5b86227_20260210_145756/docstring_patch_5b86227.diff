@@ -1,0 +1,111 @@
+--- a/jwt/algorithms.py
++++ b/jwt/algorithms.py
+@@ -155,8 +155,13 @@
+ 
+ 
+ def get_default_algorithms() -> dict[str, Algorithm]:
+-    """
+-    Returns the algorithms that are implemented by the library.
++    """Returns the algorithms that are implemented by the library.
++
++    :returns: A dictionary mapping algorithm names to Algorithm class instances
++    :rtype: dict[str, Algorithm]
++
++    Changelog:
++        5b86227: Modified ECAlgorithm instantiations to explicitly specify curve parameters (SECP256R1, SECP256K1, SECP384R1, SECP521R1) for each EC algorithm. This clarifies the exact elliptic curves used for ECDSA/EdDSA algorithms instead of relying on implicit defaults.
+     """
+     default_algorithms: dict[str, Algorithm] = {
+         "none": NoneAlgorithm(),
+@@ -581,11 +586,34 @@
+             hash_alg: type[hashes.HashAlgorithm],
+             expected_curve: type[EllipticCurve] | None = None,
+         ) -> None:
++            """Initialize an ECAlgorithm instance with a hash algorithm and optional expected elliptic curve.
++
++            Args:
++                hash_alg: A hash algorithm class to use for ECDSA operations
++                expected_curve: Optional elliptic curve class that will be validated against
++                    provided keys. If None, no curve validation is performed.
++
++            Changelog:
++                5b86227: Added expected_curve parameter to enable elliptic curve validation in ECAlgorithm.
++                This allows enforcing specific curve requirements during JWT verification, improving
++                security by preventing algorithm substitution attacks. The parameter is optional
++                to maintain backward compatibility.
++            """
+             self.hash_alg = hash_alg
+             self.expected_curve = expected_curve
+ 
+         def _validate_curve(self, key: AllowedECKeys) -> None:
+-            """Validate that the key's curve matches the expected curve."""
++            """Validate that the key's elliptic curve matches the algorithm's expected curve.
++
++            :param key: The EC key object to validate
++            :returns: None
++            :raises InvalidKeyError: If the key's curve does not match the expected curve
++
++            Changelog:
++                5b86227: Added curve validation logic to enforce strict curve matching between
++                EC keys and algorithms. Introduces type checking against expected_curve class
++                attribute and raises InvalidKeyError with descriptive message when curves mismatch.
++            """
+             if self.expected_curve is None:
+                 return
+ 
+@@ -596,6 +624,25 @@
+                 )
+ 
+         def prepare_key(self, key: AllowedECKeys | str | bytes) -> AllowedECKeys:
++            """Prepares an elliptic curve key for use by validating its type and curve parameters.
++
++            Args:
++                key: An elliptic curve key in PEM/SSH format, bytes, or a pre-loaded key object.
++
++            Returns:
++                An elliptic curve public or private key object validated for use.
++
++            Raises:
++                TypeError: If input is not a string, bytes, or valid EC key object
++                ValueError: If key loading fails or curve validation fails
++
++            Changelog:
++                5b86227: Added elliptic curve validation for all key paths. Added three calls to self._validate_curve:
++                    - When returning existing crypto key types
++                    - After loading public keys from PEM/SSH
++                    - After loading private keys from PEM
++                This ensures all EC keys (existing or newly loaded) have their curves validated before use, preventing unsupported curves from being accepted.
++            """
+             if isinstance(key, self._crypto_key_types):
+                 self._validate_curve(key)
+                 return key
+
+--- a/jwt/api_jwk.py
++++ b/jwt/api_jwk.py
+@@ -27,6 +27,9 @@
+         :raises InvalidKeyError: If the key type (``kty``) is not found or unsupported, or if the curve (``crv``) is not found or unsupported.
+         :raises MissingCryptographyError: If the algorithm requires ``cryptography`` to be installed and it is not available.
+         :raises PyJWKError: If unable to find an algorithm for the key.
++
++        Changelog:
++            5b86227: Upstream modification to algorithm instantiation adds explicit elliptic curve parameters. This affects EC/OKP key validation by enforcing strict curve checks during JWK initialization. Callers may encounter InvalidKeyError for previously accepted EC curves that lack explicit parameter definitions in the updated algorithms. The change improves cryptographic transparency but requires explicit curve support declarations.
+         """
+         self._algorithms = get_default_algorithms()
+         self._jwk_data = jwk_data
+
+--- a/jwt/api_jws.py
++++ b/jwt/api_jws.py
+@@ -35,6 +35,14 @@
+         algorithms: Sequence[str] | None = None,
+         options: SigOptions | None = None,
+     ) -> None:
++        """Initialize a PyJWS instance with configurable algorithms and options.
++
++        :param algorithms: List of allowed algorithm names. If None, uses the default set including EC algorithms with explicit curve parameters.
++        :param options: Dictionary of signature verification options. If None, uses default options.
++
++        Changelog:
++            5b86227: Default algorithms from get_default_algorithms now include explicit elliptic curve parameters for ECDSA/EdDSA algorithms. PyJWS instances will now enforce specific curve requirements by default when using EC algorithms, which may affect interoperability with JWTs using non-standard curves but improves cryptographic transparency.
++        """
+         self._algorithms = get_default_algorithms()
+         self._valid_algs = (
+             set(algorithms) if algorithms is not None else set(self._algorithms)

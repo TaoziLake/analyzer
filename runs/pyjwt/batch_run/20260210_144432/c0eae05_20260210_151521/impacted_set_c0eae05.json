@@ -1,0 +1,177 @@
+{
+  "commit": "c0eae05",
+  "parent": "93086bd79238114af54dbcbf6c498f3bf7b8c85e",
+  "repo": "D:\\locbench\\pyjwt",
+  "num_seeds": 8,
+  "num_seeds_used": 8,
+  "seed_scope": "code_only",
+  "num_impacted": 12,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "jwt.api_jwk",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.api_jwt",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "jwt.api_jwt.PyJWT"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.help.info",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "jwt.help.main"
+      ],
+      "callees": [
+        "join"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.jwks_client",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.jwks_client.PyJWKClient.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "jwt.exceptions.PyJWKClientError",
+        "jwt.jwk_set_cache.JWKSetCache"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.jwks_client.PyJWKClient.get_signing_keys",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "jwt.jwks_client.PyJWKClient.get_signing_key"
+      ],
+      "callees": [
+        "jwt.exceptions.PyJWKClientError",
+        "jwt.jwks_client.PyJWKClient.get_jwk_set"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.jwks_client.PyJWKClient.match_kid",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "jwt.jwks_client.PyJWKClient.get_signing_key"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.types",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.help.main",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.help.info",
+      "callers": [
+        "jwt.help"
+      ],
+      "callees": [
+        "jwt.help.info"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.jwks_client.PyJWKClient.get_signing_key",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "jwt.jwks_client.PyJWKClient.get_signing_keys",
+      "callers": [
+        "jwt.jwks_client.PyJWKClient.get_signing_key_from_jwt"
+      ],
+      "callees": [
+        "jwt.exceptions.PyJWKClientError",
+        "jwt.jwks_client.PyJWKClient.match_kid",
+        "jwt.jwks_client.PyJWKClient.get_signing_keys"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.help",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "jwt.help.main",
+      "callers": [],
+      "callees": [
+        "jwt.help.main"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "jwt.jwks_client.PyJWKClient.get_signing_key_from_jwt",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "jwt.jwks_client.PyJWKClient.get_signing_key",
+      "callers": [],
+      "callees": [
+        "header.get",
+        "jwt.api_jwt.decode_complete",
+        "jwt.jwks_client.PyJWKClient.get_signing_key"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-10T15:15:22"
+}

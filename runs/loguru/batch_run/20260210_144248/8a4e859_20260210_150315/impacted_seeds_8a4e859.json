@@ -1,0 +1,72 @@
+{
+  "commit": "8a4e859",
+  "parent": "60bce25be171e6261c81b9b1143c442f6c18d994",
+  "repo": "D:\\locbench\\loguru",
+  "num_files_in_diff": 6,
+  "num_py_files_in_diff": 4,
+  "num_seeds": 4,
+  "seeds": [
+    {
+      "path": "loguru/_defaults.py",
+      "version": "new",
+      "line": 51,
+      "kind": "module",
+      "qualname": "loguru._defaults",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "loguru/_logger.py",
+      "version": "new",
+      "line": 2188,
+      "kind": "function",
+      "qualname": "loguru._logger.Logger.exception",
+      "span": [
+        2181,
+        2189
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "    def exception(__self, __message, *args, **kwargs):  # noqa: N805\n        r\"\"\"Log an ``'ERROR'`` message while also capturing the currently handled exception.\n\n        This method internally uses |sys.exc_info|, therefore it should only be called within\n        an ``except`` block. To log an exception that has already been caught, use the ``exception``\n        argument of |opt| along with a call to the |error| method (for example).\n        \"\"\"\n        options = (True, *__self._options[1:])\n        __self._log(\"ERROR\", False, options, __message, args, kwargs)",
+      "old_code": "    def exception(__self, __message, *args, **kwargs):  # noqa: N805\n        r\"\"\"Log an ``'ERROR'`` message while also capturing the currently handled exception.\n\n        This method internally uses |sys.exc_info|, therefore it should only be called within\n        an ``except`` block. To log an exception that has already been caught, use the ``exception``\n        argument of |opt| along with a call to the |error| method (for example).\n        \"\"\"\n        options = (True,) + __self._options[1:]\n        __self._log(\"ERROR\", False, options, __message, args, kwargs)"
+    },
+    {
+      "path": "tests/test_add_sinks.py",
+      "version": "new",
+      "line": 244,
+      "kind": "function",
+      "qualname": "tests.test_add_sinks.test_deprecated_start_and_stop",
+      "span": [
+        243,
+        252
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "def test_deprecated_start_and_stop(writer):\n    with pytest.warns(DeprecationWarning, match=r\"The 'start\\(\\)' method is deprecated\"):\n        i = logger.start(writer, format=\"{message}\")\n    logger.debug(\"Test\")\n    assert writer.read() == \"Test\\n\"\n    writer.clear()\n    with pytest.warns(DeprecationWarning, match=r\"The 'stop\\(\\)' method is deprecated\"):\n        logger.stop(i)\n    logger.debug(\"Test\")\n    assert writer.read() == \"\"",
+      "old_code": "def test_deprecated_start_and_stop(writer):\n    with pytest.warns(DeprecationWarning):\n        i = logger.start(writer, format=\"{message}\")\n    logger.debug(\"Test\")\n    assert writer.read() == \"Test\\n\"\n    writer.clear()\n    with pytest.warns(DeprecationWarning):\n        logger.stop(i)\n    logger.debug(\"Test\")\n    assert writer.read() == \"\""
+    },
+    {
+      "path": "tests/test_opt.py",
+      "version": "new",
+      "line": 583,
+      "kind": "function",
+      "qualname": "tests.test_opt.test_deprecated_ansi_argument",
+      "span": [
+        581,
+        585
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "def test_deprecated_ansi_argument(writer):\n    logger.add(writer, format=\"{message}\", colorize=True)\n    with pytest.warns(DeprecationWarning, match=r\"The 'ansi' parameter is deprecated\"):\n        logger.opt(ansi=True).info(\"Foo <red>bar</red> baz\")\n    assert writer.read() == parse(\"Foo <red>bar</red> baz\\n\")",
+      "old_code": "def test_deprecated_ansi_argument(writer):\n    logger.add(writer, format=\"{message}\", colorize=True)\n    with pytest.warns(DeprecationWarning):\n        logger.opt(ansi=True).info(\"Foo <red>bar</red> baz\")\n    assert writer.read() == parse(\"Foo <red>bar</red> baz\\n\")"
+    }
+  ],
+  "generated_at": "2026-02-10T15:03:15"
+}

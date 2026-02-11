@@ -1,0 +1,64 @@
+{
+  "commit": "a0a0148",
+  "parent": "c85632528f6f3d9d974bfae300716ac997a8d2c1",
+  "repo": "D:\\locbench\\mistune",
+  "num_seeds": 3,
+  "num_seeds_used": 3,
+  "seed_scope": "code_only",
+  "num_impacted": 3,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "src.mistune.directives.toc.TableOfContents.toc_hook",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.mistune.directives.toc.TableOfContents.generate_heading_id",
+        "toc_items.append",
+        "sections.append",
+        "headings.append",
+        "src.mistune.toc.normalize_toc_item"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.toc.add_toc_hook.toc_hook",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "headings.append",
+        "normalize_toc_item",
+        "toc_items.append",
+        "heading_id"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.mistune.toc.normalize_toc_item",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.mistune.directives.toc.TableOfContents.toc_hook"
+      ],
+      "callees": [
+        "md.renderer",
+        "src.mistune.util.striptags",
+        "md.inline",
+        "src.mistune.core.BlockState"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-10T14:49:51"
+}

@@ -1,0 +1,44 @@
+--- a/playhouse/cysqlite_ext.py
++++ b/playhouse/cysqlite_ext.py
+@@ -55,6 +55,22 @@
+ class CySqliteDatabase(SqliteDatabase):
+     def __init__(self, database, rank_functions=True, regexp_function=False,
+                  *args, **kwargs):
++        """CySqliteDatabase initialization with optional SQLite extension support.
++
++        Args:
++            database: Path to the SQLite database file.
++            rank_functions (bool): Whether to register full-text search ranking functions (BM25, Lucene, fts_rank). Defaults to True.
++            regexp_function (bool): Whether to register the REGEXP operator function. Defaults to False.
++            *args: Positional arguments passed to parent SqliteDatabase class.
++            **kwargs: Keyword arguments passed to parent SqliteDatabase class.
++
++        Changelog:
++            ab3157ce: Added rank_functions and regexp_function boolean flags to control
++            automatic registration of SQLite extensions. Initializes internal hooks
++            to None. Registers ranking functions (fts_bm25, fts_lucene, fts_rank) when
++            rank_functions=True, and REGEXP operator when regexp_function=True.
++            Parameters now explicitly document extension control behavior.
++        """
+         super(CySqliteDatabase, self).__init__(database, *args, **kwargs)
+ 
+         self._commit_hook = None
+@@ -73,6 +89,18 @@
+             self.register_function(_sqlite_regexp, 'regexp', 2)
+ 
+     def _connect(self):
++        """Establishes a connection to the SQLite database using cysqlite.
++
++        Returns:
++            cysqlite.Connection: A database connection object.
++
++        Raises:
++            ImproperlyConfigured: If cysqlite is not available.
++            Exception: Any error occurring during connection hook initialization.
++
++        Changelog:
++            ab3157ce: Added new _connect method to handle database connections. Initializes cysqlite.Connection with timeout, extensions, and connect_params. Wraps _add_conn_hooks in try-except to ensure connection closure on failure. Adds proper error handling for missing cysqlite dependency.
++        """
+         if cysqlite is None:
+             raise ImproperlyConfigured('cysqlite is not installed.')
+         conn = cysqlite.Connection(self.database, timeout=self._timeout,

@@ -1,0 +1,232 @@
+{
+  "commit": "2a2c59e",
+  "parent": "36da8cca14457f6e1d1bbca25fb29ba42b2d70cb",
+  "repo": "D:\\locbench\\loguru",
+  "num_seeds": 3,
+  "num_seeds_used": 1,
+  "seed_scope": "code_only",
+  "num_impacted": 7,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "loguru._colorizer.AnsiParser._get_ansicode",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "loguru._colorizer.AnsiParser.feed"
+      ],
+      "callees": [
+        "color.count",
+        "color.startswith",
+        "x.isdigit",
+        "lower",
+        "tag.startswith",
+        "strip",
+        "color.upper",
+        "color.lower",
+        "color.isdigit",
+        "color.split"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "loguru._colorizer.AnsiParser.feed",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "loguru._colorizer.AnsiParser._get_ansicode",
+      "callers": [
+        "tests.conftest.parse",
+        "loguru._colorizer.Colorizer._parse_with_formatting",
+        "loguru._colorizer.Colorizer.prepare_simple_message",
+        "loguru._colorizer.Colorizer.ansify",
+        "loguru._colorizer.Colorizer._parse_without_formatting"
+      ],
+      "callees": [
+        "loguru._colorizer.AnsiParser._tags.pop",
+        "loguru._colorizer.AnsiParser._color_tokens.append",
+        "loguru._colorizer.AnsiParser._tags.append",
+        "loguru._colorizer.AnsiParser._tokens.extend",
+        "match.start",
+        "match.group",
+        "match.end",
+        "loguru._colorizer.AnsiParser._get_ansicode",
+        "loguru._colorizer.AnsiParser._tokens.append",
+        "loguru._colorizer.AnsiParser._color_tokens.pop",
+        "loguru._colorizer.AnsiParser._regex_tag.finditer"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.conftest.parse",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "loguru._colorizer.AnsiParser.feed",
+      "callers": [
+        "tests.test_opt.test_colors_multiple_calls_level_color_changed",
+        "tests.test_ansimarkup_extended.test_hex_colors",
+        "tests.test_levels.test_add_malicious_level",
+        "tests.test_ansimarkup_extended.test_background_colors",
+        "tests.test_ansimarkup_extended.test_invalid_color",
+        "tests.test_ansimarkup_basic.test_background_colors",
+        "tests.test_opt.test_colors_doesnt_color_unrelated",
+        "tests.test_opt.test_colors_nested",
+        "tests.test_levels.test_assign_custom_level_method",
+        "tests.test_opt.test_colors_with_message_specs",
+        "tests.test_opt.test_deprecated_ansi_argument",
+        "tests.test_ansimarkup_extended.test_nested",
+        "tests.test_opt.test_colors_not_colorize",
+        "tests.test_opt.test_level_tag_wrapping_with_colors",
+        "tests.test_opt.test_colors_doesnt_strip_unrelated",
+        "tests.test_add_option_colorize.test_override_no_color",
+        "tests.test_ansimarkup_extended.test_invalid_hex",
+        "tests.test_levels",
+        "tests.test_add_option_colorize.test_colorize_stream",
+        "tests.test_ansimarkup_basic.test_unbalanced_error",
+        "tests.test_ansimarkup_extended.test_hex_short_code_equals_long_code",
+        "tests.test_opt.test_all_colors_combinations",
+        "tests.test_opt.test_colors_with_level",
+        "tests.test_ansimarkup_basic.test_invalid_color",
+        "tests.test_opt.test_colors_double_message",
+        "tests.test_opt.test_colors_with_auto_indexing",
+        "tests.test_opt.test_colors",
+        "tests.test_opt.test_args_with_colors_not_formatted_twice",
+        "tests.test_levels.test_edit_level",
+        "tests.test_pickling.test_pickling_format_string",
+        "tests.test_opt.test_colored_string_getitem",
+        "tests.test_ansimarkup_basic.test_permissive_parsing",
+        "tests.test_ansimarkup_basic.test_autoclose",
+        "tests.test_levels.test_add_existing_level",
+        "tests.test_opt.test_colors_multiple_calls",
+        "tests.test_ansimarkup_extended.test_invalid_8bit",
+        "tests.test_ansimarkup_basic.test_strip",
+        "tests.test_add_option_colorize.test_automatic_detection_when_stream_is_a_tty",
+        "tests.test_ansimarkup_extended.test_foreground_colors",
+        "tests.test_ansimarkup_extended.test_tricky_parse",
+        "tests.test_opt.test_colored_string_used_as_spec",
+        "tests.test_ansimarkup_extended.test_tricky_strip",
+        "tests.test_ansimarkup_extended.test_rgb_colors",
+        "tests.test_add_option_colorize",
+        "tests.test_opt.test_raw_with_colors",
+        "tests.test_ansimarkup_basic.test_nested",
+        "tests.test_ansimarkup_basic.test_unclosed_error",
+        "tests.test_opt.test_colors_with_manual_indexing",
+        "tests.test_levels.test_add_level",
+        "tests.test_levels.test_blank_color",
+        "tests.test_opt.test_colors_with_dynamic_formatter",
+        "tests.test_ansimarkup_basic.test_mismatched_error",
+        "tests.test_ansimarkup_basic.test_foreground_colors",
+        "tests.test_ansimarkup_extended.test_8bit_colors",
+        "tests.test_ansimarkup_basic.test_styles",
+        "tests.test_ansimarkup_basic.test_strict_parsing",
+        "tests.test_pickling.test_pickling_format_function",
+        "tests.test_ansimarkup_extended.test_strip",
+        "tests.test_opt.test_colors_with_format_specs",
+        "tests.test_ansimarkup_basic.test_escaping",
+        "tests.test_ansimarkup_extended.test_invalid_rgb"
+      ],
+      "callees": [
+        "loguru._colorizer.AnsiParser.done",
+        "loguru._colorizer.AnsiParser.feed",
+        "loguru._colorizer.AnsiParser",
+        "loguru._colorizer.AnsiParser.strip",
+        "loguru._colorizer.AnsiParser.colorize"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "loguru._colorizer.Colorizer._parse_with_formatting",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "loguru._colorizer.AnsiParser.feed",
+      "callers": [
+        "loguru._colorizer.Colorizer.prepare_message",
+        "loguru._colorizer.Colorizer._parse_with_formatting"
+      ],
+      "callees": [
+        "loguru._colorizer.try_formatting",
+        "loguru._colorizer.AnsiParser.feed",
+        "loguru._colorizer.Colorizer._parse_with_formatting",
+        "loguru._colorizer.AnsiParser",
+        "loguru._colorizer.AnsiParser.strip",
+        "field_name.isdigit",
+        "formatter.parse",
+        "formatter.format_field",
+        "formatter.convert_field",
+        "formatter.get_field",
+        "loguru._colorizer.AnsiParser.done"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "loguru._colorizer.Colorizer.prepare_simple_message",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "loguru._colorizer.AnsiParser.feed",
+      "callers": [
+        "loguru._logger.Logger._log"
+      ],
+      "callees": [
+        "loguru._colorizer.AnsiParser",
+        "loguru._colorizer.AnsiParser.feed",
+        "loguru._colorizer.ColoredMessage",
+        "loguru._colorizer.AnsiParser.done"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "loguru._colorizer.Colorizer.ansify",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "loguru._colorizer.AnsiParser.feed",
+      "callers": [
+        "loguru._logger.Core.__init__",
+        "loguru._logger.Logger.level"
+      ],
+      "callees": [
+        "loguru._colorizer.AnsiParser.done",
+        "loguru._colorizer.AnsiParser.feed",
+        "text.strip",
+        "loguru._colorizer.AnsiParser",
+        "loguru._colorizer.AnsiParser.colorize"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "loguru._colorizer.Colorizer._parse_without_formatting",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "loguru._colorizer.AnsiParser.feed",
+      "callers": [
+        "loguru._colorizer.Colorizer.prepare_format",
+        "loguru._colorizer.Colorizer._parse_without_formatting"
+      ],
+      "callees": [
+        "loguru._colorizer.AnsiParser.feed",
+        "messages_color_tokens.append",
+        "loguru._colorizer.AnsiParser",
+        "loguru._colorizer.AnsiParser.current_color_tokens",
+        "formatter.parse",
+        "messages_color_tokens.extend",
+        "loguru._colorizer.Colorizer._parse_without_formatting",
+        "loguru._colorizer.AnsiParser.done"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-10T14:47:16"
+}

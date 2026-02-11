@@ -1,0 +1,42 @@
+--- a/benchmark/bench.py
++++ b/benchmark/bench.py
+@@ -37,6 +37,17 @@
+ 
+ 
+ def get_markdown_parsers():
++    """Returns a dictionary mapping markdown parser names to their respective parsing functions.
++
++    Returns:
++        dict: Dictionary where keys are parser names (str) and values are callable parsing functions. Supported parsers include various mistune configurations and other markdown implementations when available.
++
++    Raises:
++        No exceptions are raised. Missing parsers are silently excluded from the returned dictionary.
++
++    Changelog:
++        cd1ad91: Removed redundant f-string formatting from "mistune (slow)" and "mistune (fast)" parser keys. The keys are now static strings without unnecessary string formatting operations, improving code readability and performance.
++    """
+     parsers = {}
+ 
+     import mistune
+@@ -118,6 +129,21 @@
+ 
+ 
+ def benchmarks(cases, count=100):
++    """Run performance benchmarks on markdown parsers for specified test cases.
++
++    This function executes benchmark tests across all available markdown parsers for the
++    given test cases, measuring execution time over a specified number of iterations.
++
++    :param cases: List of test case names to benchmark
++    :param count: Number of iterations to run each test case (default: 100)
++    :returns: None
++    :raises: None
++
++    Changelog:
++        cd1ad91: Updated to use optimized get_markdown_parsers() which eliminates redundant
++        string formatting in parser keys. No impact on benchmark results or output format,
++        but parser initialization now has reduced runtime overhead.
++    """
+     methods = get_markdown_parsers()
+     for name in cases:
+         content = load_case(name + ".txt")

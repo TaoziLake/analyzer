@@ -1,0 +1,64 @@
+{
+  "commit": "cd1ad91",
+  "parent": "e8d0a030ce2dd8e7a034fcf61c5f6a29ff677fdf",
+  "repo": "D:\\locbench\\mistune",
+  "num_seeds": 1,
+  "num_seeds_used": 1,
+  "seed_scope": "code_only",
+  "num_impacted": 3,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "benchmark.bench.get_markdown_parsers",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "benchmark.bench.benchmarks"
+      ],
+      "callees": [
+        "mistune.create_markdown",
+        "mistune.directives.Include",
+        "markdown_it.MarkdownIt",
+        "mistune.directives.Admonition",
+        "mistune.directives.TableOfContents",
+        "mistune.directives.RSTDirective",
+        "markdown2.Markdown"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "benchmark.bench.benchmarks",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "benchmark.bench.get_markdown_parsers",
+      "callers": [
+        "benchmark.bench"
+      ],
+      "callees": [
+        "benchmark.bench.run_case",
+        "benchmark.bench.load_case",
+        "benchmark.bench.get_markdown_parsers"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "benchmark.bench",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "benchmark.bench.benchmarks",
+      "callers": [],
+      "callees": [
+        "benchmark.bench.benchmarks"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-10T14:57:23"
+}

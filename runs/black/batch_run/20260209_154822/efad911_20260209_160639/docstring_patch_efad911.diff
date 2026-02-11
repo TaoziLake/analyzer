@@ -1,0 +1,60 @@
+--- a/src/black/comments.py
++++ b/src/black/comments.py
+@@ -250,7 +250,16 @@
+ ) -> bool:
+     """Handle fmt:off/on blocks that contain only comments.
+ 
+-    Returns True if a block was converted, False otherwise.
++    Args:
++        leaf: The leaf node being processed
++        comment: The ProtoComment containing the fmt:off directive
++        previous_consumed: Number of characters consumed before this comment
++        mode: Black's formatting mode
++
++    Returns:
++        True if a block was converted to STANDALONE_COMMENT, False otherwise
++
++    Builds a standalone comment prefix that preserves all content before the fmt:off directive, including any preceding comments. Creates a new STANDALONE_COMMENT node containing the formatted block and inserts it before the original leaf.
+     """
+     all_comments = list_comments(leaf.prefix, is_endmarker=False, mode=mode)
+ 
+@@ -332,7 +341,15 @@
+ ) -> bool:
+     """Convert content of a single `# fmt: off`/`# fmt: on` into a standalone comment.
+ 
+-    Returns True if a pair was converted.
++    Skips processing STANDALONE_COMMENT nodes already handled by prior formatting passes to avoid redundant work.
++
++    Args:
++        node: Node to process
++        mode: Formatting mode configuration
++        lines: Collection of line ranges to consider
++
++    Returns:
++        True if a pair was converted, False otherwise
+     """
+     for leaf in node.leaves():
+         # Skip STANDALONE_COMMENT nodes that were created by fmt:off/on processing
+
+--- a/src/black/linegen.py
++++ b/src/black/linegen.py
+@@ -387,6 +387,19 @@
+         yield from self.line()
+ 
+     def visit_STANDALONE_COMMENT(self, leaf: Leaf) -> Iterator[Line]:
++        """Handles standalone comment nodes, preserving formatting for fmt:off/on blocks and processing prefix comments.
++
++        Args:
++            leaf: The Leaf node containing the standalone comment.
++
++        Returns:
++            Iterator of Line objects resulting from processing the comment node.
++
++        Raises:
++            No exceptions raised.
++
++        When the comment is a fmt:off/on block with prefix comments (like markdown), the prefix comments are split into individual lines and processed as separate comments before appending the fmt block directly. Regular standalone comments are processed through visit_default.
++        """
+         if not self.current_line.bracket_tracker.any_open_brackets():
+             yield from self.line()
+         # STANDALONE_COMMENT nodes created by our special handling in

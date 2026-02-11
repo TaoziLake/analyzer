@@ -1,0 +1,27 @@
+{
+  "commit": "0516c9e",
+  "parent": "2677e2d8a340759c6f7e5d25fb578c2a270f9d05",
+  "repo": "D:\\locbench\\mistune",
+  "num_files_in_diff": 2,
+  "num_py_files_in_diff": 1,
+  "num_seeds": 1,
+  "seeds": [
+    {
+      "path": "src/mistune/plugins/footnotes.py",
+      "version": "new",
+      "line": 73,
+      "kind": "function",
+      "qualname": "src.mistune.plugins.footnotes.parse_footnote_item",
+      "span": [
+        57,
+        81
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def parse_footnote_item(block: \"BlockParser\", key: str, index: int, state: BlockState) -> Dict[str, Any]:\n    ref = state.env.get(\"ref_footnotes\")\n    if not ref:\n        raise ValueError(\"Missing 'ref_footnotes'.\")\n    text = ref[key]\n\n    lines = text.splitlines()\n    second_line = None\n    for second_line in lines[1:]:\n        if second_line:\n            break\n\n    if second_line:\n        spaces = len(second_line) - len(second_line.lstrip())\n        pattern = re.compile(r\"^ {\" + str(spaces) + r\",}\", flags=re.M)\n        text = pattern.sub(\"\", text).strip()\n\n        footer_state = BlockState()\n        footer_state.process(text)\n        block.parse(footer_state)\n        children = footer_state.tokens\n    else:\n        text = text.strip()\n        children = [{\"type\": \"paragraph\", \"text\": text}]\n    return {\"type\": \"footnote_item\", \"children\": children, \"attrs\": {\"key\": key, \"index\": index}}",
+      "old_code": "def parse_footnote_item(block: \"BlockParser\", key: str, index: int, state: BlockState) -> Dict[str, Any]:\n    ref = state.env.get(\"ref_footnotes\")\n    if not ref:\n        raise ValueError(\"Missing 'ref_footnotes'.\")\n    text = ref[key]\n\n    lines = text.splitlines()\n    second_line = None\n    for second_line in lines[1:]:\n        if second_line:\n            break\n\n    if second_line:\n        spaces = len(second_line) - len(second_line.lstrip())\n        pattern = re.compile(r\"^ {\" + str(spaces) + r\",}\", flags=re.M)\n        text = pattern.sub(\"\", text).strip()\n        items = _PARAGRAPH_SPLIT.split(text)\n        children = [{\"type\": \"paragraph\", \"text\": s} for s in items]\n    else:\n        text = text.strip()\n        children = [{\"type\": \"paragraph\", \"text\": text}]\n    return {\"type\": \"footnote_item\", \"children\": children, \"attrs\": {\"key\": key, \"index\": index}}"
+    }
+  ],
+  "generated_at": "2026-02-10T14:52:02"
+}

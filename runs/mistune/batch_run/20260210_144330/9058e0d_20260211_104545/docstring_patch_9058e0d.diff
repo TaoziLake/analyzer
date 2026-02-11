@@ -1,0 +1,40 @@
+--- a/src/mistune/block_parser.py
++++ b/src/mistune/block_parser.py
+@@ -95,6 +95,15 @@
+             list_rules: Optional[List[str]]=None,
+             max_nested_level: int=6
+     ):
++        """Initializes a BlockParser instance with configurable block quote and list parsing rules.
++
++        :param block_quote_rules: Optional list of rule names to use for block quote parsing. If None, defaults to all default rules.
++        :param list_rules: Optional list of rule names to use for list parsing. If None, defaults to all default rules.
++        :param max_nested_level: Maximum nesting level allowed for lists. Defaults to 6.
++
++        Changelog:
++            9058e0d: Parent class initialization logic modified. Changes to default rule sets in the parent class may affect block_quote_rules and list_rules default values, potentially altering parsing behavior for block quotes and lists.
++        """
+         super(BlockParser, self).__init__()
+ 
+         if block_quote_rules is None:
+
+--- a/src/mistune/inline_parser.py
++++ b/src/mistune/inline_parser.py
+@@ -98,6 +98,18 @@
+     )
+ 
+     def __init__(self, hard_wrap: bool = False) -> None:
++        """Initialize an InlineParser instance with optional hard wrap behavior.
++
++        Args:
++            hard_wrap (bool): If True, line breaks are treated as hard breaks. If False,
++                soft breaks are used. Defaults to False.
++
++        Changelog:
++            9058e0d: Upstream change in parent class __init__ may affect initialization of base
++                class attributes. This constructor assumes parent class initializes 'rules'
++                and 'specification' attributes during __init__ call. Any changes to parent
++                class initialization logic could cause attribute errors during instantiation.
++        """
+         super(InlineParser, self).__init__()
+ 
+         self.hard_wrap = hard_wrap
