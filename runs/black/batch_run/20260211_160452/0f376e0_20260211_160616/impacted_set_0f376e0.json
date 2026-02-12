@@ -1,0 +1,308 @@
+{
+  "commit": "0f376e0",
+  "parent": "a8bfcc1040fdfce2e02cdd85dc8bf4e7abe0462f",
+  "repo": "/Users/syhe/2026/black",
+  "num_seeds": 11,
+  "num_seeds_used": 10,
+  "seed_scope": "code_only",
+  "num_impacted": 15,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "src.black.comments.make_comment",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.comments.list_comments"
+      ],
+      "callees": [
+        "black.nodes.is_type_comment_string",
+        "content.startswith",
+        "value_part.strip",
+        "content.split",
+        "content.lstrip",
+        "type_part.strip",
+        "content.rstrip",
+        "contains_fmt_directive"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments._should_process_fmt_comment",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.comments.convert_one_fmt_off_pair"
+      ],
+      "callees": [
+        "contains_fmt_directive"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments._handle_comment_only_fmt_block",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.comments.convert_one_fmt_off_pair"
+      ],
+      "callees": [
+        "fmt_off_prefix.split",
+        "parent.insert_child",
+        "src.black.comments.list_comments",
+        "hidden_value.endswith",
+        "original_prefix.split",
+        "contains_fmt_directive",
+        "blib2to3.pytree.Leaf"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments._handle_regular_fmt_block",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.comments.convert_one_fmt_off_pair"
+      ],
+      "callees": [
+        "fmt_off_prefix.split",
+        "black.nodes.first_leaf_of",
+        "parent.insert_child",
+        "node_str.endswith",
+        "prefix.split",
+        "parts.append",
+        "ignored.remove",
+        "stringify_node",
+        "join",
+        "hidden_value.endswith",
+        "node.leaves",
+        "contains_fmt_directive",
+        "blib2to3.pytree.Leaf"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments.generate_ignored_nodes",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.comments.convert_one_fmt_off_pair"
+      ],
+      "callees": [
+        "black.nodes.container_of",
+        "_generate_ignored_nodes_from_fmt_skip",
+        "is_fmt_on",
+        "children_contains_fmt_on",
+        "contains_fmt_directive"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments.is_fmt_on",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.comments.children_contains_fmt_on"
+      ],
+      "callees": [
+        "src.black.comments.list_comments",
+        "contains_fmt_directive"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments.contains_fmt_directive",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.linegen.normalize_invisible_parens",
+        "src.black.linegen.LineGenerator.visit_STANDALONE_COMMENT"
+      ],
+      "callees": [
+        "comment_line.split",
+        "split",
+        "comment.strip",
+        "comment_line.strip"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen.LineGenerator.visit_STANDALONE_COMMENT",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "src.black.linegen.LineGenerator.line",
+        "black.comments.generate_comments",
+        "startswith",
+        "black.comments.contains_fmt_directive",
+        "value.splitlines",
+        "line.strip",
+        "src.black.linegen.LineGenerator.current_line.append",
+        "src.black.linegen.LineGenerator.visit_default",
+        "leaf.prefix.split",
+        "src.black.linegen.LineGenerator.current_line.bracket_tracker.any_open_brackets"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen.normalize_invisible_parens",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.linegen.normalize_invisible_parens"
+      ],
+      "callees": [
+        "black.nodes.wrap_in_parentheses",
+        "black.nodes.is_rpar_token",
+        "_normalize_import_from",
+        "black.comments.contains_fmt_directive",
+        "black.nodes.is_one_tuple",
+        "src.black.linegen.normalize_invisible_parens",
+        "remove_with_parens",
+        "_is_atom_multiline",
+        "_maybe_wrap_cms_in_parens",
+        "black.nodes.is_lpar_token",
+        "_atom_has_magic_trailing_comma",
+        "black.comments.list_comments",
+        "black.nodes.is_multiline_string",
+        "maybe_make_parens_invisible_in_atom"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments.list_comments",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.comments.make_comment",
+      "callers": [
+        "src.black.comments.convert_one_fmt_off_pair",
+        "src.black.comments.is_fmt_on",
+        "src.black.comments._handle_comment_only_fmt_block",
+        "src.black.comments._generate_ignored_nodes_from_fmt_skip"
+      ],
+      "callees": [
+        "make_comment",
+        "result.append",
+        "line.startswith",
+        "match.groups",
+        "line.endswith",
+        "src.black.comments.ProtoComment"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments.convert_one_fmt_off_pair",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.comments._should_process_fmt_comment",
+      "callers": [
+        "src.black.comments.normalize_fmt_off"
+      ],
+      "callees": [
+        "src.black.comments._is_valid_standalone_fmt_comment",
+        "src.black.comments._should_process_fmt_comment",
+        "src.black.comments.list_comments",
+        "generate_ignored_nodes",
+        "_handle_regular_fmt_block",
+        "node.leaves",
+        "src.black.comments._handle_comment_only_fmt_block"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments.children_contains_fmt_on",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.comments.is_fmt_on",
+      "callers": [
+        "src.black.comments.generate_ignored_nodes"
+      ],
+      "callees": [
+        "black.nodes.first_leaf_of",
+        "src.black.comments.is_fmt_on"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments._generate_ignored_nodes_from_fmt_skip",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "src.black.comments.list_comments",
+      "callers": [
+        "src.black.comments.generate_ignored_nodes"
+      ],
+      "callees": [
+        "src.black.comments.list_comments",
+        "src.black.comments._find_compound_statement_context",
+        "ignored_nodes.insert",
+        "seen_nodes.add",
+        "current_node.prev_sibling.leaves",
+        "src.black.comments._get_compound_statement_header"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.comments.normalize_fmt_off",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "src.black.comments.convert_one_fmt_off_pair",
+      "callers": [
+        "src.black.__init__._format_str_once"
+      ],
+      "callees": [
+        "convert_one_fmt_off_pair"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-11T16:06:17"
+}

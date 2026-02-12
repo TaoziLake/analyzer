@@ -1,0 +1,187 @@
+{
+  "commit": "fe875c0",
+  "parent": "5cdb4b6c238ec7e7a87954b041ee241a1c0acfb5",
+  "repo": "/Users/syhe/2026/black",
+  "num_seeds": 5,
+  "num_seeds_used": 2,
+  "seed_scope": "code_only",
+  "num_impacted": 8,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "src.black.__init__._format_str_once",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.__init__.assert_stable"
+      ],
+      "callees": [
+        "black.ranges.convert_unchanged_lines",
+        "normalized_contents.lstrip",
+        "replace",
+        "black.lines.EmptyLineTracker",
+        "black.linegen.transform_line",
+        "dst_contents.extend",
+        "decode_bytes",
+        "black.comments.normalize_fmt_off",
+        "black.linegen.LineGenerator.visit",
+        "dst_blocks.append",
+        "block.content_lines.append",
+        "get_future_imports",
+        "black.mode.supports_feature",
+        "detect_target_versions",
+        "black.lines.EmptyLineTracker.maybe_empty_lines",
+        "black.parsing.lib2to3_parse",
+        "black.linegen.LineGenerator",
+        "block.all_lines",
+        "src_contents.encode",
+        "join"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.__init__.decode_bytes",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.__init__.format_stdin_to_stdout",
+        "src.black.__init__.format_file_in_place",
+        "src.black.__init__._format_str_once"
+      ],
+      "callees": [
+        "tiow.read",
+        "srcbuf.seek"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.__init__.assert_stable",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.__init__._format_str_once",
+      "callers": [
+        "src.black.__init__.check_stability_and_equivalence"
+      ],
+      "callees": [
+        "src.black.__init__._black_info",
+        "src.black.__init__._format_str_once",
+        "black.output.dump_to_file",
+        "black.output.diff"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.__init__.format_stdin_to_stdout",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.__init__.decode_bytes",
+      "callers": [
+        "src.black.__init__.reformat_one",
+        "src.black.__init__.reformat_code"
+      ],
+      "callees": [
+        "format_file_contents",
+        "f.detach",
+        "black.output.diff",
+        "black.files.wrap_stream_for_windows",
+        "decode_bytes",
+        "f.write",
+        "black.output.color_diff"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.__init__.format_file_in_place",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.__init__.decode_bytes",
+      "callers": [
+        "src.black.__init__.reformat_one"
+      ],
+      "callees": [
+        "buf.readline",
+        "src.stat",
+        "format_file_contents",
+        "f.detach",
+        "black.output.diff",
+        "buf.read",
+        "black.files.wrap_stream_for_windows",
+        "decode_bytes",
+        "f.write",
+        "black.output.color_diff",
+        "black.output.ipynb_diff",
+        "header.decode"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.__init__.check_stability_and_equivalence",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "src.black.__init__.assert_stable",
+      "callers": [
+        "src.black.__init__.format_cell",
+        "src.black.__init__.format_file_contents"
+      ],
+      "callees": [
+        "assert_stable",
+        "assert_equivalent"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.__init__.reformat_one",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "src.black.__init__.format_stdin_to_stdout",
+      "callers": [
+        "src.black.__init__.main"
+      ],
+      "callees": [
+        "cache.is_changed",
+        "startswith",
+        "format_stdin_to_stdout",
+        "report.done",
+        "format_file_in_place",
+        "report.failed",
+        "cache.write",
+        "black.cache.Cache.read"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.__init__.reformat_code",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "src.black.__init__.format_stdin_to_stdout",
+      "callers": [
+        "src.black.__init__.main"
+      ],
+      "callees": [
+        "format_stdin_to_stdout",
+        "report.done",
+        "report.failed"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-11T18:21:54"
+}

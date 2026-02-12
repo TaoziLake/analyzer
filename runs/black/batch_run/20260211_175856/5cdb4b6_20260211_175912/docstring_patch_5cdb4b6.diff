@@ -1,0 +1,73 @@
+--- a/src/black/concurrency.py
++++ b/src/black/concurrency.py
+@@ -80,7 +80,17 @@
+     workers: int | None,
+     no_cache: bool = False,
+ ) -> None:
+-    """Reformat multiple files using a ProcessPoolExecutor."""
++    """TODO: docstring
++
++    Args:
++        sources:
++        fast:
++        write_back:
++        mode:
++        report:
++        workers:
++        no_cache:
++    """
+     maybe_install_uvloop()
+ 
+     if workers is None:
+
+--- a/src/black/__init__.py
++++ b/src/black/__init__.py
+@@ -545,7 +545,40 @@
+     config: str | None,
+     no_cache: bool,
+ ) -> None:
+-    """The uncompromising code formatter."""
++    """TODO: docstring
++
++    Args:
++        ctx:
++        code:
++        line_length:
++        target_version:
++        check:
++        diff:
++        line_ranges:
++        color:
++        fast:
++        pyi:
++        ipynb:
++        python_cell_magics:
++        skip_source_first_line:
++        skip_string_normalization:
++        skip_magic_trailing_comma:
++        preview:
++        unstable:
++        enable_unstable_feature:
++        quiet:
++        verbose:
++        required_version:
++        include:
++        exclude:
++        extend_exclude:
++        force_exclude:
++        stdin_filename:
++        workers:
++        src:
++        config:
++        no_cache:
++    """
+     ctx.ensure_object(dict)
+ 
+     assert sys.version_info >= (3, 10), "Black requires Python 3.10+"
+@@ -1617,6 +1650,7 @@
+ def patched_main() -> None:
+     # PyInstaller patches multiprocessing to need freeze_support() even in non-Windows
+     # environments so just assume we always need to call it if frozen.
++    """TODO: docstring"""
+     if getattr(sys, "frozen", False):
+         from multiprocessing import freeze_support

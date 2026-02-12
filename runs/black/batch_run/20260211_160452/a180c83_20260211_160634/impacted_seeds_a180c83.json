@@ -1,0 +1,72 @@
+{
+  "commit": "a180c83",
+  "parent": "cde9494ac5b89bd4c9154f746a543685961983a8",
+  "repo": "/Users/syhe/2026/black",
+  "num_files_in_diff": 11,
+  "num_py_files_in_diff": 3,
+  "num_seeds": 4,
+  "seeds": [
+    {
+      "path": "gallery/gallery.py",
+      "version": "new",
+      "line": 106,
+      "kind": "function",
+      "qualname": "gallery.gallery.get_package",
+      "span": [
+        106,
+        112
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def get_package(package: str, version: str | None, directory: Path) -> Path | None:\n    try:\n        return download_and_extract(package, version, directory)\n    except Exception:\n        print(f\"Caught an exception while downloading {package}.\")\n        traceback.print_exc()\n        return None",
+      "old_code": "def get_package(\n    package: str, version: str | None, directory: Path\n) -> Path | None:\n    try:\n        return download_and_extract(package, version, directory)\n    except Exception:\n        print(f\"Caught an exception while downloading {package}.\")\n        traceback.print_exc()\n        return None"
+    },
+    {
+      "path": "src/black/__init__.py",
+      "version": "new",
+      "line": 14,
+      "kind": "module",
+      "qualname": "src.black.__init__",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "tests/test_black.py",
+      "version": "new",
+      "line": 431,
+      "kind": "function",
+      "qualname": "tests.test_black.BlackTestCase.test_python37",
+      "span": [
+        426,
+        434
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "    def test_python37(self) -> None:\n        source_path = get_case_path(\"cases\", \"python37\")\n        _, source, expected = read_data_from_file(source_path)\n        actual = fs(source)\n        self.assertFormatEqual(expected, actual)\n        black.assert_equivalent(source, actual)\n        black.assert_stable(source, actual, DEFAULT_MODE)\n        # ensure black can parse this when the target is 3.7\n        self.invokeBlack([str(source_path), \"--target-version\", \"py37\"])",
+      "old_code": "    def test_python37(self) -> None:\n        source_path = get_case_path(\"cases\", \"python37\")\n        _, source, expected = read_data_from_file(source_path)\n        actual = fs(source)\n        self.assertFormatEqual(expected, actual)\n        major, minor = sys.version_info[:2]\n        if major > 3 or (major == 3 and minor >= 7):\n            black.assert_equivalent(source, actual)\n        black.assert_stable(source, actual, DEFAULT_MODE)\n        # ensure black can parse this when the target is 3.7\n        self.invokeBlack([str(source_path), \"--target-version\", \"py37\"])"
+    },
+    {
+      "path": "tests/test_black.py",
+      "version": "new",
+      "line": 1760,
+      "kind": "function",
+      "qualname": "tests.test_black.BlackTestCase.test_bpo_33660_workaround",
+      "span": [
+        1755,
+        1765
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "    def test_bpo_33660_workaround(self) -> None:\n        if system() == \"Windows\":\n            return\n\n        root = Path(\"/\")\n        path = Path(\"workspace\") / \"project\"\n        report = black.Report(verbose=True)\n        resolves_outside = black.resolves_outside_root_or_cannot_stat(\n            path, root, report\n        )\n        self.assertIs(resolves_outside, False)",
+      "old_code": "    def test_bpo_33660_workaround(self) -> None:\n        if system() == \"Windows\":\n            return\n\n        # https://bugs.python.org/issue33660\n        # Can be removed when we drop support for Python 3.8.5\n        root = Path(\"/\")\n        with change_directory(root):\n            path = Path(\"workspace\") / \"project\"\n            report = black.Report(verbose=True)\n            resolves_outside = black.resolves_outside_root_or_cannot_stat(\n                path, root, report\n            )\n            self.assertIs(resolves_outside, False)"
+    }
+  ],
+  "generated_at": "2026-02-11T16:06:34"
+}

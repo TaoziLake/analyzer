@@ -5,7 +5,7 @@
 llm_client.py
 
 LLM 客戶端封裝模組：
-- 讀取 config.yaml 配置
+- 讀取 analyzer/config.yaml 配置
 - 使用 OpenAI SDK 調用 LLM
 - 封裝 generate_docstring() 方法
 - 包含重試邏輯和錯誤處理
@@ -46,24 +46,25 @@ def _find_config_yaml() -> str:
     """
     尋找 config.yaml，依序嘗試：
     1. 環境變數 LOCBENCH_CONFIG
-    2. <locbench>/config.yaml（相對於此檔案往上兩層）
-    3. 當前工作目錄的 config.yaml
+    2. <locbench>/analyzer/config.yaml（相對於此檔案往上一層）
+    3. 當前工作目錄的 analyzer/config.yaml
     """
     if os.environ.get("LOCBENCH_CONFIG"):
         return os.environ["LOCBENCH_CONFIG"]
 
-    # <locbench>/analyzer/llm/llm_client.py -> <locbench>/config.yaml
+    # <locbench>/analyzer/llm/llm_client.py -> <locbench>/analyzer/config.yaml
     here = os.path.dirname(os.path.abspath(__file__))
-    locbench_root = os.path.abspath(os.path.join(here, "..", ".."))
-    candidate = os.path.join(locbench_root, "config.yaml")
+    analyzer_root = os.path.abspath(os.path.join(here, ".."))
+    candidate = os.path.join(analyzer_root, "config.yaml")
     if os.path.isfile(candidate):
         return candidate
-    # d:\locbench\config.yaml
-    if os.path.isfile("config.yaml"):
-        return "config.yaml"
+    # 當前工作目錄的 analyzer/config.yaml
+    cwd_candidate = os.path.join("analyzer", "config.yaml")
+    if os.path.isfile(cwd_candidate):
+        return cwd_candidate
 
     raise FileNotFoundError(
-        "找不到 config.yaml。請設置環境變數 LOCBENCH_CONFIG 或將 config.yaml 放在 locbench 根目錄。"
+        "找不到 config.yaml。請設置環境變數 LOCBENCH_CONFIG 或將 config.yaml 放在 analyzer 目錄下。"
     )
 
 
@@ -94,7 +95,7 @@ class LLMClient:
         self,
         config_path: Optional[str] = None,
         temperature: float = 0.3,
-        max_tokens: int = 1024,
+        max_tokens: int = 32768,
         retry_times: int = 2,
         retry_delay: float = 1.0,
         call_interval: float = 0.5,

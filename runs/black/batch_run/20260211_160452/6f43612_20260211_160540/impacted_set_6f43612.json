@@ -1,0 +1,208 @@
+{
+  "commit": "6f43612",
+  "parent": "200c550aff44372f801a6d826a361cb26f45a504",
+  "repo": "/Users/syhe/2026/black",
+  "num_seeds": 16,
+  "num_seeds_used": 7,
+  "seed_scope": "code_only",
+  "num_impacted": 9,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "src.black.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "tests.test_black.BlackRunner.__init__"
+      ],
+      "callees": [
+        "join",
+        "mypy_extensions.mypyc_attr",
+        "src.black.__init__.patched_main",
+        "v.name.lower"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.__init__.main",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.__init__.patched_main"
+      ],
+      "callees": [
+        "src.black.__init__.WriteBack.from_configuration",
+        "ctx.exit",
+        "black.mode.Mode",
+        "black.output.err",
+        "black.ranges.parse_line_ranges",
+        "black.concurrency.reformat_many",
+        "ctx.get_parameter_source",
+        "ctx.default_map.items",
+        "ctx.ensure_object",
+        "get_sources",
+        "reformat_one",
+        "black.output.out",
+        "black.files.find_user_pyproject_toml",
+        "src.black.__init__.main.get_usage",
+        "reformat_code",
+        "black.report.Report",
+        "_black_version.version.split",
+        "sources.pop",
+        "black.files.find_project_root"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.__init__.get_sources",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.__init__.main"
+      ],
+      "callees": [
+        "path.is_file",
+        "black.output.err",
+        "relative_to",
+        "sources.update",
+        "black.files.get_gitignore",
+        "path.resolve",
+        "black.output.out",
+        "black.files.best_effort_relative_path",
+        "src.black.__init__.re_compile_maybe_verbose",
+        "root.is_absolute",
+        "black.handle_ipynb_magics.jupyter_dependencies_are_installed",
+        "sources.add",
+        "report.path_ignored",
+        "black.files.gen_python_files",
+        "as_posix",
+        "path.is_dir",
+        "black.files.path_is_excluded",
+        "path.iterdir",
+        "black.files.resolves_outside_root_or_cannot_stat"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.files",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "mypy_extensions.mypyc_attr"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.files.get_gitignore",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.files.gen_python_files"
+      ],
+      "callees": [
+        "gitignore.is_file",
+        "pathspec.GitIgnoreSpec.from_lines",
+        "gitignore.open",
+        "black.output.err",
+        "gf.readlines"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.files._path_is_ignored",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.files.gen_python_files"
+      ],
+      "callees": [
+        "as_posix",
+        "path.is_dir",
+        "gitignore_dict.items",
+        "path.relative_to",
+        "pattern.match_file"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.files.gen_python_files",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.files.gen_python_files"
+      ],
+      "callees": [
+        "report.path_ignored",
+        "root.is_absolute",
+        "as_posix",
+        "src.black.files.path_is_excluded",
+        "child.iterdir",
+        "src.black.files.gen_python_files",
+        "black.handle_ipynb_magics.jupyter_dependencies_are_installed",
+        "child.relative_to",
+        "src.black.files.get_gitignore",
+        "include.search",
+        "child.is_dir",
+        "child.is_file",
+        "src.black.files.resolves_outside_root_or_cannot_stat",
+        "src.black.files._path_is_ignored",
+        "child.is_absolute"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_black.BlackRunner.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.__init__",
+      "callers": [
+        "tests.test_black.BlackRunner.__init__"
+      ],
+      "callees": [
+        "packaging.version.Version",
+        "__init__"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.__init__.patched_main",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.__init__.main",
+      "callers": [
+        "src.black.__init__"
+      ],
+      "callees": [
+        "src.black.__init__.main"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-11T16:05:41"
+}

@@ -1,0 +1,92 @@
+{
+  "commit": "21a2a8c",
+  "parent": "e3146cea4245fcee29d007cb45d9faaf63271586",
+  "repo": "/Users/syhe/2026/black",
+  "num_seeds": 9,
+  "num_seeds_used": 1,
+  "seed_scope": "code_only",
+  "num_impacted": 4,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "src.black.concurrency.schedule_formatting",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "tests.test_concurrency_manager_shutdown.test_manager_shutdown_called_for_diff.run"
+      ],
+      "callees": [
+        "report.failed",
+        "cancelled.append",
+        "task.exception",
+        "task.result",
+        "tasks.pop",
+        "cache.write",
+        "black.cache.Cache.read",
+        "manager.Lock",
+        "loop.add_signal_handler",
+        "sources_to_cache.append",
+        "loop.run_in_executor",
+        "tasks.keys",
+        "report.done",
+        "cache.filtered_cached",
+        "task.cancelled",
+        "manager.shutdown"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_concurrency_manager_shutdown.test_manager_shutdown_called_for_diff.run",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.concurrency.schedule_formatting",
+      "callers": [
+        "tests.test_concurrency_manager_shutdown.test_manager_shutdown_called_for_diff",
+        "tests.data.cases.fmtonoff5"
+      ],
+      "callees": [
+        "black.report.Report",
+        "black.concurrency.schedule_formatting",
+        "black.Mode"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_concurrency_manager_shutdown.test_manager_shutdown_called_for_diff",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.test_concurrency_manager_shutdown.test_manager_shutdown_called_for_diff.run",
+      "callers": [],
+      "callees": [
+        "src.write_text",
+        "tests.test_concurrency_manager_shutdown.FakeManager",
+        "monkeypatch.setattr",
+        "run"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.data.cases.fmtonoff5",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "tests.test_concurrency_manager_shutdown.test_manager_shutdown_called_for_diff.run",
+      "callers": [],
+      "callees": [
+        "setup",
+        "run",
+        "will_be_formatted"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-11T16:09:02"
+}

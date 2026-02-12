@@ -1,0 +1,174 @@
+--- a/src/black/comments.py
++++ b/src/black/comments.py
+@@ -334,9 +334,12 @@
+ def convert_one_fmt_off_pair(
+     node: Node, mode: Mode, lines: Collection[tuple[int, int]]
+ ) -> bool:
+-    """Convert content of a single `# fmt: off`/`# fmt: on` into a standalone comment.
+-
+-    Returns True if a pair was converted.
++    """TODO: docstring
++
++    Args:
++        node:
++        mode:
++        lines:
+     """
+     for leaf in node.leaves():
+         # Skip STANDALONE_COMMENT nodes that were created by fmt:off/on/skip processing
+@@ -493,10 +496,12 @@
+ def generate_ignored_nodes(
+     leaf: Leaf, comment: ProtoComment, mode: Mode
+ ) -> Iterator[LN]:
+-    """Starting from the container of `leaf`, generate all leaves until `# fmt: on`.
+-
+-    If comment is skip, returns leaf only.
+-    Stops at the end of the block.
++    """TODO: docstring
++
++    Args:
++        leaf:
++        comment:
++        mode:
+     """
+     if contains_fmt_directive(comment.value, FMT_SKIP):
+         yield from _generate_ignored_nodes_from_fmt_skip(leaf, comment, mode)
+@@ -634,7 +639,13 @@
+ def _generate_ignored_nodes_from_fmt_skip(
+     leaf: Leaf, comment: ProtoComment, mode: Mode
+ ) -> Iterator[LN]:
+-    """Generate all leaves that should be ignored by the `# fmt: skip` from `leaf`."""
++    """TODO: docstring
++
++    Args:
++        leaf:
++        comment:
++        mode:
++    """
+     prev_sibling = leaf.prev_sibling
+     parent = leaf.parent
+     ignored_nodes: list[LN] = []
+
+--- a/src/black/lines.py
++++ b/src/black/lines.py
+@@ -823,10 +823,12 @@
+ 
+ 
+ def is_line_short_enough(line: Line, *, mode: Mode, line_str: str = "") -> bool:
+-    """For non-multiline strings, return True if `line` is no longer than `line_length`.
+-    For multiline strings, looks at the context around `line` to determine
+-    if it should be inlined or split up.
+-    Uses the provided `line_str` rendering, if any, otherwise computes a new one.
++    """TODO: docstring
++
++    Args:
++        line:
++        mode:
++        line_str:
+     """
+     if not line_str:
+         line_str = line_to_string(line)
+
+--- a/src/black/linegen.py
++++ b/src/black/linegen.py
+@@ -693,11 +693,12 @@
+ def transform_line(
+     line: Line, mode: Mode, features: Collection[Feature] = ()
+ ) -> Iterator[Line]:
+-    """Transform a `line`, potentially splitting it into many lines.
+-
+-    They should fit in the allotted `line_length` but might not be able to.
+-
+-    `features` are syntactical features that may be used in the output.
++    """TODO: docstring
++
++    Args:
++        line:
++        mode:
++        features:
+     """
+     if line.is_comment:
+         yield line
+@@ -742,11 +743,12 @@
+         def _rhs(
+             self: object, line: Line, features: Collection[Feature], mode: Mode
+         ) -> Iterator[Line]:
+-            """Wraps calls to `right_hand_split`.
+-
+-            The calls increasingly `omit` right-hand trailers (bracket pairs with
+-            content), meaning the trailers get glued together to split on another
+-            bracket pair instead.
++            """TODO: docstring
++
++            Args:
++                line:
++                features:
++                mode:
+             """
+             for omit in generate_trailers_to_omit(line, mode.line_length):
+                 lines = list(right_hand_split(line, mode, features, omit=omit))
+@@ -942,11 +944,11 @@
+     line: Line,
+     omit: Collection[LeafID] = (),
+ ) -> RHSResult:
+-    """Split the line into head, body, tail starting with the last bracket pair.
+-
+-    Note: this function should not have side effects. It's relied upon by
+-    _maybe_split_omitting_optional_parens to get an opinion whether to prefer
+-    splitting on the right side of an assignment statement.
++    """TODO: docstring
++
++    Args:
++        line:
++        omit:
+     """
+     tail_leaves: list[Leaf] = []
+     body_leaves: list[Leaf] = []
+@@ -1048,6 +1050,15 @@
+     features: Collection[Feature] = (),
+     omit: Collection[LeafID] = (),
+ ) -> Iterator[Line]:
++    """TODO: docstring
++
++    Args:
++        rhs:
++        line:
++        mode:
++        features:
++        omit:
++    """
+     if (
+         Feature.FORCE_OPTIONAL_PARENTHESES not in features
+         # the opening bracket is an optional paren
+@@ -1112,9 +1123,12 @@
+ def _prefer_split_rhs_oop_over_rhs(
+     rhs_oop: RHSResult, rhs: RHSResult, mode: Mode
+ ) -> bool:
+-    """
+-    Returns whether we should prefer the result from a split omitting optional parens
+-    (rhs_oop) over the original (rhs).
++    """TODO: docstring
++
++    Args:
++        rhs_oop:
++        rhs:
++        mode:
+     """
+     # contains unsplittable type ignore
+     if (
+@@ -1997,6 +2011,15 @@
+     *,
+     line_str: str = "",
+ ) -> list[Line]:
++    """TODO: docstring
++
++    Args:
++        line:
++        transform:
++        mode:
++        features:
++        line_str:
++    """
+     if not line_str:
+         line_str = line_to_string(line)
+     result: list[Line] = []

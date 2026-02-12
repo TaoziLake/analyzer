@@ -1,0 +1,140 @@
+{
+  "commit": "14713ac",
+  "parent": "1d233bb977901a27c12bd883aa94eaa8f088f02c",
+  "repo": "/Users/syhe/2026/black",
+  "num_seeds": 5,
+  "num_seeds_used": 4,
+  "seed_scope": "code_only",
+  "num_impacted": 6,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "src.black.trans.StringSplitter.do_splitter_match",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "black.rusty.Ok",
+        "black.nodes.is_empty_lpar",
+        "is_valid_index",
+        "StringParser",
+        "src.black.trans.StringSplitter._prefer_paren_wrap_match",
+        "black.nodes.is_empty_rpar",
+        "is_valid_index_factory",
+        "StringParser.parse",
+        "src.black.trans.BaseStringSplitter.do_splitter_match",
+        "src.black.trans.TErr"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.trans.StringParenWrapper.do_splitter_match",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "black.rusty.Ok",
+        "src.black.trans.StringParenWrapper._else_match",
+        "src.black.trans.StringParenWrapper._prefer_paren_wrap_match",
+        "src.black.trans.StringParenWrapper._return_match",
+        "src.black.trans.StringParenWrapper.has_custom_splits",
+        "src.black.trans.StringParenWrapper._trailing_comma_tuple_match",
+        "src.black.trans.StringParenWrapper._assign_match",
+        "src.black.trans.BaseStringSplitter.do_splitter_match",
+        "black.strings.str_width",
+        "src.black.trans.StringParenWrapper._dict_or_lambda_match",
+        "src.black.trans.TErr",
+        "src.black.trans.StringParenWrapper._assert_match"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.trans.StringParenWrapper",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.linegen.transform_line"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.trans.StringParenWrapper._trailing_comma_tuple_match",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.trans.StringParenWrapper.do_splitter_match"
+      ],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen.transform_line",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.trans.StringParenWrapper",
+      "callers": [
+        "src.black.linegen.run_transformer"
+      ],
+      "callees": [
+        "src.black.linegen._hugging_power_ops_line_to_string",
+        "black.trans.StringParenWrapper",
+        "line.contains_uncollapsable_type_comments",
+        "line.contains_standalone_comments",
+        "black.lines.line_to_string",
+        "should_split_funcdef_with_rhs",
+        "black.trans.StringSplitter",
+        "black.trans.StringParenStripper",
+        "line.contains_unsplittable_type_ignore",
+        "transformers.append",
+        "black.trans.StringMerger",
+        "line.contains_implicit_multiline_string_with_comments",
+        "run_transformer",
+        "black.lines.is_line_short_enough"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen.run_transformer",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "src.black.linegen.transform_line",
+      "callers": [
+        "src.black.linegen.run_transformer"
+      ],
+      "callees": [
+        "black.lines.is_line_short_enough",
+        "contains_uncollapsable_type_comments",
+        "black.lines.append_leaves",
+        "black.lines.line_to_string",
+        "strip",
+        "line.contains_multiline_strings",
+        "transform",
+        "black.trans.CannotTransform",
+        "contains_unsplittable_type_ignore",
+        "src.black.linegen.run_transformer",
+        "line.clone",
+        "src.black.linegen.transform_line",
+        "result.extend"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-11T16:05:13"
+}

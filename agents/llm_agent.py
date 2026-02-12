@@ -162,8 +162,6 @@ def _module_qual_from_relpath(rel_file_path: str, ext: str = ".py") -> str:
     if rel.endswith(ext):
         rel = rel[: -len(ext)]
     module_qual = rel.replace("/", ".")
-    if module_qual.endswith(".__init__"):
-        module_qual = module_qual[: -len(".__init__")]
     return module_qual
 
 
@@ -797,7 +795,8 @@ def main():
                     else:
                         _COUNTERS["llm_fallbacks"] += 1
                         print(f"    [{target_idx}/{len(targets)}] {qn} (hop={hop_level}): "
-                              f"LLM diff-mode failed, using template")
+                              f"LLM diff-mode failed, using template"
+                              f" | error={llm_result.get('error')} prompt_tokens={llm_result.get('prompt_tokens')} completion_tokens={llm_result.get('completion_tokens')}")
 
                 else:
                     # ---- Hop 1+: impact-based prompt（函式全文 + 上層分析）----
@@ -831,7 +830,8 @@ def main():
                     else:
                         _COUNTERS["llm_fallbacks"] += 1
                         print(f"    [{target_idx}/{len(targets)}] {qn} (hop={hop_level}): "
-                              f"LLM impact-mode failed, using template")
+                              f"LLM impact-mode failed, using template"
+                              f" | error={llm_result.get('error')} prompt_tokens={llm_result.get('prompt_tokens')} completion_tokens={llm_result.get('completion_tokens')}")
 
             # Fallback 到模板
             if docstring_lines is None:

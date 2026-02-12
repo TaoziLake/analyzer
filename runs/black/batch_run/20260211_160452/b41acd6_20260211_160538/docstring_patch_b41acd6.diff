@@ -1,0 +1,63 @@
+--- a/scripts/diff_shades_gha_helper.py
++++ b/scripts/diff_shades_gha_helper.py
+@@ -83,6 +83,11 @@
+ 
+ 
+ def get_latest_revision(ref: str) -> str:
++    """TODO: docstring
++
++    Args:
++        ref:
++    """
+     data = http_get(
+         f"https://api.github.com/repos/{REPO}/commits",
+         fields={"per_page": "1", "sha": ref},
+@@ -92,6 +97,11 @@
+ 
+ 
+ def get_pr_branches(pr: int | None = None) -> tuple[Any, Any, int]:
++    """TODO: docstring
++
++    Args:
++        pr:
++    """
+     if not pr:
+         pr_ref = os.getenv("GITHUB_REF")
+         assert pr_ref is not None
+@@ -117,6 +127,7 @@
+ 
+ @main.command("config", help="Acquire run configuration and metadata.")
+ def config() -> None:
++    """TODO: docstring"""
+     import diff_shades  # type: ignore[import-not-found]
+ 
+     jobs = [{"mode": "preview-new-changes", "style": "preview"}]
+@@ -165,6 +176,14 @@
+ @click.argument("style")
+ @click.argument("mode")
+ def comment_body(baseline: Path, target: Path, style: str, mode: str) -> None:
++    """TODO: docstring
++
++    Args:
++        baseline:
++        target:
++        style:
++        mode:
++    """
+     cmd = (
+         f"{sys.executable} -m diff_shades --no-color "
+         f"compare {baseline} {target} --quiet --check"
+@@ -200,6 +219,13 @@
+ @click.argument("run-id")
+ @click.argument("styles", nargs=-1)
+ def comment_details(pr: int, run_id: str, styles: tuple[str, ...]) -> None:
++    """TODO: docstring
++
++    Args:
++        pr:
++        run_id:
++        styles:
++    """
+     base, head, _ = get_pr_branches(pr)
+ 
+     lines = [

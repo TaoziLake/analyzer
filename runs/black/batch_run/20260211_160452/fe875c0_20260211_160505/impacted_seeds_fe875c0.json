@@ -1,0 +1,88 @@
+{
+  "commit": "fe875c0",
+  "parent": "5cdb4b6c238ec7e7a87954b041ee241a1c0acfb5",
+  "repo": "/Users/syhe/2026/black",
+  "num_files_in_diff": 3,
+  "num_py_files_in_diff": 2,
+  "num_seeds": 5,
+  "seeds": [
+    {
+      "path": "src/black/__init__.py",
+      "version": "new",
+      "line": 1221,
+      "kind": "function",
+      "qualname": "src.black.__init__._format_str_once",
+      "span": [
+        1218,
+        1278
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def _format_str_once(\n    src_contents: str, *, mode: Mode, lines: Collection[tuple[int, int]] = ()\n) -> str:\n    # Use the encoding overwrite since the src_contents may contain a different\n    # magic encoding comment than utf-8\n    normalized_contents, _, newline_type = decode_bytes(\n        src_contents.encode(\"utf-8\"), mode, encoding_overwrite=\"utf-8\"\n    )\n\n    src_node = lib2to3_parse(\n        normalized_contents.lstrip(), target_versions=mode.target_versions\n    )\n\n    dst_blocks: list[LinesBlock] = []\n    if mode.target_versions:\n        versions = mode.target_versions\n    else:\n        future_imports = get_future_imports(src_node)\n        versions = detect_target_versions(src_node, future_imports=future_imports)\n\n    line_generation_features = {\n        feature\n        for feature in {\n            Feature.PARENTHESIZED_CONTEXT_MANAGERS,\n            Feature.UNPARENTHESIZED_EXCEPT_TYPES,\n            Feature.T_STRINGS,\n        }\n        if supports_feature(versions, feature)\n    }\n    normalize_fmt_off(src_node, mode, lines)\n    if lines:\n        # This should be called after normalize_fmt_off.\n        convert_unchanged_lines(src_node, lines)\n\n    line_generator = LineGenerator(mode=mode, features=line_generation_features)\n    elt = EmptyLineTracker(mode=mode)\n    split_line_features = {\n        feature\n        for feature in {\n            Feature.TRAILING_COMMA_IN_CALL,\n            Feature.TRAILING_COMMA_IN_DEF,\n        }\n        if supports_feature(versions, feature)\n    }\n    block: LinesBlock | None = None\n    for current_line in line_generator.visit(src_node):\n        block = elt.maybe_empty_lines(current_line)\n        dst_blocks.append(block)\n        for line in transform_line(\n            current_line, mode=mode, features=split_line_features\n        ):\n            block.content_lines.append(str(line))\n    if dst_blocks:\n        dst_blocks[-1].after = 0\n    dst_contents = []\n    for block in dst_blocks:\n        dst_contents.extend(block.all_lines())\n    if not dst_contents:\n        if \"\\n\" in normalized_contents:\n            return newline_type\n    return \"\".join(dst_contents).replace(\"\\n\", newline_type)",
+      "old_code": "def _format_str_once(\n    src_contents: str, *, mode: Mode, lines: Collection[tuple[int, int]] = ()\n) -> str:\n    normalized_contents, _, newline_type = decode_bytes(\n        src_contents.encode(\"utf-8\"), mode\n    )\n\n    src_node = lib2to3_parse(\n        normalized_contents.lstrip(), target_versions=mode.target_versions\n    )\n\n    dst_blocks: list[LinesBlock] = []\n    if mode.target_versions:\n        versions = mode.target_versions\n    else:\n        future_imports = get_future_imports(src_node)\n        versions = detect_target_versions(src_node, future_imports=future_imports)\n\n    line_generation_features = {\n        feature\n        for feature in {\n            Feature.PARENTHESIZED_CONTEXT_MANAGERS,\n            Feature.UNPARENTHESIZED_EXCEPT_TYPES,\n            Feature.T_STRINGS,\n        }\n        if supports_feature(versions, feature)\n    }\n    normalize_fmt_off(src_node, mode, lines)\n    if lines:\n        # This should be called after normalize_fmt_off.\n        convert_unchanged_lines(src_node, lines)\n\n    line_generator = LineGenerator(mode=mode, features=line_generation_features)\n    elt = EmptyLineTracker(mode=mode)\n    split_line_features = {\n        feature\n        for feature in {\n            Feature.TRAILING_COMMA_IN_CALL,\n            Feature.TRAILING_COMMA_IN_DEF,\n        }\n        if supports_feature(versions, feature)\n    }\n    block: LinesBlock | None = None\n    for current_line in line_generator.visit(src_node):\n        block = elt.maybe_empty_lines(current_line)\n        dst_blocks.append(block)\n        for line in transform_line(\n            current_line, mode=mode, features=split_line_features\n        ):\n            block.content_lines.append(str(line))\n    if dst_blocks:\n        dst_blocks[-1].after = 0\n    dst_contents = []\n    for block in dst_blocks:\n        dst_contents.extend(block.all_lines())\n    if not dst_contents:\n        if \"\\n\" in normalized_contents:\n            return newline_type\n    return \"\".join(dst_contents).replace(\"\\n\", newline_type)"
+    },
+    {
+      "path": "src/black/__init__.py",
+      "version": "new",
+      "line": 1281,
+      "kind": "function",
+      "qualname": "src.black.__init__.decode_bytes",
+      "span": [
+        1281,
+        1321
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": false,
+      "seed_type": "code_change",
+      "new_code": "def decode_bytes(\n    src: bytes, mode: Mode, *, encoding_overwrite: str | None = None\n) -> tuple[FileContent, Encoding, NewLine]:\n    \"\"\"Return a tuple of (decoded_contents, encoding, newline).\n\n    `newline` is either CRLF, LF, or CR, but `decoded_contents` is decoded with\n    universal newlines (i.e. only contains LF).\n\n    Use the keyword only encoding_overwrite argument if the bytes are encoded\n    differently to their possible encoding magic comment.\n    \"\"\"\n    srcbuf = io.BytesIO(src)\n\n    # Still use detect encoding even if overrite set because otherwise lines\n    # might be different\n    encoding, lines = tokenize.detect_encoding(srcbuf.readline)\n    if encoding_overwrite is not None:\n        encoding = encoding_overwrite\n\n    if not lines:\n        return \"\", encoding, \"\\n\"\n\n    if lines[0][-2:] == b\"\\r\\n\":\n        if b\"\\r\" in lines[0][:-2]:\n            newline = \"\\r\"\n        else:\n            newline = \"\\r\\n\"\n    elif lines[0][-1:] == b\"\\n\":\n        if b\"\\r\" in lines[0][:-1]:\n            newline = \"\\r\"\n        else:\n            newline = \"\\n\"\n    else:\n        if b\"\\r\" in lines[0]:\n            newline = \"\\r\"\n        else:\n            newline = \"\\n\"\n\n    srcbuf.seek(0)\n    with io.TextIOWrapper(srcbuf, encoding) as tiow:\n        return tiow.read(), encoding, newline",
+      "old_code": "def decode_bytes(src: bytes, mode: Mode) -> tuple[FileContent, Encoding, NewLine]:\n    \"\"\"Return a tuple of (decoded_contents, encoding, newline).\n\n    `newline` is either CRLF or LF but `decoded_contents` is decoded with\n    universal newlines (i.e. only contains LF).\n    \"\"\"\n    srcbuf = io.BytesIO(src)\n    encoding, lines = tokenize.detect_encoding(srcbuf.readline)\n    if not lines:\n        return \"\", encoding, \"\\n\"\n\n    if lines[0][-2:] == b\"\\r\\n\":\n        if b\"\\r\" in lines[0][:-2]:\n            newline = \"\\r\"\n        else:\n            newline = \"\\r\\n\"\n    elif lines[0][-1:] == b\"\\n\":\n        if b\"\\r\" in lines[0][:-1]:\n            newline = \"\\r\"\n        else:\n            newline = \"\\n\"\n    else:\n        if b\"\\r\" in lines[0]:\n            newline = \"\\r\"\n        else:\n            newline = \"\\n\"\n\n    srcbuf.seek(0)\n    with io.TextIOWrapper(srcbuf, encoding) as tiow:\n        return tiow.read(), encoding, newline"
+    },
+    {
+      "path": "tests/test_black.py",
+      "version": "new",
+      "line": 22,
+      "kind": "module",
+      "qualname": "tests.test_black",
+      "span": null,
+      "reason": "diff_new_line_outside_defs",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": null,
+      "old_code": null
+    },
+    {
+      "path": "tests/test_black.py",
+      "version": "new",
+      "line": 2083,
+      "kind": "function",
+      "qualname": "tests.test_black.BlackTestCase.test_newline_type_detection",
+      "span": [
+        2083,
+        2087
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "    def test_newline_type_detection(self) -> None:\n        mode = Mode()\n        newline_types = [\"A\\n\", \"A\\r\\n\", \"A\\r\"]\n        for test_case in itertools.permutations(newline_types):\n            assert black.format_str(\"\".join(test_case), mode=mode) == test_case[0] * 3",
+      "old_code": null
+    },
+    {
+      "path": "tests/test_black.py",
+      "version": "new",
+      "line": 2089,
+      "kind": "function",
+      "qualname": "tests.test_black.BlackTestCase.test_decode_with_encoding",
+      "span": [
+        2089,
+        2114
+      ],
+      "reason": "diff_new_line_in_def",
+      "is_test": true,
+      "seed_type": "test_change",
+      "new_code": "    def test_decode_with_encoding(self) -> None:\n        # This uses temporary files since some editors (including GitHub)\n        # struggle with displaying and/or editing non utf-8 data\n        # \\xfc is iso-8859-1 for ü\n        with NamedTemporaryFile(delete=False) as first_line:\n            first_line.write(\n                b\"# -*- coding: iso-8859-1 -*-\\n\"\n                b\"# 2002-11-22 J\\xfcrgen Hermann <jh@web.de>\\n\"\n            )\n            first_line.close()\n            self.assertFalse(\n                ff(Path(first_line.name)),\n                \"Failed to properly detect encoding\",\n            )\n\n        with NamedTemporaryFile(delete=False) as second_line:\n            second_line.write(\n                b\"#! /usr/bin/env python3\\n\"\n                b\"# -*- coding: iso-8859-1 -*-\\n\"\n                b\"# 2002-11-22 J\\xfcrgen Hermann <jh@web.de>\\n\"\n            )\n            second_line.close()\n            self.assertFalse(\n                ff(Path(second_line.name)),\n                \"Failed to properly detect encoding on second line\",\n            )",
+      "old_code": null
+    }
+  ],
+  "generated_at": "2026-02-11T16:05:05"
+}

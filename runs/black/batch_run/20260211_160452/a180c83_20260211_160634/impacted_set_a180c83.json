@@ -1,0 +1,60 @@
+{
+  "commit": "a180c83",
+  "parent": "cde9494ac5b89bd4c9154f746a543685961983a8",
+  "repo": "/Users/syhe/2026/black",
+  "num_seeds": 4,
+  "num_seeds_used": 2,
+  "seed_scope": "code_only",
+  "num_impacted": 3,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "gallery.gallery.get_package",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "gallery.gallery.download_and_extract"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.__init__",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "tests.test_black.BlackRunner.__init__"
+      ],
+      "callees": [
+        "src.black.__init__.patched_main",
+        "v.name.lower",
+        "join",
+        "mypy_extensions.mypyc_attr"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "tests.test_black.BlackRunner.__init__",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.__init__",
+      "callers": [
+        "tests.test_black.BlackRunner.__init__"
+      ],
+      "callees": [
+        "packaging.version.Version",
+        "__init__"
+      ],
+      "is_internal": false,
+      "is_test": true,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-11T16:06:36"
+}

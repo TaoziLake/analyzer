@@ -1,0 +1,59 @@
+{
+  "commit": "f4b006f",
+  "parent": "115dbcf3f2593b88909faee31404b83d6dcc5ff7",
+  "repo": "/Users/syhe/2026/black",
+  "num_seeds": 2,
+  "num_seeds_used": 1,
+  "seed_scope": "code_only",
+  "num_impacted": 2,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "src.black.lines.can_omit_invisible_parens",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.linegen._maybe_split_omitting_optional_parens"
+      ],
+      "callees": [
+        "black.nodes.is_multiline_string",
+        "_can_omit_opening_paren",
+        "bt.max_delimiter_priority",
+        "_can_omit_closing_paren",
+        "black.nodes.is_type_ignore_comment",
+        "rhs.head.comments.get",
+        "rhs.body.comments.get",
+        "bt.delimiter_count_with_priority"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen._maybe_split_omitting_optional_parens",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.lines.can_omit_invisible_parens",
+      "callers": [
+        "src.black.linegen._maybe_split_omitting_optional_parens"
+      ],
+      "callees": [
+        "src.black.linegen._maybe_split_omitting_optional_parens",
+        "src.black.linegen._first_right_hand_split",
+        "rhs.head.contains_multiline_strings",
+        "black.nodes.ensure_visible",
+        "black.lines.is_line_short_enough",
+        "src.black.linegen.CannotSplit",
+        "rhs.tail.contains_multiline_strings",
+        "black.lines.can_be_split",
+        "black.lines.can_omit_invisible_parens",
+        "_prefer_split_rhs_oop_over_rhs"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-11T16:05:18"
+}

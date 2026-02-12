@@ -1,0 +1,202 @@
+{
+  "commit": "1d233bb",
+  "parent": "f4b006f61d4009135b744941f02df384f7604bc8",
+  "repo": "/Users/syhe/2026/black",
+  "num_seeds": 13,
+  "num_seeds_used": 8,
+  "seed_scope": "code_only",
+  "num_impacted": 11,
+  "max_hops": 2,
+  "impacted": [
+    {
+      "qualname": "src.black.linegen",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen.transform_line",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.linegen.run_transformer"
+      ],
+      "callees": [
+        "line.contains_standalone_comments",
+        "should_split_funcdef_with_rhs",
+        "black.trans.StringMerger",
+        "line.contains_uncollapsable_type_comments",
+        "black.trans.StringParenWrapper",
+        "black.lines.line_to_string",
+        "transformers.append",
+        "src.black.linegen._hugging_power_ops_line_to_string",
+        "black.trans.StringParenStripper",
+        "black.trans.StringSplitter",
+        "run_transformer",
+        "black.lines.is_line_short_enough",
+        "line.contains_implicit_multiline_string_with_comments",
+        "line.contains_unsplittable_type_ignore"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.mode.Preview",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.nodes",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [
+        "BRACKET.values",
+        "mypy_extensions.mypyc_attr",
+        "BRACKET.keys",
+        "blib2to3.pygram.initialize"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.nodes.whitespace",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.lines.Line.append"
+      ],
+      "callees": [
+        "parent_type",
+        "preceding_leaf",
+        "is_simple_exponentiation",
+        "is_vararg"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.nodes.is_simple_exponentiation",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.nodes.whitespace"
+      ],
+      "callees": [
+        "is_simple"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.nodes.is_simple_exponentiation.is_simple",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [
+        "src.black.nodes.is_simple_exponentiation",
+        "src.black.nodes.is_simple_exponentiation.is_simple"
+      ],
+      "callees": [
+        "is_simple"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.trans",
+      "hop": 0,
+      "reason": "direct_change",
+      "source": null,
+      "callers": [],
+      "callees": [],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.linegen.run_transformer",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.linegen.transform_line",
+      "callers": [
+        "src.black.linegen.run_transformer"
+      ],
+      "callees": [
+        "strip",
+        "black.lines.append_leaves",
+        "line.clone",
+        "black.lines.line_to_string",
+        "line.contains_multiline_strings",
+        "src.black.linegen.run_transformer",
+        "transform",
+        "src.black.linegen.transform_line",
+        "contains_unsplittable_type_ignore",
+        "contains_uncollapsable_type_comments",
+        "result.extend",
+        "black.lines.is_line_short_enough",
+        "black.trans.CannotTransform"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.Line.append",
+      "hop": 1,
+      "reason": "calls_changed_function",
+      "source": "src.black.nodes.whitespace",
+      "callers": [
+        "src.black.lines.Line.append_safe"
+      ],
+      "callees": [
+        "black.nodes.whitespace",
+        "src.black.lines.Line.leaves.append",
+        "src.black.lines.Line.append_comment",
+        "src.black.lines.Line.remove_trailing_comma",
+        "src.black.lines.Line.is_complex_subscript",
+        "src.black.lines.Line.has_magic_trailing_comma",
+        "src.black.lines.Line.bracket_tracker.mark",
+        "leaf.value.strip"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    },
+    {
+      "qualname": "src.black.lines.Line.append_safe",
+      "hop": 2,
+      "reason": "calls_changed_function",
+      "source": "src.black.lines.Line.append",
+      "callers": [],
+      "callees": [
+        "src.black.lines.Line.bracket_tracker.any_open_for_or_lambda",
+        "src.black.lines.Line.append"
+      ],
+      "is_internal": true,
+      "is_test": false,
+      "is_external": false
+    }
+  ],
+  "generated_at": "2026-02-11T16:08:50"
+}
